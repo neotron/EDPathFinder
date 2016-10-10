@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.5)
+project(EliteTSP)
+set(ORTOOLS /usr/local/or-tools/)
+include_directories(${ORTOOLS}/include)
+link_directories(${ORTOOLS}/lib)
+link_libraries(-lortools -lz)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11  -mmacosx-version-min=10.8 -stdlib=libc++  -DARCH_K8 -Wno-deprecated")
+
+set(SOURCE_FILES src/main.cpp src/System.cpp src/System.h)
+add_executable(EliteTSP ${SOURCE_FILES})

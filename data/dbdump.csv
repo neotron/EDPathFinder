@@ -1,0 +1,539 @@
+L1H	Sol	Europa	Fung's Claim		0	0	0	0.00	3	1	1	dja						1		1	1				Large	3
+L3L	Sol	Europa	Illy Enterprise		0	0	0	0.00	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M1L	WISE 1506+7027	3 E	Galouye relay		-7.375	7.09375	-2.4375	10.52	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	WISE 1506+7027	1 C	Lee Lab		-7.375	7.09375	-2.4375	10.52	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	WISE 1506+7027	2 E	Moon Laboratory		-7.375	7.09375	-2.4375	10.52	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1H	Lacaille 8760	2	Haignere Terminal+		-0.6875	-9.09375	9.09375	12.88	2	0	0	dja				1				1	1	1	1		Small	3
+M4L	Kruger 60	B1	Andrews Vista		-12.625	0	-3.40625	13.08	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1M	Kruger 60	B1	Ehrenfried Kegel Horizons		-12.625	0	-3.40625	13.08	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	TZ Arietis	5 E	Meikle Vista		-5.375	-10.59375	-8.5	14.61	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M6H	Kokary	3	Laing Settlement	1	3.5	-10.3125	-11.4375	15.79	2	1	0	dja	2 g						1	1	1		1		Medium	3
+S5L	Kokary	3	Redi Installation		3.5	-10.3125	-11.4375	15.79	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Kokary	3	Sawyer Beacon		3.5	-10.3125	-11.4375	15.79	0	1	1	dja	2 g, only for small ship (difficulty with place to land)	1	1	1		1	1	1	1	1	1	1	Large	2
+M4L	Groombridge 1618	B 5	Dickson Base		-2.34375	12.625	-9.34375	15.88	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	Groombridge 1618	A 1	Gulyaev Works		-2.34375	12.625	-9.34375	15.88	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Groombridge 1618	B 9	Mitchell Horizons		-2.34375	12.625	-9.34375	15.88	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S3M	Groombridge 1618	B 8	Tavernier Penal Colony+		-2.34375	12.625	-9.34375	15.88	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S5L	Groombridge 1618	A 1	Tito Hub		-2.34375	12.625	-9.34375	15.88	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	Groombridge 1618	B 7	Underwood Works		-2.34375	12.625	-9.34375	15.88	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	70 Ophiuchi	Richardson	Leckie's Claim		-8.21875	3.09375	14.0625	16.58	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L2M	Altair	1	Galvani Depot		-12.3125	-2.75	11	16.74	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S1M	Altair	1	Heavside orizons		-12.3125	-2.75	11	16.74	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L4M1	Altair	Lowing's Rock	Oleskiw Depot		-12.3125	-2.75	11	16.74	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	Altair	1	Tito Landing		-12.3125	-2.75	11	16.74	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M1M	Eta Cassiopeiae	New Moon	Hewish Point		-16.25	-1.625	-10.5625	19.45	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S3H	Delta Pavonis	Suzuki Reward	Bouch Holdings		8.375	-10.84375	14.46875	19.93	2	0	0	dja				1				1	1	1	1		Small	3
+L4M2	Delta Pavonis	Gold	Burckhardt Point	1	8.375	-10.84375	14.46875	19.93	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	Delta Pavonis	Suzuki Reward	Daimler Settlement		8.375	-10.84375	14.46875	19.93	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	Delta Pavonis	Gold	Ejeta Relay		8.375	-10.84375	14.46875	19.93	0	1	0	dja,Sevenperry		1	1	1		1	1	1	1	1	1	1	Large	2
+M3L	Delta Pavonis	Camp Mitterand	Vardeman Terminal		8.375	-10.84375	14.46875	19.93	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	Delta Pavonis	Camp Mitterand	Wallance Horizons		8.375	-10.84375	14.46875	19.93	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	Ross 775	A 1	Arnason Prospect		-18.8125	-8.90625	6.78125	21.89	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S1L	Ross 775	CD 4	Morey Terminal		-18.8125	-8.90625	6.78125	21.89	0	0	0	dja		1	1	1	1	1	1						Small	1
+M1L	Ross 775	CD 1	Scalzi Bastion		-18.8125	-8.90625	6.78125	21.89	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M5L	Ross 671	B 1	Barreiros Vision		-17.53125	-13.84375	0.625	22.35	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	Ross 671	A 3	De Balboa Landing		-17.53125	-13.84375	0.625	22.35	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Ross 671	A 6	Dias Hub		-17.53125	-13.84375	0.625	22.35	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	George Pantazis	A 9	Haber Landing+		-12.09375	-16	-14.21875	24.59	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M5L	George Pantazis	A 9	Sladek's Folly		-12.09375	-16	-14.21875	24.59	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2H	Ross 730	A 1	Al-Battani Landing		-22.25	2.71875	16.375	27.76	2	1	0	dja							1	1	1		1		Medium	3
+M1H	Guy	A 4 A	Mendez Relay		26.71875	14.25	7.375	31.17	3	1	1	dja							1	1	1		1		Medium	3
+S3L	Guy	A 4 A	Rodrigues Folly		26.71875	14.25	7.375	31.17	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3M	Acihaut	Ayer	Camarda Legacy		-18.5	25.28125	-4	31.58	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M4L	Acihaut	Ayer	McKee's Inheritance		-18.5	25.28125	-4	31.58	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S3M	Nang Ta-khian	Nisa	Holland Depot+		-18.21875	26.5625	-6.34375	32.83	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M4M	Nang Ta-khian	Nisa	Schilling Prospect		-18.21875	26.5625	-6.34375	32.83	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M1M	Nang Ta-khian	2 A	Serre Arsenal		-18.21875	26.5625	-6.34375	32.83	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S3H	V857 Centauri	1 A	Nehsi Installation+		30.375	11.125	9.6875	33.77	2	0	0	dja				1				1	1	1	1		Small	3
+L3L	Wyrd	B 2	Alexandrov Relay		-11.625	31.53125	-3.9375	33.84	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S3M	Wyrd	Lister	Grijalva's Inheritance		-11.625	31.53125	-3.9375	33.84	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3M	Wyrd	Lister	Gulyaev Vision		-11.625	31.53125	-3.9375	33.84	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S3L	Wyrd	B 3	Simak Penal Colony+		-11.625	31.53125	-3.9375	33.84	0	0	0	dja		1	1	1	1	1	1						Small	1
+M1H	LHS 3776	2 B	Maybury Point	1	-13.09375	-27.03125	16.0625	34.06	3	1	1	dja							1	1	1		1		Medium	3
+L1L	Byel Taca	8	Bao's Progress		-12.21875	-20.0625	-25.25	34.49	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M2M	Ross 730	A 1	Rominger Mines		-22.25	2.71875	16.375	27.76	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L3H	LFT 90	5 B	Carleson Vision		-29.21875	-0.9375	-19.8125	35.32	3	1	0	dja						1		1	1				Large	3
+S2M	LFT 90	5 E	Gunn Survey+		-29.21875	-0.9375	-19.8125	35.32	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3H	LFT 90	5 B	Iqbal Enterprise		-29.21875	-0.9375	-19.8125	35.32	3	1	0	dja						1		1	1				Large	3
+M4L	LFT 90	5 E	Webb Landing		-29.21875	-0.9375	-19.8125	35.32	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L4M1	Sekhenses	5	Acaba Arsenal		-12.90625	-19.09375	27.625	35.98	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2L	Sekhenses	5	Bixby Camp		-12.90625	-19.09375	27.625	35.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4L	Sekhenses	3	Chun Enterprise		-12.90625	-19.09375	27.625	35.98	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M2H	Sekhenses	6	Fowler Depot		-12.90625	-19.09375	27.625	35.98	2	1	0	dja							1	1	1		1		Medium	3
+M3L	Sekhenses	3	Lee Enterprise		-12.90625	-19.09375	27.625	35.98	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M6L	Sekhenses	1	Oramus Point++		-12.90625	-19.09375	27.625	35.98	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	L 190-21	A 2	Yamazaki Hub		35.375	0.1875	7.75	36.21	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	L 190-21	A 2	Yang Project		35.375	0.1875	7.75	36.21	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L4M1	Carnoeck	3 C	Johnson Point	1	35.96875	5.1875	1.3125	36.36	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2H	Blest	4 A	Apgar Beacon+		6.0625	-17.75	-33.625	38.50	2	0	1	dja				1				1	1	1	1		Small	3
+L4M1	Blest	5 B	Vogel Base		6.0625	-17.75	-33.625	38.50	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M1L	FT Piscium	A 2 B	Oluwafemi Silo		-25.5	-23.6875	-16.84375	38.67	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3M	G 173-53	2	Thurston Terminal		-25.15625	-8.03125	-28.65625	38.97	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L3L	LHS 6427	A 3	Stuart Observatory		-33.25	-19.78125	-9.53125	39.85	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	Gyton's Hope		Matteucci Point		-29.625	-2	-26.75	39.97	0	1	1	Fire Dragon		1	1	1		1	1	1	1	1	1	1	Large	2
+L1M	Gyton's Hope		Whitworth Settlement		-29.625	-2	-26.75	39.97	0	1	1	Fire Dragon		1	1	1		1	1	1	1	1	1	1	Large	2
+S1H	LHS 1920	B 1	Smith Works+		25.84375	5.0625	-30.21875	40.08	2	0	0	dja				1				1	1	1	1		Small	3
+L2L	LHS 112	C 3	Gantt Works		-32.15625	-20	-15.34375	40.86	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	LHS 112	C 2	Wolfe Base		-32.15625	-20	-15.34375	40.86	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	LHS 112	C 3	Zajdel Installation		-32.15625	-20	-15.34375	40.86	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M4M	Eme		Morris Enterprise		33.71875	26.21875	4.03125	42.90	0	0	0	Cmdr Chaos		1		1		1	1	1	1	1	1		Medium	2
+L3M	LP 672-42	B 10 C	Blaschke Base		27.78125	32.84375	1	43.03	0	1	0			1	1	1		1	1	1	1	1	1	1	Large	2
+M2L	Erne	A 2	Barnes Holdings		-1.0625	-11.8125	-41.375	43.04	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3M	LFT 992	B 5 A	Scithers Beacon		-7.5625	42.59375	0.6875	43.27	0	1	0	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+L2L	CD-55 1514	C 4	Hennepin Depot		39.59375	-17.375	-3.5	43.38	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Upsilon Andromedae	B 3	Clebsch Installation		-30.4375	-15.28125	-27.90625	44.03	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	Trocnades	AB 2 F	Ehrenfried		-25.46875	-32.40625	21.5	46.49	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2H	Trocnades	A 3	Selberg Base		-25.46875	-32.40625	21.5	46.49	2	1	0	dja							1	1	1		1		Medium	3
+S3L	LFT 1610	A 3	Diamond's Folly		1.4375	-33.46875	34.78125	48.29	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2H	LFT 1610	A 2	Vo Enterprise		1.4375	-33.46875	34.78125	48.29	3	1	0	dja						1		1	1				Large	3
+M1H	L 639-45	3 A	Stuart Silo		-11.34375	-26.25	39.0625	48.41	3	1	1	dja							1	1	1		1		Medium	3
+M2L	L 639-45	4	Williamson Beacon		-11.34375	-26.25	39.0625	48.41	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1L	Euboa	B 3	Ahmed's Folly		-7.53125	-24.15625	41.5	48.61	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1L	Euboa	B 2	Barentsz Landing		-7.53125	-24.15625	41.5	48.61	0	0	0	dja		1	1	1	1	1	1						Small	1
+M3L	Euboa	B 8 C	Bloch Survey		-7.53125	-24.15625	41.5	48.61	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	Euboa	B 6 A	Hudson Beacon		-7.53125	-24.15625	41.5	48.61	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S1M	Teleut	D 1	Glidden Installation+		74.625	-15.5625	53.875	93.35	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S3L	31 Aquilae	B 10	Butz Terminal		-36.625	-2.03125	33.25	49.51	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	31 Aquilae	B 3	Coppel Base		-36.625	-2.03125	33.25	49.51	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	31 Aquilae	B 5	Cori Enterprize		-36.625	-2.03125	33.25	49.51	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	31 Aquilae	B 10	Horowitz Colony		-36.625	-2.03125	33.25	49.51	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Liaedin	Ulrich's Rock	Euthymenes Depot		-32.03125	-5.8125	38.125	50.13	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	Liaedin	Ulrich's Rock	Valigursky Landing		-32.03125	-5.8125	38.125	50.13	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L3M	Ross 584		Binder Beacon		10.9375	-33.65625	-36.4375	50.79	0	1	0	Insane4un		1	1	1		1	1	1	1	1	1	1	Large	2
+L1M	Ross 584		Kwolek Settlement		10.9375	-33.65625	-36.4375	50.79	0	1	1	Insane4un		1	1	1		1	1	1	1	1	1	1	Large	2
+M2M	LP 322-836	B 2	Auld Prospect		-3.4375	51.59375	2.03125	51.75	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S4H	LFT 568	2 E	Finch Base+		53.1875	-9.90625	-1.9375	54.14	2	0	0	dja				1				1	1	1	1		Small	3
+M2M	Tama	B 2	Adams' Folly		-29.9375	-45.65625	10.34375	55.57	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2L	Tama	B 1	Cameron Prospect		-29.9375	-45.65625	10.34375	55.57	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S3M	Othime	1	Thiele Installation+		2.40625	-26.4375	52.4375	58.77	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L4H	Skinfaxi	3 D	Cousteau Barracks		-29.3125	-39.625	34.28125	60.04	3	1	1	dja						1		1	1				Large	3
+L3L	Skinfaxi	4 A	Herreshoff Horizons		-29.3125	-39.625	34.28125	60.04	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S2M	Munfayl	5 D	Back Laboratory		-24.15625	-86.15625	2.53125	89.51	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M3L	Skinfaxi	2 B	Puleston Installation		-29.3125	-39.625	34.28125	60.04	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S4H	Wolf 248	5 A	Lousma's Inheritance		2.78125	60.3125	-0.4375	60.38	2	0	0	dja				1				1	1	1	1		Small	3
+L3L	Wolf 248	5 A	Tognini Prospect		2.78125	60.3125	-0.4375	60.38	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	Wolf 248	5 A	Zholobov Arena		2.78125	60.3125	-0.4375	60.38	3	1	1	dja						1		1	1				Large	3
+M2L	Elli	A 3	Illy's Progress		60.1875	-1.03125	-6.03125	60.50	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Elli	A 3	Klimuk Installation		60.1875	-1.03125	-6.03125	60.50	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M4M	Ross 769	1	Blackwell Base		-26.34375	-38.09375	42.03125	62.54	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L2H	Summanus	A 4	Bogdanov Prospect		52.1875	-34.625	-0.6875	62.63	3	1	0	dja						1		1	1				Large	3
+L4M2	Summanus	A 2	Daley Barracks		52.1875	-34.625	-0.6875	62.63	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S1L	Summanus	A 4	Fawcett's Progress		52.1875	-34.625	-0.6875	62.63	0	0	0	dja		1	1	1	1	1	1						Small	1
+M3M	Kokoto		Terry Camp		39.15625	40.5	28	62.91	0	0	0	Cmdr Chaos		1		1		1	1	1	1	1	1		Medium	2
+M3M	Kutkha	A 2 A	Ali Survey		60.59375	-10.8125	17.15625	63.90	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M4L	Kutkha	A 2 A	Cabana Stop		60.59375	-10.8125	17.15625	63.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M1L	Kutkha	A 2 A	Perrin Hub		60.59375	-10.8125	17.15625	63.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3H	Ngaliba	7 F	Veblen Vision		-30.5	-8.625	58.0625	66.15	3	1	0	dja						1		1	1				Large	3
+M4H	Aura	ABC 6 F	Apt Reach		-16.625	32.15625	55.5625	66.31	2	1	1	dja							1	1	1		1		Medium	3
+S4L	Aura	ABC 6 E	Csoma Base		-16.625	32.15625	55.5625	66.31	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Aura	ABC 5 B	Harrison Intallation+		-16.625	32.15625	55.5625	66.31	0	0	0	dja		1	1	1	1	1	1						Small	1
+S4L	Aura	ABC 6 E	Ramelli's Progress+		-16.625	32.15625	55.5625	66.31	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	Djiwar	B 6	Blaylock Beacon		-8.90625	-33.6875	56.96875	66.78	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M1L	BD+44 4389	A 5 G	Clifton Survey		-61.71875	-17.03125	-19.21875	66.85	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	BD+44 4389	A 1 A	Taine Vision		-61.71875	-17.03125	-19.21875	66.85	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S1L	BD+52 3410	AB 3	Powers Plant		-62.65625	-8.0625	-22	66.89	0	0	0	dja		1	1	1	1	1	1						Small	1
+M2M	Mbukuravi	2	Wnuk-Lipinski Settlement		-31.875	-13.125	57.34375	66.91	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2L	Ross 835	D 2	Thompson's Inheritance		3.21875	63.84375	24.125	68.33	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Lalande 1799	1 A	Litke Prospect		-28.8125	-58.09375	-23.5	68.97	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	V640 Cassiopeia	A 6 A	Fibonacci Survey		-62.0625	-4.53125	-32.21875	70.07	0	1	0	Sevenperry		1	1	1		1	1	1	1	1	1	1	Large	2
+S3H	Minerva	3 B	Danvers Observatory+		-22.0625	-64.9375	-15.125	70.23	2	0	0	dja				1				1	1	1	1		Small	3
+L3L	Kremainn	4 F	Alexander Prospect		-37.0625	-11.15625	59.0625	70.61	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	LHS 2541	A 3	Burnham Terminal		29.8125	63.96875	6.625	70.88	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M2L	LHS 2541	A 4	Eratosthenes Horizons		29.8125	63.96875	6.625	70.88	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	LHS 2541	A 2	Garn Enterprise+		29.8125	63.96875	6.625	70.88	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3M	LTT 1935	F 1	Lavrador Base		48.75	-50.09375	-11.84375	70.90	0	1	0	Hamakua	0.29g	1	1	1		1	1	1	1	1	1	1	Large	2
+S4M	LHS 3447	B 1 A	Edwards Enterprise+		-43.1875	-5.28125	56.15625	71.04	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L1L	LHS 3447	B 2 A	Kozin's Inheritance		-43.1875	-5.28125	56.15625	71.04	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	Apura	2	Beebe's Progress		41.8125	57.34375	5.40625	71.17	3	1	1	dja						1		1	1				Large	3
+S3L	Apura	2	Daniel Forum+		41.8125	57.34375	5.40625	71.17	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3M	Apura	7 E	Johnson Depot+		41.8125	57.34375	5.40625	71.17	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S3L	Apura	2	Pellegrino's Claim+		41.8125	57.34375	5.40625	71.17	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	63 G. Capricorni	7 A	Binder Installation		-19.1875	-44.8125	52.53125	71.66	0	0	0	dja		1	1	1	1	1	1						Small	1
+M2L	63 G. Capricorni	5	Locke Beacon		-19.1875	-44.8125	52.53125	71.66	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3H	63 G. Capricorni	4	Minkowski Relay		-19.1875	-44.8125	52.53125	71.66	3	1	0	dja						1		1	1				Large	3
+L3L	63 G. Capricorni	7 A	Roggeveen Beacon		-19.1875	-44.8125	52.53125	71.66	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	LTT 18486	B 1 B	Payette's Claim		-45.09375	-11.96875	56.46875	73.25	3	1	1	dja						1		1	1				Large	3
+L1M	Ki	1	Stebler Settlement		-16.78125	-29.15625	-65.15625	73.33	0	1	1	Hamakua	1.29g	1	1	1		1	1	1	1	1	1	1	Large	2
+L2M	Lodemovoi	2	Kelly's Folly		-67.4375	-12.25	-27.21875	73.75	0	1	0	Sevenperry		1	1	1		1	1	1	1	1	1	1	Large	2
+S1H	LP 294-40	A 2	Meade Vision		-51.4375	-38.34375	-37.1875	74.16	2	0	0	dja				1				1	1	1	1		Small	3
+M2L	LP 294-40	A 3	Asher Works		-51.4375	-38.34375	-37.1875	74.16	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	Ekonir	A 2 A	Vandermeer Laboratory		-37.78125	0.53125	63.90625	74.24	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Djapati	B 4	Coleman's Claim		60.875	-34.09375	27.25	74.90	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Mong Kung	4	Williamson Enterprise		-1.34375	69.4375	28.125	74.93	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1L	Nyx	A 2	Sarafanov's Inheritance+		-29.4375	-68.78125	-11.5	75.69	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5M	Nyx	B 1	Thompson Horizons		-29.4375	-68.78125	-11.5	75.69	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L4M1	NLTT 8084	1 C	Padalka Point		-11	-60.6875	-44.1875	75.87	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M3M	Tamor	8 D	Armstrong Relay		-69.03125	-19.28125	-25.6875	76.14	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S2L	Tamor	7 A	Shapiro Observatory		-69.03125	-19.28125	-25.6875	76.14	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5L	LHS 3479	A 2	Virt's Folly		-50	-12.9375	56.28125	76.39	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M5L	LHS 3479	A 2	Yano Base		-50	-12.9375	56.28125	76.39	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	LHS 2637	3 D	Altshuller's Progress		-22.5625	74.6875	-15.53125	79.55	0	1	0	moose666		1	1	1		1	1	1	1	1	1	1	Large	2
+M5M	Catuntinigi		Godnan Mine		-52.65625	30.78125	-51.90625	80.09	0	1	1	mazelinho		1	1	1		1	1	1	1	1	1	1	Large	2
+S2L	BD+23 2640	A 3 B	Derleth Lab		-8.25	77.53125	21.46875	80.87	0	0	0	dja		1	1	1	1	1	1						Small	1
+M2L	BD+23 2640	A 1 E	Frobenius Holdings		-8.25	77.53125	21.46875	80.87	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M1M	BD+23 2640	A 3 B	Panshin Penal Colony		-8.25	77.53125	21.46875	80.87	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+L4M2	BD+23 2640	A 4 D	Reed Arsenal		-8.25	77.53125	21.46875	80.87	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S4L	LHS 4046	5 B	Hill Reach		-36.6875	-72.84375	-0.3125	81.56	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2L	LHS 4046	5 B	Lee survey		-36.6875	-72.84375	-0.3125	81.56	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	LHS 4046	2 A	Shawl Base		-36.6875	-72.84375	-0.3125	81.56	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L2H	Tsim Binba	3	GGordon's Folly		10.0625	-81.125	1.25	81.76	3	1	0	dja						1		1	1				Large	3
+M6L	Tsim Binba	2	Vlamingh Settlement		10.0625	-81.125	1.25	81.76	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S4M	Tsim Binba	2	Wnuk-Lipinski Works		10.0625	-81.125	1.25	81.76	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L1M	Gabraceni	7 C	Ampere's Inheritance		52.53125	-11.375	61.65625	81.79	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4M	70 Ophiuchi	Richardson	Andrews Prospect		-8.21875	3.09375	14.0625	16.58	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S1L	Gabraceni	3	Navigator Holdings		52.53125	-11.375	61.65625	81.79	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Chankun	3 A	Varley Vision		-19.59375	-76.125	-25.625	82.68	0	1	1	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+S2M	LHS 2412	A 6 F	Fung Survey		55.09375	62.28125	1.875	83.17	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L4H	LHS 2412	A 6 E	Thomas Depot		55.09375	62.28125	1.875	83.17	3	1	1	dja						1		1	1				Large	3
+L3L	LHS 2412	A 5 D	Webb Enterprise		55.09375	62.28125	1.875	83.17	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2M	Ross 788	Ambleside	Barnes Terminal		-49.5	-51.75	-45.15625	84.66	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L1M	B2 Carinae	A 5 B	Alvarado Reach		84.5625	-12.875	10.4375	86.17	0	1	1	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+L3M	B2 Carinae	A 4 D	Ricci Vision		84.5625	-12.875	10.4375	86.17	0	1	0	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	17 Crateris	3	Scully-Power Market		73	44.125	17.625	87.10	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	17 Crateris	3	Smith Prospect		73	44.125	17.625	87.10	3	1	1							1		1	1				Large	3
+S3M	Snoqui Xian	B 7	Atiyah Relay		-73.78125	-28.375	-36.59375	87.11	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3L	Snoqui Xian	B 7	Low Beacon		-73.78125	-28.375	-36.59375	87.11	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2M	Snoqui Xian	A 6	Morgan Refinery		-73.78125	-28.375	-36.59375	87.11	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S1L	Velim	3	Champlain Base		-0.5	81.5625	31.625	87.48	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5L	Velim	3	Jeury Survey		-0.5	81.5625	31.625	87.48	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M5L	Velim	3	Kirk Vision		-0.5	81.5625	31.625	87.48	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M4L	89 Leonis	7 C	Boole's Claim		44.34375	76.75	-5.03125	88.78	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2M	89 Leonis	7 D	Burgess Holdings		44.34375	76.75	-5.03125	88.78	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4L	89 Leonis	3 C	Lubin Vision		44.34375	76.75	-5.03125	88.78	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M3M	89 Leonis	3 C	Ozanne Observatory		44.34375	76.75	-5.03125	88.78	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L1L	89 Leonis	7 C	Payne's Folly		44.34375	76.75	-5.03125	88.78	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	89 Leonis	7 D	Payne's Inheritance	1	44.34375	76.75	-5.03125	88.78	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	89 Leonis	3 C	Wull Point		44.34375	76.75	-5.03125	88.78	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	Crevit	2 B	Saunders Camp		-24	-85.46875	-1.6875	88.79	3	1	1	dja						1		1	1				Large	3
+L3M	Komotae		Vittori Base		24.25	83.90625	-17.28125	89.03	0	1	0	wahchewie		1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	LTT 982	1 A	Westerfeld Holdings		25.1875	-85.40625	-5.5	89.21	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M4L	Wolf 397	Trus Madi	Asire Legacy		40	79.21875	-10.40625	89.35	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S4H	Wolf 397	Trus Madi	Charnas' Progres+		40	79.21875	-10.40625	89.35	2	0	0	dja				1				1	1	1	1		Small	3
+L1M	Wolf 397	Trus Madi	Gibson Prospect		40	79.21875	-10.40625	89.35	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M3H	Munfayl	3 A	Brera Base		-24.15625	-86.15625	2.53125	89.51	2	1	1	dja							1	1	1		1		Medium	3
+S4L	Munfayl	3 G	Thurston Vista+		-24.15625	-86.15625	2.53125	89.51	0	0	0	dja		1	1	1	1	1	1						Small	1
+M6L	Minot	C 1	Andrews Prospect		81.84375	30.40625	20.4375	89.67	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S5L	Minot	C 11	Gelfand Holdings		81.84375	30.40625	20.4375	89.67	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	Minot	C 1	Howard Vista		81.84375	30.40625	20.4375	89.67	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	Raksaka	3 F	Garan Horizons		66.21875	16.34375	62.4375	92.47	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M1L	Raksaka	3 F	Veblen Relay		66.21875	16.34375	62.4375	92.47	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1H	Nocoma	2	Edison Plant+		41.3125	48.71875	67.5	92.93	2	0	0	dja				1				1	1	1	1		Small	3
+S3H	Nocoma	5 D	Foale Bastion+		41.3125	48.71875	67.5	92.93	2	0	0	dja				1				1	1	1	1		Small	3
+L1H	Nocoma	5 C	Hamilton Camp		41.3125	48.71875	67.5	92.93	3	1	1	dja						1		1	1				Large	3
+L4M1	Acan	A 3	Dirac Survey		-13.21875	88.5625	24.96875	92.96	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L4M1	Acan	A 14 D	Heck Relay	1	-13.21875	88.5625	24.96875	92.96	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	Acan	A 6 A	Saavedra Survey		-13.21875	88.5625	24.96875	92.96	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L2H	Acan	A 2	Stephenson Settlement		-13.21875	88.5625	24.96875	92.96	3	1	0	dja						1		1	1				Large	3
+M2M	Teleut	C 1	Britnev Terminal		74.625	-15.5625	53.875	93.35	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S3L	Teleut	D 2	Witt Hub+		74.625	-15.5625	53.875	93.35	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1H	Ross 345	Brigantia	Bering Colony		-54.375	-6.75	-75.6875	93.44	3	1	1	dja						1		1	1				Large	3
+L4M1	Nyanktona	2 A	Martins Hub		69.0625	16.03125	61.15625	93.63	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S4M	Nyanktona	2 A	Sutcliffe Prospect+		69.0625	16.03125	61.15625	93.63	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S4M	Olker	A 3 A	Brooks Prospect+		46.90625	81.1875	-8.46875	94.15	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S2L	Olker	A 3 A	Kozin Survey		46.90625	81.1875	-8.46875	94.15	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4L	Olker	A 3 A	Martins Vision		46.90625	81.1875	-8.46875	94.15	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2M	LP 941-16	A 1	Robson Base		27.9375	-89.0625	-15.09375	94.55	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4M	Momus Reach	Pandora	Ahmed Town		-34.9375	-44.15625	-77.34375	95.67	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S3L	Momus Reach	2 D	Wisniewski-Snerg Penal Colony+		-34.9375	-44.15625	-77.34375	95.67	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Imani	B 5	Qian Point		-38.625	-77.125	-41.5625	95.75	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4M	Imani	B 5	Robson Reach		-38.625	-77.125	-41.5625	95.75	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S1L	CD-35 9019	A 6	Hackworth Terminal+		59.875	41.125	62.9375	96.11	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	CD-35 9019	A 4	Hilbert Terminal		59.875	41.125	62.9375	96.11	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M4M	CD-35 9019	A 4	Whitney Vision		59.875	41.125	62.9375	96.11	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S3L	CD-35 9019	A 4	Wolfe Exchange		59.875	41.125	62.9375	96.11	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	CD-35 9019	A 4	Young Forum		59.875	41.125	62.9375	96.11	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3H	Djuhti	7 A	Schweickart Base		-6.8125	92.65625	24.8125	96.16	3	1	0	dja						1		1	1				Large	3
+L4H	LTT 13232	3 A	Lindbohm Hub		46.625	84.65625	-1.125	96.65	3	1	1	dja						1		1	1				Large	3
+L2L	40 Ceti	2 E	Carrasco Plant		-27.96875	-87.59375	-32.3125	97.46	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	40 Ceti	2 A	Franke Survey		-27.96875	-87.59375	-32.3125	97.46	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	40 Ceti	4 A	Linge Base		-27.96875	-87.59375	-32.3125	97.46	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4M1	40 Ceti	3 A	Tenn Installation		-27.96875	-87.59375	-32.3125	97.46	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	17 Virginis	1 E	Khayyam Base		36.625	89.84375	10.4375	97.58	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M3L	Arque	2 C	Abel Prospect		66.5	38.0625	61.125	98.02	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M4H	Arque	2 D	Langsdorff Escape	1	66.5	38.0625	61.125	98.02	2	1	1	dja							1	1	1		1		Medium	3
+S4L	Arque	2 B	Tudela Arena		66.5	38.0625	61.125	98.02	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Wikatabar	1 A	Clebsch's Progress		-32.78125	-75.40625	53.71875	98.22	0	1	1	PiZ		1	1	1		1	1	1	1	1	1	1	Large	2
+S1M	Ross 911	A 2	Hope Works+		45.25	87.71875	-4.53125	98.81	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M2M	Sabihilo	C 1	Effinger's Progress		-48.4375	-76.6875	-39.6875	99.01	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2M	Sabihilo	C 2	Hurston Vision		-48.4375	-76.6875	-39.6875	99.01	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L3L	Odomazotz	6 C	Alvares Lab		72.4375	-9.53125	67.34375	99.36	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S1M	Odomazotz	4	Berkey's Claim+		72.4375	-9.53125	67.34375	99.36	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S2L	Kagudi	AB 5	Manakov Relay		-47.6875	-42.96875	-77.65625	100.75	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Kagudi	AB 4	Spinrad Settlement		-47.6875	-42.96875	-77.65625	100.75	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L1M	HR 8514	6 B	Furrer Enterprise		-74.21875	-64.1875	23.46875	100.89	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S3L	Pathan	BC 5	Ahmed Laboratory		-71.8125	-51.5	-48.90625	101.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+L4M1	Pathan	A 2 A	Blackman Arsenal		-71.8125	-51.5	-48.90625	101.00	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L4M1	Pathan	BC 3	Chaviano Bastion		-71.8125	-51.5	-48.90625	101.00	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S1L	Pathan	BC 1	Madsen's Folly+		-71.8125	-51.5	-48.90625	101.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	Pathan	A 3	Powell Holdings		-71.8125	-51.5	-48.90625	101.00	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	Pathan	A 3	Yegorov's Folly		-71.8125	-51.5	-48.90625	101.00	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M5L	Shenich	2	Shoemaker Mines		-26.09375	-92.5625	-31.28125	101.13	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M5L	Shenich	2	Yegorov's Inheritance		-26.09375	-92.5625	-31.28125	101.13	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M5M	Yaringu	A 1	Gann Landing	1	-57.21875	-23.46875	-82.71875	103.28	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L3M	Kokowar	5 A	Clebsch Camp		4.65625	-101.9375	18.46875	103.70	0	1	0	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+L1M	Kokowar	5 A	Van Vogt Horizons		4.65625	-101.9375	18.46875	103.70	0	1	1	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+M2L	La Tenha	A 1	Janifer's Folly		-4.15625	91	49.59375	103.72	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2H	La Tenha	A 1	Makarov Vision		-4.15625	91	49.59375	103.72	3	1	0	dja						1		1	1				Large	3
+M5L	La Tenha	A 2	Shalatula Point		-4.15625	91	49.59375	103.72	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M1M	Aranbarahun	B 3	Cernan Depot		78.96875	15.625	65.8125	103.98	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S4L	Aranbarahun	AB 3 A	Crown's Exile		78.96875	15.625	65.8125	103.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+S5L	Aranbarahun	A 4	Merle Works		78.96875	15.625	65.8125	103.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+M2L	Aranbarahun	B 2	Mitchell Plant		78.96875	15.625	65.8125	103.98	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1L	Aranbarahun	B 1	Peirce's Progress+		78.96875	15.625	65.8125	103.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+S5L	Aranbarahun	A 4	Vasquez de Coronado Point+		78.96875	15.625	65.8125	103.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5L	Aranbarahun	B 3	Watts Settlement		78.96875	15.625	65.8125	103.98	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Toxand	A 3	Archimedes' Progress		85	-11.25	60.625	105.01	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1L	Toxand	A 2	Eschbach Terminal+		85	-11.25	60.625	105.01	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Toxand	A 1	Gernsback Market		85	-11.25	60.625	105.01	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1L	Toxand	A 2	Perez Base+		85	-11.25	60.625	105.01	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	Calhuacan	Eurebus	Gallun's Progress		69.65625	-79.34375	3.125	105.63	0	1	0	Hamakua, LeetNoob		1	1	1	1	1	1		1	1			Large	1
+L4M1	LTT 779	B 2	Kirchoff Survey		-29.90625	-93.875	-39.28125	106.07	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L2H	LTT 779	C 1	Quinn Depot		-29.90625	-93.875	-39.28125	106.07	3	1	0	dja						1		1	1				Large	3
+M2L	Lei Hesang	A 3	Thiele Beacon		2.71875	-102.1875	28.875	106.22	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S4L	Wolf 64	AB 1 E	Barry Base		-48.59375	-80.03125	-50.5	106.38	0	0	0	dja		1	1	1	1	1	1						Small	1
+L4M1	Wolf 64	AB 3 A	Crown Depot		-48.59375	-80.03125	-50.5	106.38	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Heheng	A 3	Sverdrup Town		68.21875	46.4375	67.6875	106.73	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Heheng	A 3	Tesla Vista		68.21875	46.4375	67.6875	106.73	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S3H	Allobo	2 B	Kondratyev Silo+		89.3125	-7.65625	60.4375	108.11	2	0	0	dja				1				1	1	1	1		Small	3
+S3L	Allobo	1 E	Steakley Vision+		89.3125	-7.65625	60.4375	108.11	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	Sumod	B 3	Lunan Landing		-60.375	-77.8125	45.625	108.54	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	BD+06 5034	2	Stafford Prospect		-78.5625	-73.46875	21.71875	109.73	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L4M2	BD+06 5034	4 C	Zebrowski Arsenal		-78.5625	-73.46875	21.71875	109.73	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L3M	CD-54 9671	5 F	Caillie Terminal		33.9375	-97.34375	39.03125	110.23	0	1	0			1	1	1		1	1	1	1	1	1	1	Large	2
+M4H	Amaneque	A 1 G	Hogan Escape	1	67.46875	6.9375	87.09375	110.39	2	1	1	dja							1	1	1		1		Medium	3
+S4L	Arexe	1 E	Dantec Holdings+		69.375	38.90625	78.0625	111.45	0	0	0	dja		1	1	1	1	1	1						Small	1
+M3M	Arexe	3 C	Jenner Lab		69.375	38.90625	78.0625	111.45	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S2L	Arexe	1 E	Teng-Hui Observatory		69.375	38.90625	78.0625	111.45	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2H	Ned Erh	A 2	Haldeman II's Folly		6.34375	-111.65625	0.4375	111.84	3	1	0	dja						1		1	1				Large	3
+M2L	Mebes	A 3	Baldwin Holdings		86.90625	-12.3125	71	112.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	Mebes	A 3	Bayley Holdings+		86.90625	-12.3125	71	112.90	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M2L	Mebes	A 2	Cadamosto Beacon		86.90625	-12.3125	71	112.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Mebes	A 2	Davis Enterprise		86.90625	-12.3125	71	112.90	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Mebes	A 4	Garden's Folly		86.90625	-12.3125	71	112.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S2M	Mebes	AB 6 A	Gelfand Installation		86.90625	-12.3125	71	112.90	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S1M	Mebes	A 5	Markarov Mines+		86.90625	-12.3125	71	112.90	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3L	Lambda-2 Phoenicis	7 A	Abbott Beacon		31.15625	-106.21875	25.46875	113.59	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	NLTT 34960	2 E	Bombelli Lab		57.78125	72.125	66.96875	114.13	0	1	0	Sevenperry		1	1	1		1	1	1	1	1	1	1	Large	2
+L2L	HR 5082	1	Wilson's Progress		90.21875	-30.0625	64.21875	114.75	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S4H	Nkonjurungu	A 1 A	von Helmont's Progress		-81.65625	-80.375	19.625	116.25	2	0	0	dja				1				1	1	1	1		Small	3
+L3M	Sha Wa	10 F	Jakes Vision		99.75	-50.125	-32.8125	116.36	0	1	0	Hamakua	0.16g	1	1	1		1	1	1	1	1	1	1	Large	2
+S4M	LTT 16422	4 A	Tuan's Inheritance		-82.09375	-74.4375	41.875	118.46	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M3M	Gaula	AB 3 A	Gaspar de Portola Relay		90.625	-2.65625	76.90625	118.89	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S4L	Gaula	AB 3 A	Lavrador Horizons+		90.625	-2.65625	76.90625	118.89	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1M	Guite	1	Morrow Prospect+		-57.1875	-87.375	-57.03125	118.98	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S1L	Guite	1	Singer Point+		-57.1875	-87.375	-57.03125	118.98	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2M	CD-51 1447	A 5	Karlsefni's Progress		95.59375	-68.21875	-19.625	119.07	0	1	0	Hamakua	0.45g	1	1	1		1	1	1	1	1	1	1	Large	2
+L3L	Wolf 1326	3 D	Fisk Prospect		-71.46875	-82.71875	50.25	120.31	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Gliese 900.1	A 3	Busemann Landing		21.625	-111.5625	45.40625	122.37	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1M	Gliese 900.1	A 11 D	Hamilton Landing		21.625	-111.5625	45.40625	122.37	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M1L	Gliese 900.1	C 2	Santos Base		21.625	-111.5625	45.40625	122.37	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M4M	Gliese 900.1	A 11 C	Van Der Bergh Reach		21.625	-111.5625	45.40625	122.37	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2L	Dvorsi		Geston Plant		77.59375	-96.5625	7.3125	124.09	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M2M	Dvorsi		Kirshner Prospect		77.59375	-96.5625	7.3125	124.09	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L2L	Dvorsi		Samos Holdings		77.59375	-96.5625	7.3125	124.09	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S1L	Dvorsi		Shepherd Installation+		77.59375	-96.5625	7.3125	124.09	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5L	Dvorsi		Zebrowski's Claim		77.59375	-96.5625	7.3125	124.09	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4M2	LTT 9863	4 C	Bombelli Hub	1	24.65625	-117.03125	36.90625	125.17	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4L	LTT 9863	3 F	Moorcock's Inheritance		24.65625	-117.03125	36.90625	125.17	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S3L	Maunggu	5 A	Bradley Works+		73.875	-101.59375	0.40625	125.61	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Maunggu	5 A	Chadwick Installation+		73.875	-101.59375	0.40625	125.61	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	NLTT 7789	2 A	Bruce Penitentiary		76.75	-97.15625	24.28125	126.17	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M1H	NLTT 7789	2 A	Navigator Penal Colony		76.75	-97.15625	24.28125	126.17	3	1	1	dja							1	1	1		1		Medium	3
+L2L	Pai Huldr	B 3	Gonnessiat Base		52.625	-114.59375	7.1875	126.30	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	Kanitisa	3	Barnes Terminal		23.03125	-118.5	42.75	128.06	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S1M	Kanitisa	2	Jones Base+		23.03125	-118.5	42.75	128.06	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3M	s Eridani	C 3	Langsdorff Relay		57.28125	-115.3125	-15.46875	129.68	0	1	0	Hamakua	0.11g	1	1	1		1	1	1	1	1	1	1	Large	2
+M2H	Batho	2	Kandel Depot	1	-55.9375	-103	-57.09375	130.38	2	1	0	dja							1	1	1		1		Medium	3
+L1L	Kuru	A 1	Broglie Horizons		-18.53125	100	82.09375	130.70	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M4H	Kraurno	4 B	Issiginis Landing	1	-81.4375	-84.84375	57.15625	130.76	2	1	1	dja							1	1	1		1		Medium	3
+L1L	Kraurno	1 A	Normand Stop		-81.4375	-84.84375	57.15625	130.76	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2L	Nahua	5 A	Bigourdan Terminal		27.71875	-119.625	45.625	131.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+S4L	Nahua	5 B	Cousteau's Progress		27.71875	-119.625	45.625	131.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4M	Nahua	5 B	Lilienthal Enterprise		27.71875	-119.625	45.625	131.00	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S4L	Nahua	5 A	Mieville Vision		27.71875	-119.625	45.625	131.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Nahua	5 C	Mukai Plant+		27.71875	-119.625	45.625	131.00	0	0	0	dja		1	1	1	1	1	1						Small	1
+M2L	Facece		Banno's Inheritance		64.28125	-111.4375	25.1875	131.09	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M1H	Facece	6C	Cremona Penitentiary		64.28125	-111.4375	25.1875	131.09	3	1	1	dja							1	1	1		1		Medium	3
+M4L	Facece	6D	Finney's Inheritance		64.28125	-111.4375	25.1875	131.09	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	Facece		Robinson Vision+		64.28125	-111.4375	25.1875	131.09	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S1M	Facece		Rondon Installation+		64.28125	-111.4375	25.1875	131.09	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L3L	Njemari	A 3 A	Garrett Camp		125.6875	-33.8125	-17.9375	131.39	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S4L	BPM 28514	2 A	Hirayama Base+		47.09375	-114.34375	48.75	132.92	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	HIP 116460	B 6	Jones Point		22	-122.25	48.84375	133.47	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2L	HIP 116460	B 6	Metcalf Prospect		22	-122.25	48.84375	133.47	0	0	0	dja		1	1	1	1	1	1						Small	1
+L3M	HIP 116460	B 6	Nagata Landing		22	-122.25	48.84375	133.47	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M2M	Nijuna	A 3	Cerulli Plant		41.9375	-117.4375	48.21875	133.70	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S2L	Nijuna	A 2	Francisco De Almeida Laboratory+		41.9375	-117.4375	48.21875	133.70	0	0	0	dja		1	1	1	1	1	1						Small	1
+L3L	Nijuna	A 2	Zubrin Camp		41.9375	-117.4375	48.21875	133.70	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M1L	Maorsi	5 A	Auld Depot		17.34375	-126.6875	40.5	134.13	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M3L	Maorsi	2 D	Barton Vision		17.34375	-126.6875	40.5	134.13	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L3L	Maorsi	2 D	Marriott Beacon		17.34375	-126.6875	40.5	134.13	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	HIP 41844	BC 2	Petaja Depot		-21.28125	80.8125	-105.59375	134.66	0	1	0			1	1	1		1	1	1	1	1	1	1	Large	2
+L1L	Belaba	1 D	McCrea's Claim		85.40625	-89.375	60.15625	137.48	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	Gender	A 1	Thollon Horizons		59	-124.6875	7.84375	138.16	0	1	1	Jockari		1	1	1		1	1	1	1	1	1	1	Large	2
+L2L	Ch'i Lin	9 D	Schroeder Base		22.90625	-127.8125	47.34375	138.21	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	Ch'i Lin	4	Vonarburg Lab		22.90625	-127.8125	47.34375	138.21	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M2M	Venexo	B 3	Altuna Terminal		128.09375	-53.59375	-2.125	138.87	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L3L	Venexo	B 5 A	Carver Relay		128.09375	-53.59375	-2.125	138.87	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M3M	Venexo	B 5 A	Delaunay Survey		128.09375	-53.59375	-2.125	138.87	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2L	Venexo	B 3	Langsdorff Horizons		128.09375	-53.59375	-2.125	138.87	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L4M1	Venexo	B 5 A	Tilman Silo		128.09375	-53.59375	-2.125	138.87	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2H	Jotunheim	6 B	Ayerdhal Relay		66.03125	-110.875	52.6875	139.39	2	0	1	dja				1				1	1	1	1		Small	3
+M1L	Jotunheim	6 E	De Kamp Asylum		66.03125	-110.875	52.6875	139.39	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1H	Jotunheim	7 C	Holub Point		66.03125	-110.875	52.6875	139.39	3	1	1	dja						1		1	1				Large	3
+S1L	Achenar	3	Brill Works+		67.5	-119.46875	24.84375	139.45	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2M	Achenar	Yamaha's Grave	Friedman Holdings+		67.5	-119.46875	24.84375	139.45	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M3L	Achenar	4A	Zhuravleva Relay		67.5	-119.46875	24.84375	139.45	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S2L	Goller	A 4 E	Fabian Laboratory+		125.21875	-65.0625	2.875	141.14	0	0	0	dja		1	1	1	1	1	1						Small	1
+M1L	Goller	B 4	Hamilton Keep		125.21875	-65.0625	2.875	141.14	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L4M2	CD-70 1960	5 C	Napier Depot		75.84375	-102.8125	60.125	141.20	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M2H	CD-53 136		Jenkins installation		51.71875	-131.625	37.28125	146.25	2	1	0	dja							1	1	1		1		Medium	3
+M2M	CD-53 136		Mather's Claim		51.71875	-131.625	37.28125	146.25	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M2L	CD-53 136		Noether Landing		51.71875	-131.625	37.28125	146.25	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	CD-53 136		Szentmartony works+		51.71875	-131.625	37.28125	146.25	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M3M	Galouri	B 2 A	Baldwin Vision		65.03125	-118.5	62.5	148.92	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S2M	Galouri	A 5 A	Theodor Winnecke Landing+		65.03125	-118.5	62.5	148.92	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S3L	Achreni	4 D	Fieseler Depot		123.75	-68.09375	47.3125	148.96	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Wiknariu	1 F	Cheranovsky Stop		128.28125	-75.65625	35.0625	153.00	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L1H	Wiknariu	1 F	Crumey Landing		128.28125	-75.65625	35.0625	153.00	3	1	1	dja						1		1	1				Large	3
+S4M	Wiknariu	1 F	Giclas Settlement		128.28125	-75.65625	35.0625	153.00	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L4M1	Wiknariu	2 E	Hawke Depot		128.28125	-75.65625	35.0625	153.00	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	Bunuson		Barnes Landing		111.90625	-104.90625	-16.09375	154.23	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Chick Bara		Akiyama Beacon		124.34375	-95.53125	-5.09375	156.89	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4M1	Chick Bara		Kapteyn Survey		124.34375	-95.53125	-5.09375	156.89	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S1L	Chick Bara		Levi Beacon+		124.34375	-95.53125	-5.09375	156.89	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2L	Chick Bara		Pajdusakova Prospect		124.34375	-95.53125	-5.09375	156.89	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M5H	Chick Bara		Tall Works		124.34375	-95.53125	-5.09375	156.89	1	1	1	dja						1		1	1				Large	3
+L3L	Chick Bara		Viete Camp		124.34375	-95.53125	-5.09375	156.89	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Nu Kop	3 A	Laumer's Folly		132.09375	-80.34375	33.75	158.25	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Mitschigua	2	Hogan Installation		128.4375	-92.96875	4.34375	158.61	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4H	Mitschigua	3	Langford Relay		128.4375	-92.96875	4.34375	158.61	3	1	1	dja						1		1	1				Large	3
+L1M	Kharpulo	4 G	Greenstein Oasis		41.9375	-155.6875	16.3125	162.06	0	1	1	Hamakua	0.14g	1	1	1		1	1	1	1	1	1	1	Large	2
+L2M	Auschauts		Dummer Plant		135.90625	-81.96875	39.09375	163.46	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M5M	Auschauts		Fernao Do Po Point	1	135.90625	-81.96875	39.09375	163.46	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S2L	Buriges		Tago Base+		110.34375	-118.375	-26.03125	163.91	0	0	0	dja		1	1	1	1	1	1						Small	1
+L2M	Khwathis	A 2	Elvstrom Holdings		90.625	82.5625	-109.5625	164.42	0	1	0			1	1	1		1	1	1	1	1	1	1	Large	2
+S1L	Luguls	4	Belyanin Mines+		138.875	-80.375	37.3125	164.74	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2M	Luguls	6	Krylov Enterprise		138.875	-80.375	37.3125	164.74	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L2L	Luguls	3	Levi-Civita Settlement		138.875	-80.375	37.3125	164.74	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2M	Luguls	2	Penrose Works		138.875	-80.375	37.3125	164.74	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L2M	Du Shas	A 2	Mouhot Plant	1	141.84375	-87.375	21.4375	167.97	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M1L	Gaula	AB 4 A	Honda Base		90.625	-2.65625	76.90625	118.89	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1M	Du Shas	A 3	Watts survey+		141.84375	-87.375	21.4375	167.97	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L2M	Murare		Boucher Holdings		121.6875	-111.75	-32.71875	168.42	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S3L	Murare		Rogers Barracks+		121.6875	-111.75	-32.71875	168.42	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2L	Chhaleenes	4 A	Budrys Vision		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2L	Chhaleenes	4 A	Corben Enterprise		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3M	Chhaleenes	3	Larbalestier Colony		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S2H	Chhaleenes	2	Markov Prospect		144.03125	-83.6875	30.75	169.39	2	0	1	dja				1				1	1	1	1		Small	3
+M3M	Chhaleenes	4 A	McDonald Prospect		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S3L	Chhaleenes	3	Perry Terminal		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Chhaleenes	4 A	Rangarajan Hub		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3M	Chhaleenes	3	Walter's Inheritance		144.03125	-83.6875	30.75	169.39	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M5M	Prthautas	A 3	Clebsch Horizons		142.625	-91	18.125	170.15	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S1L	Prthautas	A 4	McCool's Inheritance+		142.625	-91	18.125	170.15	0	0	0	dja		1	1	1	1	1	1						Small	1
+M3L	Hoji	A 1 A	Baxter Landing		134.28125	-104.1875	25.90625	171.92	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2H	Mundine	3 A	Smith Installation		143.59375	-92.71875	19.25	172.01	3	1	0	dja						1		1	1				Large	3
+L3M	Deorini	1 C	Pond Survey		154.5625	-69.78125	-29.90625	172.20	0	1	0	Martox	0.11g	1	1	1		1	1	1	1	1	1	1	Large	2
+S1L	Croatigae	A 1	Antonov's Folly		137.75	-100.375	25.09375	172.28	0	0	0	dja		1	1	1	1	1	1						Small	1
+M5L	Croatigae	BC 2	Bokeilly's Folly		137.75	-100.375	25.09375	172.28	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4M1	Croatigae	A 2	Karman Point		137.75	-100.375	25.09375	172.28	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Croatigae	BC 3	Smith Vision		137.75	-100.375	25.09375	172.28	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1M	Ayu	1 D	Escobar Reach	1	148.6875	-85.59375	27.96875	173.83	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S3L	Ayu	1 D	Steele Base		148.6875	-85.59375	27.96875	173.83	0	0	0	dja		1	1	1	1	1	1						Small	1
+S5L	Amenta	B 4	Blish Gateway+		140.09375	-107.0625	22.375	177.73	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4L	Amenta	B 6 A	Fleming Vista		140.09375	-107.0625	22.375	177.73	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Amenta	A 3	Katzenstein Beacon		140.09375	-107.0625	22.375	177.73	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	Amenta	A 4	Kimura's Folly		140.09375	-107.0625	22.375	177.73	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+S4L	Dainayiman	4 A	Caselberg's Folly		144.5625	-104.6875	28.46875	180.74	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4M	Dainayiman	4 B	J.G.Ballard Point		144.5625	-104.6875	28.46875	180.74	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+S4L	Dainayiman	4 D	Jean Landing		144.5625	-104.6875	28.46875	180.74	0	0	0	dja		1	1	1	1	1	1						Small	1
+S4L	Dainayiman	4 A	Lunney Enterprise+		144.5625	-104.6875	28.46875	180.74	0	0	0	dja		1	1	1	1	1	1						Small	1
+S3L	Dainayiman		Payne-Gaposchkin Survey+		144.5625	-104.6875	28.46875	180.74	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1M	Tolonese	B 9	Schweinfurth Point		135.21875	-110.3125	-49.09375	181.28	0	1	1	Martox	0.2g	1	1	1		1	1	1	1	1	1	1	Large	2
+M2L	Kojinbaia	3	Baynes' Progress		135.5625	-117.5	29.875	181.87	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Zagoro	A 3	Younghusband Beacon		-32.5	-174.59375	-48.75	184.16	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L1H	Ualarni	5	Phillifent's Inheritance		214.5625	-174.34375	22.25	277.36	3	1	1	dja						1		1	1				Large	3
+L1M	HIP 29596	1 C	Land Installation	1	165.25	-82.4375	-35.75	188.10	0	1	1	Martox	0.16g	1	1	1		1	1	1	1	1	1	1	Large	2
+L3M	Kou Hua	1 B	Arzachel Survey		111.28125	-145.5	63.25	193.79	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M3M	Kou Hua	2 D	Corte-Real Beacon		111.28125	-145.5	63.25	193.79	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+L2L	Lopterones		Tiedemann Plant		182.71875	-140.875	4	230.76	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L3L	Wadjedet	A 3 A	Laird Vision		203.53125	-108.78125	0.21875	230.78	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L2L	HIP 31666		Hill Prospect		207.3125	-106.125	41.09375	236.49	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2H	Guana Bhun	2	Boole's Folly		208.625	-127	20.4375	245.09	2	1	0	dja							1	1	1		1		Medium	3
+S1L	Synuefe CM-L c24-14	B 3	Drake's Progress+		212.53125	-147.5	-14.96875	259.13	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1H	Synuefe CM-L c24-14	B 3	Goldberg Vision+		212.53125	-147.5	-14.96875	259.13	2	0	0	dja				1				1	1	1	1		Small	3
+M1L	Zende	A 2 A	Evans Depot		226.0625	-134.3125	-1.75	262.96	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M5H	HIP 24968		Chinton's Inheritance		219.71875	-151.78125	-16.84375	267.58	1	1	1	dja						1		1	1				Large	3
+S1L	HIP 24968	A 3	Kessel Enterprise+		219.71875	-151.78125	-16.84375	267.58	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2L	HIP 24968	A 5	Lunan Beacon+		219.71875	-151.78125	-16.84375	267.58	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1L	HIP 24968	A 2	Renenbellot's Inheritance+		219.71875	-151.78125	-16.84375	267.58	0	0	0	dja		1	1	1	1	1	1						Small	1
+S1L	HIP 24968	A 2	Sunyaev Prospect+		219.71875	-151.78125	-16.84375	267.58	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	Ingui	A B A	Bujold Horizons		215.40625	-171.09375	17.28125	275.63	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+S2L	Ingui	A 7 A	Doctorow Lab+		215.40625	-171.09375	17.28125	275.63	0	0	0	dja		1	1	1	1	1	1						Small	1
+M1M	Yen Tacanik	2	Comer Installation		207.625	-174.84375	49.625	275.94	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S1L	Yen Tacanik	1	Cowper Enterprise+		207.625	-174.84375	49.625	275.94	0	0	0	dja		1	1	1	1	1	1						Small	1
+M3M	Yen Tacanik		Green Landing		207.625	-174.84375	49.625	275.94	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M4L	Taurt	AB 1 C	Clairaut's Inheritance		211.34375	-170.125	51.84375	276.22	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M1M	Ualarni	4	Fairbairn Base		214.5625	-174.34375	22.25	277.36	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+L1H	HIP 22150	A 1 B	Altuna's Progress		220.875	-169.03125	27.3125	279.47	3	1	1	dja						1		1	1				Large	3
+S1M	Synuefe YK-N c23-18		Oltion's Progress+		272.15625	-128.03125	-36.75	303.00	2	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S2M	Exphiay	10 B	Hippalus Laboratory+		283.84375	-128.25	-38.9375	313.90	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M4L	Exphiay	Rakhiot	Jolliet Enterprise		283.84375	-128.25	-38.9375	313.90	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L4M1	Exphiay	10 A	Searfoss Silo		283.84375	-128.25	-38.9375	313.90	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	Aditi	Morrow Peek	Shklovsky Gataway		72.875	-337.84375	-159.40625	380.60	0	1	0	Jorg		1	1	1		1	1	1	1	1	1	1	Large	2
+M1H	Ross 788	6 A	Caselberg Relay		-49.5	-51.75	-45.15625	84.66	3	1	1	dja							1	1	1		1		Medium	3
+L4M1	35 Ceti	2 C	Clervoy Barracks		-56.625	-135.65625	-55.96875	157.29	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1L	Apsarillici	7	Normand Escape		-42.6875	-159.53125	-50.15625	172.59	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Zagoro	A 2	Shiner Prospect	1	-32.5	-174.59375	-48.75	184.16	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M2L	HR 404	2 C	Bass Landing		-31.34375	-140.9375	-48.03125	152.16	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M3H	Nanggalis	2	Beebe Emterprise		-58.90625	-116.5625	-19.8125	132.10	2	1	1	dja							1	1	1		1		Medium	3
+M1M	Nanggalis	5 D	Cormack Hub		-58.90625	-116.5625	-19.8125	132.10	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S3M	BD+10 5022	A 1 B	Plucker relay		-63.21875	-77.90625	-17	101.76	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S4M	BD+10 5022	A 1 B	Almargro's Progress		-63.21875	-77.90625	-17	101.76	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S3H	Aetius	1 B	Oliver Penal Colony		-64.6875	-58.71875	-26.03125	91.16	2	0	0	dja				1				1	1	1	1		Small	3
+M1L	LTT 17149	A 4 D	Fermi Camp		-51.59375	-48.5	-30.59375	77.14	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M4H	Lalande 4141	2 A	Anderson's Folly	1	-39.65625	-49.59375	-60.96875	88.03	2	1	1	dja							1	1	1		1		Medium	3
+M2M	LHS 1375	Gold	Philips Depot		-9.125	-19.3125	-17.5	27.61	0	0	0	DarkArren		1		1		1	1	1	1	1	1		Medium	2
+M3L	Kairi	A 4 A	Debehogne Beacon		137.59375	-17.15625	-37.375	143.61	0	0	0	DarkArren		1	1	1	1	1	1						Medium	1
+L2L	Kairi	B 1	Ross Inheritance		137.59375	-17.15625	-37.375	143.61	0	1	0	DarkArren		1	1	1	1	1	1		1	1			Large	1
+S1L	Kairi	B 2	Barlowe Depot		137.59375	-17.15625	-37.375	143.61	0	0	0	DarkArren		1	1	1	1	1	1						Small	1
+S1L	Kairi	B 3	Cavendish Settlement		137.59375	-17.15625	-37.375	143.61	0	0	0	DarkArren		1	1	1	1	1	1						Small	1
+L2L	Kairi	B 3	Ledyard Vision		137.59375	-17.15625	-37.375	143.61	0	1	0	DarkArren		1	1	1	1	1	1		1	1			Large	1
+S2L	Deciat	7 C	Sheffield Relay	1	122.625	-0.8125	-47.28125	131.43	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2M	Deciat	9 A	Vandermeer Lab	1	122.625	-0.8125	-47.28125	131.43	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+M1M	Deciat	9 B	Brendan Installation	1	122.625	-0.8125	-47.28125	131.43	0	0	1	dja		1		1		1	1	1	1	1	1		Medium	2
+S2L	Deciat	9 C	Bounds Lab	1	122.625	-0.8125	-47.28125	131.43	0	0	0	dja		1	1	1	1	1	1						Small	1
+S2M	Salikians	5 D	Morgan Prospect		157.5625	-0.875	-48.09375	164.74	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L1L	Salikians	5 B	Mcintyre Reach		157.5625	-0.875	-48.09375	164.74	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L3M	Salikians	5 A	Resnick Base		157.5625	-0.875	-48.09375	164.74	0	1	0	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M3L	CD-39 4830	ABC 1 A	De Sousa Beacon	1	114.40625	5.1875	-17.40625	115.84	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1M	CD-39 4830	ABC 5 B	Wisoff Base		114.40625	5.1875	-17.40625	115.84	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+M4L	CD-39 4831	ABC 5 B	Bain Beacom		114.40625	5.1875	-17.40625	115.84	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S3L	Rang Guans	8	Clark Forum		106.4375	18.6875	11.84375	108.71	0	0	0	dja		1	1	1	1	1	1						Small	1
+M4L	Rang Guans	8	Vries' Inheritance		106.4375	18.6875	11.84375	108.71	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S1L	Lopocares	2	Drummond Mine		110.59375	23.90625	1.75	113.16	0	0	0	dja		1	1	1	1	1	1						Small	1
+L1L	Lopocares	10	Reed Arena		110.59375	23.90625	1.75	113.16	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M1L	Aasgaa	A 3	Burgess Depot		97.3125	44.15625	57.9375	121.56	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M2L	Aasgaa	A 2	Garden Vision		97.3125	44.15625	57.9375	121.56	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	Unegak Maku	3 B	Julian Holdings		109.59375	12.125	41.71875	117.89	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+L1M	Unegak Maku	2 C	White Asylum		109.59375	12.125	41.71875	117.89	0	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+S3L	Unegak Maku	5 D	Selberg Survey		109.59375	12.125	41.71875	117.89	0	0	0	dja		1	1	1	1	1	1						Small	1
+L4M1	Jambavan	1 A	Ingstad Depot		105.6875	20.8125	21.1875	109.78	3	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M3L	Vashis	B 1 D	Marques Lab		107.4375	13.28125	0.4375	108.26	0	0	0	dja		1	1	1	1	1	1						Medium	1
+S4H	Vashis	A 2 A	Gabriel Reach	1	107.4375	13.28125	0.4375	108.26	2	0	0	dja				1				1	1	1	1		Small	3
+S4M	Vashis	B 1 C	Reinhold Landing	1	107.4375	13.28125	0.4375	108.26	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+S4M	Vashis	B 1 C	Wood Point	1	107.4375	13.28125	0.4375	108.26	0	0	0	dja		1	1	1		1	1	1	1	1	1		Small	2
+L2L	Lalande 27055	C 3	Bruisov Works		-14.75	52.5625	23.03125	59.25	0	1	0	Knower	0.39g	1	1	1	1	1	1		1	1			Large	1
+M3M	Miao Thixo	2 A	Sekelj Laboratory		-22.90625	-21.375	81.71875	87.52	0	0	0	DarkArren		1		1		1	1	1	1	1	1		Medium	2
+S2M	Miao Thixo	2 A	Wellman Survey		-22.90625	-21.375	81.71875	87.52	0	0	0	DarkArren		1	1	1		1	1	1	1	1	1		Small	2
+M2L	Lopocares	1	Andrew Works	1	110.59375	23.90625	1.75	113.16	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L1L	Lopocares	10	Reed Arena		110.59375	23.90625	1.75	113.16	0	1	1	dja		1	1	1	1	1	1		1	1			Large	1
+M2M	Lopocares	2	Rocklynne's Inheritance		110.59375	23.90625	1.75	113.16	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M3M	Lopocares	10	Williams Landing		110.59375	23.90625	1.75	113.16	0	0	0	dja		1		1		1	1	1	1	1	1		Medium	2
+M3L	Vaiurisc	A 3	Escobar Observatory		107.59375	18	-15.1875	110.14	0	0	0	dja		1	1	1	1	1	1						Medium	1
+M5L	Vaiurisc	A 3	Wiener Prospect		107.59375	18	-15.1875	110.14	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+M2L	Vaiurisc	A 4	Rae Installation		107.59375	18	-15.1875	110.14	0	0	0	dja		1	1	1	1	1	1						Medium	1
+L2L	Vaiurisc	A 5	Grijalva's Folly		107.59375	18	-15.1875	110.14	0	1	0	dja		1	1	1	1	1	1		1	1			Large	1
+L4M2	Vaiurisc	B 1	Dall Penal Colony		107.59375	18	-15.1875	110.14	3	1	1	dja		1	1	1		1	1	1	1	1	1	1	Large	2
+L3H	Smei Ti	ABC 3 C	Henson Vision	1	119.59375	4.5	-27.3125	122.76	3	1	0	dja						1		1	1				Large	3
