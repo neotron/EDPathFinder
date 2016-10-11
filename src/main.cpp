@@ -24,94 +24,30 @@
 // solutions being generated using a cheapest addition heuristic.
 // Optionally one can randomly forbid a set of random connections between nodes
 // (forbidden arcs).
-
+#include <QApplication>
+#include <QDebug>
+#include "tsp.h"
+#include "System.h"
 #include <memory>
 
-#include "base/callback.h"
 #include "base/commandlineflags.h"
-#include "base/commandlineflags.h"
-#include "base/integral_types.h"
-#include "base/join.h"
-#include "constraint_solver/routing.h"
-#include "constraint_solver/routing_flags.h"
-#include "base/random.h"
-#include "System.h"
+#include "mainwindow.h"
 
-DEFINE_int32(tsp_random_forbidden_connections, 0, "Number of random forbidden connections.");
-DEFINE_bool(tsp_use_deterministic_random_seed, false, "Use deterministic random seeds.");
-
-std::deque<System> systems;
-
-namespace operations_research {
-
-// Random seed generator.
-	int32 GetSeed() {
-		if(FLAGS_tsp_use_deterministic_random_seed) {
-			return ACMRandom::DeterministicSeed();
-		} else {
-			return ACMRandom::HostnamePidTimeSeed();
-		}
-	}
-
-// Cost/distance functions.
-	int64 MyDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to) {
-		return systems[from.value()].distance(systems[to.value()]);
-	}
-
-	void Tsp() {
-		RoutingModel routing((int) systems.size(), 1);
-		routing.SetDepot(RoutingModel::NodeIndex(0));
-		RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
-		// Setting first solution heuristic (cheapest addition).
-		parameters.set_first_solution_strategy(FirstSolutionStrategy::PATH_CHEAPEST_ARC);
-
-		routing.SetArcCostEvaluatorOfAllVehicles(NewPermanentCallback(MyDistance));
-		// Solve, returns a solution if any (owned by RoutingModel).
-		const Assignment *solution = routing.SolveWithParameters(parameters);
-		if(solution != NULL) {
-			// Solution cost.
-			LOG(INFO) << "Total Distance: " << System::formatDistance(solution->ObjectiveValue()) << " ly";
-			// Inspect solution.
-			// Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
-			const int route_number = 0;
-			std::string route;
-			int nodeid;
-			int64 dist = 0;
-			int previd = 0;
-			int64 totaldist = 0;
-			for(int64 node = routing.Start(route_number);
-				!routing.IsEnd(node);
-				node = solution->Value(routing.NextVar(node))) {
-				nodeid = routing.IndexToNode(node).value();
-				const System &sys = systems[nodeid];
-				if(nodeid > 0) {
-					dist = sys.distance(systems[previd]);
-					totaldist += dist;
-				}
-				previd = nodeid;
-				auto settlements = sys.settlements();
-				for(auto it = settlements.begin(); it != settlements.end(); ++it) {
-					StrAppend(&route, sys.system(), "\t", sys.planet(), "\t", (*it).name(), "\t", System::formatDistance(dist), "\t", System::formatDistance(totaldist), "\n");
-					dist = 0;
-				}
-			}
-//      const int64 end = routing.End(route_number);
-//       nodeid = routing.IndexToNode(end).value();
-//      StrAppend(&route, systems[nodeid].system, " (", nodeid, ", ", end,
-//		")\n");
-			std::cerr << route;
-		} else {
-			LOG(INFO) << "No solution found.";
-		}
-	}
-}  // namespace operations_research
+// namespace operations_research
 
 int main(int argc, char **argv) {
+	qDebug() << QT_VERSION_STR;
+	QApplication a(argc, argv);
+	MainWindow w;
+	w.show();
+
+	return a.exec();
+
 	gflags::ParseCommandLineFlags(&argc, &argv, true);
 	SystemLoader loader;
 	if(argc > 1) {
-		systems = loader.loadSettlements(argv[1]);
-		operations_research::Tsp();
+		auto systems = loader.loadSettlements(argv[1]);
+		operations_research::Tsp(&systems);
 	} else {
 		printf("Missing argument: Settlements csv file. Format: System\tPlanet\tSettlement\tX\tY\tZ\n");
 		return -1;

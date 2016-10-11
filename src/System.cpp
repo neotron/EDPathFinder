@@ -115,3 +115,13 @@ bool SystemLoader::getBool(std::istringstream &is, bool eol) const {
 	std::getline(is, valStr, (char) (eol ? '\n' : '\t'));
 	return valStr == "1";
 }
+
+std::string System::formatDistance(int64 dist) {
+	std::stringstream ss;
+	if(dist > 0) {
+		ss << dist / 100 << "." << dist % 100;
+		return ss.str();
+	} else {
+		return "-";
+	}
+}

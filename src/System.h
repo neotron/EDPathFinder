@@ -85,15 +85,7 @@ public:
 		return (int64) distance;
 	}
 
-	static std::string formatDistance(int64 dist) {
-		std::stringstream ss;
-		if(dist > 0) {
-			ss << dist / 100 << "." << dist % 100;
-			return ss.str();
-		} else {
-			return "-";
-		}
-	}
+	static std::string formatDistance(int64 dist);
 
 	void addSettlement(const Settlement &settlement){
 		_settlements.push_back(settlement);
