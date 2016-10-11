@@ -26,11 +26,6 @@
 // (forbidden arcs).
 #include <QApplication>
 #include <QDebug>
-#include "tsp.h"
-#include "System.h"
-#include <memory>
-
-#include "base/commandlineflags.h"
 #include "mainwindow.h"
 
 // namespace operations_research
@@ -42,17 +37,6 @@ int main(int argc, char **argv) {
 	w.show();
 
 	return a.exec();
-
-	gflags::ParseCommandLineFlags(&argc, &argv, true);
-	SystemLoader loader;
-	if(argc > 1) {
-		auto systems = loader.loadSettlements(argv[1]);
-		operations_research::Tsp(&systems);
-	} else {
-		printf("Missing argument: Settlements csv file. Format: System\tPlanet\tSettlement\tX\tY\tZ\n");
-		return -1;
-	}
-	return 0;
 }
 
 

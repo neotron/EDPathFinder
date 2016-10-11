@@ -13,15 +13,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3db8e30c-f6ad-4140-bfc4-ce02e078d19d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tsp.cpp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/tsp.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/EliteTSP.iml" afterPath="$PROJECT_DIR$/.idea/EliteTSP.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt" afterPath="$PROJECT_DIR$/CMakeLists.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMakeLists.txt.user" afterPath="$PROJECT_DIR$/CMakeLists.txt.user" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/System.cpp" afterPath="$PROJECT_DIR$/src/System.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/System.h" afterPath="$PROJECT_DIR$/src/System.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main.cpp" afterPath="$PROJECT_DIR$/src/main.cpp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/mainwindow.cpp" afterPath="$PROJECT_DIR$/src/mainwindow.cpp" />
     </list>
     <ignored path="EliteTSP.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -47,28 +40,8 @@
           <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                  <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="algorithm" pinned="false" current-in-tab="false">
-            <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/algorithm">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="262">
-                  <caret line="1750" column="0" selection-start-line="1750" selection-start-column="0" selection-end-line="1750" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CMakeLists.txt.user" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/CMakeLists.txt.user">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                <state relative-caret-position="225">
+                  <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -77,11 +50,19 @@
           <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/main.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="645">
-                  <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-                  <folding>
-                    <element signature="e#1170#1193#0" expanded="true" />
-                  </folding>
+                <state relative-caret-position="420">
+                  <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="resources.qrc" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/resources/resources.qrc">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="45">
+                  <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -89,8 +70,8 @@
           <file leaf-file-name="tsp.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/tsp.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="681">
-                  <caret line="47" column="50" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
+                <state relative-caret-position="990">
+                  <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
                   <folding>
                     <element signature="e#47#66#0" expanded="true" />
                   </folding>
@@ -99,12 +80,22 @@
             </entry>
           </file>
           <file leaf-file-name="tsp.h" pinned="false" current-in-tab="false">
+            <entry file="file:///Volumes/Extended/workspace/EliteTSP/src/tsp.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="210">
+                  <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="tsp.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/tsp.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="165">
-                  <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
+                <state relative-caret-position="390">
+                  <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
                   <folding>
-                    <element signature="e#93#109#0" expanded="true" />
+                    <element signature="e#94#110#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -113,11 +104,21 @@
           <file leaf-file-name="mainwindow.cpp" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/src/mainwindow.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="480">
-                  <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+                <state relative-caret-position="105">
+                  <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
                   <folding>
-                    <element signature="e#0#23#0" expanded="true" />
+                    <element signature="e#0#17#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="callback.h" pinned="false" current-in-tab="false">
+            <entry file="file:///usr/local/or-tools/include/base/callback.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="248">
+                  <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -125,9 +126,23 @@
           <file leaf-file-name="mainwindow.h" pinned="false" current-in-tab="false">
             <entry file="file:///Volumes/Extended/workspace/EliteTSP/src/mainwindow.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="225">
-                  <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-                  <folding />
+                <state relative-caret-position="315">
+                  <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+                  <folding>
+                    <element signature="e#43#65#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="routing.h" pinned="false" current-in-tab="false">
+            <entry file="file:///usr/local/or-tools/include/constraint_solver/routing.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="266">
+                  <caret line="618" column="2" selection-start-line="618" selection-start-column="2" selection-end-line="618" selection-end-column="2" />
+                  <folding>
+                    <element signature="e#8108#8127#0" expanded="true" />
+                  </folding>
                 </state>
               </provider>
             </entry>
@@ -146,7 +161,7 @@
             <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="262">
-                  <caret line="162" column="97" selection-start-line="162" selection-start-column="97" selection-end-line="162" selection-end-column="97" />
+                  <caret line="305" column="0" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
                   <folding />
                 </state>
               </provider>
@@ -165,8 +180,8 @@
           <file leaf-file-name="mainwindow.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/mainwindow.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="360">
-                  <caret line="24" column="16" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+                <state relative-caret-position="315">
+                  <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
                   <folding>
                     <element signature="e#43#65#0" expanded="true" />
                   </folding>
@@ -184,78 +199,24 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/main.cpp">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="75">
-                  <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-                  <folding>
-                    <element signature="e#0#27#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="routing_enums.pb.h" pinned="false" current-in-tab="false">
-            <entry file="file:///usr/local/or-tools/include/constraint_solver/routing_enums.pb.h">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2430">
-                  <caret line="162" column="21" selection-start-line="162" selection-start-column="21" selection-end-line="162" selection-end-column="21" />
-                  <folding>
-                    <marker date="1471619933000" expanded="false" signature="266:317" placeholder="..." />
-                    <marker date="1471619933000" expanded="false" signature="357:516" placeholder="..." />
-                    <marker date="1471619933000" expanded="false" signature="573:765" placeholder="..." />
-                    <marker date="1471619933000" expanded="false" signature="783:1165" placeholder="..." />
-                    <marker date="1471619933000" expanded="true" signature="1235:14606" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="1611:2594" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="3158:3266" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="3381:3528" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="3565:4086" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="4685:4796" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="4917:5070" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="5299:9978" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="5512:5555" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="6652:6724" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="6994:7039" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="7077:7130" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="8636:8696" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="9014:9072" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="9134:9191" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="9272:9336" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="10214:14133" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="10445:10488" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="11603:11675" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="11948:11993" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="12031:12084" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="12764:12827" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13154:13215" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13277:13337" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13418:13485" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="14672:15380" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="14693:15355" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="false" signature="14696:14707" placeholder="&lt;&gt;" />
-                    <marker date="1471619933000" expanded="false" signature="14828:14839" placeholder="&lt;&gt;" />
-                    <marker date="1471619933000" expanded="true" signature="14942:15019" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="false" signature="15020:15031" placeholder="&lt;&gt;" />
-                    <marker date="1471619933000" expanded="false" signature="15155:15166" placeholder="&lt;&gt;" />
-                    <marker date="1471619933000" expanded="true" signature="15272:15352" placeholder="{...}" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
           <file leaf-file-name="System.cpp" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/System.cpp">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="574">
-                  <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
+                <state relative-caret-position="41">
+                  <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
                   <folding>
                     <element signature="e#46#65#0" expanded="true" />
-                    <marker date="1476151176000" expanded="true" signature="225:2913" placeholder="{...}" />
-                    <marker date="1476151176000" expanded="true" signature="2982:3129" placeholder="{...}" />
-                    <marker date="1476151176000" expanded="true" signature="3202:3350" placeholder="{...}" />
-                    <marker date="1476151176000" expanded="true" signature="3419:3521" placeholder="{...}" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="qfile.h" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qfile.h">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="15">
+                  <caret line="65" column="4" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -263,623 +224,10 @@
           <file leaf-file-name="System.h" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/src/System.h">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="210">
-                  <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+                <state relative-caret-position="-75">
+                  <caret line="50" column="109" selection-start-line="50" selection-start-column="109" selection-end-line="50" selection-end-column="109" />
                   <folding>
                     <element signature="e#99#116#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="callback.h" pinned="false" current-in-tab="false">
-            <entry file="file:///usr/local/or-tools/include/base/callback.h">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="74445">
-                  <caret line="4963" column="0" selection-start-line="4963" selection-start-column="0" selection-end-line="4963" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="string" pinned="false" current-in-tab="false">
-            <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/string">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="57210">
-                  <caret line="3814" column="0" selection-start-line="3814" selection-start-column="0" selection-end-line="3814" selection-end-column="0" />
-                  <folding>
-                    <marker date="1468361484000" expanded="false" signature="19437:19712" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="19811:19829" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="19847:19884" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="20008:20032" placeholder="&lt;_StateT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="20066:20861" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="20864:20888" placeholder="&lt;_StateT&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="21041:21065" placeholder="&lt;_StateT&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="21215:21239" placeholder="&lt;_StateT&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="21405:21428" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="21470:23178" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="23181:23204" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="23296:23469" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="23471:23494" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="23559:23662" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="23664:23687" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="23791:23909" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="23911:23934" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="24021:24322" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="24324:24347" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="24441:24647" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="24649:24672" placeholder="&lt;_CharT&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="24759:24861" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="24885:24896" placeholder="&lt;&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="24944:27088" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="26142:26326" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="27116:27127" placeholder="&lt;&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="27178:29258" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="28338:28523" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="29299:29310" placeholder="&lt;&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="29362:31151" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="31254:31427" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="31495:31598" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="31707:31825" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="31924:32225" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="32324:32530" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="32622:32724" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="32726:32737" placeholder="&lt;&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="32789:34582" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="34685:34858" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="34926:35029" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="35138:35256" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="35355:35656" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="35755:35961" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="36053:36155" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="36244:36310" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="36467:36671" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="36673:36739" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="36909:37324" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="37343:37409" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="37568:37861" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="37863:37929" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="38101:38521" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="38546:38612" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="38799:39068" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="39093:39159" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="39349:39711" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="39741:39807" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="40002:40277" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="40280:40346" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="40528:40792" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="40821:40887" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="41080:41332" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="41335:41401" placeholder="&lt;_CharT,_SizeT,_Traits,_SizeT __npos&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="41581:41822" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="41824:41844" placeholder="&lt;_Ptr&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="41915:42064" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="42083:42138" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="42311:42366" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="42492:42547" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="42666:42721" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="42849:42904" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="43025:43040" placeholder="&lt;bool&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="43091:43183" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="43186:43205" placeholder="&lt;bool __b&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="43268:43396" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="43350:43387" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="43398:43417" placeholder="&lt;bool __b&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="43480:43608" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="43562:43599" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="43630:43686" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="43806:43828" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="43897:44067" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="44117:44172" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="44256:71780" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="45465:45600" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="46041:46692" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="46723:46810" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="46840:46916" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="46955:46976" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="46987:47009" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47051:47176" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47202:47347" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47226:47301" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47413:47442" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47454:47501" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47525:47570" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47594:47711" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="47618:47704" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="48129:48139" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="48490:48500" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="49350:49380" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="49488:49518" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="50717:51206" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="54560:54590" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="54626:54783" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="54857:54889" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="54925:55022" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="56168:56198" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="56234:56391" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="56465:56497" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="56533:56630" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="57546:57576" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="57612:57764" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="57860:57892" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="57928:58020" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="59679:59709" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="59745:59838" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="60526:60536" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="64454:64711" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="65024:65484" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="65648:65698" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="65896:65930" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="67792:67960" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="67966:67990" placeholder="&lt;size_type __a&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="68142:68160" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="68258:68439" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="68324:68424" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="68627:68658" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="68686:68818" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="68889:68922" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="68950:69026" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="69685:69826" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="69730:69821" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="69933:70117" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="70774:70915" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="70819:70910" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="71084:71147" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="71783:71839" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="71950:72058" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="71985:72020" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="72060:72116" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="72337:72342" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="72422:73068" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="72457:73030" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="73070:73126" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="73290:73377" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="73325:73354" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="73379:73435" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="73665:73674" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="73694:73781" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="73729:73758" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="73783:73839" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="73955:74499" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="74501:74557" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="74652:75181" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="75183:75239" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="75352:75550" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="75512:75541" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="75552:75608" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="75764:75973" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="75935:75964" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="75975:76031" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="76159:76351" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="76313:76342" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="76353:76409" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="76580:76783" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="76745:76774" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="76785:76841" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="77008:77263" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="77225:77254" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="77265:77321" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="77448:77703" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="77665:77694" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="77747:77803" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="78028:78037" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="78081:78235" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="78136:78226" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="78237:78293" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="78448:78843" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="78744:78834" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="78890:78946" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="79033:79557" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="79559:79615" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="79736:79831" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="79793:79822" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="79833:79889" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="80053:80148" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="80110:80139" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="80150:80206" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="80421:80666" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="80628:80657" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="80668:80724" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="80725:80756" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="80776:80892" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="80996:81388" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="81390:81446" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="81447:81480" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="81500:81564" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="81672:82311" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="82313:82369" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="82370:82400" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="82537:82639" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="82601:82630" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="82641:82697" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="82698:82728" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="82964:83066" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="83028:83057" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="83117:83173" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="83298:83409" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="83371:83400" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="83411:83467" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="83635:83746" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="83708:83737" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="83800:83856" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="83916:84096" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="83951:83979" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="84098:84154" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="84395:85653" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="85655:85711" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="85950:86982" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="86995:87051" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="87183:87715" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="87717:87773" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="87898:88298" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="88300:88356" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="88469:88810" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="88812:88868" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="88992:89108" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="89152:89208" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="89337:89453" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="89455:89511" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="89705:89833" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="89835:89891" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="90189:90336" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="true" signature="90233:90312" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="90346:90402" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="90403:90433" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="90453:90607" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="90711:90815" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="90817:90873" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="90874:90906" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="90926:91028" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="91136:91634" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="91636:91692" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="91846:91896" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="91898:91954" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="92107:92277" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="92279:92335" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="92452:92576" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="92589:92645" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="92777:93352" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="93354:93410" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="93535:93965" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="93967:94023" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="94098:94790" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="94792:94848" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="94849:94879" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="94899:95053" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="95157:95248" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="95250:95306" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="95307:95339" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="95359:95461" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="95569:96081" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="96083:96139" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="96293:96343" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="96345:96401" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="96554:96724" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="96726:96782" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="96899:97023" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="97036:97092" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="97241:98153" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="98155:98211" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="98353:99141" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="99143:99199" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="99200:99230" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="99250:99422" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="99548:100122" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="99583:99756" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="100040:100074" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="100124:100180" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="100181:100213" placeholder="&lt;_ForwardIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="100233:100353" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="100483:101626" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="100518:100691" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="101628:101684" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="101856:101914" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="101916:101972" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="102194:102387" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="102389:102445" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="102579:102710" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="102712:102768" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="102918:103597" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="103599:103655" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="103853:104193" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="103888:104064" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="104207:104263" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="104430:106153" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="106155:106211" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="106371:107246" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="107248:107304" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="107305:107335" placeholder="&lt;_InputIterator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="107355:107453" placeholder="&lt;~&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="107646:108013" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="108015:108071" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="108260:108325" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="108327:108383" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="108624:108825" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="108827:108883" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="109034:109173" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="109175:109231" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="109428:109575" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="109577:109633" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="109841:109951" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="109953:110009" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="110202:110307" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="110309:110365" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="110566:110676" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="110688:110744" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="110869:111410" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="111412:111468" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="111634:112113" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="111669:111834" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="112115:112171" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="112362:112876" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="112397:112575" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="112878:112934" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="113027:113511" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="113513:113569" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="113669:113950" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="113952:114008" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="114122:114437" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="114439:114495" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="114582:114705" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="114707:114763" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="114929:115117" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="115015:115072" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="115119:115175" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="115253:117081" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="116376:116430" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="117083:117139" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="117318:117418" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="117420:117476" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="117643:117752" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="117754:117810" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="117946:118035" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="118037:118093" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="118217:118306" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="118308:118364" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="118511:118609" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="118611:118667" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="118826:118915" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="118917:118973" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="119119:119231" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="119233:119289" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="119447:119550" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="119552:119608" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="119774:119991" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="119993:120049" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="120213:120271" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="120273:120329" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="120471:120480" placeholder="..." />
-                    <marker date="1468361484000" expanded="true" signature="120636:120952" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="120671:120842" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="120963:120987" placeholder="&lt;_Traits&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="121022:121220" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="121223:121278" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="121556:121757" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="121759:121814" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="122066:122201" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="122203:122258" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="122506:122716" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="122718:122773" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="122981:123093" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="123105:123160" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="123441:123644" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="123646:123701" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="123955:124091" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="124093:124148" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="124398:124610" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="124612:124667" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="124877:124990" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="125010:125065" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="125370:125589" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="125591:125646" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="125916:126060" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="126062:126117" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="126383:126611" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="126613:126668" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="126927:126959" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="126978:127033" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="127335:127552" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="127554:127609" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="127877:128020" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="128022:128077" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="128341:128567" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="128569:128624" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="128881:128914" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="128938:128993" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="129310:129537" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="129539:129594" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="129872:130020" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="130022:130077" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="130351:130587" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="130589:130644" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="130911:131036" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="131059:131114" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="131428:131653" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="131655:131710" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="131986:132133" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="132135:132190" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="132462:132696" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="132698:132753" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="133018:133142" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="133156:133212" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="133344:133705" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="133707:133763" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="134021:134086" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="134088:134144" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="134505:134760" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="134762:134818" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="134913:135051" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="135053:135109" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="135330:135473" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="135475:135531" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="135819:136304" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="136323:136378" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="136481:136716" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="136733:136788" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="136971:137222" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="137224:137250" placeholder="&lt;_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="137449:137840" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="137842:137897" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="138045:138086" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="138088:138143" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="138289:138330" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="138347:138402" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="138583:138616" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="138618:138673" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="138821:138854" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="138856:138911" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="139059:139092" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="139108:139163" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="139346:139386" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="139388:139443" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="139591:139631" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="139633:139688" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="139836:139876" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="139892:139947" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="140130:140159" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="140161:140216" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="140364:140393" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="140395:140450" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="140598:140627" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="140644:140699" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="140882:140914" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="140916:140971" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="141119:141151" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="141153:141208" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="141356:141388" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="141405:141460" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="141643:141675" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="141677:141732" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="141880:141912" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="141914:141969" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="142117:142149" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="142166:142221" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="142396:142772" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="142774:142829" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="142958:143337" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="143339:143394" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="143515:143780" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="143782:143837" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="143967:144346" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="144348:144403" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="144526:144790" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="144834:144889" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="145082:145130" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="145132:145187" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="145380:145431" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="145433:145488" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="145676:145724" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="145726:145781" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="145938:145989" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="145991:146046" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="146195:146269" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="146271:146326" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="146484:146532" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="146534:146589" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="146740:146802" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="146858:146913" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="147109:147135" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="149727:149782" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="149924:149979" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="150137:150243" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="150246:150301" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="true" signature="150451:150526" placeholder="{...}" />
-                    <marker date="1468361484000" expanded="false" signature="150528:150583" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="150734:150789" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="150934:150989" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="151142:151197" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="151411:151466" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="151653:151708" placeholder="&lt;_CharT,_Traits,_Allocator&gt;" />
-                    <marker date="1468361484000" expanded="false" signature="151956:153187" placeholder="..." />
-                    <marker date="1468361484000" expanded="false" signature="153252:154105" placeholder="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="routing.h" pinned="false" current-in-tab="false">
-            <entry file="file:///usr/local/or-tools/include/constraint_solver/routing.h">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="10140">
-                  <caret line="676" column="20" selection-start-line="676" selection-start-column="20" selection-end-line="676" selection-end-column="20" />
-                  <folding>
-                    <marker date="1471619933000" expanded="false" signature="8117:8807" placeholder="..." />
-                    <marker date="1471619933000" expanded="true" signature="8840:103850" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="9383:65900" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="9435:9903" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="11387:11527" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="11777:14185" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13138:13528" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13302:13522" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13734:13785" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="13905:14181" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="14210:15599" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="20797:20936" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="23012:23228" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="25385:25511" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="25656:25704" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="27197:27272" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="27377:27423" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="false" signature="27627:27648" placeholder="&lt;F&gt;" />
-                    <marker date="1471619933000" expanded="true" signature="27762:28061" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="28254:28298" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="28458:28510" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="28682:28742" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="29942:30068" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="30198:30238" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="32428:32471" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="32582:32630" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="41354:41402" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="41935:42108" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="44295:44351" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="44566:44641" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="45493:45569" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="45800:45856" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="45928:46007" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="54599:54989" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="false" signature="55149:55170" placeholder="&lt;T&gt;" />
-                    <marker date="1471619933000" expanded="true" signature="55192:55238" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="55267:55318" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="55530:55909" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="58014:58183" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="59866:59941" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="65975:66085" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="66959:82260" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="67550:67622" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="68446:68484" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="68586:68623" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="68808:68871" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="78522:78575" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="78651:78695" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="78772:78830" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="78911:78960" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="79022:79069" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="79100:79222" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="82424:82857" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="82475:82567" placeholder="&lt;~&gt;" />
-                    <marker date="1471619933000" expanded="true" signature="83781:86262" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="84733:84961" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="85088:85159" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="85274:85354" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="86396:87215" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="87309:88925" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="89495:93877" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="91560:91833" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="94249:95428" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="95651:96565" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="95931:96226" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="96788:97331" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="97556:98053" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="98712:100444" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="99673:99786" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="99889:99936" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="100043:100101" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="100206:100264" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="100751:100964" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="101051:101558" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="101356:101404" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="101653:103311" placeholder="{...}" />
-                    <marker date="1471619933000" expanded="true" signature="102052:102202" placeholder="{...}" />
                   </folding>
                 </state>
               </provider>
@@ -893,7 +241,7 @@
             <entry file="file://$PROJECT_DIR$/src/System.cpp">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="680">
-                  <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+                  <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
                   <folding>
                     <element signature="e#46#65#0" expanded="true" />
                   </folding>
@@ -904,8 +252,8 @@
           <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/.gitignore">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1169">
-                  <caret line="148" column="7" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="7" />
+                <state relative-caret-position="569">
+                  <caret line="108" column="16" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
                   <folding />
                 </state>
               </provider>
@@ -925,13 +273,15 @@
         <option value="$PROJECT_DIR$/System.h" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/main.cpp" />
-        <option value="$PROJECT_DIR$/src/System.h" />
-        <option value="$PROJECT_DIR$/src/System.cpp" />
-        <option value="$PROJECT_DIR$/src/tsp.h" />
-        <option value="$PROJECT_DIR$/src/tsp.cpp" />
+        <option value="$PROJECT_DIR$/resources/resources.qrc" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/System.cpp" />
         <option value="$PROJECT_DIR$/src/main.cpp" />
         <option value="$PROJECT_DIR$/src/mainwindow.h" />
+        <option value="$PROJECT_DIR$/src/System.h" />
+        <option value="$PROJECT_DIR$/src/tsp.h" />
+        <option value="$PROJECT_DIR$/src/tsp.cpp" />
+        <option value="/Volumes/Extended/workspace/EliteTSP/src/mainwindow.h" />
         <option value="$PROJECT_DIR$/src/mainwindow.cpp" />
       </list>
     </option>
@@ -943,7 +293,7 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="2560" />
+    <option name="x" value="2561" />
     <option name="y" value="23" />
     <option name="width" value="2560" />
     <option name="height" value="1417" />
@@ -1173,6 +523,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EliteTSP" />
+              <option name="myItemType" value="com.jetbrains.cidr.projectView.CidrFilesViewHelper$MyProjectTreeStructure$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EliteTSP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EliteTSP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
     </panes>
@@ -1356,7 +724,7 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" singleton="true" PROGRAM_PARAMS="data/dbdump.csv" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="EliteTSP" RUN_TARGET_NAME="EliteTSP" EXPLICIT_BUILD_TARGET_NAME="all">
+    <configuration default="false" name="Build All" type="CMakeRunConfiguration" factoryName="Application" singleton="true" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="EliteTSP" RUN_TARGET_NAME="EliteTSP" EXPLICIT_BUILD_TARGET_NAME="all">
       <envs />
       <method />
     </configuration>
@@ -1387,15 +755,15 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2560" y="23" width="2560" height="1417" extended-state="0" />
+    <frame x="2561" y="23" width="2560" height="1417" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33025405" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33025405" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32948422" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32948422" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24970461" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Atlassian " active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1424,7 +792,14 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="32" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/mainwindow.cpp</url>
+          <line>94</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="34" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1464,9 +839,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1395">
           <caret line="93" column="84" selection-start-line="93" selection-start-column="84" selection-end-line="93" selection-end-column="84" />
-          <folding>
-            <element signature="e#1170#1193#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3021,83 +2394,7 @@
         <state relative-caret-position="10140">
           <caret line="676" column="20" selection-start-line="676" selection-start-column="20" selection-end-line="676" selection-end-column="20" />
           <folding>
-            <marker date="1471619933000" expanded="false" signature="8117:8807" placeholder="..." />
-            <marker date="1471619933000" expanded="true" signature="8840:103850" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="9383:65900" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="9435:9903" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="11387:11527" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="11777:14185" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13138:13528" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13302:13522" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13734:13785" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13905:14181" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="14210:15599" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="20797:20936" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="23012:23228" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="25385:25511" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="25656:25704" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="27197:27272" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="27377:27423" placeholder="{...}" />
-            <marker date="1471619933000" expanded="false" signature="27627:27648" placeholder="&lt;F&gt;" />
-            <marker date="1471619933000" expanded="true" signature="27762:28061" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28254:28298" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28458:28510" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28682:28742" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="29942:30068" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="30198:30238" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="32428:32471" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="32582:32630" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="41354:41402" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="41935:42108" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="44295:44351" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="44566:44641" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45493:45569" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45800:45856" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45928:46007" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="54599:54989" placeholder="{...}" />
-            <marker date="1471619933000" expanded="false" signature="55149:55170" placeholder="&lt;T&gt;" />
-            <marker date="1471619933000" expanded="true" signature="55192:55238" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="55267:55318" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="55530:55909" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="58014:58183" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="59866:59941" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="65975:66085" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="66959:82260" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="67550:67622" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68446:68484" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68586:68623" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68808:68871" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78522:78575" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78651:78695" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78772:78830" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78911:78960" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="79022:79069" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="79100:79222" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="82424:82857" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="82475:82567" placeholder="&lt;~&gt;" />
-            <marker date="1471619933000" expanded="true" signature="83781:86262" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="84733:84961" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="85088:85159" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="85274:85354" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="86396:87215" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="87309:88925" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="89495:93877" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="91560:91833" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="94249:95428" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="95651:96565" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="95931:96226" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="96788:97331" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="97556:98053" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="98712:100444" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="99673:99786" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="99889:99936" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100043:100101" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100206:100264" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100751:100964" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101051:101558" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101356:101404" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101653:103311" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="102052:102202" placeholder="{...}" />
+            <element signature="e#8108#8127#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -3108,10 +2405,6 @@
           <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding>
             <element signature="e#46#65#0" expanded="true" />
-            <marker date="1476151176000" expanded="true" signature="225:2913" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="2982:3129" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="3202:3350" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="3419:3521" placeholder="{...}" />
           </folding>
         </state>
       </provider>
@@ -3136,9 +2429,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1170#1193#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3146,9 +2437,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#1170#1193#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4176,100 +3465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/local/or-tools/include/constraint_solver/routing.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10140">
-          <caret line="676" column="20" selection-start-line="676" selection-start-column="20" selection-end-line="676" selection-end-column="20" />
-          <folding>
-            <marker date="1471619933000" expanded="false" signature="8117:8807" placeholder="..." />
-            <marker date="1471619933000" expanded="true" signature="8840:103850" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="9383:65900" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="9435:9903" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="11387:11527" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="11777:14185" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13138:13528" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13302:13522" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13734:13785" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="13905:14181" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="14210:15599" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="20797:20936" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="23012:23228" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="25385:25511" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="25656:25704" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="27197:27272" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="27377:27423" placeholder="{...}" />
-            <marker date="1471619933000" expanded="false" signature="27627:27648" placeholder="&lt;F&gt;" />
-            <marker date="1471619933000" expanded="true" signature="27762:28061" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28254:28298" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28458:28510" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="28682:28742" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="29942:30068" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="30198:30238" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="32428:32471" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="32582:32630" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="41354:41402" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="41935:42108" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="44295:44351" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="44566:44641" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45493:45569" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45800:45856" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="45928:46007" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="54599:54989" placeholder="{...}" />
-            <marker date="1471619933000" expanded="false" signature="55149:55170" placeholder="&lt;T&gt;" />
-            <marker date="1471619933000" expanded="true" signature="55192:55238" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="55267:55318" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="55530:55909" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="58014:58183" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="59866:59941" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="65975:66085" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="66959:82260" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="67550:67622" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68446:68484" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68586:68623" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="68808:68871" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78522:78575" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78651:78695" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78772:78830" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="78911:78960" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="79022:79069" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="79100:79222" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="82424:82857" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="82475:82567" placeholder="&lt;~&gt;" />
-            <marker date="1471619933000" expanded="true" signature="83781:86262" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="84733:84961" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="85088:85159" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="85274:85354" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="86396:87215" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="87309:88925" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="89495:93877" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="91560:91833" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="94249:95428" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="95651:96565" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="95931:96226" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="96788:97331" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="97556:98053" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="98712:100444" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="99673:99786" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="99889:99936" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100043:100101" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100206:100264" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="100751:100964" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101051:101558" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101356:101404" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="101653:103311" placeholder="{...}" />
-            <marker date="1471619933000" expanded="true" signature="102052:102202" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/or-tools/include/base/callback.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="74445">
-          <caret line="4963" column="0" selection-start-line="4963" selection-start-column="0" selection-end-line="4963" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/string">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57210">
@@ -4791,28 +3986,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1169">
-          <caret line="148" column="7" selection-start-line="148" selection-start-column="7" selection-end-line="148" selection-end-column="7" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/System.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="118" column="12" selection-start-line="118" selection-start-column="12" selection-end-line="118" selection-end-column="12" />
-          <folding>
-            <element signature="e#46#65#0" expanded="true" />
-            <marker date="1476151176000" expanded="true" signature="225:2913" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="2982:3129" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="3202:3350" placeholder="{...}" />
-            <marker date="1476151176000" expanded="true" signature="3419:3521" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1/algorithm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -4821,41 +3994,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#27#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/tsp.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="47" column="50" selection-start-line="47" selection-start-column="50" selection-end-line="47" selection-end-column="50" />
-          <folding>
-            <element signature="e#47#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="11" selection-start-line="43" selection-start-column="11" selection-end-line="43" selection-end-column="11" />
-          <folding>
-            <element signature="e#1170#1193#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4863,14 +4006,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="970" column="25" selection-start-line="970" selection-start-column="25" selection-end-line="970" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="162" column="97" selection-start-line="162" selection-start-column="97" selection-end-line="162" selection-end-column="97" />
           <folding />
         </state>
       </provider>
@@ -4883,16 +4018,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/tsp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="46" selection-start-line="11" selection-start-column="46" selection-end-line="11" selection-end-column="46" />
-          <folding>
-            <element signature="e#93#109#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qstring.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
@@ -4901,17 +4026,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/System.h">
+    <entry file="file://$PROJECT_DIR$/resources/resources.qrc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding>
-            <element signature="e#99#116#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="45">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file:///Volumes/Extended/workspace/EliteTSP/src/mainwindow.h">
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
@@ -4919,22 +4042,146 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/CLion2016.1/cmake/generated/EliteTSP-10398507/10398507/Debug/EliteTSP_automoc.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Caches/CLion2016.1/cmake/generated/EliteTSP-10398507/10398507/Debug/CMakeFiles/EliteTSP.dir/qrc_resources.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qfile.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="65" column="4" selection-start-line="65" selection-start-column="4" selection-end-line="65" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/System.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="41">
+          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+          <folding>
+            <element signature="e#46#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/mainwindow.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" column="16" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
+        <state relative-caret-position="315">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
           <folding>
             <element signature="e#43#65#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/System.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-75">
+          <caret line="50" column="109" selection-start-line="50" selection-start-column="109" selection-end-line="50" selection-end-column="109" />
+          <folding>
+            <element signature="e#99#116#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Volumes/Extended/workspace/EliteTSP/src/tsp.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="569">
+          <caret line="108" column="16" selection-start-line="108" selection-start-column="16" selection-end-line="108" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/or-tools/include/base/callback.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="75" column="6" selection-start-line="75" selection-start-column="6" selection-end-line="75" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/or-tools/include/constraint_solver/routing.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="618" column="2" selection-start-line="618" selection-start-column="2" selection-end-line="618" selection-end-column="2" />
+          <folding>
+            <element signature="e#8108#8127#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tsp.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+          <folding>
+            <element signature="e#94#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/tsp.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="66" column="29" selection-start-line="66" selection-start-column="29" selection-end-line="66" selection-end-column="29" />
+          <folding>
+            <element signature="e#47#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Volumes/Extended/workspace/EliteTSP/src/mainwindow.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+          <folding>
+            <element signature="e#43#65#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Qt/5.7/clang_64/lib/QtCore.framework/Headers/qobject.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="305" column="0" selection-start-line="305" selection-start-column="0" selection-end-line="305" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/mainwindow.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" column="45" selection-start-line="32" selection-start-column="45" selection-end-line="32" selection-end-column="45" />
+        <state relative-caret-position="105">
+          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding>
-            <element signature="e#0#23#0" expanded="true" />
+            <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>

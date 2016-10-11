@@ -14,7 +14,7 @@
    <string>EliteTSP</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="createRouteButton">
     <property name="geometry">
      <rect>
       <x>400</x>

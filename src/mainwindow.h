@@ -17,14 +17,24 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+public slots:
+    void createRoute();
+    void routeCalculated();
+
 private:
     Ui::MainWindow *ui;
 
     void cleanupCheckboxes();
 
-    QMap<QString, SettlementFlags> _flagsLookup;
 
     void buildLookupMap();
+
+    void loadSystems();
+private:
+    QMap<QString, SettlementFlags> _flagsLookup;
+
+    std::deque<System> _systems;
+
 };
 
 #endif // MAINWINDOW_H
