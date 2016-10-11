@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <map>
+#include <unordered_map>
 #include <QFile>
 #include <QTextStream>
 #include "System.h"
@@ -18,7 +18,7 @@ std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
     }
 
     QTextStream in(&systemData);
-    std::map<std::string, System *> lookup;
+    std::unordered_map<std::string, System *> lookup;
     for(QString qline = in.readLine(); !qline.isNull(); qline = in.readLine()) {
         std::string line = qline.toStdString();
         //  1: Type

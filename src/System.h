@@ -82,7 +82,7 @@ public:
         _settlements.push_back(settlement);
     }
 
-    System(const std::string &system, const std::string &planet, const std::deque<const Settlement> &settlements,
+    System(const std::string &system, const std::string &planet, const std::deque<Settlement> &settlements,
            double x, double y, double z) : _system(system), _planet(planet), _settlements(settlements), _x(x), _y(y),
                                            _z(z) { }
 
@@ -94,7 +94,7 @@ public:
 
     static std::string formatDistance(int64 dist);
 
-    void addSettlement(const Settlement &settlement) {
+    void addSettlement(Settlement &settlement) {
         _settlements.push_back(settlement);
     }
 
@@ -110,7 +110,7 @@ public:
         return _x;
     }
 
-    const std::deque<const Settlement> &settlements() const {
+    const std::deque<Settlement> &settlements() const {
         return _settlements;
     }
 
@@ -127,7 +127,7 @@ private:
 
     std::string _system;
     std::string _planet;
-    std::deque<const Settlement> _settlements;
+    std::deque<Settlement> _settlements;
     double _x;
     double _y;
     double _z;

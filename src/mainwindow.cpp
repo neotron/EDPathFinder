@@ -66,7 +66,7 @@ void MainWindow::createRoute() {
     std::deque<System> matchingSystems;
     for(auto &it : _systems) {
         bool found = false;
-        std::deque<const Settlement> matchingSettlements;
+        std::deque<Settlement> matchingSettlements;
         for(auto sit: it.settlements()) {
             if((sit.flags() & settlementFlags) != settlementFlags) {
                 continue;

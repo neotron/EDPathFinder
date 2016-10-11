@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.1.0, 2016-10-10T22:49:06. -->
+<!-- Written by QtCreator 4.1.0, 2016-10-10T20:40:17. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{668adf0d-e89c-487e-bc97-9d3d78adda3d}</value>
+  <value type="QByteArray">{664484fc-074f-4181-9835-3d779a2366ed}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.ActiveTarget</variable>
@@ -59,20 +59,20 @@
  <data>
   <variable>ProjectExplorer.Project.Target.0</variable>
   <valuemap type="QVariantMap">
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.7.0 MSVC2015_64bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.7.0 MSVC2015_64bit</value>
-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.57.win64_msvc2015_64_kit</value>
-   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop Qt 5.7.0 clang 64bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop Qt 5.7.0 clang 64bit</value>
+   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">qt.57.clang_64_kit</value>
+   <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">2</value>
    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
     <valuelist type="QVariantList" key="CMake.Configuration"/>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/neotron/.babun/cygwin/home/neotron/src/build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Default</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Default</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
       <valuelist type="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets">
-       <value type="QString">all</value>
+       <value type="QString"></value>
       </valuelist>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Make</value>
@@ -111,7 +111,7 @@
     <valuelist type="QVariantList" key="CMake.Configuration">
      <value type="QString">CMAKE_BUILD_TYPE:STRING=Debug</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/neotron/.babun/cygwin/home/neotron/src/build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Debug</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Debug</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
@@ -155,12 +155,12 @@
     <valuelist type="QVariantList" key="CMake.Configuration">
      <value type="QString">CMAKE_BUILD_TYPE:STRING=Release</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/neotron/.babun/cygwin/home/neotron/src/build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
       <valuelist type="QVariantList" key="CMakeProjectManager.MakeStep.BuildTargets">
-       <value type="QString"></value>
+       <value type="QString">all</value>
       </valuelist>
       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
       <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Make</value>
@@ -199,7 +199,7 @@
     <valuelist type="QVariantList" key="CMake.Configuration">
      <value type="QString">CMAKE_BUILD_TYPE:STRING=RelWithDebInfo</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/neotron/.babun/cygwin/home/neotron/src/build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Release with Debug Information</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Release with Debug Information</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
@@ -243,7 +243,7 @@
     <valuelist type="QVariantList" key="CMake.Configuration">
      <value type="QString">CMAKE_BUILD_TYPE:STRING=MinSizeRel</value>
     </valuelist>
-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">C:/Users/neotron/.babun/cygwin/home/neotron/src/build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release</value>
+    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Minimum Size Release</value>
     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
       <value type="QString" key="CMakeProjectManager.MakeStep.AdditionalArguments"></value>
@@ -341,7 +341,7 @@
     <value type="QString" key="CMakeProjectManager.CMakeRunConfiguation.Title">EliteTSP</value>
     <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.Arguments"></value>
     <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.UserWorkingDirectory"></value>
-    <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.UserWorkingDirectory.default">C:/Users/neotron/AppData/Local/Temp/qtc-cmake-qwhwKz</value>
+    <value type="QString" key="CMakeProjectManager.CMakeRunConfiguration.UserWorkingDirectory.default">/Volumes/Extended/workspace/build-EliteTSP-Desktop_Qt_5_7_0_clang_64bit-Release</value>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">EliteTSP</value>

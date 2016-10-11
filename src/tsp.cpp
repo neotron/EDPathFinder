@@ -34,7 +34,7 @@ namespace operations_research {
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
-            string route;
+            std::string route;
             int nodeid;
             int64 dist = 0;
             int previd = 0;
@@ -60,7 +60,7 @@ namespace operations_research {
 //       nodeid = routing.IndexToNode(end).value();
 //      StrAppend(&route, systems[nodeid].system, " (", nodeid, ", ", end,
 //		")\n");
-            cerr << route;
+            std::cerr << route;
         } else {
             LOG(INFO) << "No solution found.";
         }
