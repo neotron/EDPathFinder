@@ -2,11 +2,11 @@
 // Created by David Hedbor on 10/10/16.
 //
 
+#include <QDebug>
 #include "System.h"
 #include "constraint_solver/routing_flags.h"
 #include "constraint_solver/routing.h"
-#include "base/join.h"
-#include "base/callback.h"
+
 #include "TSPWorker.h"
 
 namespace operations_research {
@@ -17,6 +17,10 @@ namespace operations_research {
     }
 
     void TSPWorker::run() {
+
+        // Calculate the closest system
+        _systems.push_front(System("Starting Location", Planet("", Settlement("")), _x, _y, _z));
+
         RoutingModel routing((int) _systems.size(), 1);
         routing.SetDepot(RoutingModel::NodeIndex(0));
         RoutingSearchParameters parameters = BuildSearchParametersFromFlags();

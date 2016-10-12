@@ -24,17 +24,19 @@ namespace operations_research {
     Q_OBJECT
 
     public:
-        TSPWorker(const std::deque<System> &systems) : QThread(), _systems(systems) {
+        TSPWorker(const std::deque<System> &systems, double x, double y, double z) : QThread(), _x(x), _y(y), _z(z), _systems(systems) {
         }
 
         virtual void run();
 
+    signals:
+        void taskCompleted(const RouteResult &route);
+
     private:
         int64 systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
         std::deque<System> _systems;
+        double _x, _y, _z;
 
-    signals:
-        void taskCompleted(const RouteResult &route);
     };
 };
 

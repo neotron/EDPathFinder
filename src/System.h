@@ -10,6 +10,7 @@
 #include <cmath>
 #include <base/integral_types.h>
 #include <QString>
+
 class Settlement;
 
 class Planet;
@@ -54,11 +55,10 @@ class Settlement {
 
 
 public:
-    Settlement(const std::string &name, SettlementSize size, ThreatLevel threatLevel, int32 flags) : _name(name),
-                                                                                                     _size(size),
-                                                                                                     _threatLevel(
-                                                                                                             threatLevel),
-                                                                                                     _flags(flags) {}
+    Settlement(const std::string &name, SettlementSize size = SettlementSizeSmall,
+               ThreatLevel threatLevel = ThreatLevelSafe, int32 flags = 0) : _name(name), _size(size),
+                                                                             _threatLevel(threatLevel),
+                                                                             _flags(flags) { }
 
     const std::string &name() const {
         return _name;
@@ -89,7 +89,7 @@ public:
         _settlements.push_back(settlement);
     }
 
-    Planet(const std::string &name, const SettlementList &settlements) : _name(name), _settlements(settlements) {}
+    Planet(const std::string &name, const SettlementList &settlements) : _name(name), _settlements(settlements) { }
 
     const std::deque<Settlement> &settlements() const {
         return _settlements;
@@ -118,7 +118,9 @@ public:
 
     System(const std::string &system, const PlanetList &planets, double x, double y, double z) : _name(system),
                                                                                                  _planets(planets),
-                                                                                                 _x(x), _y(y), _z(z) {}
+                                                                                                 _x(x), _y(y), _z(z) { }
+
+    System(double x, double y, double z) : _x(x), _y(y), _z(z) { }
 
 // Return distance as a fixed point value with two decimals.
     int64 distance(const System &other) const {
@@ -152,7 +154,7 @@ public:
         _planets.push_back(Planet(planetName, settlement));
     };
 
-    const std::string & name() const {
+    const std::string &name() const {
         return _name;
     }
 

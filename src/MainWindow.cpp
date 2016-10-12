@@ -8,7 +8,9 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
     connect(ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-
+    ui->x->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+    ui->y->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+    ui->z->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
     cleanupCheckboxes();
     buildLookupMap();
     loadSystems();
@@ -64,7 +66,7 @@ void MainWindow::createRoute() {
     if(_filteredSystems.size() > 0) {
         ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
         ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(new TSPWorker(_filteredSystems));
+        TSPWorker *workerThread(new TSPWorker(_filteredSystems, ui->x->text().toDouble(), ui->y->text().toDouble(), ui->z->text().toDouble()));
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
@@ -76,6 +78,7 @@ void MainWindow::createRoute() {
 void MainWindow::loadSystems() {
     SystemLoader loader;
    	_systems = loader.loadSettlements();
+    updateFilters();
 
 }
 
@@ -124,8 +127,6 @@ void MainWindow::updateFilters() {
     }
     _matchingSettlementCount = matches;
     ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
-
-    qDebug() << "Out of " << _systems.size() << ", "<<_filteredSystems.size()<<" systems matched the filter.";
 }
 
 

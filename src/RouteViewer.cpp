@@ -8,6 +8,7 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) :
     _ui->tableView->setModel(new RouteTableModel(this, result));
     _ui->tableView->resizeColumnsToContents();
     _ui->tableView->resizeRowsToContents();
+    _ui->tableView->adjustSize();
     setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
