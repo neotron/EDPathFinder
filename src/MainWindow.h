@@ -20,6 +20,7 @@ public:
 public slots:
     void createRoute();
     void routeCalculated();
+    void updateFilters();
 
 private:
     Ui::MainWindow *ui;
@@ -34,7 +35,8 @@ private:
     QMap<QString, SettlementFlags> _flagsLookup;
 
     std::deque<System> _systems;
-
+    std::deque<System> _filteredSystems;
+    int32 _matchingSettlementCount;
 };
 
 #endif // MAINWINDOW_H

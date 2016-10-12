@@ -27,7 +27,7 @@
      <string>Create Route</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -248,12 +248,13 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuElite_TSP_Router">
+   <widget class="QMenu" name="menuApplication">
     <property name="title">
-     <string>Elite TSP - Router</string>
+     <string>Application</string>
     </property>
+    <addaction name="actionPreferences"/>
    </widget>
-   <addaction name="menuElite_TSP_Router"/>
+   <addaction name="menuApplication"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -264,6 +265,24 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionFile">
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::AboutRole</enum>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

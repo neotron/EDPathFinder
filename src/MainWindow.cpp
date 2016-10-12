@@ -1,5 +1,6 @@
 #include <QDebug>
-#include "mainwindow.h"
+#include <QCheckBox>
+#include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "tsp.h"
 
@@ -17,10 +18,15 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::cleanupCheckboxes() {
-    QList<QCheckBox *> layouts = findChildren<QCheckBox *>();
+    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
     int width = 0;
-            foreach(QCheckBox *checkbox, layouts) { width = qMax(checkbox->width(), width); }
-            foreach(QCheckBox *checkbox, layouts) { checkbox->setMinimumWidth(width); }
+    for(auto checkbox: checkboxes) {
+        connect(checkbox, SIGNAL(stateChanged(int)), this, SLOT(updateFilters()));
+        width = qMax(checkbox->width(), width);
+    }
+    for(auto checkbox: checkboxes) {
+        checkbox->setMinimumWidth(width);
+    }
 }
 
 void MainWindow::buildLookupMap() {
@@ -46,6 +52,26 @@ void MainWindow::routeCalculated() {
 }
 
 void MainWindow::createRoute() {
+
+    if(_filteredSystems.size() > 0) {
+        ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+        ui->createRouteButton->setEnabled(false);
+        TSPWorker *workerThread(new TSPWorker(_filteredSystems));
+        connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
+        connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
+        workerThread->start();
+    } else {
+        ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
+    }
+}
+
+void MainWindow::loadSystems() {
+    SystemLoader loader;
+   	_systems = loader.loadSettlements();
+
+}
+
+void MainWindow::updateFilters() {
     int32 settlementFlags = 0;
     QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
@@ -63,7 +89,7 @@ void MainWindow::createRoute() {
     }
 
     int32 matches = 0;
-    std::deque<System> matchingSystems;
+    _filteredSystems.clear();
     for(auto &it : _systems) {
         bool found = false;
         std::deque<Settlement> matchingSettlements;
@@ -78,27 +104,16 @@ void MainWindow::createRoute() {
             ++matches;
         }
         if(matchingSettlements.size()) {
-            matchingSystems.push_back(System(it.system(), it.planet(), matchingSettlements, it.x(), it.y(), it.y()));
+            _filteredSystems.push_back(System(it.system(), it.planet(), matchingSettlements, it.x(), it.y(), it.y()));
         }
     }
-    qDebug() << "Out of " << _systems.size() << ", "<<matchingSystems.size()<<" systems matched the filter.";
-    if(matchingSystems.size() > 0) {
-        ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(matches).arg(matchingSystems.size()));
-        ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(new TSPWorker(matchingSystems));
-        connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
-        connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
-        workerThread->start();
-    } else {
-        ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
-    }
+    _matchingSettlementCount = matches;
+    ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+
+    qDebug() << "Out of " << _systems.size() << ", "<<_filteredSystems.size()<<" systems matched the filter.";
 }
 
-void MainWindow::loadSystems() {
-    SystemLoader loader;
-   	_systems = loader.loadSettlements();
 
-}
 
 
 

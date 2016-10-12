@@ -57,6 +57,7 @@ tramp
 
 # cask packages
 .cask/
+
 ### C template
 # Object files
 *.o
@@ -90,6 +91,7 @@ tramp
 
 # Debug files
 *.dSYM/
+
 ### C++ template
 # Compiled Object files
 *.slo

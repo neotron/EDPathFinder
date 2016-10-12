@@ -26,7 +26,7 @@
 // (forbidden arcs).
 #include <QApplication>
 #include <QDebug>
-#include "mainwindow.h"
+#include "MainWindow.h"
 
 // namespace operations_research
 
