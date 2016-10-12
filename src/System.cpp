@@ -85,9 +85,10 @@ std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
         Settlement settlement(name, size, threat, flags);
 
         if(lookup.count(system)) {
-            lookup[system]->addSettlement(settlement);
+            lookup[system]->addSettlement(planet, settlement);
         } else {
-            System systemObj(system, planet, settlement, x, y, z);
+            Planet planetObj(planet, settlement);
+            System systemObj(system, planetObj, x, y, z);
             systems.push_back(systemObj);
             lookup[system] = &systems.back();
         }
@@ -120,12 +121,11 @@ bool SystemLoader::getBool(std::istringstream &is, bool eol) const {
     return valStr == "1";
 }
 
-std::string System::formatDistance(int64 dist) {
-    std::stringstream ss;
+QString System::formatDistance(int64 dist) {
     if(dist > 0) {
-        ss << dist / 100 << "." << dist % 100;
-        return ss.str();
+        return QString("%1.%2").arg(dist / 100).arg(dist % 100);
     } else {
         return "-";
     }
 }
+

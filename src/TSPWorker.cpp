@@ -7,7 +7,7 @@
 #include "constraint_solver/routing.h"
 #include "base/join.h"
 #include "base/callback.h"
-#include "tsp.h"
+#include "TSPWorker.h"
 
 namespace operations_research {
 
@@ -17,53 +17,54 @@ namespace operations_research {
     }
 
     void TSPWorker::run() {
-
         RoutingModel routing((int) _systems.size(), 1);
         routing.SetDepot(RoutingModel::NodeIndex(0));
         RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
-        
+
         // Setting first solution heuristic (cheapest addition).
         parameters.set_first_solution_strategy(FirstSolutionStrategy::PATH_CHEAPEST_ARC);
         routing.SetArcCostEvaluatorOfAllVehicles(NewPermanentCallback(this, &TSPWorker::systemDistance));
-        
+
         // Solve, returns a solution if any (owned by RoutingModel).
         const Assignment *solution = routing.SolveWithParameters(parameters);
+
+        // Populate result.
+        RouteResult result;
         if(solution != NULL) {
             // Solution cost.
-            LOG(INFO) << "Total Distance: " << System::formatDistance(solution->ObjectiveValue()) << " ly";
+            result.ly = System::formatDistance(solution->ObjectiveValue());
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
-            std::string route;
             int nodeid;
-            int64 dist = 0;
             int previd = 0;
+            int64 dist = 0;
             int64 totaldist = 0;
-            for(int64 node = routing.Start(route_number);
-                !routing.IsEnd(node);
-                node = solution->Value(routing.NextVar(node))) {
+            for(int64 node = routing.Start(route_number); !routing.IsEnd(node); node = solution->Value(routing.NextVar(node))) {
                 nodeid = routing.IndexToNode(node).value();
+
                 const System &sys = _systems[nodeid];
+
                 if(nodeid > 0) {
                     dist = sys.distance(_systems[previd]);
                     totaldist += dist;
                 }
                 previd = nodeid;
-                auto settlements = sys.settlements();
-                for(auto it = settlements.begin(); it != settlements.end(); ++it) {
-                    StrAppend(&route, sys.system(), "\t", sys.planet(), "\t", (*it).name(), "\t",
-                              System::formatDistance(dist), "\t", System::formatDistance(totaldist), "\n");
-                    dist = 0;
+                for(auto planet: sys.planets()) {
+                    for(auto settlement: planet.settlements()) {
+                        std::vector<QString> row(5);
+                        row[0] = sys.name().c_str();
+                        row[1] = planet.name().c_str();
+                        row[2] = settlement.name().c_str();
+                        row[3] = System::formatDistance(dist);
+                        row[4] = System::formatDistance(totaldist);
+                        result.route.emplace_back(row);
+                    }
                 }
             }
-//      const int64 end = routing.End(route_number);
-//       nodeid = routing.IndexToNode(end).value();
-//      StrAppend(&route, systems[nodeid].system, " (", nodeid, ", ", end,
-//		")\n");
-            std::cerr << route;
         } else {
             LOG(INFO) << "No solution found.";
         }
-        emit taskCompleted();
+        emit taskCompleted(result);
     }
 }

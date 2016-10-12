@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include "System.h"
+#include "TSPWorker.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,7 +20,7 @@ public:
 
 public slots:
     void createRoute();
-    void routeCalculated();
+    void routeCalculated(const RouteResult &route);
     void updateFilters();
 
 private:

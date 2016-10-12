@@ -16,5 +16,5 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS")
 endif()
 
-set(SOURCE_FILES src/main.cpp src/System.cpp src/System.h src/tsp.cpp src/MainWindow.cpp src/RouteViewer.cpp src/RouteViewer.ui src/MainWindow.ui resources/resources.qrc)
+set(SOURCE_FILES src/main.cpp src/System.cpp src/System.h src/TSPWorker.cpp src/MainWindow.cpp src/RouteViewer.cpp src/RouteViewer.ui src/MainWindow.ui resources/resources.qrc src/RouteTableModel.cpp src/RouteTableModel.h )
 add_executable(EliteTSP ${SOURCE_FILES})

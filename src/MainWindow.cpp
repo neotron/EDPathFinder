@@ -2,7 +2,8 @@
 #include <QCheckBox>
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
-#include "tsp.h"
+#include "TSPWorker.h"
+#include "RouteViewer.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
@@ -46,9 +47,16 @@ void MainWindow::buildLookupMap() {
     _flagsLookup["anarchy"] = SettlementFlagsAnarchy;
 }
 
-void MainWindow::routeCalculated() {
-    ui->statusBar->showMessage("Route calculated.", 10000);
+void MainWindow::routeCalculated(const RouteResult &route) {
+    if(!route.route.size()) {
+        ui->statusBar->showMessage("No solution found to the given route.", 10000);
+        return;
+    }
+    ui->statusBar->showMessage("Route calculation completed.", 10000);
     ui->createRouteButton->setEnabled(true);
+
+    RouteViewer *viewer = new RouteViewer(route);
+    viewer->show();
 }
 
 void MainWindow::createRoute() {
@@ -90,21 +98,28 @@ void MainWindow::updateFilters() {
 
     int32 matches = 0;
     _filteredSystems.clear();
-    for(auto &it : _systems) {
+    for(const auto &system : _systems) {
         bool found = false;
-        std::deque<Settlement> matchingSettlements;
-        for(auto sit: it.settlements()) {
-            if((sit.flags() & settlementFlags) != settlementFlags) {
-                continue;
+        std::deque<Planet> matchingPlanets;
+        for(const auto &planet: system.planets()) {
+            std::deque<Settlement> matchingSettlements;
+            for(auto settlement: planet.settlements()) {
+                if((settlement.flags() & settlementFlags) != settlementFlags) {
+                    continue;
+                }
+                if(jumpsExcluded &&
+                   (settlement.flags() & SettlementFlagsJumpClimbRequired) == SettlementFlagsJumpClimbRequired) {
+                    continue;
+                }
+                matchingSettlements.push_back(settlement);
+                ++matches;
             }
-            if(jumpsExcluded && (sit.flags()&SettlementFlagsJumpClimbRequired) == SettlementFlagsJumpClimbRequired) {
-                continue;
+            if(matchingSettlements.size()) {
+                matchingPlanets.push_back(Planet(planet.name(), matchingSettlements));
             }
-            matchingSettlements.push_back(sit);
-            ++matches;
         }
-        if(matchingSettlements.size()) {
-            _filteredSystems.push_back(System(it.system(), it.planet(), matchingSettlements, it.x(), it.y(), it.y()));
+        if(matchingPlanets.size()) {
+            _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
         }
     }
     _matchingSettlementCount = matches;

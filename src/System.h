@@ -9,7 +9,16 @@
 #include <deque>
 #include <cmath>
 #include <base/integral_types.h>
+#include <QString>
+class Settlement;
 
+class Planet;
+
+class System;
+
+typedef std::deque<Settlement> SettlementList;
+typedef std::deque<Planet> PlanetList;
+typedef std::deque<System> SystemList;
 
 enum ThreatLevel {
     ThreatLevelSafe,
@@ -49,7 +58,7 @@ public:
                                                                                                      _size(size),
                                                                                                      _threatLevel(
                                                                                                              threatLevel),
-                                                                                                     _flags(flags) { }
+                                                                                                     _flags(flags) {}
 
     const std::string &name() const {
         return _name;
@@ -74,17 +83,42 @@ private:
     int32 _flags;
 };
 
-class System {
-
+class Planet {
 public:
-    System(const std::string &system, const std::string &planet, const Settlement &settlement, double x, double y,
-           double z) : _system(system), _planet(planet), _settlements(), _x(x), _y(y), _z(z) {
+    Planet(const std::string &name, const Settlement &settlement) : _name(name), _settlements() {
         _settlements.push_back(settlement);
     }
 
-    System(const std::string &system, const std::string &planet, const std::deque<Settlement> &settlements,
-           double x, double y, double z) : _system(system), _planet(planet), _settlements(settlements), _x(x), _y(y),
-                                           _z(z) { }
+    Planet(const std::string &name, const SettlementList &settlements) : _name(name), _settlements(settlements) {}
+
+    const std::deque<Settlement> &settlements() const {
+        return _settlements;
+    }
+
+    void addSettlement(const Settlement &settlement) {
+        _settlements.push_back(settlement);
+    }
+
+    const std::string &name() const {
+        return _name;
+    }
+
+private:
+    std::string _name;
+    SettlementList _settlements;
+};
+
+class System {
+
+public:
+    System(const std::string &name, const Planet &planet, double x, double y, double z) : _name(name), _planets(),
+                                                                                          _x(x), _y(y), _z(z) {
+        _planets.push_back(planet);
+    }
+
+    System(const std::string &system, const PlanetList &planets, double x, double y, double z) : _name(system),
+                                                                                                 _planets(planets),
+                                                                                                 _x(x), _y(y), _z(z) {}
 
 // Return distance as a fixed point value with two decimals.
     int64 distance(const System &other) const {
@@ -92,11 +126,7 @@ public:
         return (int64) distance;
     }
 
-    static std::string formatDistance(int64 dist);
-
-    void addSettlement(Settlement &settlement) {
-        _settlements.push_back(settlement);
-    }
+    static QString formatDistance(int64 dist);
 
     double z() const {
         return _z;
@@ -110,24 +140,27 @@ public:
         return _x;
     }
 
-    const std::deque<Settlement> &settlements() const {
-        return _settlements;
-    }
+    const PlanetList &planets() const { return _planets; };
 
-    const std::string &planet() const {
-        return _planet;
-    }
+    void addSettlement(const std::string &planetName, const Settlement &settlement) {
+        for(auto planet: _planets) {
+            if(planet.name() == planetName) {
+                planet.addSettlement(settlement);
+                return;
+            }
+        }
+        _planets.push_back(Planet(planetName, settlement));
+    };
 
-    const std::string &system() const {
-        return _system;
+    const std::string & name() const {
+        return _name;
     }
 
 private:
     double sqr(double val) const { return val * val; }
 
-    std::string _system;
-    std::string _planet;
-    std::deque<Settlement> _settlements;
+    std::string _name;
+    PlanetList _planets;
     double _x;
     double _y;
     double _z;
@@ -135,7 +168,7 @@ private:
 
 class SystemLoader {
 public:
-    std::deque<System, std::allocator<System>> loadSettlements();
+    std::deque<System> loadSettlements();
 
 private:
     int32 getInt(std::istringstream &is, bool eol = false) const;

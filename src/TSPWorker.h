@@ -10,6 +10,15 @@
 #include "System.h"
 #include "constraint_solver/routing.h"
 
+typedef std::vector<std::vector<QString>> RouteResultMatrix;
+
+struct RouteResult {
+    RouteResult(): ly(), route() {}
+
+    QString ly;
+    RouteResultMatrix route;
+};
+
 namespace operations_research {
     class TSPWorker : public QThread {
     Q_OBJECT
@@ -25,7 +34,7 @@ namespace operations_research {
         std::deque<System> _systems;
 
     signals:
-        void taskCompleted();
+        void taskCompleted(const RouteResult &route);
     };
 };
 
