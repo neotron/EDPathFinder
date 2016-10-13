@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>533</width>
-    <height>390</height>
+    <width>480</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -50,75 +50,62 @@
       <property name="title">
        <string>General Filters</string>
       </property>
-      <widget class="QWidget" name="formLayoutWidget_2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>493</width>
-         <height>51</height>
-        </rect>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <property name="horizontalSpacing">
+        <number>15</number>
        </property>
-       <layout class="QFormLayout" name="formLayout">
-        <property name="labelAlignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="horizontalSpacing">
-         <number>20</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>6</number>
-        </property>
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>6</number>
-        </property>
-        <property name="rightMargin">
-         <number>6</number>
-        </property>
-        <property name="bottomMargin">
-         <number>6</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="cdt">
-          <property name="minimumSize">
-           <size>
-            <width>202</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Core Data Terminal</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="anarchy">
-          <property name="text">
-           <string>Only Anarchy Systems</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QCheckBox" name="jump">
-          <property name="minimumSize">
-           <size>
-            <width>278</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>Exclude Jump Required</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="cdt">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>202</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>The base includes a scannable Core Data Terminal for extra income.</string>
+         </property>
+         <property name="text">
+          <string>Core Data Terminal</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="jump">
+         <property name="minimumSize">
+          <size>
+           <width>278</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Exclude bases that require wall climbing and/or jumping to reach all data points (safely). </string>
+         </property>
+         <property name="text">
+          <string>Exclude Jump Required</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="anarchy">
+         <property name="toolTip">
+          <string>Only include bases in anarchy systems (no bounties).</string>
+         </property>
+         <property name="text">
+          <string>Only Anarchy Systems</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -138,116 +125,268 @@
       <property name="title">
        <string>Material Filters</string>
       </property>
-      <widget class="QWidget" name="formLayoutWidget_3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>491</width>
-         <height>122</height>
-        </rect>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <property name="horizontalSpacing">
+        <number>15</number>
        </property>
-       <layout class="QFormLayout" name="formLayout_3">
-        <property name="labelAlignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="horizontalSpacing">
-         <number>20</number>
-        </property>
-        <property name="verticalSpacing">
-         <number>6</number>
-        </property>
-        <property name="leftMargin">
-         <number>6</number>
-        </property>
-        <property name="topMargin">
-         <number>6</number>
-        </property>
-        <property name="rightMargin">
-         <number>6</number>
-        </property>
-        <property name="bottomMargin">
-         <number>6</number>
-        </property>
-        <item row="0" column="0">
-         <widget class="QCheckBox" name="csd">
-          <property name="text">
-           <string>Classified Scan Databanks</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QCheckBox" name="csf">
-          <property name="text">
-           <string>Classified Scan Fragment</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="0">
-         <widget class="QCheckBox" name="slf">
-          <property name="text">
-           <string>Specialized Legacy Firmware</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QCheckBox" name="dsd">
-          <property name="text">
-           <string>Divergent Scan Data</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="osk">
-          <property name="text">
-           <string>Open Symmetric Keys</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="1">
-         <widget class="QCheckBox" name="mef">
-          <property name="text">
-           <string>Modified Embedded Firmware</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QCheckBox" name="cif">
-          <property name="text">
-           <string>Cracked Industrial Firmware</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QCheckBox" name="sfp">
-          <property name="text">
-           <string>Security Firmware Patch</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QCheckBox" name="mcf">
-          <property name="text">
-           <string>Modified Consumer Firmware</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QCheckBox" name="tec">
-          <property name="text">
-           <string>Tagged Encryption Codes</string>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QCheckBox" name="uef">
-          <property name="text">
-           <string>Unusual Encrypted Files</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="csd">
+         <property name="text">
+          <string>Classified Scan Databanks</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="csf">
+         <property name="text">
+          <string>Classified Scan Fragment</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="slf">
+         <property name="text">
+          <string>Specialized Legacy Firmware</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="dsd">
+         <property name="text">
+          <string>Divergent Scan Data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="osk">
+         <property name="text">
+          <string>Open Symmetric Keys</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="mef">
+         <property name="text">
+          <string>Modified Embedded Firmware</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="cif">
+         <property name="text">
+          <string>Cracked Industrial Firmware</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="sfp">
+         <property name="text">
+          <string>Security Firmware Patch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="mcf">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Modified Consumer Firmware</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QCheckBox" name="tec">
+         <property name="text">
+          <string>Tagged Encryption Codes</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QCheckBox" name="uef">
+         <property name="text">
+          <string>Unusual Encrypted Files</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_3">
+      <property name="title">
+       <string>Maximum Threat Level Allowed</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>4</number>
+       </property>
+       <item>
+        <widget class="QRadioButton" name="noSec">
+         <property name="toolTip">
+          <string>No combat needed for these bases.</string>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string>No Fight</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="restrictedSec">
+         <property name="toolTip">
+          <string>Restricted / long distance (M5H)</string>
+         </property>
+         <property name="toolTipDuration">
+          <number>-1</number>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string>Restricted</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="mediumSec">
+         <property name="minimumSize">
+          <size>
+           <width>139</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>Most medium sized high security bases.</string>
+         </property>
+         <property name="text">
+          <string>Medium/High Sec</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QRadioButton" name="highSec">
+         <property name="toolTip">
+          <string>Large and military high security bases. Very dangerous, and hard to solo.</string>
+         </property>
+         <property name="statusTip">
+          <string/>
+         </property>
+         <property name="text">
+          <string>Large/High Sec</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="toolTip">
+       <string>Select one or more settlement sizes. </string>
+      </property>
+      <property name="title">
+       <string>Settlement Sizes</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>15</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="smallSize">
+         <property name="text">
+          <string>Small</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="mediumSize">
+         <property name="text">
+          <string>Medium</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="largeSize">
+         <property name="text">
+          <string>Large</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QGroupBox" name="groupBox_5">
+      <property name="title">
+       <string>Maximum number of hops in route</string>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>-1</number>
+       </property>
+       <property name="topMargin">
+        <number>6</number>
+       </property>
+       <property name="bottomMargin">
+        <number>6</number>
+       </property>
+       <item>
+        <widget class="QSlider" name="systemCountSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="systemCountLabel">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>30</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>30</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>999</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
@@ -258,13 +397,6 @@
       <property name="verticalSpacing">
        <number>3</number>
       </property>
-      <item row="2" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Current Location</string>
-        </property>
-       </widget>
-      </item>
       <item row="2" column="1">
        <widget class="QLineEdit" name="x">
         <property name="text">
@@ -275,18 +407,15 @@
         </property>
        </widget>
       </item>
-      <item row="2" column="2">
-       <widget class="QLineEdit" name="y">
+      <item row="2" column="0">
+       <widget class="QLabel" name="label">
         <property name="text">
-         <string>0</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>Current Location</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="3">
-       <widget class="QLineEdit" name="z">
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="y">
         <property name="text">
          <string>0</string>
         </property>
@@ -305,20 +434,30 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="label_3">
+      <item row="0" column="3">
+       <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Y</string>
+         <string>Z</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="label_4">
+      <item row="2" column="3">
+       <widget class="QLineEdit" name="z">
         <property name="text">
-         <string>Z</string>
+         <string>0</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Y</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -361,7 +500,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>533</width>
+     <width>480</width>
      <height>22</height>
     </rect>
    </property>
@@ -403,5 +542,22 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>systemCountSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>systemCountLabel</receiver>
+   <slot>setNum(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>229</x>
+     <y>442</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>443</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

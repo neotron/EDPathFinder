@@ -24,8 +24,9 @@ namespace operations_research {
     Q_OBJECT
 
     public:
-        TSPWorker(const std::deque<System> &systems, double x, double y, double z) : QThread(), _x(x), _y(y), _z(z), _systems(systems) {
-        }
+        TSPWorker(const SystemList &systems, double x, double y, double z, int maxSystemCount)
+                : QThread(), _systems(systems), _x(x), _y(y), _z(z), _maxSystemCount(maxSystemCount) { }
+
 
         virtual void run();
 
@@ -34,8 +35,10 @@ namespace operations_research {
 
     private:
         int64 systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
-        std::deque<System> _systems;
+        SystemList _systems;
         double _x, _y, _z;
+    private:
+        int _maxSystemCount;
 
     };
 };

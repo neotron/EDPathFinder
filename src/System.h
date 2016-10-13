@@ -22,16 +22,16 @@ typedef std::deque<Planet> PlanetList;
 typedef std::deque<System> SystemList;
 
 enum ThreatLevel {
-    ThreatLevelSafe,
+    ThreatLevelLow,
     ThreatLevelRestrictedLongDistance,
     ThreatLevelMedium,
     ThreatLeveLHigh
 };
 
 enum SettlementSize {
-    SettlementSizeSmall,
-    SettlementSizeMedium,
-    SettlementFlagsLarge
+    SettlementSizeSmall = 1 << 0,
+    SettlementSizeMedium = 1 << 1,
+    SettlementSizeLarge = 1 << 2
 };
 
 enum SettlementFlags {
@@ -56,9 +56,8 @@ class Settlement {
 
 public:
     Settlement(const std::string &name, SettlementSize size = SettlementSizeSmall,
-               ThreatLevel threatLevel = ThreatLevelSafe, int32 flags = 0) : _name(name), _size(size),
-                                                                             _threatLevel(threatLevel),
-                                                                             _flags(flags) { }
+               ThreatLevel threatLevel = ThreatLevelLow, int32 flags = 0) : _name(name), _size(size),
+                                                                            _threatLevel(threatLevel), _flags(flags) { }
 
     const std::string &name() const {
         return _name;
@@ -91,7 +90,7 @@ public:
 
     Planet(const std::string &name, const SettlementList &settlements) : _name(name), _settlements(settlements) { }
 
-    const std::deque<Settlement> &settlements() const {
+    const SettlementList &settlements() const {
         return _settlements;
     }
 
@@ -111,6 +110,9 @@ private:
 class System {
 
 public:
+
+    System() { }
+
     System(const std::string &name, const Planet &planet, double x, double y, double z) : _name(name), _planets(),
                                                                                           _x(x), _y(y), _z(z) {
         _planets.push_back(planet);
@@ -170,7 +172,7 @@ private:
 
 class SystemLoader {
 public:
-    std::deque<System> loadSettlements();
+    SystemList loadSettlements();
 
 private:
     int32 getInt(std::istringstream &is, bool eol = false) const;

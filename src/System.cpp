@@ -11,7 +11,7 @@
 #include "System.h"
 
 std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
-    std::deque<System> systems;
+    SystemList systems;
     QFile systemData(":/dbdump.csv");
     if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return systems;
@@ -47,7 +47,7 @@ std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
         // 26: size
         // 27: idx
         std::istringstream lis(line);
-        std::string type, system, planet, name, dump;
+        std::string type, system, planet, name, sizeStr, dump;
         double x, y, z;
         int32 flags = 0;
         SettlementSize size;
@@ -80,8 +80,14 @@ std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
         if(getBool(lis)) { flags |= SettlementFlagsDivergentScanData; }
         if(getBool(lis)) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
         if(getBool(lis)) { flags |= SettlementFlagsClassifiedScanFragment; }
-        size = (SettlementSize) getInt(lis);
-
+        std::getline(lis, sizeStr, '\t');
+        if(sizeStr == "Large") {
+            size = SettlementSizeLarge;
+        } else if(sizeStr == "Medium") {
+            size = SettlementSizeMedium;
+        } else {
+            size = SettlementSizeSmall;
+        }
         Settlement settlement(name, size, threat, flags);
 
         if(lookup.count(system)) {

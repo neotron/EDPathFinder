@@ -35,8 +35,8 @@ private:
 private:
     QMap<QString, SettlementFlags> _flagsLookup;
 
-    std::deque<System> _systems;
-    std::deque<System> _filteredSystems;
+    SystemList _systems;
+    SystemList _filteredSystems;
     int32 _matchingSettlementCount;
 };
 

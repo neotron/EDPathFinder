@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QCheckBox>
+#include <QRadioButton>
 #include "MainWindow.h"
 #include "ui_mainwindow.h"
 #include "TSPWorker.h"
@@ -11,9 +12,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->x->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
     ui->y->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
     ui->z->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+
     cleanupCheckboxes();
     buildLookupMap();
     loadSystems();
+
 }
 
 MainWindow::~MainWindow() {
@@ -30,6 +33,10 @@ void MainWindow::cleanupCheckboxes() {
     for(auto checkbox: checkboxes) {
         checkbox->setMinimumWidth(width);
     }
+    auto radios = findChildren<QRadioButton *>();
+    for(auto radio: radios) {
+         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
+     }
 }
 
 void MainWindow::buildLookupMap() {
@@ -66,7 +73,7 @@ void MainWindow::createRoute() {
     if(_filteredSystems.size() > 0) {
         ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
         ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(new TSPWorker(_filteredSystems, ui->x->text().toDouble(), ui->y->text().toDouble(), ui->z->text().toDouble()));
+        TSPWorker *workerThread(new TSPWorker(_filteredSystems, ui->x->text().toDouble(), ui->y->text().toDouble(), ui->z->text().toDouble(), ui->systemCountSlider->value()));
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
@@ -78,8 +85,11 @@ void MainWindow::createRoute() {
 void MainWindow::loadSystems() {
     SystemLoader loader;
    	_systems = loader.loadSettlements();
+    ui->systemCountSlider->setMinimum(0);
+    ui->systemCountSlider->setSingleStep(1);
+    ui->systemCountSlider->setMaximum((int) _systems.size());
+    ui->systemCountSlider->setValue((int)_systems.size());
     updateFilters();
-
 }
 
 void MainWindow::updateFilters() {
@@ -99,6 +109,28 @@ void MainWindow::updateFilters() {
         }
     }
 
+    ThreatLevel maxThreatLevel(ThreatLevelLow);
+    if(ui->restrictedSec->isChecked()) {
+        maxThreatLevel = ThreatLevelRestrictedLongDistance;
+    } else if(ui->mediumSec->isChecked()) {
+        maxThreatLevel = ThreatLevelMedium;
+    } else if(ui->highSec->isChecked()) {
+        maxThreatLevel = ThreatLeveLHigh;
+    }
+
+    int32 settlementSizes = 0;
+
+    if(ui->smallSize->isChecked()) {
+        settlementSizes |= SettlementSizeSmall;
+    }
+    if(ui->mediumSize->isChecked()) {
+        settlementSizes |= SettlementSizeMedium;
+    }
+    if(ui->largeSize->isChecked()) {
+        settlementSizes |= SettlementSizeLarge;
+    }
+
+
     int32 matches = 0;
     _filteredSystems.clear();
     for(const auto &system : _systems) {
@@ -108,6 +140,12 @@ void MainWindow::updateFilters() {
             std::deque<Settlement> matchingSettlements;
             for(auto settlement: planet.settlements()) {
                 if((settlement.flags() & settlementFlags) != settlementFlags) {
+                    continue;
+                }
+                if((settlementSizes & settlement.size()) != settlement.size()) {
+                    continue;
+                }
+                if(settlement.threatLevel() > maxThreatLevel) {
                     continue;
                 }
                 if(jumpsExcluded &&
@@ -125,6 +163,9 @@ void MainWindow::updateFilters() {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
         }
     }
+    ui->systemCountSlider->setMaximum((int) _filteredSystems.size());
+    ui->systemCountLabel->setText(QString::number(ui->systemCountSlider->value()));
+
     _matchingSettlementCount = matches;
     ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
 }

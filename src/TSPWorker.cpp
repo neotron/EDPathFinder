@@ -16,10 +16,17 @@ namespace operations_research {
         return _systems[from.value()].distance(_systems[to.value()]);
     }
 
-    void TSPWorker::run() {
+    void TSPWorker::run() { 
+        const System startingSystem = System("Starting Location", Planet("", Settlement("")), _x, _y, _z);
+        std::sort(_systems.begin(), _systems.end(), [startingSystem](const System &a, const System &b) {
+            return a.distance(startingSystem) < b.distance((startingSystem));
+        });
 
+        if(_maxSystemCount < _systems.size()) {
+            _systems.resize((size_t)_maxSystemCount);
+        }
         // Calculate the closest system
-        _systems.push_front(System("Starting Location", Planet("", Settlement("")), _x, _y, _z));
+        _systems.push_front(startingSystem);
 
         RoutingModel routing((int) _systems.size(), 1);
         routing.SetDepot(RoutingModel::NodeIndex(0));
