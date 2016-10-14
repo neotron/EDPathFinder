@@ -5,13 +5,15 @@
 #include "ui_mainwindow.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
+#include "EDSMQueryExecutor.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
-    connect(ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-    ui->x->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
-    ui->y->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
-    ui->z->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow) {
+    _ui->setupUi(this);
+    connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
+    _ui->x->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+    _ui->y->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+    _ui->z->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
+    connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
 
     cleanupCheckboxes();
     buildLookupMap();
@@ -20,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 }
 
 MainWindow::~MainWindow() {
-    delete ui;
+    delete _ui;
 }
 
 void MainWindow::cleanupCheckboxes() {
@@ -58,11 +60,11 @@ void MainWindow::buildLookupMap() {
 
 void MainWindow::routeCalculated(const RouteResult &route) {
     if(!route.route.size()) {
-        ui->statusBar->showMessage("No solution found to the given route.", 10000);
+        _ui->statusBar->showMessage("No solution found to the given route.", 10000);
         return;
     }
-    ui->statusBar->showMessage("Route calculation completed.", 10000);
-    ui->createRouteButton->setEnabled(true);
+    _ui->statusBar->showMessage("Route calculation completed.", 10000);
+    _ui->createRouteButton->setEnabled(true);
 
     RouteViewer *viewer = new RouteViewer(route);
     viewer->show();
@@ -71,24 +73,24 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 void MainWindow::createRoute() {
 
     if(_filteredSystems.size() > 0) {
-        ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
-        ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(new TSPWorker(_filteredSystems, ui->x->text().toDouble(), ui->y->text().toDouble(), ui->z->text().toDouble(), ui->systemCountSlider->value()));
+        _ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+        _ui->createRouteButton->setEnabled(false);
+        TSPWorker *workerThread(new TSPWorker(_filteredSystems, _ui->x->text().toDouble(), _ui->y->text().toDouble(), _ui->z->text().toDouble(), _ui->systemCountSlider->value()));
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
     } else {
-        ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
+        _ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
     }
 }
 
 void MainWindow::loadSystems() {
     SystemLoader loader;
    	_systems = loader.loadSettlements();
-    ui->systemCountSlider->setMinimum(0);
-    ui->systemCountSlider->setSingleStep(1);
-    ui->systemCountSlider->setMaximum((int) _systems.size());
-    ui->systemCountSlider->setValue((int)_systems.size());
+    _ui->systemCountSlider->setMinimum(0);
+    _ui->systemCountSlider->setSingleStep(1);
+    _ui->systemCountSlider->setMaximum((int) _systems.size());
+    _ui->systemCountSlider->setValue((int)_systems.size());
     updateFilters();
 }
 
@@ -110,23 +112,23 @@ void MainWindow::updateFilters() {
     }
 
     ThreatLevel maxThreatLevel(ThreatLevelLow);
-    if(ui->restrictedSec->isChecked()) {
+    if(_ui->restrictedSec->isChecked()) {
         maxThreatLevel = ThreatLevelRestrictedLongDistance;
-    } else if(ui->mediumSec->isChecked()) {
+    } else if(_ui->mediumSec->isChecked()) {
         maxThreatLevel = ThreatLevelMedium;
-    } else if(ui->highSec->isChecked()) {
+    } else if(_ui->highSec->isChecked()) {
         maxThreatLevel = ThreatLeveLHigh;
     }
 
     int32 settlementSizes = 0;
 
-    if(ui->smallSize->isChecked()) {
+    if(_ui->smallSize->isChecked()) {
         settlementSizes |= SettlementSizeSmall;
     }
-    if(ui->mediumSize->isChecked()) {
+    if(_ui->mediumSize->isChecked()) {
         settlementSizes |= SettlementSizeMedium;
     }
-    if(ui->largeSize->isChecked()) {
+    if(_ui->largeSize->isChecked()) {
         settlementSizes |= SettlementSizeLarge;
     }
 
@@ -163,12 +165,39 @@ void MainWindow::updateFilters() {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
         }
     }
-    ui->systemCountSlider->setMaximum((int) _filteredSystems.size());
-    ui->systemCountLabel->setText(QString::number(ui->systemCountSlider->value()));
+    _ui->systemCountSlider->setMaximum((int) _filteredSystems.size());
+    _ui->systemCountLabel->setText(QString::number(_ui->systemCountSlider->value()));
 
     _matchingSettlementCount = matches;
-    ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+    _ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
 }
+
+void MainWindow::updateSystemCoordinates() {
+    const QString systemName(_ui->systemName->text());
+    if(!systemName.length()) {
+        return;
+    }
+    _ui->x->setText("-");
+    _ui->x->setEnabled(false);
+    _ui->y->setText("-");
+    _ui->y->setEnabled(false);
+    _ui->z->setText("-");
+    _ui->z->setEnabled(false);
+    auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
+    connect(executor, &QThread::finished, executor, &QObject::deleteLater);
+    connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &MainWindow::systemCoordinatesReceived);
+    executor->start();
+}
+
+void MainWindow::systemCoordinatesReceived(double x, double y, double z) {
+    _ui->x->setText(QString::number(x));
+    _ui->y->setText(QString::number(y));
+    _ui->z->setText(QString::number(z));
+}
+
+
+
+
 
 
 

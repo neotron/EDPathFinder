@@ -22,9 +22,11 @@ public slots:
     void createRoute();
     void routeCalculated(const RouteResult &route);
     void updateFilters();
+    void updateSystemCoordinates();
+    void systemCoordinatesReceived(double x, double y, double z);
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *_ui;
 
     void cleanupCheckboxes();
 
