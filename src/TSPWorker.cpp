@@ -61,15 +61,17 @@ namespace operations_research {
                     totaldist += dist;
                 }
                 previd = nodeid;
+                QString distance(System::formatDistance(dist));
                 for(auto planet: sys.planets()) {
                     for(auto settlement: planet.settlements()) {
                         std::vector<QString> row(5);
                         row[0] = sys.name().c_str();
                         row[1] = planet.name().c_str();
                         row[2] = settlement.name().c_str();
-                        row[3] = System::formatDistance(dist);
+                        row[3] = distance;
                         row[4] = System::formatDistance(totaldist);
                         result.route.emplace_back(row);
+                        distance = "-";
                     }
                 }
             }

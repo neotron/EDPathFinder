@@ -17,14 +17,19 @@ int RouteTableModel::columnCount(const QModelIndex &parent) const {
 }
 
 QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
-    switch(role) {
-        case Qt::DisplayRole:
-            return _result.route[index.row()][index.column()];
-        case Qt::TextAlignmentRole:
-            return index.column() < 3 ? Qt::AlignLeft : Qt::AlignRight;
-        default:
-            return QVariant();
+    int col = index.column();
+    int row = index.row();
+    if(row < _result.route.size() && col < _result.route[row].size()) {
+        switch(role) {
+            case Qt::DisplayRole:
+                return _result.route[row][col];
+            case Qt::TextAlignmentRole:
+                return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
+            default:
+                return QVariant();
+        }
     }
+    return QVariant();
 }
 
 QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
@@ -34,8 +39,8 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
                 case 0: return "System";
                 case 1: return "Planet";
                 case 2: return "Settlement";
-                case 3: return "Jump Size";
-                case 4: return "Distance Travelled";
+                case 3: return "Distance";
+                case 4: return "Total Distance";
             }
         }
     }
