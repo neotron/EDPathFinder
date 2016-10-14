@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>EliteTSP</string>
+   <string>ED Pathfinder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -573,13 +573,6 @@
      <height>22</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuApplication">
-    <property name="title">
-     <string>Application</string>
-    </property>
-    <addaction name="actionPreferences"/>
-   </widget>
-   <addaction name="menuApplication"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">

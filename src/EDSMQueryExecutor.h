@@ -14,10 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+#pragma once
 
-
-#ifndef ELITETSP_EDSMQUERY_H
-#define ELITETSP_EDSMQUERY_H
 #include <QUrl>
 #include <QThread>
 class QNetworkReply;
@@ -50,6 +48,3 @@ private:
     RequestType _requestType;
     const QUrl _url;
 };
-
-
-#endif //ELITETSP_EDSMQUERY_H

@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EDPathfinder Release" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="" PASS_PARENT_ENVS_2="true" PROJECT_NAME="EDPathinder" TARGET_NAME="EDPathfinder" CONFIG_NAME="RelWithDebInfo" RUN_TARGET_PROJECT_NAME="EDPathinder" RUN_TARGET_NAME="EDPathfinder">
+    <envs />
+    <method />
+  </configuration>
+</component>

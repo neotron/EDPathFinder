@@ -15,9 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-
-#ifndef ELITETSP_SYSTEM_H
-#define ELITETSP_SYSTEM_H
+#pragma once
 
 #include <string>
 #include <deque>
@@ -195,5 +193,3 @@ private:
 
     bool getBool(std::istringstream &is, bool eol = false) const;
 };
-
-#endif //ELITETSP_SYSTEM_H

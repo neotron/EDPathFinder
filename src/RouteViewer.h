@@ -15,8 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef ROUTEVIEWER_H
-#define ROUTEVIEWER_H
+#pragma once
 
 #include <QMainWindow>
 #include <QItemSelection>
@@ -39,5 +38,3 @@ public slots:
 private:
     Ui::RouteViewer *_ui;
 };
-
-#endif // ROUTEVIEWER_H

@@ -1,5 +1,3 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
 //
 //  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
 //
@@ -16,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+#pragma once
 
 #include <QMainWindow>
 #include <QMap>
@@ -57,5 +56,3 @@ private:
     SystemList _filteredSystems;
     int32 _matchingSettlementCount;
 };
-
-#endif // MAINWINDOW_H

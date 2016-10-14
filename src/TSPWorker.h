@@ -34,8 +34,7 @@
 //
 
 
-#ifndef ELITETSP_TSP_H
-#define ELITETSP_TSP_H
+#pragma once
 
 #include <deque>
 #include <QThread>
@@ -77,4 +76,3 @@ namespace operations_research {
 
 using operations_research::TSPWorker;
 
-#endif //ELITETSP_TSP_H

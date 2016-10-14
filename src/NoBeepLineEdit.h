@@ -15,10 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-
-#ifndef ELITETSP_NOBEEPLINEEDIT_H
-#define ELITETSP_NOBEEPLINEEDIT_H
-
+#pragma once
 
 #include <QLineEdit>
 #include <QKeyEvent>
@@ -47,6 +44,3 @@ public:
         }
     }
 };
-
-
-#endif //ELITETSP_NOBEEPLINEEDIT_H

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(EliteTSP)
+project(EDPathinder)
 set(ORTOOLS ../or-tools/)
 include_directories(${ORTOOLS}/include)
 link_directories(${ORTOOLS}/lib)
@@ -19,4 +19,4 @@ else()
 endif()
 
 set(SOURCE_FILES src/main.cpp src/System.cpp src/System.h src/TSPWorker.cpp src/MainWindow.cpp src/RouteViewer.cpp src/RouteViewer.ui src/MainWindow.ui resources/resources.qrc src/RouteTableModel.cpp src/RouteTableModel.h src/NoBeepLineEdit.h src/EDSMQueryExecutor.cpp src/EDSMQueryExecutor.h)
-add_executable(EliteTSP ${SOURCE_FILES})
+add_executable(EDPathfinder ${SOURCE_FILES})

@@ -15,9 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef ELITETSP_ROUTETABLEMODEL_H
-#define ELITETSP_ROUTETABLEMODEL_H
-
+#pragma once
 
 #include <QAbstractTableModel>
 #include "System.h"
@@ -39,6 +37,3 @@ public:
 private:
     RouteResult _result;
 };
-
-
-#endif //ELITETSP_ROUTETABLEMODEL_H
