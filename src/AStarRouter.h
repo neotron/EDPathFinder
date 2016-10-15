@@ -128,6 +128,10 @@ public:
         auto lowerName = lower(name);
         return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
     }
+    System *getSystemByName(const QString &name) {
+        auto lowerName = lower(name.toStdString());
+        return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
+    }
 
 private:
 

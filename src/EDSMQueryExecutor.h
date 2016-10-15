@@ -20,6 +20,8 @@
 #include <QThread>
 class QNetworkReply;
 class QNetworkAccessManager;
+class System;
+
 class EDSMQueryExecutor : public QThread {
     Q_OBJECT
 
@@ -32,7 +34,7 @@ protected:
     virtual void run() override;
 
 signals:
-    void coordinatesReceived(double x, double y, double z);
+    void coordinatesReceived(const System &);
     void coordinateRequestFailed();
 public slots:
     void replyFinished(QNetworkReply *reply);

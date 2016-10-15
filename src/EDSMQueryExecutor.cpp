@@ -22,6 +22,7 @@
 #include <QJsonDocument>
 
 #include "EDSMQueryExecutor.h"
+#include "System.h"
 #include <QJsonObject>
 
 #define SYSTEM_QUERY_URL QString("http://www.edsm.net/api-v1/system?systemName=%1&coords=1")
@@ -53,7 +54,8 @@ void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
             auto x = coords["x"].toDouble();
             auto z = coords["z"].toDouble();
             auto y = coords["y"].toDouble();
-            emit coordinatesReceived(x, y, z);
+            System system(document.object()["name"].toString().toStdString(), x, y, z);
+            emit coordinatesReceived(system);
             reply->deleteLater();
             return;
         }

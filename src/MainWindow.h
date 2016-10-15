@@ -39,7 +39,7 @@ public slots:
     void routeCalculated(const RouteResult &route);
     void updateFilters();
     void updateSystemCoordinates();
-    void systemCoordinatesReceived(double x, double y, double z);
+    void systemCoordinatesReceived(const System &system);
     void systemCoordinatesRequestFailed();
     void dataDecompressed(const QByteArray &bytes);
 
@@ -59,10 +59,15 @@ private:
     SystemList _filteredSystems;
     int32 _matchingSettlementCount;
     AStarRouter _router;
+    bool _routingPending;
 
     void loadCompressedData();
 
     void downloadSystemCoordinates(const QString &systemName) const;
 
     void showMessage(const QString &message, int timeout = 10000);
+
+    void updateSliderParams(int size);
+
+    void updateSystemCoordinateDisplay(const System &system) const;
 };

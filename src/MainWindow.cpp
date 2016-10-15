@@ -26,7 +26,7 @@
 #include "QCompressor.h"
 #include "AStarRouter.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false) {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
     connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
@@ -87,11 +87,19 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 void MainWindow::createRoute() {
 
     if(_filteredSystems.size() > 0) {
-        _ui->statusBar->showMessage(QString("Calculating route with %1 settlements in %2 systems...").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+        auto systemName = _ui->systemName->text();
+        auto originSystem = _router.getSystemByName(systemName);
+        if(!originSystem) { 
+            // Need to fetch coordinates for origin.
+            downloadSystemCoordinates(systemName);
+            _routingPending = true;
+            return;
+        }
+        auto routeSize = _ui->systemCountSlider->value();
+        updateSystemCoordinateDisplay(*originSystem);
+        showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name().c_str()), 0);
         _ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(
-                new TSPWorker(_filteredSystems, _router.getSystemByName(_ui->systemName->text().toStdString()),
-                              _ui->systemCountSlider->value()));
+        TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
 //        workerThread->setRouter(&_router);
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
@@ -106,8 +114,8 @@ void MainWindow::loadSystems() {
    	_systems = loader.loadSettlements(&_router);
     _ui->systemCountSlider->setMinimum(1);
     _ui->systemCountSlider->setSingleStep(1);
-    _ui->systemCountSlider->setMaximum((int) _systems.size());
-    _ui->systemCountSlider->setValue((int)_systems.size());
+    updateSliderParams((int) _systems.size());
+
     updateFilters();
 }
 
@@ -183,10 +191,8 @@ void MainWindow::updateFilters() {
         }
     }
     auto numSystems = (int) _filteredSystems.size();
-    _ui->systemCountSlider->setMaximum(numSystems);
-    _ui->systemCountSlider->setValue(numSystems);
-    _ui->systemCountLabel->setText(QString::number(numSystems));
-    
+    updateSliderParams(numSystems);
+
     _matchingSettlementCount = matches;
     _ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
 }
@@ -200,7 +206,7 @@ void MainWindow::updateSystemCoordinates() {
     if(!system) {
         downloadSystemCoordinates(systemName);
     } else {
-        systemCoordinatesReceived(system->x(), system->y(), system->z());
+        updateSystemCoordinateDisplay(*system);
     }
 
 }
@@ -220,17 +226,30 @@ void MainWindow::downloadSystemCoordinates(const QString &systemName) const {
 }
 
 void MainWindow::systemCoordinatesRequestFailed() {
-    _ui->statusBar->showMessage(QString("Unknown origin system: %1").arg(_ui->systemName->text()), 10000);
+    showMessage(QString("Unknown origin system: %1").arg(_ui->systemName->text()));
     _ui->systemName->setEnabled(true);
+    _routingPending = false;
 }
 
 
-void MainWindow::systemCoordinatesReceived(double x, double y, double z) {
-    _ui->createRouteButton->setEnabled(true);
+void MainWindow::systemCoordinatesReceived(const System &system) {
+    updateSystemCoordinateDisplay(system);
+    _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setEnabled(true);
-    _ui->x->setText(QString::number(x));
-    _ui->y->setText(QString::number(y));
-    _ui->z->setText(QString::number(z));
+    _ui->systemName->setText(system.name().c_str());
+    _router.addSystem(system);
+    showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
+    if(_routingPending) {
+        _routingPending = false;
+        createRoute();
+    }
+}
+
+void MainWindow::updateSystemCoordinateDisplay(const System &system) const {
+    _ui->x->setText(QString::number(system.x()));
+    _ui->y->setText(QString::number(system.y()));
+    _ui->z->setText(QString::number(system.z()));
+    _ui->systemName->setText(system.name().c_str());
 }
 
 void MainWindow::loadCompressedData() {
@@ -263,6 +282,15 @@ void MainWindow::dataDecompressed(const QByteArray &bytes) {
 void MainWindow::showMessage(const QString &message, int timeout) {
     _ui->statusBar->showMessage(message, timeout);
 }
+
+void MainWindow::updateSliderParams(int size) {
+    auto max = qMin(100, size);
+    _ui->systemCountSlider->setMaximum(max);
+    _ui->systemCountSlider->setValue(max);
+    _ui->systemCountLabel->setText(QString::number(max));
+}
+
+
 
 
 
