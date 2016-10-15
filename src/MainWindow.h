@@ -40,6 +40,7 @@ public slots:
     void updateFilters();
     void updateSystemCoordinates();
     void systemCoordinatesReceived(double x, double y, double z);
+    void systemCoordinatesRequestFailed();
     void dataDecompressed(const QByteArray &bytes);
 
 private:
@@ -60,4 +61,8 @@ private:
     AStarRouter _router;
 
     void loadCompressedData();
+
+    void downloadSystemCoordinates(const QString &systemName) const;
+
+    void showMessage(const QString &message, int timeout = 10000);
 };

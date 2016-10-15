@@ -56,18 +56,24 @@ private:
     bool _valid;
 };
 
-class AStarSystemNode : public System, public AStarNode {
+class AStarSystemNode : public AStarNode {
 public:
-    AStarSystemNode(AStarCalculator &calculator, const std::string &name, const QVector3D &position) : System(name, position), AStarNode(), _calculator(calculator) { }
+    AStarSystemNode(AStarCalculator &calculator, const System &system) : AStarNode(), _system(system), _calculator(calculator) { }
     virtual ~AStarSystemNode() { }
 
     // Distance between this and another node, used by A* algorithm.
     virtual float distanceTo(AStarNode *node) const override {
         auto other = (AStarSystemNode *)node;
-        return _position.distanceToPoint(other->_position);
+        return _system.position().distanceToPoint(other->_system.position());
     }
 
+    const std::string &name() const { return _system.name(); }
+    const QVector3D &position() const { return _system.position(); }
+
     virtual std::vector<std::pair<Node *, float>> &getChildren() override;
+
+private:
+    const System &_system;
     AStarCalculator &_calculator;
 };
 
@@ -76,12 +82,12 @@ class AStarCalculator : public QObject {
 
 public:
     AStarCalculator(const SystemList &systems, const System &start, const System &end, double jumprange, QObject *parent = Q_NULLPTR) : QObject(parent), _start(Q_NULLPTR), _end(Q_NULLPTR), _jumpRange(jumprange),_nodes() {
-        cylinder(systems, start.position(), end.position(), 20.0);
+        cylinder(systems, start.position(), end.position(), 40.0);
     }
 
     virtual ~AStarCalculator();
 
-    void cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, double buffer);
+    void cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer);
 
     double jumpRange() const {
         return _jumpRange;

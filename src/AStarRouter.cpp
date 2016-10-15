@@ -64,21 +64,24 @@ AStarCalculator::~AStarCalculator() {
     _nodes.clear();
 }
 
-void AStarCalculator::cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, double buffer) {
+void AStarCalculator::cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer) {
+
+    auto bufferSquare = buffer * buffer;
     for(const auto &s: stars) {
-        auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).length();
-        auto denominator = (vec_to - vec_from).length();
+        auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
+        auto denominator = (vec_to - vec_from).lengthSquared();
         auto dist = numerator / denominator;
-        if(dist < buffer) {
-            auto system = new AStarSystemNode(*this, s.name(), s.position());
-            _nodes.push_back(system);
+        if(dist < bufferSquare) {
+            auto systemNode = new AStarSystemNode(*this, s);
+            _nodes.push_back(systemNode);
             if(s.position() == vec_from) {
-                _start = system;
+                _start = systemNode;
             } else if(s.position() == vec_to) {
-                _end = system;
+                _end = systemNode;
             }
         }
     }
+    //qDebug() << "Cylinder of systems contain"<<_nodes.size()<<"nodes.";
 }
 
 AStarResult AStarCalculator::solve() {

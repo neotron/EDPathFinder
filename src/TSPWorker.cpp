@@ -36,9 +36,9 @@ namespace operations_research {
         auto &toSystem = _systems[to];
         ++numDist;
         if(_router) {
-            AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 27.0f);
+            AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 45.0f);
             if(result.valid()) {
-                return (int64) (result.distance() + result.route().size() * 10000);
+                return (int64) result.route().size();
             } else {
                 return INT64_MAX;
             }
@@ -108,7 +108,7 @@ namespace operations_research {
         RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
 
         // Setting first solution heuristic (cheapest addition).
-        parameters.set_first_solution_strategy(FirstSolutionStrategy::PATH_CHEAPEST_ARC);
+        parameters.set_first_solution_strategy(FirstSolutionStrategy::PARALLEL_CHEAPEST_INSERTION);
         routing.SetArcCostEvaluatorOfAllVehicles(NewPermanentCallback(this, &TSPWorker::systemDistance));
 
         // Solve, returns a solution if any (owned by RoutingModel).
@@ -140,6 +140,16 @@ namespace operations_research {
                 }
                 previd = nodeid;
                 QString distance(System::formatDistance(dist));
+                if(!sys.planets().size())  {
+                    // Starting system
+                    std::vector<QString> row(5);
+                    row[0] = sys.name().c_str();
+                    row[1] = "Point of origin";
+                    row[2] = "";
+                    row[3] = distance;
+                    row[4] = System::formatDistance(totaldist);
+                    result.route.emplace_back(row);
+                }
                 for(auto planet: sys.planets()) {
                     for(auto settlement: planet.settlements()) {
                         std::vector<QString> row(5);

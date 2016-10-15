@@ -71,12 +71,6 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
 
         std::getline(lis, type, '\t'); // 1
         std::getline(lis, system, '\t'); // 2
-
-        if(!router->getSystemByName(system)) {
-            qDebug()<<"System"<<system.c_str()<<"is unknown.";
-            continue;
-        }
-
         std::getline(lis, planet, '\t'); // 3
         std::getline(lis, name, '\t'); // 4
         if(getBool(lis)) { // gov/is anarchy
@@ -119,6 +113,10 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
             System systemObj(system, planetObj, x, y, z);
             systems.push_back(systemObj);
             lookup[system] = &systems.back();
+
+            if(!router->getSystemByName(system)) {
+                router->addSystem(systemObj);
+            }
         }
     }
     std::cerr << "Loaded " << systems.size() << " systems." << std::endl;
@@ -151,7 +149,7 @@ bool SystemLoader::getBool(std::istringstream &is, bool eol) const {
 
 QString System::formatDistance(int64 dist) {
     if(dist > 0) {
-        return QString("%1.%2").arg(dist / 100).arg(dist % 100);
+        return QString("%1.%2").arg(dist / 10).arg(dist % 10);
     } else {
         return "-";
     }

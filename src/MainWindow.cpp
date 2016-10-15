@@ -29,11 +29,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow) {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-    _ui->x->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
-    _ui->y->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
-    _ui->z->setValidator( new QDoubleValidator(-50000, 50000, 5, this) );
     connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
-
     cleanupCheckboxes();
     buildLookupMap();
     loadCompressedData();
@@ -96,7 +92,7 @@ void MainWindow::createRoute() {
         TSPWorker *workerThread(
                 new TSPWorker(_filteredSystems, _router.getSystemByName(_ui->systemName->text().toStdString()),
                               _ui->systemCountSlider->value()));
-        workerThread->setRouter(&_router);
+//        workerThread->setRouter(&_router);
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
@@ -108,7 +104,7 @@ void MainWindow::createRoute() {
 void MainWindow::loadSystems() {
     SystemLoader loader;
    	_systems = loader.loadSettlements(&_router);
-    _ui->systemCountSlider->setMinimum(0);
+    _ui->systemCountSlider->setMinimum(1);
     _ui->systemCountSlider->setSingleStep(1);
     _ui->systemCountSlider->setMaximum((int) _systems.size());
     _ui->systemCountSlider->setValue((int)_systems.size());
@@ -186,9 +182,11 @@ void MainWindow::updateFilters() {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
         }
     }
-    _ui->systemCountSlider->setMaximum((int) _filteredSystems.size());
-    _ui->systemCountLabel->setText(QString::number(_ui->systemCountSlider->value()));
-
+    auto numSystems = (int) _filteredSystems.size();
+    _ui->systemCountSlider->setMaximum(numSystems);
+    _ui->systemCountSlider->setValue(numSystems);
+    _ui->systemCountLabel->setText(QString::number(numSystems));
+    
     _matchingSettlementCount = matches;
     _ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
 }
@@ -200,30 +198,43 @@ void MainWindow::updateSystemCoordinates() {
     }
     auto system = _router.getSystemByName(systemName.toStdString());
     if(!system) {
-        _ui->systemName->setText("");
-        _ui->statusBar->showMessage(QString("Unknown orign system: %1").arg(systemName), 10000);
-        return;
+        downloadSystemCoordinates(systemName);
+    } else {
+        systemCoordinatesReceived(system->x(), system->y(), system->z());
     }
-    _ui->x->setText(QString::number(system->x()));
-    _ui->x->setEnabled(false);
-    _ui->y->setText(QString::number(system->y()));
-    _ui->y->setEnabled(false);
-    _ui->z->setText(QString::number(system->z()));
-    _ui->z->setEnabled(false);
 
-    //auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
-    //connect(executor, &QThread::finished, executor, &QObject::deleteLater);
-    //connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &MainWindow::systemCoordinatesReceived);
-    //executor->start();
 }
 
+void MainWindow::downloadSystemCoordinates(const QString &systemName) const {
+    _ui->statusBar->showMessage(QString("Fetching system coordinates from EDSM..."), 10000);
+    auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
+    connect(executor, &QThread::finished, executor, &QObject::deleteLater);
+    connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &MainWindow::systemCoordinatesReceived);
+    connect(executor, &EDSMQueryExecutor::coordinateRequestFailed, this, &MainWindow::systemCoordinatesRequestFailed);
+    executor->start();
+    _ui->x->setText("-");
+    _ui->y->setText("-");
+    _ui->z->setText("-");
+    _ui->systemName->setEnabled(false);
+    _ui->createRouteButton->setEnabled(false);
+}
+
+void MainWindow::systemCoordinatesRequestFailed() {
+    _ui->statusBar->showMessage(QString("Unknown origin system: %1").arg(_ui->systemName->text()), 10000);
+    _ui->systemName->setEnabled(true);
+}
+
+
 void MainWindow::systemCoordinatesReceived(double x, double y, double z) {
+    _ui->createRouteButton->setEnabled(true);
+    _ui->systemName->setEnabled(true);
     _ui->x->setText(QString::number(x));
     _ui->y->setText(QString::number(y));
     _ui->z->setText(QString::number(z));
 }
 
 void MainWindow::loadCompressedData() {
+    showMessage("Loading known systems...", 0);
     QFile file(":/systems.json.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
     QByteArray blob = file.readAll();
@@ -236,15 +247,26 @@ void MainWindow::loadCompressedData() {
 
 void MainWindow::dataDecompressed(const QByteArray &bytes) {
     auto json = QJsonDocument::fromJson(bytes);
+    int numSystems = 0;
     for(auto systemObj: json.array()) {
         auto sysdata = systemObj.toObject();
         auto coords = sysdata["coords"].toObject();
         auto name = sysdata["name"].toString();
         System system(name.toStdString(), coords["x"].toDouble(), coords["y"].toDouble(), coords["z"].toDouble());
         _router.addSystem(system);
+        ++numSystems;
     }
+    showMessage(QString("Completed loading of %1 systems.").arg(numSystems));
     loadSystems();
 }
+
+void MainWindow::showMessage(const QString &message, int timeout) {
+    _ui->statusBar->showMessage(message, timeout);
+}
+
+
+
+
 
 
 

@@ -353,8 +353,20 @@
        </property>
        <item>
         <widget class="QSlider" name="systemCountSlider">
+         <property name="maximum">
+          <number>0</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="invertedControls">
+          <bool>false</bool>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::NoTicks</enum>
+         </property>
+         <property name="tickInterval">
+          <number>5</number>
          </property>
         </widget>
        </item>
@@ -379,7 +391,7 @@
           </size>
          </property>
          <property name="text">
-          <string>999</string>
+          <string>0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -407,37 +419,28 @@
        <property name="verticalSpacing">
         <number>3</number>
        </property>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
+       <item row="1" column="1">
+        <widget class="QLabel" name="x">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>75</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
+         </property>
          <property name="text">
-          <string>System Name</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>X</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Y</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Z</string>
+          <string>0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -450,85 +453,127 @@
           <string>Current system, used as starting point for route.</string>
          </property>
          <property name="text">
-          <string/>
+          <string>Sol</string>
          </property>
          <property name="placeholderText">
-          <string>Sol</string>
+          <string/>
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="NoBeepLineEdit" name="x">
-         <property name="maximumSize">
-          <size>
-           <width>75</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="toolTip">
-          <string>Coordinates for the selected system. Can enter if system lookup fails.</string>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_3">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
          </property>
          <property name="text">
-          <string/>
+          <string>Y</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
-         <property name="readOnly">
-          <bool>false</bool>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
          </property>
-         <property name="placeholderText">
-          <string>0</string>
+         <property name="text">
+          <string>System Name</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_2">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>X</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QLabel" name="label_4">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Z</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="NoBeepLineEdit" name="y">
+        <widget class="QLabel" name="y">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Coordinates for the selected system. Can enter if system lookup fails.</string>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="text">
-          <string/>
+          <string>0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="placeholderText">
-          <string>0</string>
          </property>
         </widget>
        </item>
        <item row="1" column="3">
-        <widget class="NoBeepLineEdit" name="z">
+        <widget class="QLabel" name="z">
+         <property name="minimumSize">
+          <size>
+           <width>75</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>75</width>
            <height>16777215</height>
           </size>
          </property>
-         <property name="toolTip">
-          <string>Coordinates for the selected system. Can enter if system lookup fails.</string>
+         <property name="font">
+          <font>
+           <weight>50</weight>
+           <bold>false</bold>
+          </font>
          </property>
          <property name="text">
-          <string/>
+          <string>0</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>false</bool>
-         </property>
-         <property name="placeholderText">
-          <string>0</string>
          </property>
         </widget>
        </item>
@@ -614,7 +659,7 @@
  <connections>
   <connection>
    <sender>systemCountSlider</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>systemCountLabel</receiver>
    <slot>setNum(int)</slot>
    <hints>

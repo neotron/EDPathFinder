@@ -147,7 +147,7 @@ public:
 
 // Return distance as a fixed point value with two decimals. Used by TSP
     int64 distance(const System &other) const {
-        float distance = _position.distanceToPoint(other._position) * 100;
+        float distance = _position.distanceToPoint(other._position) * 10;
         return (int64) distance;
     }
 
