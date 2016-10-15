@@ -16,20 +16,13 @@
 
 #include "QCompressor.h"
 
-/**
- * @brief Compresses the given buffer using the standard GZIP algorithm
- * @param input The buffer to be compressed
- * @param output The result of the compression
- * @param level The compression level to be used (@c 0 = no compression, @c 9 = max, @c -1 = default)
- * @return @c true if the compression was successful, @c false otherwise
- */
-bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
+bool QCompressor::gzipCompress()
 {
     // Prepare output
-    output.clear();
+    _output.clear();
 
     // Is there something to do?
-    if(input.length())
+    if(_input.length())
     {
         // Declare vars
         int flush = 0;
@@ -43,17 +36,17 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
         strm.next_in = Z_NULL;
 
         // Initialize deflater
-        int ret = deflateInit2(&strm, qMax(-1, qMin(9, level)), Z_DEFLATED, GZIP_WINDOWS_BIT, 8, Z_DEFAULT_STRATEGY);
+        int ret = deflateInit2(&strm, qMax(-1, qMin(9, _level)), Z_DEFLATED, GZIP_WINDOWS_BIT, 8, Z_DEFAULT_STRATEGY);
 
         if (ret != Z_OK)
             return(false);
 
         // Prepare output
-        output.clear();
+        _output.clear();
 
         // Extract pointer to input data
-        char *input_data = input.data();
-        int input_data_left = input.length();
+        const char *input_data = _input.data();
+        int input_data_left = _input.length();
 
         // Compress data until available
         do {
@@ -62,7 +55,7 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
 
             // Set deflater references
             strm.next_in = (unsigned char*)input_data;
-            strm.avail_in = chunk_size;
+            strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
             input_data += chunk_size;
@@ -75,10 +68,10 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
             do {
 
                 // Declare vars
-                char out[GZIP_CHUNK_SIZE];
+                unsigned char *out = (unsigned char *)alloca(GZIP_CHUNK_SIZE);
 
                 // Set deflater references
-                strm.next_out = (unsigned char*)out;
+                strm.next_out = out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
 
                 // Try to deflate chunk
@@ -99,7 +92,7 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
 
                 // Cumulate result
                 if(have > 0)
-                    output.append((char*)out, have);
+                    _output.append((char*)out, have);
 
             } while (strm.avail_out == 0);
 
@@ -115,19 +108,14 @@ bool QCompressor::gzipCompress(QByteArray input, QByteArray &output, int level)
         return(true);
 }
 
-/**
- * @brief Decompresses the given buffer using the standard GZIP algorithm
- * @param input The buffer to be decompressed
- * @param output The result of the decompression
- * @return @c true if the decompression was successfull, @c false otherwise
- */
-bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
+bool QCompressor::gzipDecompress()
 {
     // Prepare output
-    output.clear();
+    _output.clear();
 
     // Is there something to do?
-    if(input.length() > 0)
+    auto input_size = _input.length();
+    if(input_size > 0)
     {
         // Prepare inflater status
         z_stream strm;
@@ -144,8 +132,8 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
             return(false);
 
         // Extract pointer to input data
-        char *input_data = input.data();
-        int input_data_left = input.length();
+        const char *input_data = _input.data();
+        int input_data_left = input_size;
 
         // Decompress data until available
         do {
@@ -158,7 +146,7 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
 
             // Set inflater references
             strm.next_in = (unsigned char*)input_data;
-            strm.avail_in = chunk_size;
+            strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
             input_data += chunk_size;
@@ -195,10 +183,12 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
 
                 // Cumulate result
                 if(have > 0)
-                    output.append((char*)out, have);
+                    _output.append((char*)out, have);
 
             } while (strm.avail_out == 0);
-
+            
+            emit progress((input_size - input_data_left)*100/input_size);
+                    
         } while (ret != Z_STREAM_END);
 
         // Clean-up
@@ -210,3 +200,13 @@ bool QCompressor::gzipDecompress(QByteArray input, QByteArray &output)
     else
         return(true);
 }
+
+void QCompressor::run() {
+    if(_compress) {
+        gzipCompress();
+    } else {
+        gzipDecompress();
+    }
+    emit complete(_output);
+}
+

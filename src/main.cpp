@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "MainWindow.h"
+
 Q_DECLARE_METATYPE(RouteResult);
 
 // namespace operations_research
@@ -30,6 +31,7 @@ int main(int argc, char **argv) {
 
 	MainWindow w;
 	w.show();
+
 
 	return a.exec();
 }

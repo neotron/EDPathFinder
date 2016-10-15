@@ -1,0 +1,3 @@
+[submodule "deps/PathFinder"]
+	path = deps/PathFinder
+	url = git@github.com:Sahnvour/PathFinder.git

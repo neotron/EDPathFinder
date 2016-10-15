@@ -22,9 +22,11 @@
 #include <unordered_map>
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 #include "System.h"
+#include "AStarRouter.h"
 
-std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
+SystemList SystemLoader::loadSettlements(AStarRouter *router) {
     SystemList systems;
     QFile systemData(":/dbdump.csv");
     if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -69,6 +71,12 @@ std::deque<System, std::allocator<System>> SystemLoader::loadSettlements() {
 
         std::getline(lis, type, '\t'); // 1
         std::getline(lis, system, '\t'); // 2
+
+        if(!router->getSystemByName(system)) {
+            qDebug()<<"System"<<system.c_str()<<"is unknown.";
+            continue;
+        }
+
         std::getline(lis, planet, '\t'); // 3
         std::getline(lis, name, '\t'); // 4
         if(getBool(lis)) { // gov/is anarchy
@@ -149,3 +157,14 @@ QString System::formatDistance(int64 dist) {
     }
 }
 
+System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) {}
+
+void System::addSettlement(const std::string &planetName, const Settlement &settlement) {
+    for(auto planet: _planets) {
+        if(planet.name() == planetName) {
+            planet.addSettlement(settlement);
+            return;
+        }
+    }
+    _planets.push_back(Planet(planetName, settlement));
+}

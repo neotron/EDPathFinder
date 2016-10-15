@@ -20,6 +20,7 @@
 #include <QMap>
 #include "System.h"
 #include "TSPWorker.h"
+#include "AStarRouter.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,7 @@ public slots:
     void updateFilters();
     void updateSystemCoordinates();
     void systemCoordinatesReceived(double x, double y, double z);
+    void dataDecompressed(const QByteArray &bytes);
 
 private:
     Ui::MainWindow *_ui;
@@ -55,4 +57,7 @@ private:
     SystemList _systems;
     SystemList _filteredSystems;
     int32 _matchingSettlementCount;
+    AStarRouter _router;
+
+    void loadCompressedData();
 };

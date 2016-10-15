@@ -22,7 +22,11 @@
 #include <cmath>
 #include <base/integral_types.h>
 #include <QString>
+#include <deps/PathFinder/src/AStar.h>
+#include <QVector3D>
 
+class AStarSystemNode;
+class AStarRouter;
 class Settlement;
 
 class Planet;
@@ -125,66 +129,68 @@ public:
 
     System() { }
 
+    System(const std::string &name, double x, double y, double z) : _name(name), _position(x, y, z) { }
+
     System(const std::string &name, const Planet &planet, double x, double y, double z) : _name(name), _planets(),
-                                                                                          _x(x), _y(y), _z(z) {
+                                                                                          _position(x, y, z) {
         _planets.push_back(planet);
     }
 
     System(const std::string &system, const PlanetList &planets, double x, double y, double z) : _name(system),
                                                                                                  _planets(planets),
-                                                                                                 _x(x), _y(y), _z(z) { }
+                                                                                                 _position(x, y, z) { }
+    System(const std::string &name, const QVector3D &position) : _name(name), _position(position) { }
 
-    System(double x, double y, double z) : _x(x), _y(y), _z(z) { }
+    System(AStarSystemNode *system);
 
-// Return distance as a fixed point value with two decimals.
+    virtual ~System() { }
+
+// Return distance as a fixed point value with two decimals. Used by TSP
     int64 distance(const System &other) const {
-        double distance = sqrt(sqr(_x - other._x) + sqr(_y - other._y) + sqr(_z - other._z)) * 100;
+        float distance = _position.distanceToPoint(other._position) * 100;
         return (int64) distance;
     }
 
     static QString formatDistance(int64 dist);
 
     double z() const {
-        return _z;
+        return _position.x();
     }
 
     double y() const {
-        return _y;
+        return _position.y();
     }
 
     double x() const {
-        return _x;
+        return _position.z();
+    }
+
+    const QVector3D &position() const {
+        return _position;
     }
 
     const PlanetList &planets() const { return _planets; };
 
-    void addSettlement(const std::string &planetName, const Settlement &settlement) {
-        for(auto planet: _planets) {
-            if(planet.name() == planetName) {
-                planet.addSettlement(settlement);
-                return;
-            }
-        }
-        _planets.push_back(Planet(planetName, settlement));
-    };
+    void addSettlement(const std::string &planetName, const Settlement &settlement);;
 
     const std::string &name() const {
         return _name;
     }
 
-private:
+protected:
+
+    System(double x, double y, double z) : _position(x, y, z) { }
+
     double sqr(double val) const { return val * val; }
 
     std::string _name;
     PlanetList _planets;
-    double _x;
-    double _y;
-    double _z;
+    QVector3D _position;
 };
 
 class SystemLoader {
 public:
-    SystemList loadSettlements();
+    SystemList loadSettlements(AStarRouter *router);
 
 private:
     int32 getInt(std::istringstream &is, bool eol = false) const;

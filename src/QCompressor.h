@@ -13,20 +13,45 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#ifndef QCOMPRESSOR_H
-#define QCOMPRESSOR_H
+#pragma once
 
 #include <zlib.h>
 #include <QByteArray>
+#include <QtGui>
 
 #define GZIP_WINDOWS_BIT 15 + 16
 #define GZIP_CHUNK_SIZE 32 * 1024
 
-class QCompressor
-{
-public:
-    static bool gzipCompress(QByteArray input, QByteArray &output, int level = -1);
-    static bool gzipDecompress(QByteArray input, QByteArray &output);
-};
+class QCompressor : public QThread {
+Q_OBJECT
 
-#endif // QCOMPRESSOR_H
+
+public:
+    virtual void run() override;
+
+    explicit QCompressor(const QByteArray &input, bool compress = false) : QThread(),
+                                                                           _input(input), _output(),
+                                                                           _compress(compress),
+                                                                           _level(-1) { }
+
+    virtual ~QCompressor() override { }
+
+
+signals:
+
+    // For progress tracking - returns 0-100
+    void progress(int progress);
+
+    void complete(const QByteArray &output);
+
+private:
+    bool gzipCompress();
+
+    bool gzipDecompress();
+
+
+    const QByteArray _input;
+    QByteArray _output;
+    bool _compress;
+    int _level;
+};
