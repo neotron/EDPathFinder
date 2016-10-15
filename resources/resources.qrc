@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>dbdump.csv</file>
+    <file>systems.json.gz</file>
 </qresource>
 </RCC>
