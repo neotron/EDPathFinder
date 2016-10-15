@@ -14,10 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
-
-#include <QtZlib/zlib.h>
-#include <QByteArray>
 #include <QtGui>
+#include <QByteArray>
+#ifdef Q_WS_WIN
+#include <QtZlib/zlib.h>
+#else
+#include <zlib.h>
+#endif
 
 #define GZIP_WINDOWS_BIT 15 + 16
 #define GZIP_CHUNK_SIZE 32 * 1024
