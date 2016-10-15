@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
-#include <zlib.h>
+#include <QtZlib/zlib.h>
 #include <QByteArray>
 #include <QtGui>
 
