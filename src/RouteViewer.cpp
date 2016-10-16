@@ -17,7 +17,6 @@
 #include "RouteViewer.h"
 #include "ui_RouteViewer.h"
 #include "RouteTableModel.h"
-#include <QDebug.h>
 #include <QClipboard>
 
 RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) :

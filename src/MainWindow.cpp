@@ -19,7 +19,7 @@
 #include <QCheckBox>
 #include <QRadioButton>
 #include "MainWindow.h"
-#include "ui_mainwindow.h"
+#include "ui_MainWindow.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
