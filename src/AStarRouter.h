@@ -41,7 +41,7 @@ public:
         return _route;
     }
 
-    double distance() const {
+    float distance() const {
         return _distance;
     }
 
@@ -52,7 +52,7 @@ public:
 
 private:
     SystemList _route;
-    double _distance;
+    float _distance;
     bool _valid;
 };
 
@@ -81,7 +81,7 @@ class AStarCalculator : public QObject {
     Q_OBJECT
 
 public:
-    AStarCalculator(const SystemList &systems, const System &start, const System &end, double jumprange, QObject *parent = Q_NULLPTR) : QObject(parent), _start(Q_NULLPTR), _end(Q_NULLPTR), _jumpRange(jumprange),_nodes() {
+    AStarCalculator(const SystemList &systems, const System &start, const System &end, float jumprange, QObject *parent = Q_NULLPTR) : QObject(parent), _start(Q_NULLPTR), _end(Q_NULLPTR), _jumpRange(jumprange),_nodes() {
         cylinder(systems, start.position(), end.position(), 40.0);
     }
 
@@ -89,7 +89,7 @@ public:
 
     void cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer);
 
-    double jumpRange() const {
+    float jumpRange() const {
         return _jumpRange;
     }
 
@@ -101,7 +101,7 @@ public:
 
 private:
     AStarSystemNode *_start, *_end;
-    double _jumpRange;
+    float _jumpRange;
     AStarSystemList _nodes;
 };
 
@@ -122,7 +122,7 @@ public:
         _systemLookup[lower(system.name())] = &_systems.back();
     }
 
-    AStarResult calculateRoute(const std::string &begin, const std::string &end, double jumprange);
+    AStarResult calculateRoute(const std::string &begin, const std::string &end, float jumprange);
 
     System *getSystemByName(const std::string &name) {
         auto lowerName = lower(name);

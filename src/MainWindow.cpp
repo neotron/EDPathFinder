@@ -73,7 +73,8 @@ void MainWindow::buildLookupMap() {
 }
 
 void MainWindow::routeCalculated(const RouteResult &route) {
-    if(!route.route.size()) {
+    _ui->centralWidget->setEnabled(true);
+    if(!route.isValid()) {
         _ui->statusBar->showMessage("No solution found to the given route.", 10000);
         return;
     }
@@ -95,7 +96,7 @@ void MainWindow::createRoute() {
             _routingPending = true;
             return;
         }
-        auto routeSize = _ui->systemCountSlider->value();
+        auto routeSize = (size_t)_ui->systemCountSlider->value();
         updateSystemCoordinateDisplay(*originSystem);
         showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name().c_str()), 0);
         _ui->createRouteButton->setEnabled(false);
@@ -104,6 +105,8 @@ void MainWindow::createRoute() {
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
+        _ui->centralWidget->setEnabled(false);
+
     } else {
         _ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
     }
@@ -161,7 +164,6 @@ void MainWindow::updateFilters() {
     int32 matches = 0;
     _filteredSystems.clear();
     for(const auto &system : _systems) {
-        bool found = false;
         std::deque<Planet> matchingPlanets;
         for(const auto &planet: system.planets()) {
             std::deque<Settlement> matchingSettlements;
@@ -271,7 +273,8 @@ void MainWindow::dataDecompressed(const QByteArray &bytes) {
         auto sysdata = systemObj.toObject();
         auto coords = sysdata["coords"].toObject();
         auto name = sysdata["name"].toString();
-        System system(name.toStdString(), coords["x"].toDouble(), coords["y"].toDouble(), coords["z"].toDouble());
+        System system(name.toStdString(), (float)coords["x"].toDouble(), (float) coords["y"].toDouble(),
+                      (float) coords["z"].toDouble());
         _router.addSystem(system);
         ++numSystems;
     }

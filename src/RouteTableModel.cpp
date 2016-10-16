@@ -22,21 +22,22 @@
 RouteTableModel::RouteTableModel(QObject *parent, const RouteResult &result) : QAbstractTableModel(parent),
                                                                                _result(result) {}
 
-int RouteTableModel::rowCount(const QModelIndex &parent) const {
-    return (int) _result.route.size();
+int RouteTableModel::rowCount(const QModelIndex &) const {
+    return (int) _result.route().size();
 }
 
-int RouteTableModel::columnCount(const QModelIndex &parent) const {
-    return (int) _result.route[0].size();
+int RouteTableModel::columnCount(const QModelIndex &) const {
+    return (int) _result.route()[0].size();
 }
 
 QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
-    int col = index.column();
-    int row = index.row();
-    if(row < _result.route.size() && col < _result.route[row].size()) {
+    auto col = (size_t)index.column();
+    auto row = (size_t)index.row();
+    auto route = _result.route();
+    if(row < route.size() && col < route[row].size()) {
         switch(role) {
             case Qt::DisplayRole:
-                return _result.route[row][col];
+                return route[row][col];
             case Qt::TextAlignmentRole:
                 return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
             default:
@@ -55,6 +56,7 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
                 case 2: return "Settlement";
                 case 3: return "Distance";
                 case 4: return "Total Distance";
+                default: return "";
             }
         }
     }

@@ -64,7 +64,7 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
         // 27: idx
         std::istringstream lis(line);
         std::string type, system, planet, name, sizeStr, dump;
-        double x, y, z;
+        float x, y, z;
         int32 flags = 0;
         SettlementSize size;
         ThreatLevel threat;
@@ -132,10 +132,10 @@ int32 SystemLoader::getInt(std::istringstream &is, bool eol) const {
     return val;
 }
 
-double SystemLoader::getDouble(std::istringstream &is, bool eol) const {
+float SystemLoader::getDouble(std::istringstream &is, bool eol) const {
     std::string valStr;
     std::getline(is, valStr, (char) (eol ? '\n' : '\t'));
-    double val;
+    float val;
     std::stringstream ss(valStr);
     ss >> val;
     return val;
@@ -166,3 +166,5 @@ void System::addSettlement(const std::string &planetName, const Settlement &sett
     }
     _planets.push_back(Planet(planetName, settlement));
 }
+
+System::~System() { }

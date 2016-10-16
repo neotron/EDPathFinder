@@ -16,14 +16,12 @@
 
 #include "QCompressor.h"
 
-bool QCompressor::gzipCompress()
-{
+bool QCompressor::gzipCompress() {
     // Prepare output
     _output.clear();
 
     // Is there something to do?
-    if(_input.length())
-    {
+    if(_input.length()) {
         // Declare vars
         int flush = 0;
 
@@ -38,8 +36,9 @@ bool QCompressor::gzipCompress()
         // Initialize deflater
         int ret = deflateInit2(&strm, qMax(-1, qMin(9, _level)), Z_DEFLATED, GZIP_WINDOWS_BIT, 8, Z_DEFAULT_STRATEGY);
 
-        if (ret != Z_OK)
-            return(false);
+        if(ret != Z_OK) {
+            return (false);
+        }
 
         // Prepare output
         _output.clear();
@@ -54,7 +53,7 @@ bool QCompressor::gzipCompress()
             int chunk_size = qMin(GZIP_CHUNK_SIZE, input_data_left);
 
             // Set deflater references
-            strm.next_in = (unsigned char*)input_data;
+            strm.next_in = (unsigned char *) input_data;
             strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
@@ -68,7 +67,7 @@ bool QCompressor::gzipCompress()
             do {
 
                 // Declare vars
-                unsigned char *out = (unsigned char *)alloca(GZIP_CHUNK_SIZE);
+                unsigned char *out = (unsigned char *) alloca(GZIP_CHUNK_SIZE);
 
                 // Set deflater references
                 strm.next_out = out;
@@ -78,45 +77,41 @@ bool QCompressor::gzipCompress()
                 ret = deflate(&strm, flush);
 
                 // Check errors
-                if(ret == Z_STREAM_ERROR)
-                {
+                if(ret == Z_STREAM_ERROR) {
                     // Clean-up
                     deflateEnd(&strm);
 
                     // Return
-                    return(false);
+                    return (false);
                 }
 
                 // Determine compressed size
-                int have = (GZIP_CHUNK_SIZE - strm.avail_out);
+                int have = (GZIP_CHUNK_SIZE - (int)strm.avail_out);
 
                 // Cumulate result
-                if(have > 0)
-                    _output.append((char*)out, have);
-
-            } while (strm.avail_out == 0);
-
-        } while (flush != Z_FINISH);
+                if(have > 0) {
+                    _output.append((char *) out, have);
+                }
+            } while(strm.avail_out == 0);
+        } while(flush != Z_FINISH);
 
         // Clean-up
-        (void)deflateEnd(&strm);
+        (void) deflateEnd(&strm);
 
         // Return
-        return(ret == Z_STREAM_END);
+        return (ret == Z_STREAM_END);
+    } else {
+        return (true);
     }
-    else
-        return(true);
 }
 
-bool QCompressor::gzipDecompress()
-{
+bool QCompressor::gzipDecompress() {
     // Prepare output
     _output.clear();
 
     // Is there something to do?
     auto input_size = _input.length();
-    if(input_size > 0)
-    {
+    if(input_size > 0) {
         // Prepare inflater status
         z_stream strm;
         strm.zalloc = Z_NULL;
@@ -128,8 +123,9 @@ bool QCompressor::gzipDecompress()
         // Initialize inflater
         int ret = inflateInit2(&strm, GZIP_WINDOWS_BIT);
 
-        if (ret != Z_OK)
-            return(false);
+        if(ret != Z_OK) {
+            return (false);
+        }
 
         // Extract pointer to input data
         const char *input_data = _input.data();
@@ -141,11 +137,12 @@ bool QCompressor::gzipDecompress()
             int chunk_size = qMin(GZIP_CHUNK_SIZE, input_data_left);
 
             // Check for termination
-            if(chunk_size <= 0)
+            if(chunk_size <= 0) {
                 break;
+            }
 
             // Set inflater references
-            strm.next_in = (unsigned char*)input_data;
+            strm.next_in = (unsigned char *) input_data;
             strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
@@ -159,46 +156,46 @@ bool QCompressor::gzipDecompress()
                 char out[GZIP_CHUNK_SIZE];
 
                 // Set inflater references
-                strm.next_out = (unsigned char*)out;
+                strm.next_out = (unsigned char *) out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
 
                 // Try to inflate chunk
                 ret = inflate(&strm, Z_NO_FLUSH);
 
-                switch (ret) {
-                case Z_NEED_DICT:
-                    ret = Z_DATA_ERROR;
-                case Z_DATA_ERROR:
-                case Z_MEM_ERROR:
-                case Z_STREAM_ERROR:
-                    // Clean-up
-                    inflateEnd(&strm);
-
-                    // Return
-                    return(false);
+                switch(ret) {
+                    case Z_NEED_DICT:
+                        ret = Z_DATA_ERROR;
+                    case Z_DATA_ERROR:
+                    case Z_MEM_ERROR:
+                    case Z_STREAM_ERROR:
+                        // Clean-up
+                        inflateEnd(&strm);
+                        // Return
+                        return false;
+                    default:
+                        return false;
                 }
 
                 // Determine decompressed size
-                int have = (GZIP_CHUNK_SIZE - strm.avail_out);
+                int have = (GZIP_CHUNK_SIZE - (int)strm.avail_out);
 
                 // Cumulate result
-                if(have > 0)
-                    _output.append((char*)out, have);
+                if(have > 0) {
+                    _output.append((char *) out, have);
+                }
+            } while(strm.avail_out == 0);
 
-            } while (strm.avail_out == 0);
-            
-            emit progress((input_size - input_data_left)*100/input_size);
-                    
-        } while (ret != Z_STREAM_END);
+            emit progress((input_size - input_data_left) * 100 / input_size);
+        } while(ret != Z_STREAM_END);
 
         // Clean-up
         inflateEnd(&strm);
 
         // Return
         return (ret == Z_STREAM_END);
+    } else {
+        return (true);
     }
-    else
-        return(true);
 }
 
 void QCompressor::run() {

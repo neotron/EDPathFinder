@@ -13,25 +13,19 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
 
-#pragma once
-
-#include <QLineEdit>
-#include <QKeyEvent>
-
-class NoBeepLineEdit : public QLineEdit {
-
-public:
+#include "NoBeepLineEdit.h"
 
 
-    explicit NoBeepLineEdit(QWidget *parent) : QLineEdit(parent) {
+NoBeepLineEdit::~NoBeepLineEdit() {
+}
+
+void NoBeepLineEdit::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return) {
+        event->accept();
+        emit editingFinished();
+        clearFocus();
+    } else {
+        QLineEdit::keyPressEvent(event);
     }
-
-    explicit NoBeepLineEdit(const QString &string, QWidget *parent) : QLineEdit(string, parent) {
-    }
-
-    virtual ~NoBeepLineEdit();
-
-    void keyPressEvent(QKeyEvent *event) override;
-};
+}

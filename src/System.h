@@ -64,12 +64,10 @@ enum SettlementFlags {
     SettlementFlagsSpecializedLegacyFirmware = 1 << 10,
     SettlementFlagsTaggedEncryptionCodes = 1 << 11,
     SettlementFlagsUnusualEncryptedFiles = 1 << 12,
-    SettlementFlagsAnarchy = 1 << 13,
+    SettlementFlagsAnarchy = 1 << 13
 };
 
 class Settlement {
-
-
 public:
     Settlement(const std::string &name, SettlementSize size = SettlementSizeSmall,
                ThreatLevel threatLevel = ThreatLevelLow, int32 flags = 0) : _name(name), _size(size),
@@ -129,21 +127,21 @@ public:
 
     System() { }
 
-    System(const std::string &name, double x, double y, double z) : _name(name), _position(x, y, z) { }
+    System(const std::string &name, float x, float y, float z) : _name(name), _position(x, y, z) { }
 
-    System(const std::string &name, const Planet &planet, double x, double y, double z) : _name(name), _planets(),
+    System(const std::string &name, const Planet &planet, float x, float y, float z) : _name(name), _planets(),
                                                                                           _position(x, y, z) {
         _planets.push_back(planet);
     }
 
-    System(const std::string &system, const PlanetList &planets, double x, double y, double z) : _name(system),
+    System(const std::string &system, const PlanetList &planets, float x, float y, float z) : _name(system),
                                                                                                  _planets(planets),
                                                                                                  _position(x, y, z) { }
     System(const std::string &name, const QVector3D &position) : _name(name), _position(position) { }
 
     System(AStarSystemNode *system);
 
-    virtual ~System() { }
+    virtual ~System();
 
 // Return distance as a fixed point value with two decimals. Used by TSP
     int64 distance(const System &other) const {
@@ -153,15 +151,15 @@ public:
 
     static QString formatDistance(int64 dist);
 
-    double z() const {
+    float z() const {
         return _position.x();
     }
 
-    double y() const {
+    float y() const {
         return _position.y();
     }
 
-    double x() const {
+    float x() const {
         return _position.z();
     }
 
@@ -169,9 +167,9 @@ public:
         return _position;
     }
 
-    const PlanetList &planets() const { return _planets; };
+    const PlanetList &planets() const { return _planets; }
 
-    void addSettlement(const std::string &planetName, const Settlement &settlement);;
+    void addSettlement(const std::string &planetName, const Settlement &settlement);
 
     const std::string &name() const {
         return _name;
@@ -179,9 +177,9 @@ public:
 
 protected:
 
-    System(double x, double y, double z) : _position(x, y, z) { }
+    System(float x, float y, float z) : _position(x, y, z) { }
 
-    double sqr(double val) const { return val * val; }
+    float sqr(float val) const { return val * val; }
 
     std::string _name;
     PlanetList _planets;
@@ -195,7 +193,7 @@ public:
 private:
     int32 getInt(std::istringstream &is, bool eol = false) const;
 
-    double getDouble(std::istringstream &is, bool eol = false) const;
+    float getDouble(std::istringstream &is, bool eol = false) const;
 
     bool getBool(std::istringstream &is, bool eol = false) const;
 };

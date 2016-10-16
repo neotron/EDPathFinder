@@ -18,17 +18,15 @@
 
 #include <QDebug>
 #include <QtConcurrent>
+#include <constraint_solver/routing_flags.h>
 #include "System.h"
-#include "constraint_solver/routing_flags.h"
-#include "constraint_solver/routing.h"
-
 #include "TSPWorker.h"
 
 namespace operations_research {
 
 // Cost/distance functions.
     int64 TSPWorker::systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to) {
-        return _distanceMatrix[from.value()][to.value()];
+        return _distanceMatrix[(size_t)from.value()][(size_t)to.value()];
     }
 
     int64 TSPWorker::calculateDistance(size_t from, size_t to) {
@@ -91,7 +89,7 @@ namespace operations_research {
             return a.distance(*startingSystem) < b.distance((*startingSystem));
         });
         if(_maxSystemCount < _systems.size()) {
-            _systems.resize((size_t) _maxSystemCount);
+            _systems.resize(_maxSystemCount);
         }
         // Calculate the closest system
         if(_origin) {
@@ -118,48 +116,31 @@ namespace operations_research {
         // Populate result.
         RouteResult result;
         if(solution != NULL) {
-            // Solution cost.
-            result.ly = System::formatDistance(solution->ObjectiveValue());
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
-            int nodeid;
-            int previd = 0;
+            size_t nodeid;
+            size_t previd = 0;
             int64 dist = 0;
-            int64 totaldist = 0;
             for(int64 node = routing.Start(route_number);
                 !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
-                nodeid = routing.IndexToNode(node).value();
+                nodeid = (size_t) routing.IndexToNode(node).value();
 
                 const System &sys = _systems[nodeid];
 
                 if(nodeid > 0) {
                     dist = sys.distance(_systems[previd]);
-                    totaldist += dist;
                 }
                 previd = nodeid;
-                QString distance(System::formatDistance(dist));
                 if(!sys.planets().size())  {
-                    // Starting system
-                    std::vector<QString> row(5);
-                    row[0] = sys.name().c_str();
-                    row[1] = "Point of origin";
-                    row[2] = "";
-                    row[3] = distance;
-                    row[4] = System::formatDistance(totaldist);
-                    result.route.emplace_back(row);
+                    result.addEntry(sys, "Point of Origin", "", dist);
+                    continue;
                 }
                 for(auto planet: sys.planets()) {
                     for(auto settlement: planet.settlements()) {
-                        std::vector<QString> row(5);
-                        row[0] = sys.name().c_str();
-                        row[1] = planet.name().c_str();
-                        row[2] = settlement.name().c_str();
-                        row[3] = distance;
-                        row[4] = System::formatDistance(totaldist);
-                        result.route.emplace_back(row);
-                        distance = "-";
+                        result.addEntry(sys, planet, settlement, dist);
+                        dist = 0;
                     }
                 }
             }
@@ -169,3 +150,21 @@ namespace operations_research {
         emit taskCompleted(result);
     }
 }
+
+void RouteResult::addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance) {
+    addEntry(system, planet.name().c_str(), settlement.name().c_str(), distance);
+}
+
+void RouteResult::addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance) {
+    _totalDist += distance;
+    std::vector<QString> row(5);
+    row[0] = system.name().c_str();
+    row[1] = planet;
+    row[2] = settlement;
+    row[3] = System::formatDistance(distance);
+    row[4] = System::formatDistance(_totalDist);
+    _route.emplace_back(row);
+}
+
+
+

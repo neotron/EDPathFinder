@@ -54,7 +54,7 @@ void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
             auto x = coords["x"].toDouble();
             auto z = coords["z"].toDouble();
             auto y = coords["y"].toDouble();
-            System system(document.object()["name"].toString().toStdString(), x, y, z);
+            System system(document.object()["name"].toString().toStdString(), (float) x, (float) y, (float) z);
             emit coordinatesReceived(system);
             reply->deleteLater();
             return;
@@ -68,10 +68,8 @@ EDSMQueryExecutor::~EDSMQueryExecutor() {
     if(_mgr) { _mgr->deleteLater(); }
 }
 
-EDSMQueryExecutor::EDSMQueryExecutor(const QUrl &url, RequestType requestType)
-        : QThread(Q_NULLPTR), _mgr(nullptr), _url(url), _requestType(requestType)
-{
-
+EDSMQueryExecutor::EDSMQueryExecutor(const QUrl &url, RequestType requestType) : QThread(Q_NULLPTR), _mgr(nullptr),
+                                                                                 _requestType(requestType), _url(url) {
 }
 
 

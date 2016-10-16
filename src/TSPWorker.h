@@ -38,17 +38,35 @@
 
 #include <deque>
 #include <QThread>
+#include <constraint_solver/routing.h>
 #include "System.h"
-#include "constraint_solver/routing.h"
 #include "AStarRouter.h"
 
 typedef std::vector<std::vector<QString>> RouteResultMatrix;
 
-struct RouteResult {
-    RouteResult(): ly(), route() {}
+class RouteResult {
+public:
 
-    QString ly;
-    RouteResultMatrix route;
+    RouteResult(): _route(), _totalDist(0) {}
+
+    void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
+    void addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance);
+
+    const QString ly() const {
+        return System::formatDistance(_totalDist);
+    }
+
+    const RouteResultMatrix &route() const {
+        return _route;
+    }
+
+    bool isValid() const {
+        return route().size() != 0;
+    }
+
+private:
+    RouteResultMatrix _route;
+    int64 _totalDist;
 };
 
 namespace operations_research {
@@ -56,7 +74,7 @@ namespace operations_research {
     Q_OBJECT
 
     public:
-        TSPWorker(SystemList systems, System *system, int maxSystemCount)
+        TSPWorker(SystemList systems, System *system, size_t maxSystemCount)
                 : QThread(), _systems(systems), _origin(system), _maxSystemCount(maxSystemCount), _router(Q_NULLPTR), numDist(0) { }
 
 
@@ -75,7 +93,7 @@ namespace operations_research {
         int64 systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
         SystemList _systems;
         System *_origin;
-        int _maxSystemCount;
+        size_t _maxSystemCount;
         AStarRouter *_router;
         int numDist;
         std::vector<std::vector<int64>> _distanceMatrix;

@@ -17,7 +17,7 @@
 #include "AStarRouter.h"
 
 AStarResult::AStarResult(const AStarSystemList &solution) : _route(solution.size()), _valid(true) {
-    double distance = 0;
+    float distance = 0;
     AStarSystemNode *last(0);
     size_t i = 0;
     for(auto asys: solution) {
@@ -47,7 +47,7 @@ std::vector<std::pair<Node *, float>> &AStarSystemNode::getChildren() {
 }
 
 
-AStarResult AStarRouter::calculateRoute(const std::string &begin, const std::string &end, double jumprange) {
+AStarResult AStarRouter::calculateRoute(const std::string &begin, const std::string &end, float jumprange) {
     System *beginSys = getSystemByName(begin);
     System *endSys = getSystemByName(end);
     if(beginSys && endSys) {
