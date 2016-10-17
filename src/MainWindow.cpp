@@ -18,7 +18,7 @@
 #include <QDebug>
 #include <QCheckBox>
 #include <QRadioButton>
-#include <QCompleter.h>
+#include <QCompleter>
 #include <QListView>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
