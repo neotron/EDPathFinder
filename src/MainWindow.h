@@ -19,8 +19,10 @@
 #include <QMainWindow>
 #include <QMap>
 #include "System.h"
-#include "TSPWorker.h"
-#include "AStarRouter.h"
+
+
+class RouteResult;
+class AStarRouter;
 
 namespace Ui {
 class MainWindow;
@@ -44,30 +46,23 @@ public slots:
     void dataDecompressed(const QByteArray &bytes);
 
 private:
+    void cleanupCheckboxes();
+    void buildLookupMap();
+    void loadSystems();
+    void loadCompressedData();
+    void downloadSystemCoordinates(const QString &systemName);
+    void showMessage(const QString &message, int timeout = 10000);
+    void updateSliderParams(int size);
+    void updateSystemCoordinateDisplay(const System &system) const;
+
     Ui::MainWindow *_ui;
 
-    void cleanupCheckboxes();
-
-
-    void buildLookupMap();
-
-    void loadSystems();
-private:
     QMap<QString, SettlementFlags> _flagsLookup;
 
     SystemList _systems;
     SystemList _filteredSystems;
     int32 _matchingSettlementCount;
-    AStarRouter _router;
     bool _routingPending;
-
-    void loadCompressedData();
-
-    void downloadSystemCoordinates(const QString &systemName) const;
-
-    void showMessage(const QString &message, int timeout = 10000);
-
-    void updateSliderParams(int size);
-
-    void updateSystemCoordinateDisplay(const System &system) const;
+    AStarRouter *_router;
+    QSet<QString> _pendingLookups;
 };

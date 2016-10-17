@@ -18,25 +18,28 @@
 #include <QDebug>
 #include <QCheckBox>
 #include <QRadioButton>
+#include <QCompleter.h>
+#include <QListView>
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
 #include "QCompressor.h"
-#include "AStarRouter.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false), _router(new AStarRouter(this)), _pendingLookups() {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
     connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
     cleanupCheckboxes();
     buildLookupMap();
     loadCompressedData();
+    _ui->centralWidget->setEnabled(false);
 }
 
 MainWindow::~MainWindow() {
     delete _ui;
+    delete _router;
 }
 
 void MainWindow::cleanupCheckboxes() {
@@ -89,7 +92,7 @@ void MainWindow::createRoute() {
 
     if(_filteredSystems.size() > 0) {
         auto systemName = _ui->systemName->text();
-        auto originSystem = _router.getSystemByName(systemName);
+        auto originSystem = _router->getSystemByName(systemName);
         if(!originSystem) { 
             // Need to fetch coordinates for origin.
             downloadSystemCoordinates(systemName);
@@ -114,12 +117,12 @@ void MainWindow::createRoute() {
 
 void MainWindow::loadSystems() {
     SystemLoader loader;
-   	_systems = loader.loadSettlements(&_router);
+   	_systems = loader.loadSettlements(_router);
     _ui->systemCountSlider->setMinimum(1);
     _ui->systemCountSlider->setSingleStep(1);
     updateSliderParams((int) _systems.size());
-
     updateFilters();
+    _ui->centralWidget->setEnabled(true);
 }
 
 void MainWindow::updateFilters() {
@@ -204,7 +207,7 @@ void MainWindow::updateSystemCoordinates() {
     if(!systemName.length()) {
         return;
     }
-    auto system = _router.getSystemByName(systemName.toStdString());
+    auto system = _router->getSystemByName(systemName.toStdString());
     if(!system) {
         downloadSystemCoordinates(systemName);
     } else {
@@ -213,7 +216,11 @@ void MainWindow::updateSystemCoordinates() {
 
 }
 
-void MainWindow::downloadSystemCoordinates(const QString &systemName) const {
+void MainWindow::downloadSystemCoordinates(const QString &systemName) {
+    if(_pendingLookups.contains(systemName)) {
+        return;
+    }
+    _pendingLookups << systemName;
     _ui->statusBar->showMessage(QString("Fetching system coordinates from EDSM..."), 10000);
     auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
     connect(executor, &QThread::finished, executor, &QObject::deleteLater);
@@ -228,7 +235,9 @@ void MainWindow::downloadSystemCoordinates(const QString &systemName) const {
 }
 
 void MainWindow::systemCoordinatesRequestFailed() {
-    showMessage(QString("Unknown origin system: %1").arg(_ui->systemName->text()));
+    auto systemName = _ui->systemName->text();
+    showMessage(QString("Unknown origin system: %1").arg(systemName));
+    _pendingLookups.remove(systemName);
     _ui->systemName->setEnabled(true);
     _routingPending = false;
 }
@@ -238,8 +247,11 @@ void MainWindow::systemCoordinatesReceived(const System &system) {
     updateSystemCoordinateDisplay(system);
     _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setEnabled(true);
-    _ui->systemName->setText(system.name().c_str());
-    _router.addSystem(system);
+    auto systemName = QString(system.name().c_str());
+    _pendingLookups.remove(systemName);
+    _ui->systemName->setText(systemName);
+    _router->addSystem(system);
+    _router->sortSystemList();
     showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
     if(_routingPending) {
         _routingPending = false;
@@ -275,11 +287,21 @@ void MainWindow::dataDecompressed(const QByteArray &bytes) {
         auto name = sysdata["name"].toString();
         System system(name.toStdString(), (float)coords["x"].toDouble(), (float) coords["y"].toDouble(),
                       (float) coords["z"].toDouble());
-        _router.addSystem(system);
+        _router->addSystem(system);
         ++numSystems;
     }
     showMessage(QString("Completed loading of %1 systems.").arg(numSystems));
     loadSystems();
+    _router->sortSystemList();
+
+    QCompleter *completer = new QCompleter(_router, this);
+    completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    QListView *popup = (QListView*)completer->popup();
+    popup->setBatchSize(10);
+    popup->setLayoutMode(QListView::Batched);
+    connect(completer, SIGNAL(activated(const QString &)), this, SLOT(updateSystemCoordinates()));
+    _ui->systemName->setCompleter(completer);
 }
 
 void MainWindow::showMessage(const QString &message, int timeout) {

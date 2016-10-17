@@ -4,7 +4,19 @@ project(EDPathFinder)
 set(ORTOOLS ../or-tools/)
 set(PFDIR deps/PathFinder/src/)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
+set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent)
+
+link_directories(${ORTOOLS}/lib)
+
+set(QT_USE_QTNETWORK true)
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network REQUIRED)
+find_package(Qt5Concurrent REQUIRED)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
@@ -18,19 +30,6 @@ if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ ")
 endif ()
 
-set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-link_directories(${ORTOOLS}/lib)
-
-set(QT_USE_QTNETWORK true)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Network REQUIRED)
-find_package(Qt5Concurrent REQUIRED)
-
 if (UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14  -DARCH_K8 -Wno-deprecated ")
     link_libraries(${LINK_LIBS} -lz)
@@ -39,11 +38,11 @@ else ()
     link_libraries(${LINK_LIBS})
 endif ()
 
-include_directories(EDPathFinder SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC})
-add_executable(EDPathFinder ${SOURCE_FILES})
+add_executable(EDPathFinder ${SOURCE_FILES} resources/resources.qrc)

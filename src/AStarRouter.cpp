@@ -95,16 +95,41 @@ AStarResult AStarCalculator::solve() {
     finder.setStart(*_start);
     finder.setGoal(*_end);
     bool result = finder.findPath<AStar>(solution);
-    if(result) {
-        //qDebug() << "Found path with " << solution.size() << " jumps.";
-        AStarSystemNode *last(Q_NULLPTR);
-        for(auto sys: solution) {
-        //    qDebug() << "  " << sys->name().c_str() << "->" << (last ? last->distanceTo(sys) : 0.0);
-            last = sys;
-        }
-        return AStarResult(solution);
-    }
-    return AStarResult();
+
+    return result ?  AStarResult(solution) : AStarResult();
 }
 
 
+QVariant AStarRouter::data(const QModelIndex &index, int role) const {
+    if((role == Qt::EditRole || role == Qt::DisplayRole) && index.row() < (int) _systems.size() && index.column() == 0) {
+        return QString(_systems[(size_t) index.row()].name().c_str());
+    }
+    return QVariant();
+}
+
+int AStarRouter::columnCount(const QModelIndex &) const {
+    return 1;
+}
+
+int AStarRouter::rowCount(const QModelIndex &) const {
+    return (int) _systems.size();
+}
+
+QModelIndex AStarRouter::parent(const QModelIndex &) const {
+    return QModelIndex();
+}
+
+QModelIndex AStarRouter::index(int row, int column, const QModelIndex &) const {
+    return createIndex(row, column);
+}
+
+void AStarRouter::sortSystemList() {
+    beginResetModel();
+    std::sort(_systems.begin(), _systems.end(), [](const System &a, const System &b) {
+        return a.name() < b.name();
+    });
+    for(auto &system: _systems) {
+        _systemLookup[lower(system.name())] = &system;
+    }
+    endResetModel();
+}

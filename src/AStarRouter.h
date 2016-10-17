@@ -23,17 +23,19 @@
 #include "System.h"
 
 class AStarRouter;
+
 class AStarSystemNode;
+
 class AStarCalculator;
 
-typedef std::vector<AStarSystemNode *>  AStarSystemList;
+typedef std::vector<AStarSystemNode *> AStarSystemList;
 
 class AStarResult {
 
 public:
 
 
-    AStarResult(): _valid(false) { }
+    AStarResult() : _valid(false) { }
 
     AStarResult(const AStarSystemList &solution);
 
@@ -58,16 +60,19 @@ private:
 
 class AStarSystemNode : public AStarNode {
 public:
-    AStarSystemNode(AStarCalculator &calculator, const System &system) : AStarNode(), _system(system), _calculator(calculator) { }
+    AStarSystemNode(AStarCalculator &calculator, const System &system)
+            : AStarNode(), _system(system), _calculator(calculator) { }
+
     virtual ~AStarSystemNode() { }
 
     // Distance between this and another node, used by A* algorithm.
     virtual float distanceTo(AStarNode *node) const override {
-        auto other = (AStarSystemNode *)node;
+        auto other = (AStarSystemNode *) node;
         return _system.position().distanceToPoint(other->_system.position());
     }
 
     const std::string &name() const { return _system.name(); }
+
     const QVector3D &position() const { return _system.position(); }
 
     virtual std::vector<std::pair<Node *, float>> &getChildren() override;
@@ -78,10 +83,12 @@ private:
 };
 
 class AStarCalculator : public QObject {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    AStarCalculator(const SystemList &systems, const System &start, const System &end, float jumprange, QObject *parent = Q_NULLPTR) : QObject(parent), _start(Q_NULLPTR), _end(Q_NULLPTR), _jumpRange(jumprange),_nodes() {
+    AStarCalculator(const SystemList &systems, const System &start, const System &end, float jumprange,
+                    QObject *parent = Q_NULLPTR) : QObject(parent), _start(Q_NULLPTR), _end(Q_NULLPTR),
+                                                   _jumpRange(jumprange), _nodes() {
         cylinder(systems, start.position(), end.position(), 40.0);
     }
 
@@ -105,21 +112,20 @@ private:
     AStarSystemList _nodes;
 };
 
-class AStarRouter : QObject {
-    Q_OBJECT
+class AStarRouter : public QAbstractItemModel {
+Q_OBJECT
 
 public:
 
-    AStarRouter(QObject *parent = Q_NULLPTR) : QObject(parent), _systems(), _systemLookup() { }
+    AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup() { }
 
 
     virtual ~AStarRouter() {
-
     }
 
     void addSystem(const System &system) {
         _systems.push_back(system);
-        _systemLookup[lower(system.name())] = &_systems.back();
+        _systemLookup[system.name()] = &_systems.back();
     }
 
     AStarResult calculateRoute(const std::string &begin, const std::string &end, float jumprange);
@@ -128,14 +134,22 @@ public:
         auto lowerName = lower(name);
         return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
     }
+
     System *getSystemByName(const QString &name) {
         auto lowerName = lower(name.toStdString());
         return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
     }
 
+    virtual QModelIndex index(int row, int column, const QModelIndex &) const;
+    virtual QModelIndex parent(const QModelIndex &) const;
+    virtual int rowCount(const QModelIndex &) const;
+    virtual int columnCount(const QModelIndex &) const;
+    virtual QVariant data(const QModelIndex &index, int role) const;
+    void sortSystemList();
+
 private:
 
-    std::string lower(std::string str) {
+    inline std::string lower(std::string str) {
         std::transform(str.begin(), str.end(), str.begin(), ::tolower);
         return str;
     }

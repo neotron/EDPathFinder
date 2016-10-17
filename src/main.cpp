@@ -19,6 +19,7 @@
 #include <QApplication>
 #include <QDebug>
 #include "MainWindow.h"
+#include "TSPWorker.h"
 
 Q_DECLARE_METATYPE(RouteResult);
 

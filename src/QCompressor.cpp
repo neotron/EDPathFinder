@@ -173,7 +173,7 @@ bool QCompressor::gzipDecompress() {
                         // Return
                         return false;
                     default:
-                        return false;
+                        break;
                 }
 
                 // Determine decompressed size

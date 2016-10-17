@@ -144,6 +144,8 @@ namespace operations_research {
                     }
                 }
             }
+            dist = _systems[0].distance(_systems[previd]);
+            result.addEntry(_systems[0], "Point of Origin", "", dist);
         } else {
             LOG(INFO) << "No solution found.";
         }
