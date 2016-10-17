@@ -18,7 +18,6 @@
 #include <QEventLoop>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QNetworkAccessManager>
 #include <QJsonDocument>
 
 #include "EDSMQueryExecutor.h"
@@ -47,14 +46,14 @@ void EDSMQueryExecutor::run() {
 
 void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
     if(reply->error() == QNetworkReply::NoError && reply->isReadable()) {
-        auto data = reply->readAll();
+        auto data     = reply->readAll();
         auto document = QJsonDocument::fromJson(data);
         if(document.isObject()) {
             QJsonObject coords = document.object()["coords"].toObject();
-            auto x = coords["x"].toDouble();
-            auto z = coords["z"].toDouble();
-            auto y = coords["y"].toDouble();
-            System system(document.object()["name"].toString().toStdString(), (float) x, (float) y, (float) z);
+            auto        x      = coords["x"].toDouble();
+            auto        z      = coords["z"].toDouble();
+            auto        y      = coords["y"].toDouble();
+            System      system(document.object()["name"].toString(), (float) x, (float) y, (float) z);
             emit coordinatesReceived(system);
             reply->deleteLater();
             return;

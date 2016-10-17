@@ -26,15 +26,15 @@ Q_DECLARE_METATYPE(RouteResult);
 // namespace operations_research
 
 int main(int argc, char **argv) {
-	qDebug() << QT_VERSION_STR;
-	qRegisterMetaType<RouteResult>();
-	QApplication a(argc, argv);
+    qDebug() << QT_VERSION_STR;
+    qRegisterMetaType<RouteResult>();
+    QApplication a(argc, argv);
 
-	MainWindow w;
-	w.show();
+    MainWindow w;
+    w.show();
 
 
-	return a.exec();
+    return a.exec();
 }
 
 

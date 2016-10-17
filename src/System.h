@@ -17,63 +17,83 @@
 
 #pragma once
 
-#include <string>
-#include <deque>
 #include <cmath>
 #include <base/integral_types.h>
 #include <QString>
-#include <deps/PathFinder/src/AStar.h>
+#include <AStar.h>
 #include <QVector3D>
 
 class AStarSystemNode;
+
 class AStarRouter;
+
 class Settlement;
 
 class Planet;
 
 class System;
 
-typedef std::deque<Settlement> SettlementList;
-typedef std::deque<Planet> PlanetList;
-typedef std::deque<System> SystemList;
+typedef QVector<Settlement> SettlementList;
+typedef QVector<Planet>     PlanetList;
+typedef QVector<System>     SystemList;
 
 enum ThreatLevel {
-    ThreatLevelLow,
-    ThreatLevelRestrictedLongDistance,
-    ThreatLevelMedium,
-    ThreatLeveLHigh
+    ThreatLevelLow, ThreatLevelRestrictedLongDistance, ThreatLevelMedium, ThreatLeveLHigh
 };
 
 enum SettlementSize {
-    SettlementSizeSmall = 1 << 0,
-    SettlementSizeMedium = 1 << 1,
-    SettlementSizeLarge = 1 << 2
+    SettlementSizeSmall = 1 << 0, SettlementSizeMedium = 1 << 1, SettlementSizeLarge = 1 << 2
 };
 
 enum SettlementFlags {
-    SettlementFlagsCoreDataTerminal = 1 << 0,
-    SettlementFlagsJumpClimbRequired = 1 << 1,
-    SettlementFlagsClassifiedScanDatabanks = 1 << 2,
-    SettlementFlagsClassifiedScanFragment = 1 << 3,
+    SettlementFlagsCoreDataTerminal          = 1 << 0,
+    SettlementFlagsJumpClimbRequired         = 1 << 1,
+    SettlementFlagsClassifiedScanDatabanks   = 1 << 2,
+    SettlementFlagsClassifiedScanFragment    = 1 << 3,
     SettlementFlagsCrackedIndustrialFirmware = 1 << 4,
-    SettlementFlagsDivergentScanData = 1 << 5,
-    SettlementFlagsModifiedConsumerFirmware = 1 << 6,
-    SettlementFlagsModifiedEmbeddedFirmware = 1 << 7,
-    SettlementFlagsOpenSymmetricKeys = 1 << 8,
-    SettlementFlagsSecurityFirmwarePatch = 1 << 9,
+    SettlementFlagsDivergentScanData         = 1 << 5,
+    SettlementFlagsModifiedConsumerFirmware  = 1 << 6,
+    SettlementFlagsModifiedEmbeddedFirmware  = 1 << 7,
+    SettlementFlagsOpenSymmetricKeys         = 1 << 8,
+    SettlementFlagsSecurityFirmwarePatch     = 1 << 9,
     SettlementFlagsSpecializedLegacyFirmware = 1 << 10,
-    SettlementFlagsTaggedEncryptionCodes = 1 << 11,
-    SettlementFlagsUnusualEncryptedFiles = 1 << 12,
-    SettlementFlagsAnarchy = 1 << 13
+    SettlementFlagsTaggedEncryptionCodes     = 1 << 11,
+    SettlementFlagsUnusualEncryptedFiles     = 1 << 12,
+    SettlementFlagsAnarchy                   = 1 << 13
 };
 
 class Settlement {
 public:
-    Settlement(const std::string &name, SettlementSize size = SettlementSizeSmall,
-               ThreatLevel threatLevel = ThreatLevelLow, int32 flags = 0) : _name(name), _size(size),
-                                                                            _threatLevel(threatLevel), _flags(flags) { }
+    Settlement() : _name(), _size(), _threatLevel(), _flags() { }
 
-    const std::string &name() const {
+    Settlement(const QString &name, SettlementSize size = SettlementSizeSmall, ThreatLevel threatLevel = ThreatLevelLow,
+               int32 flags = 0) : _name(name), _size(size), _threatLevel(threatLevel), _flags(flags) { }
+
+    Settlement(const Settlement &&other) : _name(std::move(other._name)), _size(other._size),
+                                           _threatLevel(other._threatLevel), _flags(other._flags) {
+    }
+
+    Settlement(const Settlement &other) : _name(other._name), _size(other._size), _threatLevel(other._threatLevel),
+                                          _flags(other._flags) {
+    }
+
+    Settlement &operator=(const Settlement &&other) {
+        _name        = std::move(other._name);
+        _size        = other._size;
+        _threatLevel = other._threatLevel;
+        _flags       = other._flags;
+        return *this;
+    }
+
+    Settlement &operator=(const Settlement &other) {
+        _name        = other._name;
+        _size        = other._size;
+        _threatLevel = other._threatLevel;
+        _flags       = other._flags;
+        return *this;
+    }
+
+    const QString &name() const {
         return _name;
     }
 
@@ -90,19 +110,37 @@ public:
     }
 
 private:
-    std::string _name;
+    QString        _name;
     SettlementSize _size;
-    ThreatLevel _threatLevel;
-    int32 _flags;
+    ThreatLevel    _threatLevel;
+    int32          _flags;
 };
 
 class Planet {
 public:
-    Planet(const std::string &name, const Settlement &settlement) : _name(name), _settlements() {
+    Planet() : _name(), _settlements() { }
+
+    Planet(const QString &name, const Settlement &settlement) : _name(name), _settlements() {
         _settlements.push_back(settlement);
     }
 
-    Planet(const std::string &name, const SettlementList &settlements) : _name(name), _settlements(settlements) { }
+    Planet(const QString &name, const SettlementList &settlements) : _name(name), _settlements(settlements) { }
+
+    Planet(const Planet &&other) : _name(std::move(other._name)), _settlements(std::move(other._settlements)) { }
+
+    Planet(const Planet &other) : _name(other._name), _settlements(other._settlements) { }
+
+    Planet &operator=(const Planet &other) {
+        _name        = other._name;
+        _settlements = other._settlements;
+        return *this;
+    }
+
+    Planet &operator=(const Planet &&other) {
+        _name        = std::move(other._name);
+        _settlements = std::move(other._settlements);
+        return *this;
+    }
 
     const SettlementList &settlements() const {
         return _settlements;
@@ -112,12 +150,12 @@ public:
         _settlements.push_back(settlement);
     }
 
-    const std::string &name() const {
+    const QString &name() const {
         return _name;
     }
 
 private:
-    std::string _name;
+    QString        _name;
     SettlementList _settlements;
 };
 
@@ -127,17 +165,37 @@ public:
 
     System() { }
 
-    System(const std::string &name, float x, float y, float z) : _name(name), _position(x, y, z) { }
+    System(const QString &name, float x, float y, float z) : _name(name), _position(x, y, z) { }
 
-    System(const std::string &name, const Planet &planet, float x, float y, float z) : _name(name), _planets(),
-                                                                                          _position(x, y, z) {
+    System(const QString &name, const Planet &planet, float x, float y, float z) : _name(name), _planets(),
+                                                                                   _position(x, y, z) {
         _planets.push_back(planet);
     }
 
-    System(const std::string &system, const PlanetList &planets, float x, float y, float z) : _name(system),
-                                                                                                 _planets(planets),
-                                                                                                 _position(x, y, z) { }
-    System(const std::string &name, const QVector3D &position) : _name(name), _position(position) { }
+    System(const QString &system, const PlanetList &planets, float x, float y, float z) : _name(system),
+                                                                                          _planets(planets),
+                                                                                          _position(x, y, z) { }
+
+    System(const QString &name, const QVector3D &position) : _name(name), _position(position) { }
+
+    System(const System &other) : _name(other._name), _planets(other._planets), _position(other._position) { }
+
+    System(const System &&other) : _name(std::move(other._name)), _planets(std::move(other._planets)),
+                                   _position(std::move(other._position)) { }
+
+    System &operator=(const System &other) {
+        _name = other._name;
+        _planets = other._planets;
+        _position = other._position;
+        return *this;
+    }
+
+    System &operator=(const System &&other) {
+        _name = std::move(other._name);
+        _planets = std::move(other._planets);
+        _position = std::move(other._position);
+        return *this;
+    }
 
     System(AStarSystemNode *system);
 
@@ -169,9 +227,9 @@ public:
 
     const PlanetList &planets() const { return _planets; }
 
-    void addSettlement(const std::string &planetName, const Settlement &settlement);
+    void addSettlement(const QString &planetName, const Settlement &settlement);
 
-    const std::string &name() const {
+    const QString &name() const {
         return _name;
     }
 
@@ -181,19 +239,12 @@ protected:
 
     float sqr(float val) const { return val * val; }
 
-    std::string _name;
+    QString    _name;
     PlanetList _planets;
-    QVector3D _position;
+    QVector3D  _position;
 };
 
 class SystemLoader {
 public:
     SystemList loadSettlements(AStarRouter *router);
-
-private:
-    int32 getInt(std::istringstream &is, bool eol = false) const;
-
-    float getDouble(std::istringstream &is, bool eol = false) const;
-
-    bool getBool(std::istringstream &is, bool eol = false) const;
 };

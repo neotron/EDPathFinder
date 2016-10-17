@@ -36,7 +36,6 @@
 
 #pragma once
 
-#include <deque>
 #include <QThread>
 #include <constraint_solver/routing.h>
 #include "System.h"
@@ -47,9 +46,10 @@ typedef std::vector<std::vector<QString>> RouteResultMatrix;
 class RouteResult {
 public:
 
-    RouteResult(): _route(), _totalDist(0) {}
+    RouteResult() : _route(), _totalDist(0) { }
 
     void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
+
     void addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance);
 
     const QString ly() const {
@@ -66,7 +66,7 @@ public:
 
 private:
     RouteResultMatrix _route;
-    int64 _totalDist;
+    int64             _totalDist;
 };
 
 namespace operations_research {
@@ -74,8 +74,9 @@ namespace operations_research {
     Q_OBJECT
 
     public:
-        TSPWorker(SystemList systems, System *system, size_t maxSystemCount)
-                : QThread(), _systems(systems), _origin(system), _maxSystemCount(maxSystemCount), _router(Q_NULLPTR), numDist(0) { }
+        TSPWorker(SystemList systems, System *system, int maxSystemCount)
+                : QThread(), _systems(systems), _origin(system), _maxSystemCount(maxSystemCount), _router(Q_NULLPTR),
+                  numDist(0) { }
 
 
         virtual void run();
@@ -86,19 +87,22 @@ namespace operations_research {
         }
 
     signals:
+
         void taskCompleted(const RouteResult &route);
 
     private:
-        void calculateDistanceMatrix();
-        int64 systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
-        SystemList _systems;
-        System *_origin;
-        size_t _maxSystemCount;
-        AStarRouter *_router;
-        int numDist;
-        std::vector<std::vector<int64>> _distanceMatrix;
+        void                    calculateDistanceMatrix();
 
-        int64 calculateDistance(size_t from, size_t to);
+        int64                   systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
+
+        SystemList              _systems;
+        System                  *_origin;
+        int                     _maxSystemCount;
+        AStarRouter             *_router;
+        int                     numDist;
+        QVector<QVector<int64>> _distanceMatrix;
+
+        int64 calculateDistance(int from, int to);
     };
 };
 

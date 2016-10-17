@@ -16,18 +16,18 @@
 
 #include "AStarRouter.h"
 
-AStarResult::AStarResult(const AStarSystemList &solution) : _route(solution.size()), _valid(true) {
-    float distance = 0;
+AStarResult::AStarResult(const AStarSystemList &solution) : _route(), _valid(true) {
+    float           distance = 0;
     AStarSystemNode *last(0);
-    size_t i = 0;
-    for(auto asys: solution) {
+    int             i        = 0;
+    for(auto        asys: solution) {
         if(last) {
             distance += asys->distanceTo(last);
         }
         _route[i++] = System(asys);
         last = asys;
     }
-    _distance = distance;
+    _distance                = distance;
 }
 
 
@@ -47,9 +47,9 @@ std::vector<std::pair<Node *, float>> &AStarSystemNode::getChildren() {
 }
 
 
-AStarResult AStarRouter::calculateRoute(const std::string &begin, const std::string &end, float jumprange) {
+AStarResult AStarRouter::calculateRoute(const QString &begin, const QString &end, float jumprange) {
     System *beginSys = getSystemByName(begin);
-    System *endSys = getSystemByName(end);
+    System *endSys   = getSystemByName(end);
     if(beginSys && endSys) {
         AStarCalculator calculator(_systems, *beginSys, *endSys, jumprange);
         return calculator.solve();
@@ -66,11 +66,11 @@ AStarCalculator::~AStarCalculator() {
 
 void AStarCalculator::cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer) {
 
-    auto bufferSquare = buffer * buffer;
+    auto           bufferSquare = buffer * buffer;
     for(const auto &s: stars) {
-        auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
+        auto numerator   = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
         auto denominator = (vec_to - vec_from).lengthSquared();
-        auto dist = numerator / denominator;
+        auto dist        = numerator / denominator;
         if(dist < bufferSquare) {
             auto systemNode = new AStarSystemNode(*this, s);
             _nodes.push_back(systemNode);
@@ -90,19 +90,20 @@ AStarResult AStarCalculator::solve() {
     }
     //qDebug() << "Beginning to solve route - have" << _nodes.size() << "candidates: "<<_start->name().c_str()<<"to"<<_end->name().c_str();
 
-    AStarSystemList solution;
+    AStarSystemList             solution;
     PathFinder<AStarSystemNode> finder;
     finder.setStart(*_start);
     finder.setGoal(*_end);
     bool result = finder.findPath<AStar>(solution);
 
-    return result ?  AStarResult(solution) : AStarResult();
+    return result ? AStarResult(solution) : AStarResult();
 }
 
 
 QVariant AStarRouter::data(const QModelIndex &index, int role) const {
-    if((role == Qt::EditRole || role == Qt::DisplayRole) && index.row() < (int) _systems.size() && index.column() == 0) {
-        return QString(_systems[(size_t) index.row()].name().c_str());
+    if((role == Qt::EditRole || role == Qt::DisplayRole) && index.row() < (int) _systems.size() &&
+       index.column() == 0) {
+        return _systems[index.row()].name();
     }
     return QVariant();
 }
@@ -125,11 +126,11 @@ QModelIndex AStarRouter::index(int row, int column, const QModelIndex &) const {
 
 void AStarRouter::sortSystemList() {
     beginResetModel();
-    std::sort(_systems.begin(), _systems.end(), [](const System &a, const System &b) {
+    std::sort(_systems.begin(), _systems.end(), [ ](const System &a, const System &b) {
         return a.name() < b.name();
     });
     for(auto &system: _systems) {
-        _systemLookup[lower(system.name())] = &system;
+        _systemLookup[system.name().toLower()] = &system;
     }
     endResetModel();
 }

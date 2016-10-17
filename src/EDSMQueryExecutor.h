@@ -18,25 +18,33 @@
 
 #include <QUrl>
 #include <QThread>
+
 class QNetworkReply;
+
 class QNetworkAccessManager;
+
 class System;
 
 class EDSMQueryExecutor : public QThread {
-    Q_OBJECT
+Q_OBJECT
 
 public:
 
     static EDSMQueryExecutor *systemCoordinateRequest(const QString &systemName);
 
     virtual ~EDSMQueryExecutor() override;
+
 protected:
     virtual void run() override;
 
 signals:
+
     void coordinatesReceived(const System &);
+
     void coordinateRequestFailed();
+
 public slots:
+
     void replyFinished(QNetworkReply *reply);
 
 private:
@@ -47,6 +55,6 @@ private:
     explicit EDSMQueryExecutor(const QUrl &url, RequestType requestType);
 
     QNetworkAccessManager *_mgr;
-    RequestType _requestType;
-    const QUrl _url;
+    RequestType           _requestType;
+    const QUrl            _url;
 };

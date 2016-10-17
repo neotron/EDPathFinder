@@ -13,31 +13,11 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
 
-#pragma once
+#include "Database.h"
 
-#include <QMainWindow>
-#include <QItemSelection>
-#include "System.h"
-#include "TSPWorker.h"
+Database::~Database() { }
 
-namespace Ui {
-    class RouteViewer;
+bool Database::openDatabase() {
+    m_db.addDatabase("QSQLITE");
 }
-
-class RouteViewer : public QMainWindow {
-Q_OBJECT
-
-public:
-    explicit RouteViewer(const RouteResult &result, QWidget *parent = 0);
-
-    ~RouteViewer();
-
-public slots:
-
-    void copySelectedItem();
-
-private:
-    Ui::RouteViewer *_ui;
-};

@@ -14,12 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
+
 #include <QtGui>
 #include <QByteArray>
+
 #ifdef Q_WS_WIN
 #include <QtZlib/zlib.h>
 #else
+
 #include <zlib.h>
+
 #endif
 
 #define GZIP_WINDOWS_BIT 15 + 16
@@ -32,10 +36,8 @@ Q_OBJECT
 public:
     virtual void run() override;
 
-    explicit QCompressor(const QByteArray &input, bool compress = false) : QThread(),
-                                                                           _input(input), _output(),
-                                                                           _compress(compress),
-                                                                           _level(-1) { }
+    explicit QCompressor(const QByteArray &input, bool compress = false)
+            : QThread(), _input(input), _output(), _compress(compress), _level(-1) { }
 
     virtual ~QCompressor() override { }
 
@@ -54,7 +56,7 @@ private:
 
 
     const QByteArray _input;
-    QByteArray _output;
-    bool _compress;
-    int _level;
+    QByteArray       _output;
+    bool             _compress;
+    int              _level;
 };

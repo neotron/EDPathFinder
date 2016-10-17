@@ -16,87 +16,73 @@
 //
 
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <unordered_map>
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
 #include "System.h"
 #include "AStarRouter.h"
 
+#define EXPECTED_FIELD_COUNT 27
+#define READ_INT (*(it++)).toInt()
+#define READ_FLOAT (*(it++)).toFloat()
+#define READ_BOOL (READ_INT == 1)
+#define READ_STR (*(it++))
+#define SKIP_FIELD do { it++; } while(0)
+
 SystemList SystemLoader::loadSettlements(AStarRouter *router) {
     SystemList systems;
-    QFile systemData(":/dbdump.csv");
+    QFile      systemData(":/dbdump.csv");
     if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return systems;
     }
 
-    QTextStream in(&systemData);
-    std::unordered_map<std::string, System *> lookup;
-    for(QString qline = in.readLine(); !qline.isNull(); qline = in.readLine()) {
-        std::string line = qline.toStdString();
-        //  1: Type
-        //  2: System
-        //  3: Body
-        //  4: Name
-        //  5: is anarchy
-        //  6-8: x, y, z
-        //  9: distance(ly) (ignore)
-        // 10: threat level	0-3
-        // 11: Core Data Terminal present
-        // 12: jump climb required
-        // 13: cmdr (source)
-        // 14: special notes
-        // 15: UEF
-        // 16: SLF
-        // 17: TEC
-        // 18: MCF
-        // 19: CSD
-        // 20: CIF
-        // 21: OSK
-        // 22: SFP
-        // 23: DSD
-        // 24: MEF
-        // 25: CSF
-        // 26: size
-        // 27: idx
-        std::istringstream lis(line);
-        std::string type, system, planet, name, sizeStr, dump;
-        float x, y, z;
-        int32 flags = 0;
-        SettlementSize size;
-        ThreatLevel threat;
-
-        std::getline(lis, type, '\t'); // 1
-        std::getline(lis, system, '\t'); // 2
-        std::getline(lis, planet, '\t'); // 3
-        std::getline(lis, name, '\t'); // 4
-        if(getBool(lis)) { // gov/is anarchy
-            flags |= SettlementFlagsAnarchy;
+    QStringList             in(QString(systemData.readAll()).split("\n"));
+    QMap<QString, System *> lookup;
+    systems.reserve(in.size());
+    for(const auto &qline: in) {
+        QStringList line = qline.split("\t");
+        if(line.size() < EXPECTED_FIELD_COUNT) {
+            continue;
         }
-        x = getDouble(lis);
-        y = getDouble(lis);
-        z = getDouble(lis);
-        std::getline(lis, dump, '\t'); // distance - ignore
-        threat = (ThreatLevel) getInt(lis); // threat level
-        if(getBool(lis)) { flags |= SettlementFlagsCoreDataTerminal; }
-        if(getBool(lis)) { flags |= SettlementFlagsJumpClimbRequired; }
-        std::getline(lis, dump, '\t'); // Commander - ignore
-        std::getline(lis, dump, '\t'); // Notes - ignore
-        if(getBool(lis)) { flags |= SettlementFlagsUnusualEncryptedFiles; }
-        if(getBool(lis)) { flags |= SettlementFlagsSpecializedLegacyFirmware; }
-        if(getBool(lis)) { flags |= SettlementFlagsTaggedEncryptionCodes; }
-        if(getBool(lis)) { flags |= SettlementFlagsModifiedConsumerFirmware; }
-        if(getBool(lis)) { flags |= SettlementFlagsClassifiedScanDatabanks; }
-        if(getBool(lis)) { flags |= SettlementFlagsCrackedIndustrialFirmware; }
-        if(getBool(lis)) { flags |= SettlementFlagsOpenSymmetricKeys; }
-        if(getBool(lis)) { flags |= SettlementFlagsSecurityFirmwarePatch; }
-        if(getBool(lis)) { flags |= SettlementFlagsDivergentScanData; }
-        if(getBool(lis)) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
-        if(getBool(lis)) { flags |= SettlementFlagsClassifiedScanFragment; }
-        std::getline(lis, sizeStr, '\t');
+
+        int32 flags = 0;
+
+        auto it = line.begin();
+
+        auto type   = READ_STR; // Settlement type
+        auto system = READ_STR; // System name
+        auto planet = READ_STR; // Planet Name
+        auto name   = READ_STR; // Settlement name
+        if(READ_BOOL) { flags |= SettlementFlagsAnarchy; } // isAnarchy
+
+        auto x = READ_FLOAT; // x coordinate
+        auto y = READ_FLOAT; // y coordinate
+        auto z = READ_FLOAT; // z coordinate
+
+        SKIP_FIELD; // distance from origin, not used by app
+
+        ThreatLevel threat     = (ThreatLevel) READ_INT; // threat level
+        if(READ_BOOL) { flags |= SettlementFlagsCoreDataTerminal; }  // has coredata node
+        if(READ_BOOL) { flags |= SettlementFlagsJumpClimbRequired; } // needs jumping
+
+        SKIP_FIELD; // Commander who provided data
+        SKIP_FIELD; // Notes/comments
+
+        // Data material flags
+        if(READ_BOOL) { flags |= SettlementFlagsUnusualEncryptedFiles; }
+        if(READ_BOOL) { flags |= SettlementFlagsSpecializedLegacyFirmware; }
+        if(READ_BOOL) { flags |= SettlementFlagsTaggedEncryptionCodes; }
+        if(READ_BOOL) { flags |= SettlementFlagsModifiedConsumerFirmware; }
+        if(READ_BOOL) { flags |= SettlementFlagsClassifiedScanDatabanks; }
+        if(READ_BOOL) { flags |= SettlementFlagsCrackedIndustrialFirmware; }
+        if(READ_BOOL) { flags |= SettlementFlagsOpenSymmetricKeys; }
+        if(READ_BOOL) { flags |= SettlementFlagsSecurityFirmwarePatch; }
+        if(READ_BOOL) { flags |= SettlementFlagsDivergentScanData; }
+        if(READ_BOOL) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
+        if(READ_BOOL) { flags |= SettlementFlagsClassifiedScanFragment; }
+
+        SettlementSize size;
+        auto           sizeStr = READ_STR;
         if(sizeStr == "Large") {
             size = SettlementSizeLarge;
         } else if(sizeStr == "Medium") {
@@ -104,15 +90,18 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
         } else {
             size = SettlementSizeSmall;
         }
+
+        //auto idx = INT; // Index? Number of nodes?
+
         Settlement settlement(name, size, threat, flags);
 
-        if(lookup.count(system)) {
+        if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement);
         } else {
             Planet planetObj(planet, settlement);
             System systemObj(system, planetObj, x, y, z);
             systems.push_back(systemObj);
-            lookup[system] = &systems.back();
+            lookup[system] = &systems.last();
 
             if(!router->getSystemByName(system)) {
                 router->addSystem(systemObj);
@@ -123,30 +112,6 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
     return systems;
 }
 
-int32 SystemLoader::getInt(std::istringstream &is, bool eol) const {
-    std::string valStr;
-    std::getline(is, valStr, (char) (eol ? '\n' : '\t'));
-    int32 val;
-    std::stringstream ss(valStr);
-    ss >> val;
-    return val;
-}
-
-float SystemLoader::getDouble(std::istringstream &is, bool eol) const {
-    std::string valStr;
-    std::getline(is, valStr, (char) (eol ? '\n' : '\t'));
-    float val;
-    std::stringstream ss(valStr);
-    ss >> val;
-    return val;
-}
-
-bool SystemLoader::getBool(std::istringstream &is, bool eol) const {
-    std::string valStr;
-    std::getline(is, valStr, (char) (eol ? '\n' : '\t'));
-    return valStr == "1";
-}
-
 QString System::formatDistance(int64 dist) {
     if(dist > 0) {
         return QString("%1.%2").arg(dist / 10).arg(dist % 10);
@@ -155,9 +120,9 @@ QString System::formatDistance(int64 dist) {
     }
 }
 
-System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) {}
+System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) { }
 
-void System::addSettlement(const std::string &planetName, const Settlement &settlement) {
+void System::addSettlement(const QString &planetName, const Settlement &settlement) {
     for(auto planet: _planets) {
         if(planet.name() == planetName) {
             planet.addSettlement(settlement);

@@ -19,7 +19,6 @@
 #include <QtGui>
 #include <deps/PathFinder/src/PathFinder.h>
 #include <deps/PathFinder/src/AStar.h>
-#include <unordered_map>
 #include "System.h"
 
 class AStarRouter;
@@ -54,8 +53,8 @@ public:
 
 private:
     SystemList _route;
-    float _distance;
-    bool _valid;
+    float      _distance;
+    bool       _valid;
 };
 
 class AStarSystemNode : public AStarNode {
@@ -71,14 +70,14 @@ public:
         return _system.position().distanceToPoint(other->_system.position());
     }
 
-    const std::string &name() const { return _system.name(); }
+    const QString &name() const { return _system.name(); }
 
     const QVector3D &position() const { return _system.position(); }
 
     virtual std::vector<std::pair<Node *, float>> &getChildren() override;
 
 private:
-    const System &_system;
+    const System    &_system;
     AStarCalculator &_calculator;
 };
 
@@ -108,7 +107,7 @@ public:
 
 private:
     AStarSystemNode *_start, *_end;
-    float _jumpRange;
+    float           _jumpRange;
     AStarSystemList _nodes;
 };
 
@@ -125,37 +124,31 @@ public:
 
     void addSystem(const System &system) {
         _systems.push_back(system);
-        _systemLookup[system.name()] = &_systems.back();
+        _systemLookup[system.name().toLower()] = &_systems.back();
     }
 
-    AStarResult calculateRoute(const std::string &begin, const std::string &end, float jumprange);
-
-    System *getSystemByName(const std::string &name) {
-        auto lowerName = lower(name);
-        return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
-    }
+    AStarResult calculateRoute(const QString &begin, const QString &end, float jumprange);
 
     System *getSystemByName(const QString &name) {
-        auto lowerName = lower(name.toStdString());
-        return _systemLookup.find(lowerName) != _systemLookup.end() ? _systemLookup[lowerName] : Q_NULLPTR;
+        auto lowerName = name.toLower();
+        return _systemLookup.contains(lowerName) ? _systemLookup[lowerName] : Q_NULLPTR;
     }
 
     virtual QModelIndex index(int row, int column, const QModelIndex &) const;
+
     virtual QModelIndex parent(const QModelIndex &) const;
-    virtual int rowCount(const QModelIndex &) const;
-    virtual int columnCount(const QModelIndex &) const;
-    virtual QVariant data(const QModelIndex &index, int role) const;
-    void sortSystemList();
+
+    virtual int         rowCount(const QModelIndex &) const;
+
+    virtual int         columnCount(const QModelIndex &) const;
+
+    virtual QVariant    data(const QModelIndex &index, int role) const;
+
+    void                sortSystemList();
 
 private:
-
-    inline std::string lower(std::string str) {
-        std::transform(str.begin(), str.end(), str.begin(), ::tolower);
-        return str;
-    }
-
-    SystemList _systems;
-    std::unordered_map<std::string, System *> _systemLookup;
+    SystemList              _systems;
+    QMap<QString, System *> _systemLookup;
 };
 
 

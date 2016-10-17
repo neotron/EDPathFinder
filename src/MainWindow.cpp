@@ -27,7 +27,8 @@
 #include "EDSMQueryExecutor.h"
 #include "QCompressor.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false), _router(new AStarRouter(this)), _pendingLookups() {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false),
+                                          _router(new AStarRouter(this)), _pendingLookups() {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
     connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
@@ -44,34 +45,34 @@ MainWindow::~MainWindow() {
 
 void MainWindow::cleanupCheckboxes() {
     QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
-    int width = 0;
-    for(auto checkbox: checkboxes) {
+    int                width      = 0;
+    for(auto           checkbox: checkboxes) {
         connect(checkbox, SIGNAL(stateChanged(int)), this, SLOT(updateFilters()));
         width = qMax(checkbox->width(), width);
     }
-    for(auto checkbox: checkboxes) {
+    for(auto           checkbox: checkboxes) {
         checkbox->setMinimumWidth(width);
     }
-    auto radios = findChildren<QRadioButton *>();
-    for(auto radio: radios) {
-         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
-     }
+    auto               radios     = findChildren<QRadioButton *>();
+    for(auto           radio: radios) {
+        connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
+    }
 }
 
 void MainWindow::buildLookupMap() {
-    _flagsLookup["cdt"] = SettlementFlagsCoreDataTerminal;
-    _flagsLookup["jump"] = SettlementFlagsJumpClimbRequired;
-    _flagsLookup["csd"] = SettlementFlagsClassifiedScanDatabanks;
-    _flagsLookup["csf"] = SettlementFlagsClassifiedScanFragment;
-    _flagsLookup["cif"] = SettlementFlagsCrackedIndustrialFirmware;
-    _flagsLookup["dsd"] = SettlementFlagsDivergentScanData;
-    _flagsLookup["mcf"] = SettlementFlagsModifiedConsumerFirmware;
-    _flagsLookup["mef"] = SettlementFlagsModifiedEmbeddedFirmware;
-    _flagsLookup["osk"] = SettlementFlagsOpenSymmetricKeys;
-    _flagsLookup["sfp"] = SettlementFlagsSecurityFirmwarePatch;
-    _flagsLookup["slf"] = SettlementFlagsSpecializedLegacyFirmware;
-    _flagsLookup["tec"] = SettlementFlagsTaggedEncryptionCodes;
-    _flagsLookup["uef"] = SettlementFlagsUnusualEncryptedFiles;
+    _flagsLookup["cdt"]     = SettlementFlagsCoreDataTerminal;
+    _flagsLookup["jump"]    = SettlementFlagsJumpClimbRequired;
+    _flagsLookup["csd"]     = SettlementFlagsClassifiedScanDatabanks;
+    _flagsLookup["csf"]     = SettlementFlagsClassifiedScanFragment;
+    _flagsLookup["cif"]     = SettlementFlagsCrackedIndustrialFirmware;
+    _flagsLookup["dsd"]     = SettlementFlagsDivergentScanData;
+    _flagsLookup["mcf"]     = SettlementFlagsModifiedConsumerFirmware;
+    _flagsLookup["mef"]     = SettlementFlagsModifiedEmbeddedFirmware;
+    _flagsLookup["osk"]     = SettlementFlagsOpenSymmetricKeys;
+    _flagsLookup["sfp"]     = SettlementFlagsSecurityFirmwarePatch;
+    _flagsLookup["slf"]     = SettlementFlagsSpecializedLegacyFirmware;
+    _flagsLookup["tec"]     = SettlementFlagsTaggedEncryptionCodes;
+    _flagsLookup["uef"]     = SettlementFlagsUnusualEncryptedFiles;
     _flagsLookup["anarchy"] = SettlementFlagsAnarchy;
 }
 
@@ -91,17 +92,19 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 void MainWindow::createRoute() {
 
     if(_filteredSystems.size() > 0) {
-        auto systemName = _ui->systemName->text();
+        auto systemName   = _ui->systemName->text();
         auto originSystem = _router->getSystemByName(systemName);
-        if(!originSystem) { 
+        if(!originSystem) {
             // Need to fetch coordinates for origin.
             downloadSystemCoordinates(systemName);
             _routingPending = true;
             return;
         }
-        auto routeSize = (size_t)_ui->systemCountSlider->value();
+        auto routeSize = _ui->systemCountSlider->value();
         updateSystemCoordinateDisplay(*originSystem);
-        showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name().c_str()), 0);
+        showMessage(
+                QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name()),
+                0);
         _ui->createRouteButton->setEnabled(false);
         TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
 //        workerThread->setRouter(&_router);
@@ -109,7 +112,6 @@ void MainWindow::createRoute() {
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
         _ui->centralWidget->setEnabled(false);
-
     } else {
         _ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
     }
@@ -117,7 +119,7 @@ void MainWindow::createRoute() {
 
 void MainWindow::loadSystems() {
     SystemLoader loader;
-   	_systems = loader.loadSettlements(_router);
+    _systems = loader.loadSettlements(_router);
     _ui->systemCountSlider->setMinimum(1);
     _ui->systemCountSlider->setSingleStep(1);
     updateSliderParams((int) _systems.size());
@@ -126,10 +128,10 @@ void MainWindow::loadSystems() {
 }
 
 void MainWindow::updateFilters() {
-    int32 settlementFlags = 0;
-    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
+    int32              settlementFlags = 0;
+    QList<QCheckBox *> checkboxes      = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
-    for(auto &checkbox : checkboxes)  {
+    for(auto           &checkbox : checkboxes) {
         if(checkbox->isChecked()) {
             auto flag = _flagsLookup.find(checkbox->objectName());
             if(flag != _flagsLookup.end()) {
@@ -164,13 +166,13 @@ void MainWindow::updateFilters() {
     }
 
 
-    int32 matches = 0;
+    int32 matches             = 0;
     _filteredSystems.clear();
     for(const auto &system : _systems) {
-        std::deque<Planet> matchingPlanets;
+        PlanetList     matchingPlanets;
         for(const auto &planet: system.planets()) {
-            std::deque<Settlement> matchingSettlements;
-            for(auto settlement: planet.settlements()) {
+            SettlementList matchingSettlements;
+            for(auto       settlement: planet.settlements()) {
                 if((settlement.flags() & settlementFlags) != settlementFlags) {
                     continue;
                 }
@@ -195,11 +197,12 @@ void MainWindow::updateFilters() {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
         }
     }
-    auto numSystems = (int) _filteredSystems.size();
+    auto           numSystems = (int) _filteredSystems.size();
     updateSliderParams(numSystems);
 
     _matchingSettlementCount = matches;
-    _ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount).arg(_filteredSystems.size()));
+    _ui->statusBar->showMessage(QString("Filter matches %1 settlements in %2 systems.").arg(_matchingSettlementCount)
+                                                                                       .arg(_filteredSystems.size()));
 }
 
 void MainWindow::updateSystemCoordinates() {
@@ -207,13 +210,12 @@ void MainWindow::updateSystemCoordinates() {
     if(!systemName.length()) {
         return;
     }
-    auto system = _router->getSystemByName(systemName.toStdString());
+    auto system = _router->getSystemByName(systemName);
     if(!system) {
         downloadSystemCoordinates(systemName);
     } else {
         updateSystemCoordinateDisplay(*system);
     }
-
 }
 
 void MainWindow::downloadSystemCoordinates(const QString &systemName) {
@@ -247,7 +249,7 @@ void MainWindow::systemCoordinatesReceived(const System &system) {
     updateSystemCoordinateDisplay(system);
     _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setEnabled(true);
-    auto systemName = QString(system.name().c_str());
+    auto systemName = QString(system.name());
     _pendingLookups.remove(systemName);
     _ui->systemName->setText(systemName);
     _router->addSystem(system);
@@ -263,7 +265,7 @@ void MainWindow::updateSystemCoordinateDisplay(const System &system) const {
     _ui->x->setText(QString::number(system.x()));
     _ui->y->setText(QString::number(system.y()));
     _ui->z->setText(QString::number(system.z()));
-    _ui->systemName->setText(system.name().c_str());
+    _ui->systemName->setText(system.name());
 }
 
 void MainWindow::loadCompressedData() {
@@ -274,18 +276,20 @@ void MainWindow::loadCompressedData() {
 
     auto compressor = new QCompressor(blob);
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
-    connect(compressor, SIGNAL(complete(const QByteArray &)), this, SLOT(dataDecompressed(const QByteArray &)));
+    connect(compressor, SIGNAL(complete(
+                                       const QByteArray &)), this, SLOT(dataDecompressed(
+                                                                                const QByteArray &)));
     compressor->start();
 }
 
 void MainWindow::dataDecompressed(const QByteArray &bytes) {
-    auto json = QJsonDocument::fromJson(bytes);
-    int numSystems = 0;
+    auto     json       = QJsonDocument::fromJson(bytes);
+    int      numSystems = 0;
     for(auto systemObj: json.array()) {
-        auto sysdata = systemObj.toObject();
-        auto coords = sysdata["coords"].toObject();
-        auto name = sysdata["name"].toString();
-        System system(name.toStdString(), (float)coords["x"].toDouble(), (float) coords["y"].toDouble(),
+        auto   sysdata = systemObj.toObject();
+        auto   coords  = sysdata["coords"].toObject();
+        auto   name    = sysdata["name"].toString();
+        System system(name, (float) coords["x"].toDouble(), (float) coords["y"].toDouble(),
                       (float) coords["z"].toDouble());
         _router->addSystem(system);
         ++numSystems;
@@ -297,10 +301,11 @@ void MainWindow::dataDecompressed(const QByteArray &bytes) {
     QCompleter *completer = new QCompleter(_router, this);
     completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
-    QListView *popup = (QListView*)completer->popup();
+    QListView *popup = (QListView *) completer->popup();
     popup->setBatchSize(10);
     popup->setLayoutMode(QListView::Batched);
-    connect(completer, SIGNAL(activated(const QString &)), this, SLOT(updateSystemCoordinates()));
+    connect(completer, SIGNAL(activated(
+                                      const QString &)), this, SLOT(updateSystemCoordinates()));
     _ui->systemName->setCompleter(completer);
 }
 

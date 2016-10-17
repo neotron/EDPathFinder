@@ -22,47 +22,62 @@
 
 
 class RouteResult;
+
 class AStarRouter;
 
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 
-class MainWindow : public QMainWindow
-{
-    Q_OBJECT
+class MainWindow : public QMainWindow {
+Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
 
 public slots:
+
     void createRoute();
+
     void routeCalculated(const RouteResult &route);
+
     void updateFilters();
+
     void updateSystemCoordinates();
+
     void systemCoordinatesReceived(const System &system);
+
     void systemCoordinatesRequestFailed();
+
     void dataDecompressed(const QByteArray &bytes);
 
 private:
     void cleanupCheckboxes();
+
     void buildLookupMap();
+
     void loadSystems();
+
     void loadCompressedData();
+
     void downloadSystemCoordinates(const QString &systemName);
+
     void showMessage(const QString &message, int timeout = 10000);
+
     void updateSliderParams(int size);
+
     void updateSystemCoordinateDisplay(const System &system) const;
 
     Ui::MainWindow *_ui;
 
     QMap<QString, SettlementFlags> _flagsLookup;
 
-    SystemList _systems;
-    SystemList _filteredSystems;
-    int32 _matchingSettlementCount;
-    bool _routingPending;
-    AStarRouter *_router;
+    SystemList    _systems;
+    SystemList    _filteredSystems;
+    int32         _matchingSettlementCount;
+    bool          _routingPending;
+    AStarRouter   *_router;
     QSet<QString> _pendingLookups;
 };

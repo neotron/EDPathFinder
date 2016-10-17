@@ -27,11 +27,11 @@ bool QCompressor::gzipCompress() {
 
         // Prepare deflater status
         z_stream strm;
-        strm.zalloc = Z_NULL;
-        strm.zfree = Z_NULL;
-        strm.opaque = Z_NULL;
+        strm.zalloc   = Z_NULL;
+        strm.zfree    = Z_NULL;
+        strm.opaque   = Z_NULL;
         strm.avail_in = 0;
-        strm.next_in = Z_NULL;
+        strm.next_in  = Z_NULL;
 
         // Initialize deflater
         int ret = deflateInit2(&strm, qMax(-1, qMin(9, _level)), Z_DEFLATED, GZIP_WINDOWS_BIT, 8, Z_DEFAULT_STRATEGY);
@@ -44,8 +44,8 @@ bool QCompressor::gzipCompress() {
         _output.clear();
 
         // Extract pointer to input data
-        const char *input_data = _input.data();
-        int input_data_left = _input.length();
+        const char *input_data     = _input.data();
+        int        input_data_left = _input.length();
 
         // Compress data until available
         do {
@@ -53,7 +53,7 @@ bool QCompressor::gzipCompress() {
             int chunk_size = qMin(GZIP_CHUNK_SIZE, input_data_left);
 
             // Set deflater references
-            strm.next_in = (unsigned char *) input_data;
+            strm.next_in  = (unsigned char *) input_data;
             strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
@@ -70,7 +70,7 @@ bool QCompressor::gzipCompress() {
                 unsigned char *out = (unsigned char *) alloca(GZIP_CHUNK_SIZE);
 
                 // Set deflater references
-                strm.next_out = out;
+                strm.next_out  = out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
 
                 // Try to deflate chunk
@@ -86,7 +86,7 @@ bool QCompressor::gzipCompress() {
                 }
 
                 // Determine compressed size
-                int have = (GZIP_CHUNK_SIZE - (int)strm.avail_out);
+                int have = (GZIP_CHUNK_SIZE - (int) strm.avail_out);
 
                 // Cumulate result
                 if(have > 0) {
@@ -114,11 +114,11 @@ bool QCompressor::gzipDecompress() {
     if(input_size > 0) {
         // Prepare inflater status
         z_stream strm;
-        strm.zalloc = Z_NULL;
-        strm.zfree = Z_NULL;
-        strm.opaque = Z_NULL;
+        strm.zalloc   = Z_NULL;
+        strm.zfree    = Z_NULL;
+        strm.opaque   = Z_NULL;
         strm.avail_in = 0;
-        strm.next_in = Z_NULL;
+        strm.next_in  = Z_NULL;
 
         // Initialize inflater
         int ret = inflateInit2(&strm, GZIP_WINDOWS_BIT);
@@ -128,8 +128,8 @@ bool QCompressor::gzipDecompress() {
         }
 
         // Extract pointer to input data
-        const char *input_data = _input.data();
-        int input_data_left = input_size;
+        const char *input_data     = _input.data();
+        int        input_data_left = input_size;
 
         // Decompress data until available
         do {
@@ -142,7 +142,7 @@ bool QCompressor::gzipDecompress() {
             }
 
             // Set inflater references
-            strm.next_in = (unsigned char *) input_data;
+            strm.next_in  = (unsigned char *) input_data;
             strm.avail_in = (uInt) chunk_size;
 
             // Update interval variables
@@ -156,7 +156,7 @@ bool QCompressor::gzipDecompress() {
                 char out[GZIP_CHUNK_SIZE];
 
                 // Set inflater references
-                strm.next_out = (unsigned char *) out;
+                strm.next_out  = (unsigned char *) out;
                 strm.avail_out = GZIP_CHUNK_SIZE;
 
                 // Try to inflate chunk
@@ -177,7 +177,7 @@ bool QCompressor::gzipDecompress() {
                 }
 
                 // Determine decompressed size
-                int have = (GZIP_CHUNK_SIZE - (int)strm.avail_out);
+                int have = (GZIP_CHUNK_SIZE - (int) strm.avail_out);
 
                 // Cumulate result
                 if(have > 0) {

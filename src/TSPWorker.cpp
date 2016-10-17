@@ -26,12 +26,12 @@ namespace operations_research {
 
 // Cost/distance functions.
     int64 TSPWorker::systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to) {
-        return _distanceMatrix[(size_t)from.value()][(size_t)to.value()];
+        return _distanceMatrix[from.value()][to.value()];
     }
 
-    int64 TSPWorker::calculateDistance(size_t from, size_t to) {
+    int64 TSPWorker::calculateDistance(int from, int to) {
         auto &fromSystem = _systems[from];
-        auto &toSystem = _systems[to];
+        auto &toSystem   = _systems[to];
         ++numDist;
         if(_router) {
             AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 45.0f);
@@ -45,20 +45,20 @@ namespace operations_research {
     }
 
     void TSPWorker::calculateDistanceMatrix() {
-        auto sz = _systems.size();
+        auto sz                                             = _systems.size();
         _distanceMatrix.resize(sz);
-        typedef std::pair<QFuture<int64>, std::pair<size_t, size_t>> FuturePair;
-        std::deque<FuturePair> futures;
-        for(size_t from = 0; from < sz; from++) {
-            _distanceMatrix[from].resize(sz, -1);
+        typedef QPair<QFuture<int64>, QPair<int, int>> FuturePair;
+        QList<FuturePair>                              futures;
+        for(int                                        from = 0; from < sz; from++) {
+            _distanceMatrix[from].fill(-1, sz);
         }
-        for(size_t from = 0; from < sz; from++) {
-            for(size_t to = 0; to < sz; to++) {
+        for(int                                        from = 0; from < sz; from++) {
+            for(int to = 0; to < sz; to++) {
                 int64 dist = 0;
                 if(from != to) {
                     if(_distanceMatrix[to][from] == -1) {
-                        auto future = QtConcurrent::run(this, &TSPWorker::calculateDistance, from, to);
-                        auto destPair = std::pair<size_t, size_t>(from, to);
+                        auto future   = QtConcurrent::run(this, &TSPWorker::calculateDistance, from, to);
+                        auto destPair = QPair<int, int>(from, to);
                         futures.push_back(FuturePair(future, destPair));
                         _distanceMatrix[to][from] = -2;
                         _distanceMatrix[from][to] = -2;
@@ -119,21 +119,21 @@ namespace operations_research {
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
-            size_t nodeid;
-            size_t previd = 0;
-            int64 dist = 0;
-            for(int64 node = routing.Start(route_number);
+            int       nodeid;
+            int       previd       = 0;
+            int64     dist         = 0;
+            for(int64 node         = routing.Start(route_number);
                 !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
-                nodeid = (size_t) routing.IndexToNode(node).value();
+                nodeid = routing.IndexToNode(node).value();
 
                 const System &sys = _systems[nodeid];
 
                 if(nodeid > 0) {
                     dist = sys.distance(_systems[previd]);
                 }
-                previd = nodeid;
-                if(!sys.planets().size())  {
+                previd            = nodeid;
+                if(!sys.planets().size()) {
                     result.addEntry(sys, "Point of Origin", "", dist);
                     continue;
                 }
@@ -144,7 +144,7 @@ namespace operations_research {
                     }
                 }
             }
-            dist = _systems[0].distance(_systems[previd]);
+            dist     = _systems[0].distance(_systems[previd]);
             result.addEntry(_systems[0], "Point of Origin", "", dist);
         } else {
             LOG(INFO) << "No solution found.";
@@ -154,13 +154,13 @@ namespace operations_research {
 }
 
 void RouteResult::addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance) {
-    addEntry(system, planet.name().c_str(), settlement.name().c_str(), distance);
+    addEntry(system, planet.name(), settlement.name(), distance);
 }
 
 void RouteResult::addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance) {
     _totalDist += distance;
     std::vector<QString> row(5);
-    row[0] = system.name().c_str();
+    row[0] = system.name();
     row[1] = planet;
     row[2] = settlement;
     row[3] = System::formatDistance(distance);

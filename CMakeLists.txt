@@ -8,15 +8,17 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent)
-
-link_directories(${ORTOOLS}/lib)
 
 set(QT_USE_QTNETWORK true)
 find_package(Qt5Core REQUIRED)
+find_package(Qt5Sql REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
+
+set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Sql)
+link_directories(${ORTOOLS}/lib)
+
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
@@ -45,4 +47,4 @@ include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC})
-add_executable(EDPathFinder ${SOURCE_FILES} resources/resources.qrc)
+add_executable(EDPathFinder ${SOURCE_FILES} resources/resources.qrc src/Database.cpp src/Database.h)
