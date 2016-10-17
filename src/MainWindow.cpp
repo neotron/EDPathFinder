@@ -118,13 +118,6 @@ void MainWindow::createRoute() {
 }
 
 void MainWindow::loadSystems() {
-    SystemLoader loader;
-    _systems = loader.loadSettlements(_router);
-    _ui->systemCountSlider->setMinimum(1);
-    _ui->systemCountSlider->setSingleStep(1);
-    updateSliderParams((int) _systems.size());
-    updateFilters();
-    _ui->centralWidget->setEnabled(true);
 }
 
 void MainWindow::updateFilters() {
@@ -272,31 +265,25 @@ void MainWindow::loadCompressedData() {
     showMessage("Loading known systems...", 0);
     QFile file(":/systems.json.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
-    QByteArray blob = file.readAll();
+    QByteArray blob       = file.readAll();
+    auto       compressor = new QCompressor(blob);
+    SystemLoader *loader = new SystemLoader(_router);
 
-    auto compressor = new QCompressor(blob);
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
-    connect(compressor, SIGNAL(complete(
-                                       const QByteArray &)), this, SLOT(dataDecompressed(
-                                                                                const QByteArray &)));
+    connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
+    connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
+    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
+
     compressor->start();
 }
 
-void MainWindow::dataDecompressed(const QByteArray &bytes) {
-    auto     json       = QJsonDocument::fromJson(bytes);
-    int      numSystems = 0;
-    for(auto systemObj: json.array()) {
-        auto   sysdata = systemObj.toObject();
-        auto   coords  = sysdata["coords"].toObject();
-        auto   name    = sysdata["name"].toString();
-        System system(name, (float) coords["x"].toDouble(), (float) coords["y"].toDouble(),
-                      (float) coords["z"].toDouble());
-        _router->addSystem(system);
-        ++numSystems;
-    }
-    showMessage(QString("Completed loading of %1 systems.").arg(numSystems));
-    loadSystems();
-    _router->sortSystemList();
+void MainWindow::systemsLoaded(const SystemList &systems) {
+    _systems = std::move(systems);
+    _ui->systemCountSlider->setMinimum(1);
+    _ui->systemCountSlider->setSingleStep(1);
+    updateSliderParams(_systems.size());
+    updateFilters();
+    _ui->centralWidget->setEnabled(true);
 
     QCompleter *completer = new QCompleter(_router, this);
     completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
@@ -304,8 +291,7 @@ void MainWindow::dataDecompressed(const QByteArray &bytes) {
     QListView *popup = (QListView *) completer->popup();
     popup->setBatchSize(10);
     popup->setLayoutMode(QListView::Batched);
-    connect(completer, SIGNAL(activated(
-                                      const QString &)), this, SLOT(updateSystemCoordinates()));
+    connect(completer, SIGNAL(activated(const QString &)), this, SLOT(updateSystemCoordinates()));
     _ui->systemName->setCompleter(completer);
 }
 
@@ -319,6 +305,9 @@ void MainWindow::updateSliderParams(int size) {
     _ui->systemCountSlider->setValue(max);
     _ui->systemCountLabel->setText(QString::number(max));
 }
+
+
+
 
 
 

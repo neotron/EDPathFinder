@@ -29,17 +29,29 @@
 #define READ_STR (*(it++))
 #define SKIP_FIELD do { it++; } while(0)
 
-SystemList SystemLoader::loadSettlements(AStarRouter *router) {
-    SystemList systems;
+void SystemLoader::run() {
+    auto json      = QJsonDocument::fromJson(_bytes);
+    auto jsonArray = json.array();
+    _router->reserveSystemSpace(jsonArray.size());
+    for(auto systemObj: jsonArray) {
+        _router->addSystem(System(systemObj.toObject()));
+    }
+    loadSettlements();
+    _router->sortSystemList();
+    emit systemsLoaded(_systems);
+}
+
+void SystemLoader::loadSettlements() {
     QFile      systemData(":/dbdump.csv");
     if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        return systems;
+        return;
     }
 
-    QStringList             in(QString(systemData.readAll()).split("\n"));
+    QStringList             lines(QString(systemData.readAll()).split("\n"));
     QMap<QString, System *> lookup;
-    systems.reserve(in.size());
-    for(const auto &qline: in) {
+    _systems.clear();
+    _systems.reserve(lines.size());
+    for(const auto &qline: lines) {
         QStringList line = qline.split("\t");
         if(line.size() < EXPECTED_FIELD_COUNT) {
             continue;
@@ -100,17 +112,22 @@ SystemList SystemLoader::loadSettlements(AStarRouter *router) {
         } else {
             Planet planetObj(planet, settlement);
             System systemObj(system, planetObj, x, y, z);
-            systems.push_back(systemObj);
-            lookup[system] = &systems.last();
+            _systems.push_back(systemObj);
+            lookup[system] = &_systems.last();
 
-            if(!router->getSystemByName(system)) {
-                router->addSystem(systemObj);
+            if(!_router->getSystemByName(system)) {
+                _router->addSystem(systemObj);
             }
         }
     }
-    std::cerr << "Loaded " << systems.size() << " systems." << std::endl;
-    return systems;
 }
+
+void SystemLoader::dataDecompressed(const QByteArray &bytes) {
+    _bytes = bytes;
+    start();
+}
+
+
 
 QString System::formatDistance(int64 dist) {
     if(dist > 0) {
@@ -133,3 +150,13 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
 }
 
 System::~System() { }
+
+
+System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toString()), _planets(), _position() {
+    auto coords = jsonObject["coords"].toObject();
+    _position.setX((float) coords["x"].toDouble());
+    _position.setY((float) coords["y"].toDouble());
+    _position.setZ((float) coords["z"].toDouble());
+}
+
+SystemLoader::~SystemLoader() { }

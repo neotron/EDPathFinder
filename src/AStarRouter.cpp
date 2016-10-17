@@ -17,17 +17,19 @@
 #include "AStarRouter.h"
 
 AStarResult::AStarResult(const AStarSystemList &solution) : _route(), _valid(true) {
-    float           distance = 0;
+    float distance = 0;
+    int   i        = 0;
+
     AStarSystemNode *last(0);
-    int             i        = 0;
-    for(auto        asys: solution) {
+
+    for(auto asys: solution) {
         if(last) {
             distance += asys->distanceTo(last);
         }
         _route[i++] = System(asys);
         last = asys;
     }
-    _distance                = distance;
+    _distance      = distance;
 }
 
 

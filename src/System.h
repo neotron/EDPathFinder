@@ -22,20 +22,18 @@
 #include <QString>
 #include <AStar.h>
 #include <QVector3D>
+#include <QJsonObject>
+#include <QThread>
 
 class AStarSystemNode;
-
 class AStarRouter;
-
 class Settlement;
-
 class Planet;
-
 class System;
 
-typedef QVector<Settlement> SettlementList;
-typedef QVector<Planet>     PlanetList;
-typedef QVector<System>     SystemList;
+typedef QList<Settlement> SettlementList;
+typedef QList<Planet>     PlanetList;
+typedef QList<System>     SystemList;
 
 enum ThreatLevel {
     ThreatLevelLow, ThreatLevelRestrictedLongDistance, ThreatLevelMedium, ThreatLeveLHigh
@@ -183,16 +181,18 @@ public:
     System(const System &&other) : _name(std::move(other._name)), _planets(std::move(other._planets)),
                                    _position(std::move(other._position)) { }
 
+    System(const QJsonObject &jsonObject);
+
     System &operator=(const System &other) {
-        _name = other._name;
-        _planets = other._planets;
+        _name     = other._name;
+        _planets  = other._planets;
         _position = other._position;
         return *this;
     }
 
     System &operator=(const System &&other) {
-        _name = std::move(other._name);
-        _planets = std::move(other._planets);
+        _name     = std::move(other._name);
+        _planets  = std::move(other._planets);
         _position = std::move(other._position);
         return *this;
     }
@@ -244,7 +244,24 @@ protected:
     QVector3D  _position;
 };
 
-class SystemLoader {
+class SystemLoader : public QThread {
+    Q_OBJECT
+
 public:
-    SystemList loadSettlements(AStarRouter *router);
+    SystemLoader(AStarRouter *router): QThread(), _router(router) {}
+    void run() override;
+
+    virtual ~SystemLoader();
+
+signals:
+    void systemsLoaded(const SystemList &systems);
+
+public slots:
+    void dataDecompressed(const QByteArray &bytes);
+
+private:
+    void loadSettlements();
+    SystemList _systems;
+    AStarRouter *_router;
+    QByteArray _bytes;
 };

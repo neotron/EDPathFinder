@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>ED Pathfinder</string>
+   <string>ED PathFinder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="minimumSize">

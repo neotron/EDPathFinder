@@ -138,13 +138,18 @@ public:
 
     virtual QModelIndex parent(const QModelIndex &) const;
 
-    virtual int         rowCount(const QModelIndex &) const;
+    virtual int rowCount(const QModelIndex &) const;
 
-    virtual int         columnCount(const QModelIndex &) const;
+    virtual int columnCount(const QModelIndex &) const;
 
-    virtual QVariant    data(const QModelIndex &index, int role) const;
+    virtual QVariant data(const QModelIndex &index, int role) const;
 
-    void                sortSystemList();
+    void sortSystemList();
+protected:
+    friend class SystemLoader;
+    void reserveSystemSpace(int size) {
+        _systems.reserve(size);
+    }
 
 private:
     SystemList              _systems;

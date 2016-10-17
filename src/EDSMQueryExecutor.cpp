@@ -49,12 +49,7 @@ void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
         auto data     = reply->readAll();
         auto document = QJsonDocument::fromJson(data);
         if(document.isObject()) {
-            QJsonObject coords = document.object()["coords"].toObject();
-            auto        x      = coords["x"].toDouble();
-            auto        z      = coords["z"].toDouble();
-            auto        y      = coords["y"].toDouble();
-            System      system(document.object()["name"].toString(), (float) x, (float) y, (float) z);
-            emit coordinatesReceived(system);
+            emit coordinatesReceived(System(document.object()));
             reply->deleteLater();
             return;
         }

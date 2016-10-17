@@ -89,7 +89,7 @@ namespace operations_research {
             return a.distance(*startingSystem) < b.distance((*startingSystem));
         });
         if(_maxSystemCount < _systems.size()) {
-            _systems.resize(_maxSystemCount);
+            _systems.erase(_systems.begin()+_maxSystemCount, _systems.end());
         }
         // Calculate the closest system
         if(_origin) {

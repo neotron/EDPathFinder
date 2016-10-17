@@ -38,6 +38,7 @@ public:
     ~MainWindow();
 
 public slots:
+    void systemsLoaded(const SystemList &systems);
 
     void createRoute();
 
@@ -50,8 +51,6 @@ public slots:
     void systemCoordinatesReceived(const System &system);
 
     void systemCoordinatesRequestFailed();
-
-    void dataDecompressed(const QByteArray &bytes);
 
 private:
     void cleanupCheckboxes();

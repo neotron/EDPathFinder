@@ -28,11 +28,10 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWind
     table->setSelectionBehavior(QTableView::SelectRows);
     table->setSelectionMode(QTableView::SingleSelection);
     QHeaderView *horizontalHeader = table->horizontalHeader();
-    horizontalHeader->setSectionResizeMode(QHeaderView::Stretch);
+    horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+    horizontalHeader->setStretchLastSection(true);
     setAttribute(Qt::WA_DeleteOnClose, true);
-
-    connect(table->selectionModel(), SIGNAL(selectionChanged(
-                                                    const QItemSelection &, const QItemSelection &)), this,
+    connect(table->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this,
             SLOT(copySelectedItem()));
 }
 
