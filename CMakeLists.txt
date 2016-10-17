@@ -36,7 +36,7 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14  -DARCH_K8 -Wno-deprecated ")
     link_libraries(${LINK_LIBS} -lz)
 else ()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS /W1")
     link_libraries(${LINK_LIBS})
 endif ()
 
@@ -45,6 +45,5 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
-
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC})
-add_executable(EDPathFinder ${SOURCE_FILES} resources/resources.qrc src/Database.cpp src/Database.h)
+add_executable(EDPathFinder "${SOURCE_FILES}" resources/resources.qrc)

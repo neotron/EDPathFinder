@@ -20,4 +20,5 @@ Database::~Database() { }
 
 bool Database::openDatabase() {
     m_db.addDatabase("QSQLITE");
+    return m_db.isValid();
 }
