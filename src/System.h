@@ -24,6 +24,7 @@
 #include <QVector3D>
 #include <QJsonObject>
 #include <QThread>
+#include <QDebug>
 
 class AStarSystemNode;
 class AStarRouter;
@@ -170,9 +171,9 @@ public:
         _planets.push_back(planet);
     }
 
-    System(const QString &system, const PlanetList &planets, float x, float y, float z) : _name(system),
+    System(const QString &system, const PlanetList &planets, const QVector3D &position) : _name(system),
                                                                                           _planets(planets),
-                                                                                          _position(x, y, z) { }
+                                                                                          _position(position) { }
 
     System(const QString &name, const QVector3D &position) : _name(name), _position(position) { }
 
@@ -210,7 +211,7 @@ public:
     static QString formatDistance(int64 dist);
 
     float z() const {
-        return _position.x();
+        return _position.z();
     }
 
     float y() const {
@@ -218,7 +219,7 @@ public:
     }
 
     float x() const {
-        return _position.z();
+        return _position.x();
     }
 
     const QVector3D &position() const {

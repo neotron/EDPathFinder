@@ -187,7 +187,7 @@ void MainWindow::updateFilters() {
             }
         }
         if(matchingPlanets.size()) {
-            _filteredSystems.push_back(System(system.name(), matchingPlanets, system.x(), system.y(), system.y()));
+            _filteredSystems.push_back(System(system.name(), matchingPlanets, system.position()));
         }
     }
     auto           numSystems = (int) _filteredSystems.size();
@@ -240,7 +240,6 @@ void MainWindow::systemCoordinatesRequestFailed() {
 
 void MainWindow::systemCoordinatesReceived(const System &system) {
     updateSystemCoordinateDisplay(system);
-    _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setEnabled(true);
     auto systemName = QString(system.name());
     _pendingLookups.remove(systemName);
@@ -258,6 +257,7 @@ void MainWindow::updateSystemCoordinateDisplay(const System &system) const {
     _ui->x->setText(QString::number(system.x()));
     _ui->y->setText(QString::number(system.y()));
     _ui->z->setText(QString::number(system.z()));
+    _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setText(system.name());
 }
 

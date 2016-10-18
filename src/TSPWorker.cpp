@@ -89,16 +89,16 @@ namespace operations_research {
             return a.distance(*startingSystem) < b.distance((*startingSystem));
         });
         if(_maxSystemCount < _systems.size()) {
-            _systems.erase(_systems.begin()+_maxSystemCount, _systems.end());
+            _systems.erase(_systems.begin() + _maxSystemCount, _systems.end());
         }
         // Calculate the closest system
-        if(_origin) {
+        if(_origin && _origin->name() != _systems[0].name()) {
             _systems.push_front(*_origin);
         }
-        qDebug() << "Sorting and resizing took " << timer.elapsed();
+        //qDebug() << "Sorting and resizing took " << timer.elapsed();
         timer.restart();
         calculateDistanceMatrix();
-        qDebug() << "Matrix calculation took " << timer.elapsed();
+        //qDebug() << "Matrix calculation took " << timer.elapsed();
         timer.restart();
 
         RoutingModel routing((int) _systems.size(), 1);
@@ -111,7 +111,7 @@ namespace operations_research {
 
         // Solve, returns a solution if any (owned by RoutingModel).
         const Assignment *solution = routing.SolveWithParameters(parameters);
-        qDebug() << "Routing took " << timer.elapsed();
+        //qDebug() << "Routing took " << timer.elapsed();
 
         // Populate result.
         RouteResult result;
@@ -127,12 +127,15 @@ namespace operations_research {
                 node = solution->Value(routing.NextVar(node))) {
                 nodeid = routing.IndexToNode(node).value();
 
-                const System &sys = _systems[nodeid];
+                const auto &sys        = _systems[nodeid];
+                const auto &prevSystem = _systems[previd];
 
                 if(nodeid > 0) {
-                    dist = sys.distance(_systems[previd]);
+                    dist = sys.distance(prevSystem);
                 }
-                previd            = nodeid;
+
+                previd = nodeid;
+
                 if(!sys.planets().size()) {
                     result.addEntry(sys, "Point of Origin", "", dist);
                     continue;
