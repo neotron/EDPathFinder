@@ -49,6 +49,11 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>13</pointsize>
+         </font>
+        </property>
         <property name="title">
          <string>Settlement Information</string>
         </property>
@@ -74,7 +79,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -94,7 +99,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -112,7 +117,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -132,7 +137,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -150,7 +155,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -170,7 +175,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -188,7 +193,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -208,7 +213,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -226,7 +231,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -246,7 +251,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -264,7 +269,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -284,7 +289,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -302,7 +307,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -322,7 +327,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -340,7 +345,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
                <weight>75</weight>
                <bold>true</bold>
               </font>
@@ -360,7 +365,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -435,7 +440,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>8</pointsize>
+          <pointsize>13</pointsize>
          </font>
         </property>
         <property name="title">
@@ -448,7 +453,7 @@
             <widget class="QLabel" name="uef">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -460,7 +465,7 @@
             <widget class="QLabel" name="tec">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -472,7 +477,7 @@
             <widget class="QLabel" name="mcf">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -484,7 +489,7 @@
             <widget class="QLabel" name="sfp">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -496,7 +501,7 @@
             <widget class="QLabel" name="cif">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -508,7 +513,7 @@
             <widget class="QLabel" name="mef">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -520,7 +525,7 @@
             <widget class="QLabel" name="csd">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -532,7 +537,7 @@
             <widget class="QLabel" name="slf">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -544,7 +549,7 @@
             <widget class="QLabel" name="dsd">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -559,7 +564,7 @@
              </property>
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -571,7 +576,7 @@
             <widget class="QLabel" name="osk">
              <property name="font">
               <font>
-               <pointsize>10</pointsize>
+               <pointsize>13</pointsize>
               </font>
              </property>
              <property name="text">
@@ -600,7 +605,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>8</pointsize>
+          <pointsize>13</pointsize>
          </font>
         </property>
         <property name="title">
@@ -623,7 +628,7 @@
            </property>
            <property name="font">
             <font>
-             <pointsize>10</pointsize>
+             <pointsize>12</pointsize>
             </font>
            </property>
            <property name="alternatingRowColors">
@@ -674,7 +679,7 @@
      <x>0</x>
      <y>0</y>
      <width>1157</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
