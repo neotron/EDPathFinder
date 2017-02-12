@@ -1,11 +1,11 @@
-# ED Pathfinder
-A program that creates an optimal route that passes through two or more systems in Elite: Dangerous. It's primarily focused on making settlement data point farming easier, by allowing you to pick the materials you're interested, and get an optimal route to reach as many systems you wish that match the query. 
+# EDPathfinder
+A program that creates an optimal route that passes through two or more systems in Elite: Dangerous. It's primarily focused on making settlement data point farming easier, by allowing you to pick the materials you're interested, and get an optimal route to reach as many systems you wish that match the query. For performance reasons, the path is limited to at most 100 systems (which is typically more than you'd ever want to do in a sitting anyway).
 
-The settlement data comes from the ecellent spreadsheet by Cmdr dja: https://docs.google.com/spreadsheets/d/1UxvrHe8qy1Pzzyo11Grqw6AkE8Acmch60NOR5MDzs1U/edit#gid=931478812
+The settlement data comes from the excellent spreadsheet by Cmdr dja: https://docs.google.com/spreadsheets/d/1IVPYPqXbqC7pYY2UggEXLSO0CMaE0ksZMB2Ejlh0aYI/ - without his work, this project would have been impossible to complete.
 
 # Building
 
-ED Pathfinder depends on the Google Optimization Tools library and Qt 5.7. CMake is required for compilation. 
+EDPathfinder depends on the Google Optimization Tools library and Qt 5.7. CMake is required for compilation. 
 
 You can download binary packages of these from:
 
