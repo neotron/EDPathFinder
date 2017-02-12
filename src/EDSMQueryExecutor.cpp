@@ -24,7 +24,7 @@
 #include "System.h"
 #include <QJsonObject>
 
-#define SYSTEM_QUERY_URL QString("http://www.edsm.net/api-v1/system?systemName=%1&coords=1")
+#define SYSTEM_QUERY_URL QString("https://www.edsm.net/api-v1/system?systemName=%1&coords=1")
 
 EDSMQueryExecutor *EDSMQueryExecutor::systemCoordinateRequest(const QString &systemName) {
     auto queryString = SYSTEM_QUERY_URL.arg(QString(QUrl::toPercentEncoding(systemName)));
