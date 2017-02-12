@@ -32,10 +32,10 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
     QVariant attribute = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     if(attribute.isValid()) {
         QUrl url = attribute.toUrl();
-        qDebug() << "must go to:" << url;
+        //qDebug() << "must go to:" << url;
         return;
     }
-    qDebug() << "ContentType:" << reply->header(QNetworkRequest::ContentTypeHeader).toString();
+    //qDebug() << "ContentType:" << reply->header(QNetworkRequest::ContentTypeHeader).toString();
     QByteArray data = reply->readAll();
     QPixmap    pixmap;
     pixmap.loadFromData(data);

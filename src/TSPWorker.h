@@ -102,7 +102,7 @@ public:
 private:
     RouteResultMatrix _route;
     int64             _totalDist;
-    std::vector<const RouteSystemPlanetSettlement> _settlements;
+    std::vector<RouteSystemPlanetSettlement> _settlements;
 };
 
 namespace operations_research {
