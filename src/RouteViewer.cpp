@@ -65,7 +65,7 @@ void RouteViewer::updateSettlementInfo() {
     _ui->typeLabel->setText(settlementType->economy());
     switch(settlement.threatLevel()) {
         case ThreatLevelLow:
-            _ui->threatLabel->setText("Low");
+            _ui->threatLabel->setText("None");
             break;
         case ThreatLevelRestrictedLongDistance:
             _ui->threatLabel->setText("Restricted");
@@ -88,7 +88,18 @@ void RouteViewer::updateSettlementInfo() {
             _ui->sizeLabel->setText("Large");
             break;
     }
-
+    switch(settlementType->securityLevel()) {
+        case ThreatLevelRestrictedLongDistance:
+        case ThreatLevelLow:
+            _ui->securityLabel->setText("Low");
+            break;
+        case ThreatLevelMedium:
+            _ui->securityLabel->setText("Medium");
+            break;
+        case ThreatLeveLHigh:
+            _ui->securityLabel->setText("High");
+            break;
+    }
     setFlag(settlement, "cdt", SettlementFlagsCoreDataTerminal);
     setFlag(settlement, "jump", SettlementFlagsJumpClimbRequired);
     setFlag(settlement, "csd", SettlementFlagsClassifiedScanDatabanks);

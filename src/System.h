@@ -68,9 +68,9 @@ enum SettlementFlags {
 
 class SettlementType {
 public:
-    SettlementType(SettlementSize size, ThreatLevel threatLevel, const QString &economy, const QUrl &iconUrl,
+    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy, const QUrl &iconUrl,
                    const QUrl &showMapUrl, const QUrl &coreFullMapUrl, const QUrl &overviewUrl, const QUrl &pathMapUrl,
-                   const QUrl &overview3DUrl, const QUrl &coreUrl) : _size(size), _threatLevel(threatLevel),
+                   const QUrl &overview3DUrl, const QUrl &coreUrl) : _size(size), _securityLevel(securityLevel),
                                                                      _economy(economy), _iconUrl(iconUrl),
                                                                      _showMapUrl(showMapUrl),
                                                                      _coreFullMapUrl(coreFullMapUrl),
@@ -78,14 +78,14 @@ public:
                                                                      _overview3DUrl(overview3DUrl),
                                                                      _coreUrl(coreUrl) { }
 
-    SettlementType(const SettlementType &other) : _size(other._size), _threatLevel(other._threatLevel),
+    SettlementType(const SettlementType &other) : _size(other._size), _securityLevel(other._securityLevel),
                                                   _economy(other._economy), _iconUrl(other._iconUrl),
                                                   _showMapUrl(other._showMapUrl),
                                                   _coreFullMapUrl(other._coreFullMapUrl),
                                                   _overviewUrl(other._overviewUrl), _pathMapUrl(other._pathMapUrl),
                                                   _overview3DUrl(other._overview3DUrl), _coreUrl(other._coreUrl) { }
 
-    SettlementType(const SettlementType &&other) : _size(other._size), _threatLevel(other._threatLevel),
+    SettlementType(const SettlementType &&other) : _size(other._size), _securityLevel(other._securityLevel),
                                                    _economy(std::move(other._economy)),
                                                    _iconUrl(std::move(other._iconUrl)),
                                                    _showMapUrl(std::move(other._showMapUrl)),
@@ -102,8 +102,8 @@ public:
         return _size;
     }
 
-    ThreatLevel threatLevel() const {
-        return _threatLevel;
+    ThreatLevel securityLevel() const {
+        return _securityLevel;
     }
 
     const QString &economy() const {
@@ -140,7 +140,7 @@ public:
 
     SettlementType &operator=(const SettlementType &&other) {
         _size           = other._size;
-        _threatLevel    = other._threatLevel;
+        _securityLevel    = other._securityLevel;
         _economy        = std::move(other._economy);
         _iconUrl        = std::move(other._iconUrl);
         _showMapUrl     = std::move(other._showMapUrl);
@@ -154,7 +154,7 @@ public:
 
     SettlementType &operator=(const SettlementType &other) {
         _size           = other._size;
-        _threatLevel    = other._threatLevel;
+        _securityLevel    = other._securityLevel;
         _economy        = other._economy;
         _iconUrl        = other._iconUrl;
         _showMapUrl     = other._showMapUrl;
@@ -168,7 +168,7 @@ public:
 
 private:
     SettlementSize _size;
-    ThreatLevel    _threatLevel;
+    ThreatLevel    _securityLevel;
     QString        _economy;
     QUrl           _iconUrl;
     QUrl           _showMapUrl;
@@ -220,7 +220,7 @@ public:
     }
 
     ThreatLevel threatLevel() const {
-        return _type->threatLevel();
+        return _threatLevel;
     }
 
     int32 flags() const {

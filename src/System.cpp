@@ -174,11 +174,11 @@ void SystemLoader::loadSettlements() {
         if(READ_MATERIAL) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
         if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanFragment; }
 
-        SKIP_FIELD; // Settlement size, uses settlement raw data.
+        auto size = READ_STR;
+//        SKIP_FIELD; // Settlement size, uses settlement raw data.
         SKIP_FIELD; // idx
 
         Settlement settlement(name, flags, threat, type);
-
         if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement);
         } else {
