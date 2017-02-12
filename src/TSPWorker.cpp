@@ -141,7 +141,6 @@ namespace operations_research {
                 previd = nodeid;
 
                 if(!sys.planets().size()) {
-                    result.addEntry(sys, "Point of Origin", "", dist);
                     continue;
                 }
                 for(auto planet: sys.planets()) {
@@ -153,7 +152,6 @@ namespace operations_research {
                 }
             }
             dist     = _systems[0].distance(_systems[previd]);
-            result.addEntry(_systems[0], "Point of Origin", "", dist);
         } else {
             LOG(INFO) << "No solution found.";
         }
@@ -162,19 +160,18 @@ namespace operations_research {
 }
 
 void RouteResult::addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance) {
-    addEntry(system, planet.name(), settlement.name(), distance);
-}
-
-void RouteResult::addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance) {
     _totalDist += distance;
     std::vector<QString> row(5);
     row[0] = system.name();
-    row[1] = planet;
-    row[2] = settlement;
+    row[1] = planet.name();
+    row[2] = settlement.name();
     row[3] = System::formatDistance(distance);
     row[4] = System::formatDistance(_totalDist);
     _route.emplace_back(row);
+
+    auto routeSettlement = RouteSystemPlanetSettlement(system.name(), planet.name(), settlement);
+    _settlements.emplace_back(routeSettlement);
 }
 
-
-
+RouteResult::~RouteResult() {
+}

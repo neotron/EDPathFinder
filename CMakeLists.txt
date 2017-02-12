@@ -2,13 +2,14 @@ cmake_minimum_required(VERSION 3.5)
 
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 # Include Qt basic functions
 include(QtCommon)
 
 project(EDPathFinder VERSION 1.0)
 
 fix_project_version()
-
 
 set(RESOURCE_FOLDER resources)
 set(ICON_NAME icon512)
@@ -58,12 +59,9 @@ else ()
     link_libraries(${LINK_LIBS})
 endif ()
 
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
-
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC})
+include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES}

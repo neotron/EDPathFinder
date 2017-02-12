@@ -36,6 +36,7 @@
 
 #pragma once
 
+#include <QList>
 #include <QThread>
 #include <constraint_solver/routing.h>
 #include "System.h"
@@ -43,14 +44,38 @@
 
 typedef std::vector<std::vector<QString>> RouteResultMatrix;
 
+class RouteSystemPlanetSettlement {
+
+
+public:
+    RouteSystemPlanetSettlement(const QString &systemName, const QString &planetName, const Settlement &settlement)
+            : _systemName(systemName), _planetName(planetName), _settlement(settlement) { }
+
+    const QString &systemName() const {
+        return _systemName;
+    }
+
+    const QString &planetName() const {
+        return _planetName;
+    }
+
+    const Settlement &settlement() const {
+        return _settlement;
+    }
+
+private:
+    const QString _systemName;
+    const QString _planetName;
+    const Settlement _settlement;
+
+};
+
 class RouteResult {
 public:
 
     RouteResult() : _route(), _totalDist(0) { }
 
     void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
-
-    void addEntry(const System &system, const QString &planet, const QString &settlement, int64 distance);
 
     const QString ly() const {
         return System::formatDistance(_totalDist);
@@ -60,13 +85,24 @@ public:
         return _route;
     }
 
+    const RouteSystemPlanetSettlement *getSettlementAtIndex(int index) const {
+        if(index < 0 || static_cast<size_t>(index) >= _settlements.size()) {
+            return nullptr;
+        }
+        return &_settlements[static_cast<size_t>(index)];
+    }
+
     bool isValid() const {
         return route().size() != 0;
     }
 
+
+    virtual ~RouteResult();
+
 private:
     RouteResultMatrix _route;
     int64             _totalDist;
+    std::vector<const RouteSystemPlanetSettlement> _settlements;
 };
 
 namespace operations_research {

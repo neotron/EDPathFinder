@@ -18,7 +18,6 @@
 #pragma once
 
 #include <cmath>
-#include <base/integral_types.h>
 #include <QString>
 #include <AStar.h>
 #include <QVector3D>
@@ -26,6 +25,7 @@
 #include <QThread>
 #include <QDebug>
 #include <QUrl>
+#include <base/integral_types.h>
 
 class AStarSystemNode;
 
@@ -70,17 +70,20 @@ class SettlementType {
 public:
     SettlementType(SettlementSize size, ThreatLevel threatLevel, const QString &economy, const QUrl &iconUrl,
                    const QUrl &showMapUrl, const QUrl &coreFullMapUrl, const QUrl &overviewUrl, const QUrl &pathMapUrl,
-                   const QUrl &overview3DUrl) : _size(size), _threatLevel(threatLevel), _economy(economy),
-                                                _iconUrl(iconUrl), _showMapUrl(showMapUrl),
-                                                _coreFullMapUrl(coreFullMapUrl), _overviewUrl(overviewUrl),
-                                                _pathMapUrl(pathMapUrl), _overview3DUrl(overview3DUrl) { }
+                   const QUrl &overview3DUrl, const QUrl &coreUrl) : _size(size), _threatLevel(threatLevel),
+                                                                     _economy(economy), _iconUrl(iconUrl),
+                                                                     _showMapUrl(showMapUrl),
+                                                                     _coreFullMapUrl(coreFullMapUrl),
+                                                                     _overviewUrl(overviewUrl), _pathMapUrl(pathMapUrl),
+                                                                     _overview3DUrl(overview3DUrl),
+                                                                     _coreUrl(coreUrl) { }
 
     SettlementType(const SettlementType &other) : _size(other._size), _threatLevel(other._threatLevel),
                                                   _economy(other._economy), _iconUrl(other._iconUrl),
                                                   _showMapUrl(other._showMapUrl),
                                                   _coreFullMapUrl(other._coreFullMapUrl),
                                                   _overviewUrl(other._overviewUrl), _pathMapUrl(other._pathMapUrl),
-                                                  _overview3DUrl(other._overview3DUrl) { }
+                                                  _overview3DUrl(other._overview3DUrl), _coreUrl(other._coreUrl) { }
 
     SettlementType(const SettlementType &&other) : _size(other._size), _threatLevel(other._threatLevel),
                                                    _economy(std::move(other._economy)),
@@ -89,7 +92,8 @@ public:
                                                    _coreFullMapUrl(std::move(other._coreFullMapUrl)),
                                                    _overviewUrl(std::move(other._overviewUrl)),
                                                    _pathMapUrl(std::move(other._pathMapUrl)),
-                                                   _overview3DUrl(std::move(other._overview3DUrl)) { }
+                                                   _overview3DUrl(std::move(other._overview3DUrl)),
+                                                   _coreUrl(std::move(other._coreUrl)) { }
 
 
     SettlementType() { }
@@ -130,6 +134,10 @@ public:
         return _overview3DUrl;
     }
 
+    const QUrl &coreUrl() const {
+        return _coreUrl;
+    }
+
     SettlementType &operator=(const SettlementType &&other) {
         _size           = other._size;
         _threatLevel    = other._threatLevel;
@@ -140,6 +148,7 @@ public:
         _overviewUrl    = std::move(other._overviewUrl);
         _pathMapUrl     = std::move(other._pathMapUrl);
         _overview3DUrl  = std::move(other._overview3DUrl);
+        _coreUrl        = std::move(other._coreUrl);
         return *this;
     }
 
@@ -153,6 +162,7 @@ public:
         _overviewUrl    = other._overviewUrl;
         _pathMapUrl     = other._pathMapUrl;
         _overview3DUrl  = other._overview3DUrl;
+        _coreUrl        = other._coreUrl;
         return *this;
     }
 
@@ -166,6 +176,7 @@ private:
     QUrl           _overviewUrl;
     QUrl           _pathMapUrl;
     QUrl           _overview3DUrl;
+    QUrl           _coreUrl;
 };
 
 class Settlement {

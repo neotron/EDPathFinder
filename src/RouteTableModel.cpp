@@ -25,7 +25,7 @@ int RouteTableModel::rowCount(const QModelIndex &) const {
 }
 
 int RouteTableModel::columnCount(const QModelIndex &) const {
-    return (int) _result.route()[0].size();
+    return (int) _result.route()[0].size()-2;
 }
 
 QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
@@ -65,6 +65,17 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
         }
     }
     return QVariant();
+}
+
+QString RouteTableModel::lastDistance(size_t row) const {
+    auto route = _result.route();
+    return route[row][3];
+}
+
+
+QString RouteTableModel::totalDistance(size_t row) const {
+    auto route = _result.route();
+    return route[row][4];
 }
 
 

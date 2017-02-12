@@ -31,6 +31,13 @@
 #define READ_URL QUrl(READ_STR)
 #define SKIP_FIELD do { it++; } while(0)
 #define READ_MATERIAL (READ_FLOAT > 0.000)
+#define READ_URL_JPEG(X) QUrl X; do { \
+    auto url = READ_STR; \
+    if(url.length()) { \
+        url += ".jpg"; \
+        X = QUrl(url); \
+    }\
+} while(0)
 
 void SystemLoader::run() {
     auto json = QJsonDocument::fromJson(_bytes);
@@ -91,16 +98,15 @@ void SystemLoader::loadSettlementTypes() {
         SKIP_FIELD; // Type
         auto economy = READ_STR; // Military etc
         auto iconUrl = READ_URL;
-        auto showUrl = READ_URL;
-        auto coreFullUrl = READ_URL;
-        auto overviewUrl = READ_URL;
-        auto pathUrl = READ_URL;
-        auto overview3DUrl = READ_URL;
 
-        SKIP_FIELD; // 2.0 core
-        SKIP_FIELD; // 2.1 overview
+        READ_URL_JPEG(showUrl);
+        READ_URL_JPEG(coreFullUrl);
+        READ_URL_JPEG(overviewUrl);
+        READ_URL_JPEG(pathUrl);
+        READ_URL_JPEG(overview3DUrl);
+        READ_URL_JPEG(coreUrl);
 
-        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl, pathUrl, overview3DUrl);
+        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl, pathUrl, overview3DUrl, coreUrl);
         _settlementTypes[layout] = settlementType;
 
     }
@@ -169,8 +175,7 @@ void SystemLoader::loadSettlements() {
         if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanFragment; }
 
         SKIP_FIELD; // Settlement size, uses settlement raw data.
-
-        //auto idx = INT; // Index? Number of nodes?
+        SKIP_FIELD; // idx
 
         Settlement settlement(name, flags, threat, type);
 
@@ -199,7 +204,7 @@ QString System::formatDistance(int64 dist) {
     if(dist > 0) {
         return QString("%1.%2").arg(dist / 10).arg(dist % 10);
     } else {
-        return "-";
+        return "0.0";
     }
 }
 

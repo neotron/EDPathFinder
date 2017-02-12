@@ -34,6 +34,14 @@ public:
 
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
+
+    const RouteResult &result() const {
+        return _result;
+    }
+
+    QString lastDistance(size_t row) const;
+    QString totalDistance(size_t row) const;
+
 private:
     RouteResult _result;
 };

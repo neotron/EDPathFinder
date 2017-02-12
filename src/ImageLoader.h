@@ -13,44 +13,36 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//
 
 #pragma once
+#include <QNetworkAccessManager>
+#include <QUrl>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QLabel>
 
-#include <QMainWindow>
-#include <QItemSelection>
-#include "System.h"
-#include "TSPWorker.h"
-#include "RouteTableModel.h"
-#include "ImageLoader.h"
-
-namespace Ui {
-    class RouteViewer;
-}
-
-class RouteViewer : public QMainWindow {
+class ImageLoader: public QObject {
 Q_OBJECT
 
 public:
-    explicit RouteViewer(const RouteResult &result, QWidget *parent = 0);
+    ImageLoader(QLabel *pixmapLabel);
+    virtual ~ImageLoader();
+    void startDownload(const QUrl &url);
 
-    ~RouteViewer();
+    void setMaxSize(const QSize &maxSize) {
+        _maxSize = maxSize;
+    }
 
-public slots:
-
-    void copySelectedItem();
+private slots:
+    void onNetworkReplyReceived(QNetworkReply *reply);
 
 private:
-    Ui::RouteViewer *_ui;
-
-    void updateSettlementInfo();
-
-    RouteTableModel *_routeModel;
-
-    void setFlag(const Settlement &settlement, QString key, SettlementFlags flag);
-
-    ImageLoader *_iconLoader;
-    ImageLoader *_imageLoader;
-
-    void loadOverviewImage(const QUrl &url);
+    QSize _maxSize;
+    QNetworkAccessManager *_networkManager;
+    QNetworkReply *_reply;
+    QLabel *_pixmapLabel;
 };
+
+
+
+

@@ -4,5 +4,6 @@
     <file>systems.json.gz</file>
     <file>icon512.png</file>
     <file>basetypes.csv</file>
+    <file>noimage.png</file>
 </qresource>
 </RCC>
