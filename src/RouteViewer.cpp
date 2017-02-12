@@ -131,7 +131,11 @@ void RouteViewer::updateSettlementInfo() {
 void RouteViewer::setFlag(const Settlement &settlement, QString key, SettlementFlags flag) {
     auto label = _ui->centralwidget->findChild<QLabel*>(key);
     if(label) {
-        label->setEnabled((settlement.flags()&flag) == flag);
+        bool hasFlag = (settlement.flags()&flag) == flag;
+        label->setEnabled(hasFlag);
+        QFont font(label->font());
+        font.setBold(hasFlag);
+        label->setFont(font);
     }
 }
 
