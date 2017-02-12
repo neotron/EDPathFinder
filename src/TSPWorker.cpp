@@ -116,12 +116,16 @@ namespace operations_research {
         // Populate result.
         RouteResult result;
         if(solution != NULL) {
+            QTextStream out(stdout);
+            out <<"System"<< "\t" << "Planet"<< "\t"<<"Settlement" << "\t" << "Distance from previous" << endl;
+
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
             int       nodeid;
             int       previd       = 0;
             int64     dist         = 0;
+
             for(int64 node         = routing.Start(route_number);
                 !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
@@ -143,6 +147,7 @@ namespace operations_research {
                 for(auto planet: sys.planets()) {
                     for(auto settlement: planet.settlements()) {
                         result.addEntry(sys, planet, settlement, dist);
+                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
                         dist = 0;
                     }
                 }

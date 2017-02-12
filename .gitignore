@@ -151,3 +151,7 @@ xcuserdata
 /build/
 /.idea/workspace.xml
 CMakeLists.txt.user*
+/cmake-build-debug
+/xcode
+/output
+*.dmg

@@ -2,5 +2,7 @@
 <qresource>
     <file>dbdump.csv</file>
     <file>systems.json.gz</file>
+    <file>icon512.png</file>
+    <file>basetypes.csv</file>
 </qresource>
 </RCC>

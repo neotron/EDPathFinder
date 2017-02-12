@@ -4,6 +4,8 @@
   <component name="CidrRootsConfiguration">
     <sourceRoots />
     <libraryRoots />
-    <excludeRoots />
+    <excludeRoots>
+      <file path="$PROJECT_DIR$/cmake-build-debug/CMakeFiles" />
+    </excludeRoots>
   </component>
 </project>

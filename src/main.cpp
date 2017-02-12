@@ -31,8 +31,9 @@ int main(int argc, char **argv) {
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();
     QApplication a(argc, argv);
-
     MainWindow w;
+    QIcon icon("://icon512.png");
+    w.setWindowIcon(icon);
     w.show();
 
 

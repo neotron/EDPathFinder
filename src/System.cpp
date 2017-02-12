@@ -22,15 +22,18 @@
 #include "System.h"
 #include "AStarRouter.h"
 
+#define SETTLEMENT_TYPE_FIELD_COUNT 17
 #define EXPECTED_FIELD_COUNT 27
 #define READ_INT (*(it++)).toInt()
 #define READ_FLOAT (*(it++)).toFloat()
 #define READ_BOOL (READ_INT == 1)
 #define READ_STR (*(it++))
+#define READ_URL QUrl(READ_STR)
 #define SKIP_FIELD do { it++; } while(0)
+#define READ_MATERIAL (READ_FLOAT > 0.000)
 
 void SystemLoader::run() {
-    auto json      = QJsonDocument::fromJson(_bytes);
+    auto json = QJsonDocument::fromJson(_bytes);
     auto jsonArray = json.array();
     _router->reserveSystemSpace(jsonArray.size());
     for(auto systemObj: jsonArray) {
@@ -41,13 +44,79 @@ void SystemLoader::run() {
     emit systemsLoaded(_systems);
 }
 
-void SystemLoader::loadSettlements() {
-    QFile      systemData(":/dbdump.csv");
+
+void SystemLoader::loadSettlementTypes() {
+    QFile systemData(":/basetypes.csv");
     if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return;
     }
 
-    QStringList             lines(QString(systemData.readAll()).split("\n"));
+    QStringList lines(QString(systemData.readAll()).split("\n"));
+    _settlementTypes.clear();
+    for(const auto &qline: lines) {
+        QStringList line = qline.split("\t");
+        if(line.size() < SETTLEMENT_TYPE_FIELD_COUNT) {
+            continue;
+        }
+        auto it = line.begin();
+        auto sizeInt = READ_INT;
+        SettlementSize size;
+        switch(sizeInt) {
+        case 3:
+            size = SettlementSizeLarge;
+            break;
+        case 2:
+            size = SettlementSizeMedium;
+            break;
+        default:
+        case 1:
+            size = SettlementSizeSmall;
+            break;
+        }
+        auto layout = READ_STR;
+        auto securityStr = READ_STR;
+        ThreatLevel security;
+        if(securityStr == "High")  {
+            security = ThreatLeveLHigh;
+        } else if(securityStr == "Medium") {
+            security = ThreatLevelMedium;
+        } else {
+            security = ThreatLevelLow;
+        }
+        SKIP_FIELD; // idx
+        SKIP_FIELD; // size game
+        SKIP_FIELD; // Model (i.e size string)
+        SKIP_FIELD; // Variation
+        SKIP_FIELD; // Variation continued
+        SKIP_FIELD; // Type
+        auto economy = READ_STR; // Military etc
+        auto iconUrl = READ_URL;
+        auto showUrl = READ_URL;
+        auto coreFullUrl = READ_URL;
+        auto overviewUrl = READ_URL;
+        auto pathUrl = READ_URL;
+        auto overview3DUrl = READ_URL;
+
+        SKIP_FIELD; // 2.0 core
+        SKIP_FIELD; // 2.1 overview
+
+        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl, pathUrl, overview3DUrl);
+        _settlementTypes[layout] = settlementType;
+
+    }
+}
+
+
+void SystemLoader::loadSettlements() {
+    loadSettlementTypes();
+
+    QFile systemData(":/dbdump.csv");
+    if(!systemData.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QStringList lines(QString(systemData.readAll()).split("\n"));
+    lines.removeFirst(); // Header
     QMap<QString, System *> lookup;
     _systems.clear();
     _systems.reserve(lines.size());
@@ -61,10 +130,16 @@ void SystemLoader::loadSettlements() {
 
         auto it = line.begin();
 
-        auto type   = READ_STR; // Settlement type
+        auto typeStr = READ_STR; // Settlement type
+        auto type = _settlementTypes[typeStr];
+        if(!type) {
+            qDebug() << "Failed to load settlement type for" << typeStr << " - skipping.";
+            continue;
+        }
         auto system = READ_STR; // System name
         auto planet = READ_STR; // Planet Name
-        auto name   = READ_STR; // Settlement name
+        auto name = READ_STR; // Settlement name
+        SKIP_FIELD; // Map link that's just "map" in file
         if(READ_BOOL) { flags |= SettlementFlagsAnarchy; } // isAnarchy
 
         auto x = READ_FLOAT; // x coordinate
@@ -72,8 +147,8 @@ void SystemLoader::loadSettlements() {
         auto z = READ_FLOAT; // z coordinate
 
         SKIP_FIELD; // distance from origin, not used by app
-
         ThreatLevel threat     = (ThreatLevel) READ_INT; // threat level
+
         if(READ_BOOL) { flags |= SettlementFlagsCoreDataTerminal; }  // has coredata node
         if(READ_BOOL) { flags |= SettlementFlagsJumpClimbRequired; } // needs jumping
 
@@ -81,31 +156,23 @@ void SystemLoader::loadSettlements() {
         SKIP_FIELD; // Notes/comments
 
         // Data material flags
-        if(READ_BOOL) { flags |= SettlementFlagsUnusualEncryptedFiles; }
-        if(READ_BOOL) { flags |= SettlementFlagsSpecializedLegacyFirmware; }
-        if(READ_BOOL) { flags |= SettlementFlagsTaggedEncryptionCodes; }
-        if(READ_BOOL) { flags |= SettlementFlagsModifiedConsumerFirmware; }
-        if(READ_BOOL) { flags |= SettlementFlagsClassifiedScanDatabanks; }
-        if(READ_BOOL) { flags |= SettlementFlagsCrackedIndustrialFirmware; }
-        if(READ_BOOL) { flags |= SettlementFlagsOpenSymmetricKeys; }
-        if(READ_BOOL) { flags |= SettlementFlagsSecurityFirmwarePatch; }
-        if(READ_BOOL) { flags |= SettlementFlagsDivergentScanData; }
-        if(READ_BOOL) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
-        if(READ_BOOL) { flags |= SettlementFlagsClassifiedScanFragment; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsUnusualEncryptedFiles; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsSpecializedLegacyFirmware; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsTaggedEncryptionCodes; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsModifiedConsumerFirmware; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanDatabanks; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsCrackedIndustrialFirmware; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsOpenSymmetricKeys; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsSecurityFirmwarePatch; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsDivergentScanData; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
+        if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanFragment; }
 
-        SettlementSize size;
-        auto           sizeStr = READ_STR;
-        if(sizeStr == "Large") {
-            size = SettlementSizeLarge;
-        } else if(sizeStr == "Medium") {
-            size = SettlementSizeMedium;
-        } else {
-            size = SettlementSizeSmall;
-        }
+        SKIP_FIELD; // Settlement size, uses settlement raw data.
 
         //auto idx = INT; // Index? Number of nodes?
 
-        Settlement settlement(name, size, threat, flags);
+        Settlement settlement(name, flags, threat, type);
 
         if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement);
@@ -128,7 +195,6 @@ void SystemLoader::dataDecompressed(const QByteArray &bytes) {
 }
 
 
-
 QString System::formatDistance(int64 dist) {
     if(dist > 0) {
         return QString("%1.%2").arg(dist / 10).arg(dist % 10);
@@ -137,7 +203,8 @@ QString System::formatDistance(int64 dist) {
     }
 }
 
-System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) { }
+System::System(AStarSystemNode *system)
+        : _name(system->name()), _position(system->position()) {}
 
 void System::addSettlement(const QString &planetName, const Settlement &settlement) {
     for(auto planet: _planets) {
@@ -149,14 +216,18 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
     _planets.push_back(Planet(planetName, settlement));
 }
 
-System::~System() { }
+System::~System() {}
 
 
-System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toString()), _planets(), _position() {
+System::System(const QJsonObject &jsonObject)
+        : _name(jsonObject["name"].toString()), _planets(), _position() {
     auto coords = jsonObject["coords"].toObject();
     _position.setX((float) coords["x"].toDouble());
     _position.setY((float) coords["y"].toDouble());
     _position.setZ((float) coords["z"].toDouble());
 }
 
-SystemLoader::~SystemLoader() { }
+SystemLoader::~SystemLoader() {}
+
+
+

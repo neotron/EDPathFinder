@@ -25,11 +25,16 @@
 #include <QJsonObject>
 #include <QThread>
 #include <QDebug>
+#include <QUrl>
 
 class AStarSystemNode;
+
 class AStarRouter;
+
 class Settlement;
+
 class Planet;
+
 class System;
 
 typedef QList<Settlement> SettlementList;
@@ -61,40 +66,33 @@ enum SettlementFlags {
     SettlementFlagsAnarchy                   = 1 << 13
 };
 
-class Settlement {
+class SettlementType {
 public:
-    Settlement() : _name(), _size(), _threatLevel(), _flags() { }
+    SettlementType(SettlementSize size, ThreatLevel threatLevel, const QString &economy, const QUrl &iconUrl,
+                   const QUrl &showMapUrl, const QUrl &coreFullMapUrl, const QUrl &overviewUrl, const QUrl &pathMapUrl,
+                   const QUrl &overview3DUrl) : _size(size), _threatLevel(threatLevel), _economy(economy),
+                                                _iconUrl(iconUrl), _showMapUrl(showMapUrl),
+                                                _coreFullMapUrl(coreFullMapUrl), _overviewUrl(overviewUrl),
+                                                _pathMapUrl(pathMapUrl), _overview3DUrl(overview3DUrl) { }
 
-    Settlement(const QString &name, SettlementSize size = SettlementSizeSmall, ThreatLevel threatLevel = ThreatLevelLow,
-               int32 flags = 0) : _name(name), _size(size), _threatLevel(threatLevel), _flags(flags) { }
+    SettlementType(const SettlementType &other) : _size(other._size), _threatLevel(other._threatLevel),
+                                                  _economy(other._economy), _iconUrl(other._iconUrl),
+                                                  _showMapUrl(other._showMapUrl),
+                                                  _coreFullMapUrl(other._coreFullMapUrl),
+                                                  _overviewUrl(other._overviewUrl), _pathMapUrl(other._pathMapUrl),
+                                                  _overview3DUrl(other._overview3DUrl) { }
 
-    Settlement(const Settlement &&other) : _name(std::move(other._name)), _size(other._size),
-                                           _threatLevel(other._threatLevel), _flags(other._flags) {
-    }
+    SettlementType(const SettlementType &&other) : _size(other._size), _threatLevel(other._threatLevel),
+                                                   _economy(std::move(other._economy)),
+                                                   _iconUrl(std::move(other._iconUrl)),
+                                                   _showMapUrl(std::move(other._showMapUrl)),
+                                                   _coreFullMapUrl(std::move(other._coreFullMapUrl)),
+                                                   _overviewUrl(std::move(other._overviewUrl)),
+                                                   _pathMapUrl(std::move(other._pathMapUrl)),
+                                                   _overview3DUrl(std::move(other._overview3DUrl)) { }
 
-    Settlement(const Settlement &other) : _name(other._name), _size(other._size), _threatLevel(other._threatLevel),
-                                          _flags(other._flags) {
-    }
 
-    Settlement &operator=(const Settlement &&other) {
-        _name        = std::move(other._name);
-        _size        = other._size;
-        _threatLevel = other._threatLevel;
-        _flags       = other._flags;
-        return *this;
-    }
-
-    Settlement &operator=(const Settlement &other) {
-        _name        = other._name;
-        _size        = other._size;
-        _threatLevel = other._threatLevel;
-        _flags       = other._flags;
-        return *this;
-    }
-
-    const QString &name() const {
-        return _name;
-    }
+    SettlementType() { }
 
     SettlementSize size() const {
         return _size;
@@ -104,15 +102,130 @@ public:
         return _threatLevel;
     }
 
+    const QString &economy() const {
+        return _economy;
+    }
+
+    const QUrl &iconUrl() const {
+        return _iconUrl;
+    }
+
+    const QUrl &showMapUrl() const {
+        return _showMapUrl;
+    }
+
+    const QUrl &coreFullMapUrl() const {
+        return _coreFullMapUrl;
+    }
+
+    const QUrl &overviewUrl() const {
+        return _overviewUrl;
+    }
+
+    const QUrl &pathMapUrl() const {
+        return _pathMapUrl;
+    }
+
+    const QUrl &overview3DUrl() const {
+        return _overview3DUrl;
+    }
+
+    SettlementType &operator=(const SettlementType &&other) {
+        _size           = other._size;
+        _threatLevel    = other._threatLevel;
+        _economy        = std::move(other._economy);
+        _iconUrl        = std::move(other._iconUrl);
+        _showMapUrl     = std::move(other._showMapUrl);
+        _coreFullMapUrl = std::move(other._coreFullMapUrl);
+        _overviewUrl    = std::move(other._overviewUrl);
+        _pathMapUrl     = std::move(other._pathMapUrl);
+        _overview3DUrl  = std::move(other._overview3DUrl);
+        return *this;
+    }
+
+    SettlementType &operator=(const SettlementType &other) {
+        _size           = other._size;
+        _threatLevel    = other._threatLevel;
+        _economy        = other._economy;
+        _iconUrl        = other._iconUrl;
+        _showMapUrl     = other._showMapUrl;
+        _coreFullMapUrl = other._coreFullMapUrl;
+        _overviewUrl    = other._overviewUrl;
+        _pathMapUrl     = other._pathMapUrl;
+        _overview3DUrl  = other._overview3DUrl;
+        return *this;
+    }
+
+private:
+    SettlementSize _size;
+    ThreatLevel    _threatLevel;
+    QString        _economy;
+    QUrl           _iconUrl;
+    QUrl           _showMapUrl;
+    QUrl           _coreFullMapUrl;
+    QUrl           _overviewUrl;
+    QUrl           _pathMapUrl;
+    QUrl           _overview3DUrl;
+};
+
+class Settlement {
+public:
+
+
+    Settlement(const QString &name, int32 flags = 0, ThreatLevel threatLevel = ThreatLevelLow,
+               const SettlementType *type = nullptr) : _name(name), _flags(flags), _threatLevel(threatLevel),
+                                                       _type(type) { }
+
+    Settlement(const Settlement &&other) : _name(std::move(other._name)), _flags(other._flags),
+                                           _threatLevel(other._threatLevel), _type(other._type) {
+    }
+
+    Settlement(const Settlement &other) : _name(other._name), _flags(other._flags), _threatLevel(other._threatLevel),
+                                          _type(other._type) {
+    }
+
+    Settlement &operator=(const Settlement &&other) {
+        _name        = std::move(other._name);
+        _flags       = other._flags;
+        _threatLevel = other._threatLevel;
+        _type        = other._type;
+        return *this;
+    }
+
+    Settlement &operator=(const Settlement &other) {
+        _name        = other._name;
+        _flags       = other._flags;
+        _threatLevel = other._threatLevel;
+        _type        = other._type;
+        return *this;
+    }
+
+    const QString &name() const {
+        return _name;
+    }
+
+    SettlementSize size() const {
+        return _type->size();
+    }
+
+    ThreatLevel threatLevel() const {
+        return _type->threatLevel();
+    }
+
     int32 flags() const {
         return _flags;
     }
 
+
+    const SettlementType *type() const {
+        return _type;
+    }
+
 private:
-    QString        _name;
-    SettlementSize _size;
-    ThreatLevel    _threatLevel;
-    int32          _flags;
+    QString              _name;
+    int32                _flags;
+    ThreatLevel          _threatLevel;
+    const SettlementType *_type;
 };
 
 class Planet {
@@ -246,23 +359,30 @@ protected:
 };
 
 class SystemLoader : public QThread {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    SystemLoader(AStarRouter *router): QThread(), _router(router) {}
+    SystemLoader(AStarRouter *router) : QThread(), _router(router) { }
+
     void run() override;
 
     virtual ~SystemLoader();
 
 signals:
+
     void systemsLoaded(const SystemList &systems);
 
 public slots:
+
     void dataDecompressed(const QByteArray &bytes);
 
 private:
     void loadSettlements();
-    SystemList _systems;
-    AStarRouter *_router;
-    QByteArray _bytes;
+
+    void loadSettlementTypes();
+
+    QMap<QString, SettlementType *> _settlementTypes;
+    SystemList                      _systems;
+    AStarRouter                     *_router;
+    QByteArray                      _bytes;
 };

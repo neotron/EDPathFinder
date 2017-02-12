@@ -1,5 +1,24 @@
 cmake_minimum_required(VERSION 3.5)
-project(EDPathFinder)
+
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
+# Include Qt basic functions
+include(QtCommon)
+
+project(EDPathFinder VERSION 1.0)
+
+fix_project_version()
+
+
+set(RESOURCE_FOLDER resources)
+set(ICON_NAME icon512)
+set(COMPANY "David Hedbor")
+set(COPYRIGHT "Copyright (c) 2016 David Hedbor. All rights reserved.")
+set(IDENTIFIER "org.hedbor.EDPathFinder")
+
+set(RESOURCE_FILES resources/resources.qrc)
+
+add_project_meta(META_FILES_TO_INCLUDE)
 
 set(ORTOOLS ../or-tools/)
 set(PFDIR deps/PathFinder/src/)
@@ -7,8 +26,6 @@ set(PFDIR deps/PathFinder/src/)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-
-
 set(QT_USE_QTNETWORK true)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Sql REQUIRED)
@@ -17,8 +34,8 @@ find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 
 set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Sql)
-link_directories(${ORTOOLS}/lib)
 
+link_directories(${ORTOOLS}/lib)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
@@ -27,6 +44,7 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W")
 endif ()
+
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ ")
@@ -40,10 +58,14 @@ else ()
     link_libraries(${LINK_LIBS})
 endif ()
 
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC})
-add_executable(EDPathFinder "${SOURCE_FILES}" resources/resources.qrc)
+
+add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
+    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES}
+)
+#add_executable(EDPathFinder MACOSX_BUNDLE "${SOURCE_FILES}" resources/resources.qrc ${ICON_FILE})
