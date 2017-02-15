@@ -16,8 +16,9 @@
 
 #include <QPixmap>
 #include "ImageLoader.h"
+#include "AspectRatioPixmapLabel.h"
 
- ImageLoader::~ImageLoader() {
+ImageLoader::~ImageLoader() {
      if(_reply) {
          _reply->abort();
      }
@@ -40,8 +41,9 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
     QPixmap    pixmap;
     pixmap.loadFromData(data);
     if(_pixmapLabel) {
-        if(!_maxSize.isEmpty()) {
-            _pixmapLabel->setPixmap(pixmap.scaled(_maxSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        auto scalingLabel = dynamic_cast<AspectRatioPixmapLabel*>(_pixmapLabel);
+        if(scalingLabel) {
+            scalingLabel->setScaledPixmap(pixmap);
         } else {
             _pixmapLabel->setPixmap(pixmap);
         }
@@ -52,6 +54,7 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
 void ImageLoader::startDownload(const QUrl &url) {
     QNetworkRequest request(url);
     _reply = _networkManager->get(request);
+    qDebug() << "Downloading image URL"<<url;
 }
 
 ImageLoader::ImageLoader(QLabel *pixmapLabel) : _maxSize(QSize()), _networkManager(new QNetworkAccessManager(this)), _reply(nullptr), _pixmapLabel(pixmapLabel) {
