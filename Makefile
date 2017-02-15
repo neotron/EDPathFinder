@@ -10,5 +10,5 @@ win-package:
 	mkdir ../build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder
 	cp ../build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder.exe ../build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder
 	rm -f wininstall/*.exe
-	/cygdrive/c/User\ Programs/Qt/5.7/msvc2015_64/bin/windeployqt.exe ../build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder/EDPathFinder.exe
+	env VCINSTALLDIR="c:/User Programs/Visual Studio Community 2015/VC" /cygdrive/c/User\ Programs/Qt/5.7/msvc2015_64/bin/windeployqt.exe ../build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder/EDPathFinder.exe
 	(cd wininstall && /cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe installer.nsi)

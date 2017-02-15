@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Include Qt basic functions
 include(QtCommon)
 
-project(EDPathFinder VERSION 1.0)
+project(EDPathFinder VERSION 1.1)
 
 fix_project_version()
 
@@ -60,6 +60,7 @@ else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS /W1")
     link_libraries(${LINK_LIBS})
 endif ()
+
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC} ${EDJOURNAL_SRC})
@@ -68,4 +69,3 @@ include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES}
 )
-#add_executable(EDPathFinder MACOSX_BUNDLE "${SOURCE_FILES}" resources/resources.qrc ${ICON_FILE})
