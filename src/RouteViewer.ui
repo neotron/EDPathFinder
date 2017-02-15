@@ -426,12 +426,6 @@
         <verstretch>100</verstretch>
        </sizepolicy>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>11111</width>
-        <height>11111</height>
-       </size>
-      </property>
       <property name="font">
        <font>
         <pointsize>13</pointsize>

@@ -122,6 +122,7 @@ void RouteViewer::updateSettlementInfo() {
     _iconLoader->startDownload(settlementType->iconUrl());
 
     _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
+    _ui->largeImage->setAlignment(Qt::AlignCenter);
     delete _imageLoader;
     _imageLoader = nullptr;
 
