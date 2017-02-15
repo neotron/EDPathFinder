@@ -28,7 +28,8 @@
 #include "QCompressor.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false),
-                                          _router(new AStarRouter(this)), _pendingLookups() {
+                                          _router(new AStarRouter(this)), _pendingLookups(),
+                                          _journalWatcher(new JournalWatcher(this)), _settlementDates() {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
     connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
@@ -36,27 +37,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainW
     buildLookupMap();
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
+    connect(_journalWatcher, SIGNAL(onEvent(
+                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
+                                                                                                     const JournalFile &, const Event &)));
 }
 
 MainWindow::~MainWindow() {
     delete _ui;
     delete _router;
+    delete _journalWatcher;
 }
 
 void MainWindow::cleanupCheckboxes() {
-    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
-    int                width      = 0;
-    for(auto           checkbox: checkboxes) {
+    for(auto checkbox: findChildren<QCheckBox *>()) {
         connect(checkbox, SIGNAL(stateChanged(int)), this, SLOT(updateFilters()));
-        width = qMax(checkbox->width(), width);
     }
-    for(auto           checkbox: checkboxes) {
-        checkbox->setMinimumWidth(width);
-    }
-    auto               radios     = findChildren<QRadioButton *>();
-    for(auto           radio: radios) {
+
+    for(auto radio: findChildren<QRadioButton *>()) {
         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
     }
+
+    connect(_ui->filterCommander, SIGNAL(activated(
+                                                 const QString &)), this, SLOT(updateFilters()));
 }
 
 void MainWindow::buildLookupMap() {
@@ -90,7 +92,6 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 }
 
 void MainWindow::createRoute() {
-
     if(_filteredSystems.size() > 0) {
         auto systemName   = _ui->systemName->text();
         auto originSystem = _router->getSystemByName(systemName);
@@ -117,14 +118,12 @@ void MainWindow::createRoute() {
     }
 }
 
-void MainWindow::loadSystems() {
-}
-
 void MainWindow::updateFilters() {
     int32              settlementFlags = 0;
     QList<QCheckBox *> checkboxes      = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
-    for(auto           &checkbox : checkboxes) {
+
+    for(auto &checkbox : checkboxes) {
         if(checkbox->isChecked()) {
             auto flag = _flagsLookup.find(checkbox->objectName());
             if(flag != _flagsLookup.end()) {
@@ -137,13 +136,33 @@ void MainWindow::updateFilters() {
         }
     }
 
-    ThreatLevel maxThreatLevel(ThreatLevelLow);
+    auto commanders = _settlementDates.keys();
+    auto visitedSettlements = QMap<QString, QDateTime>();
+    if(commanders.size()) {
+        commanders.sort();
+        auto selectedCommander = _ui->filterCommander->currentText();
+        _ui->filterCommander->clear();
+        _ui->filterCommander->addItems(commanders);
+        if(!selectedCommander.isEmpty()) {
+            _ui->filterCommander->setCurrentText(selectedCommander);
+            if(_ui->filterVisited->isChecked()) {
+                visitedSettlements = _settlementDates[selectedCommander];
+            }
+        }
+    }
+
+    int32 threatFilter = ThreatLevelUnknown;
     if(_ui->restrictedSec->isChecked()) {
-        maxThreatLevel = ThreatLevelRestrictedLongDistance;
-    } else if(_ui->mediumSec->isChecked()) {
-        maxThreatLevel = ThreatLevelMedium;
-    } else if(_ui->highSec->isChecked()) {
-        maxThreatLevel = ThreatLeveLHigh;
+        threatFilter |= ThreatLevelRestrictedLongDistance;
+    }
+    if(_ui->mediumSec->isChecked()) {
+        threatFilter |= ThreatLevelMedium;
+    }
+    if(_ui->highSec->isChecked()) {
+        threatFilter |= ThreatLeveLHigh;
+    }
+    if(_ui->noSec->isChecked()) {
+        threatFilter |= ThreatLevelLow;
     }
 
     int32 settlementSizes = 0;
@@ -159,20 +178,35 @@ void MainWindow::updateFilters() {
     }
 
 
-    int32 matches             = 0;
+    int32 matches = 0;
     _filteredSystems.clear();
+    auto filteredDate         = QDateTime().currentDateTime().addDays(-14); // two weeks.
+
     for(const auto &system : _systems) {
         PlanetList     matchingPlanets;
         for(const auto &planet: system.planets()) {
             SettlementList matchingSettlements;
             for(auto       settlement: planet.settlements()) {
+                auto      settlementKey = makeSettlementKey(system, planet, settlement);
+                QDateTime scanDate;
+                if(visitedSettlements.contains(settlementKey)) {
+                    scanDate = visitedSettlements[settlementKey];
+                } else {
+                    settlementKey = makeSettlementKey(system, Planet(), settlement);
+                    if(visitedSettlements.contains(settlementKey)) {
+                        scanDate = visitedSettlements[settlementKey];
+                    }
+                }
+                if(scanDate > filteredDate) {
+                    continue;
+                }
                 if((settlement.flags() & settlementFlags) != settlementFlags) {
                     continue;
                 }
                 if((settlementSizes & settlement.size()) != settlement.size()) {
                     continue;
                 }
-                if(settlement.threatLevel() > maxThreatLevel) {
+                if((threatFilter & settlement.threatLevel()) != settlement.threatLevel()) {
                     continue;
                 }
                 if(jumpsExcluded &&
@@ -265,14 +299,18 @@ void MainWindow::loadCompressedData() {
     showMessage("Loading known systems...", 0);
     QFile file(":/systems.json.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
-    QByteArray blob       = file.readAll();
-    auto       compressor = new QCompressor(blob);
-    SystemLoader *loader = new SystemLoader(_router);
+    QByteArray   blob       = file.readAll();
+    auto         compressor = new QCompressor(blob);
+    SystemLoader *loader    = new SystemLoader(_router);
 
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
-    connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
-    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
+    connect(loader, SIGNAL(systemsLoaded(
+                                   const SystemList &)), this, SLOT(systemsLoaded(
+                                                                            const SystemList &)));
+    connect(compressor, SIGNAL(complete(
+                                       const QByteArray &)), loader, SLOT(dataDecompressed(
+                                                                                  const QByteArray &)));
 
     compressor->start();
 }
@@ -291,8 +329,20 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     QListView *popup = (QListView *) completer->popup();
     popup->setBatchSize(10);
     popup->setLayoutMode(QListView::Batched);
-    connect(completer, SIGNAL(activated(const QString &)), this, SLOT(updateSystemCoordinates()));
+    connect(completer, SIGNAL(activated(
+                                      const QString &)), this, SLOT(updateSystemCoordinates()));
     _ui->systemName->setCompleter(completer);
+
+    // Start monitoring.
+    auto newerThanDate = QDateTime::currentDateTime()
+            .addDays(-16); // Things changed in the last 16 days  - we need 14 days for expire.
+#ifdef Q_OS_OSX
+    _journalWatcher
+            ->watchDirectory(QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/",
+                             newerThanDate);
+#else
+    _journalWatcher->watchDirectory(QDir::homePath()+"/Saved Games/Frontier Developments/Elite Dangerous/", newerThanDate);
+#endif
 }
 
 void MainWindow::showMessage(const QString &message, int timeout) {
@@ -305,6 +355,52 @@ void MainWindow::updateSliderParams(int size) {
     _ui->systemCountSlider->setValue(max);
     _ui->systemCountLabel->setText(QString::number(max));
 }
+
+void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
+    if(event.type() == EventTypeDatalinkScan) {
+        auto settlementName = journal.settlement();
+        if(settlementName.isEmpty()) {
+            return;
+        }
+        if(settlementName.endsWith("+")) {
+            auto parts = settlementName.split(" ");
+            parts.removeLast();
+            settlementName = parts.join(" ");
+        }
+
+        auto settlementKey      = makeSettlementKey(journal.system(), journal.body(), settlementName);
+        auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
+        updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
+        if(settlementKey != shortSettlementKey) {
+            updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
+        }
+        updateFilters();
+    }
+}
+
+void MainWindow::updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp) {
+    if(_settlementDates[commander][key] < timestamp) {
+        _settlementDates[commander][key] = timestamp;
+    }
+}
+
+const QString MainWindow::makeSettlementKey(const System &system, const Planet &planet,
+                                            const Settlement &settlement) const {
+    return QString("%1:%2:%3").arg(system.name()).arg(planet.name()).arg(settlement.name()).toLower();
+}
+
+const QString MainWindow::makeSettlementKey(const QString &system, const QString &planet,
+                                            const QString &settlement) const {
+    // Planets from log comes with a prefix of the star, get rid of it.
+    auto parts = planet.split(system + " ");
+    if(parts.size() > 1) {
+        parts.removeFirst();
+    }
+    return QString("%1:%2:%3").arg(system).arg(parts.join("")).arg(settlement).toLower();
+}
+
+
+
 
 
 

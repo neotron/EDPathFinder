@@ -153,7 +153,7 @@ void SystemLoader::loadSettlements() {
         auto z = READ_FLOAT; // z coordinate
 
         SKIP_FIELD; // distance from origin, not used by app
-        ThreatLevel threat     = (ThreatLevel) READ_INT; // threat level
+        ThreatLevel threat     = (ThreatLevel) (1<<READ_INT); // threat level
 
         if(READ_BOOL) { flags |= SettlementFlagsCoreDataTerminal; }  // has coredata node
         if(READ_BOOL) { flags |= SettlementFlagsJumpClimbRequired; } // needs jumping

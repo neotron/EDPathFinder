@@ -1,3 +1,6 @@
 [submodule "deps/PathFinder"]
 	path = deps/PathFinder
 	url = git@github.com:neotron/PathFinder.git
+[submodule "deps/EDJournalQT"]
+	path = deps/EDJournalQT
+	url = git@github.com:neotron/EDJournalQT.git

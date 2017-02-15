@@ -76,6 +76,7 @@ void RouteViewer::updateSettlementInfo() {
         case ThreatLeveLHigh:
             _ui->threatLabel->setText("High");
             break;
+        case ThreatLevelUnknown:break;
     }
     switch(settlement.size()) {
         case SettlementSizeSmall:
@@ -89,6 +90,7 @@ void RouteViewer::updateSettlementInfo() {
             break;
     }
     switch(settlementType->securityLevel()) {
+        case ThreatLevelUnknown:
         case ThreatLevelRestrictedLongDistance:
         case ThreatLevelLow:
             _ui->securityLabel->setText("Low");

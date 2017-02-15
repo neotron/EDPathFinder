@@ -42,7 +42,11 @@ typedef QList<Planet>     PlanetList;
 typedef QList<System>     SystemList;
 
 enum ThreatLevel {
-    ThreatLevelLow, ThreatLevelRestrictedLongDistance, ThreatLevelMedium, ThreatLeveLHigh
+    ThreatLevelUnknown = 0,
+    ThreatLevelLow                    = 1 << 0,
+    ThreatLevelRestrictedLongDistance = 1 << 1,
+    ThreatLevelMedium                 = 1 << 2,
+    ThreatLeveLHigh                   = 1 << 3,
 };
 
 enum SettlementSize {
@@ -140,7 +144,7 @@ public:
 
     SettlementType &operator=(const SettlementType &&other) {
         _size           = other._size;
-        _securityLevel    = other._securityLevel;
+        _securityLevel  = other._securityLevel;
         _economy        = std::move(other._economy);
         _iconUrl        = std::move(other._iconUrl);
         _showMapUrl     = std::move(other._showMapUrl);
@@ -154,7 +158,7 @@ public:
 
     SettlementType &operator=(const SettlementType &other) {
         _size           = other._size;
-        _securityLevel    = other._securityLevel;
+        _securityLevel  = other._securityLevel;
         _economy        = other._economy;
         _iconUrl        = other._iconUrl;
         _showMapUrl     = other._showMapUrl;

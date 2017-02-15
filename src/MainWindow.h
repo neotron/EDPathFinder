@@ -18,6 +18,7 @@
 
 #include <QMainWindow>
 #include <QMap>
+#include <deps/EDJournalQT/src/JournalWatcher.h>
 #include "System.h"
 
 
@@ -52,12 +53,12 @@ public slots:
 
     void systemCoordinatesRequestFailed();
 
+    void handleEvent(const JournalFile &journal, const Event &event);
+
 private:
     void cleanupCheckboxes();
 
     void buildLookupMap();
-
-    void loadSystems();
 
     void loadCompressedData();
 
@@ -79,4 +80,13 @@ private:
     bool          _routingPending;
     AStarRouter   *_router;
     QSet<QString> _pendingLookups;
+
+    JournalWatcher *_journalWatcher;
+    QMap<QString,QMap<QString,QDateTime>> _settlementDates;
+
+    const QString makeSettlementKey(const System &system, const Planet &planet, const Settlement &settlement) const;
+
+    const QString makeSettlementKey(const QString &system, const QString &planet, const QString &settlement) const;
+
+    void updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp);
 };
