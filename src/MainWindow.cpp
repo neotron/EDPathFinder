@@ -376,7 +376,7 @@ void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
         }
         updateFilters();
     }
-    qDebug() << "Got Event: "<<event.obj();
+  //  qDebug() << "Got Event: "<<event.obj();
 }
 
 void MainWindow::updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp) {
