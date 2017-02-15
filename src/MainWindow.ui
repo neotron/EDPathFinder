@@ -6,49 +6,49 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>602</height>
+    <width>448</width>
+    <height>585</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>480</width>
-    <height>602</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>480</width>
-    <height>602</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>ED PathFinder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>100</horstretch>
+     <verstretch>100</verstretch>
+    </sizepolicy>
+   </property>
    <property name="minimumSize">
     <size>
-     <width>480</width>
-     <height>0</height>
+     <width>448</width>
+     <height>543</height>
     </size>
    </property>
-   <property name="maximumSize">
+   <property name="baseSize">
     <size>
-     <width>480</width>
-     <height>16777215</height>
+     <width>450</width>
+     <height>543</height>
     </size>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QGroupBox" name="groupBox">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -56,13 +56,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>80</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>80</height>
+        <height>0</height>
        </size>
       </property>
       <property name="title">
@@ -75,14 +69,14 @@
        <item row="0" column="0">
         <widget class="QCheckBox" name="cdt">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>202</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -99,6 +93,12 @@
        </item>
        <item row="0" column="1">
         <widget class="QCheckBox" name="jump">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>278</width>
@@ -115,6 +115,12 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="anarchy">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Only include bases in anarchy systems (no bounties).</string>
          </property>
@@ -129,7 +135,7 @@
     <item>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
@@ -137,7 +143,7 @@
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>155</height>
+        <height>0</height>
        </size>
       </property>
       <property name="title">
@@ -149,6 +155,12 @@
        </property>
        <item row="0" column="0">
         <widget class="QCheckBox" name="csd">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Classified Scan Databanks</string>
          </property>
@@ -156,6 +168,12 @@
        </item>
        <item row="0" column="1">
         <widget class="QCheckBox" name="csf">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Classified Scan Fragment</string>
          </property>
@@ -163,6 +181,12 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="slf">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Specialized Legacy Firmware</string>
          </property>
@@ -170,6 +194,12 @@
        </item>
        <item row="1" column="1">
         <widget class="QCheckBox" name="dsd">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Divergent Scan Data</string>
          </property>
@@ -177,6 +207,12 @@
        </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="osk">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Open Symmetric Keys</string>
          </property>
@@ -184,6 +220,12 @@
        </item>
        <item row="2" column="1">
         <widget class="QCheckBox" name="mef">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Modified Embedded Firmware</string>
          </property>
@@ -191,6 +233,12 @@
        </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="cif">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Cracked Industrial Firmware</string>
          </property>
@@ -198,6 +246,12 @@
        </item>
        <item row="3" column="1">
         <widget class="QCheckBox" name="sfp">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Security Firmware Patch</string>
          </property>
@@ -206,7 +260,7 @@
        <item row="4" column="0">
         <widget class="QCheckBox" name="mcf">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -218,6 +272,12 @@
        </item>
        <item row="4" column="1">
         <widget class="QCheckBox" name="tec">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Tagged Encryption Codes</string>
          </property>
@@ -225,6 +285,12 @@
        </item>
        <item row="5" column="0">
         <widget class="QCheckBox" name="uef">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Unusual Encrypted Files</string>
          </property>
@@ -235,6 +301,12 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox_3">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Maximum Threat Level Allowed</string>
       </property>
@@ -244,6 +316,12 @@
        </property>
        <item>
         <widget class="QRadioButton" name="noSec">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>No combat needed for these bases.</string>
          </property>
@@ -260,6 +338,12 @@
        </item>
        <item>
         <widget class="QRadioButton" name="restrictedSec">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Restricted / long distance (M5H)</string>
          </property>
@@ -279,11 +363,11 @@
        </item>
        <item>
         <widget class="QRadioButton" name="mediumSec">
-         <property name="minimumSize">
-          <size>
-           <width>139</width>
-           <height>0</height>
-          </size>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
          <property name="toolTip">
           <string>Most medium sized high security bases.</string>
@@ -295,6 +379,12 @@
        </item>
        <item>
         <widget class="QRadioButton" name="highSec">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Large and military high security bases. Very dangerous, and hard to solo.</string>
          </property>
@@ -311,6 +401,12 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox_4">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="toolTip">
        <string>Select one or more settlement sizes. </string>
       </property>
@@ -323,6 +419,12 @@
        </property>
        <item>
         <widget class="QCheckBox" name="smallSize">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Small</string>
          </property>
@@ -333,6 +435,12 @@
        </item>
        <item>
         <widget class="QCheckBox" name="mediumSize">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Medium</string>
          </property>
@@ -343,6 +451,12 @@
        </item>
        <item>
         <widget class="QCheckBox" name="largeSize">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Large</string>
          </property>
@@ -356,12 +470,18 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox_5">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Maximum number of hops in route</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>-1</number>
+        <number>5</number>
        </property>
        <property name="topMargin">
         <number>6</number>
@@ -371,6 +491,12 @@
        </property>
        <item>
         <widget class="QSlider" name="systemCountSlider">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>100</verstretch>
+          </sizepolicy>
+         </property>
          <property name="maximum">
           <number>0</number>
          </property>
@@ -391,25 +517,19 @@
        <item>
         <widget class="QLabel" name="systemCountLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>30</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>30</width>
-           <height>16777215</height>
-          </size>
-         </property>
          <property name="text">
-          <string>0</string>
+          <string>100</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -421,6 +541,12 @@
     </item>
     <item>
      <widget class="QGroupBox" name="groupBox_6">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <property name="title">
        <string>Starting System</string>
       </property>
@@ -432,23 +558,23 @@
         <number>6</number>
        </property>
        <property name="horizontalSpacing">
-        <number>-1</number>
+        <number>5</number>
        </property>
        <property name="verticalSpacing">
         <number>3</number>
        </property>
        <item row="1" column="1">
         <widget class="QLabel" name="x">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>75</width>
            <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>75</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -467,6 +593,12 @@
        </item>
        <item row="1" column="0">
         <widget class="NoBeepLineEdit" name="systemName">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>100</verstretch>
+          </sizepolicy>
+         </property>
          <property name="toolTip">
           <string>Current system, used as starting point for route.</string>
          </property>
@@ -541,16 +673,16 @@
        </item>
        <item row="1" column="2">
         <widget class="QLabel" name="y">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>75</width>
            <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>75</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -569,16 +701,16 @@
        </item>
        <item row="1" column="3">
         <widget class="QLabel" name="z">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>75</width>
            <height>0</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>75</width>
-           <height>16777215</height>
           </size>
          </property>
          <property name="font">
@@ -608,6 +740,9 @@
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::MinimumExpanding</enum>
+        </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
@@ -618,6 +753,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="createRouteButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Create Route</string>
         </property>
@@ -632,8 +773,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>480</width>
-     <height>22</height>
+     <width>448</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>

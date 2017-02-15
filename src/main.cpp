@@ -27,6 +27,10 @@ Q_DECLARE_METATYPE(SystemList);
 // namespace operations_research
 
 int main(int argc, char **argv) {
+
+
+    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+
     qDebug() << QT_VERSION_STR;
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();
