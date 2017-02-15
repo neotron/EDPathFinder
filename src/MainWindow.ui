@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -22,29 +22,17 @@
     <height>586</height>
    </size>
   </property>
-  <property name="maximumSize">
-   <size>
-    <width>478</width>
-    <height>586</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>EDPathFinder</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
      <horstretch>100</horstretch>
      <verstretch>100</verstretch>
     </sizepolicy>
    </property>
    <property name="minimumSize">
-    <size>
-     <width>478</width>
-     <height>543</height>
-    </size>
-   </property>
-   <property name="maximumSize">
     <size>
      <width>478</width>
      <height>544</height>
@@ -57,10 +45,7 @@
     </size>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
-    <property name="spacing">
-     <number>5</number>
-    </property>
-    <item alignment="Qt::AlignHCenter">
+    <item>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -76,6 +61,12 @@
       </property>
       <property name="title">
        <string>Filters</string>
+      </property>
+      <property name="flat">
+       <bool>false</bool>
+      </property>
+      <property name="checkable">
+       <bool>false</bool>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <property name="leftMargin">
@@ -302,10 +293,13 @@
        <item row="6" column="0" colspan="2">
         <widget class="Line" name="line">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -603,7 +597,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Filter Recently Scanned by:</string>
+          <string>Skip settlements recently scanned by:</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -613,25 +607,12 @@
        <item>
         <widget class="QComboBox" name="filterCommander">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -883,7 +864,7 @@
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizeGripEnabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
   </widget>
   <action name="actionFile">
