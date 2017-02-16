@@ -136,12 +136,12 @@ void RouteViewer::updateSettlementInfo() {
     QString preferredMap = images[0];
     if(images.contains(SettlementType::IMAGE_PATHMAP)) {
         preferredMap = SettlementType::IMAGE_PATHMAP;
-    } else if(images.contains(SettlementType::IMAGE_OVERVIEW)) {
-        preferredMap = SettlementType::IMAGE_OVERVIEW;
     } else if(images.contains(SettlementType::IMAGE_CORE)) {
         preferredMap = SettlementType::IMAGE_CORE;
     } else  if(images.contains(SettlementType::IMAGE_COREFULLMAP)) {
         preferredMap = SettlementType::IMAGE_COREFULLMAP;
+    } else if(images.contains(SettlementType::IMAGE_OVERVIEW)) {
+        preferredMap = SettlementType::IMAGE_OVERVIEW;
     } else if(images.contains(SettlementType::IMAGE_SATELLITE)) {
         preferredMap = SettlementType::IMAGE_SATELLITE;
     }

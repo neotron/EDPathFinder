@@ -33,7 +33,7 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
     QVariant attribute = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     if(attribute.isValid()) {
         QUrl url = attribute.toUrl();
-        //qDebug() << "must go to:" << url;
+        _reply = _networkManager->get(QNetworkRequest(url));
         return;
     }
     //qDebug() << "ContentType:" << reply->header(QNetworkRequest::ContentTypeHeader).toString();
@@ -56,7 +56,6 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
 void ImageLoader::startDownload(const QUrl &url) {
     QNetworkRequest request(url);
     _reply = _networkManager->get(request);
-    qDebug() << "Downloading image URL"<<url;
 }
 
 ImageLoader::ImageLoader(QLabel *pixmapLabel) : _maxSize(QSize()), _networkManager(new QNetworkAccessManager(this)), _reply(nullptr), _pixmapLabel(pixmapLabel) {
