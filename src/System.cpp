@@ -51,7 +51,7 @@ void SystemLoader::run() {
 void SystemLoader::loadSystemFromTextFile() {
     auto           start = QDateTime::currentDateTimeUtc();
     QStringList    lines(QString(_bytes).split("\n"));
-    int i = 0;
+    int            i     = 0;
     for(const auto &qline: lines) {
         QStringList line = qline.split("\t");
         if(line.size() != 4) {
@@ -63,8 +63,8 @@ void SystemLoader::loadSystemFromTextFile() {
         auto y    = READ_FLOAT;
         auto z    = READ_FLOAT;
         _router->addSystem(System(name, x, y, z));
-        if(!(i++%100)) {
-            emit progress((int) (i / (float)lines.size() * 100));
+        if(!(i++ % 100)) {
+            emit progress((int) (i / (float) lines.size() * 100));
         }
     }
     emit progress(100);
@@ -115,8 +115,8 @@ void SystemLoader::loadSettlementTypes() {
         SKIP_FIELD; // Variation
         SKIP_FIELD; // Variation continued
         SKIP_FIELD; // Type
-        auto economy = READ_STR; // Military etc
-        auto iconUrl = READ_URL;
+        auto economy        = READ_STR; // Military etc
+        auto iconUrl        = READ_URL;
 
         READ_URL_JPEG(showUrl);
         READ_URL_JPEG(coreFullUrl);
@@ -124,9 +124,15 @@ void SystemLoader::loadSettlementTypes() {
         READ_URL_JPEG(pathUrl);
         READ_URL_JPEG(overview3DUrl);
         READ_URL_JPEG(coreUrl);
-
-        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl,
-                                                 pathUrl, overview3DUrl, coreUrl);
+        READ_URL_JPEG(satelliteUrl);
+        auto settlementType = new SettlementType(size, security, economy);
+        settlementType->addImage(SettlementType::IMAGE_ICON, iconUrl);
+        settlementType->addImage(SettlementType::IMAGE_CORE, coreUrl.isValid() ? coreUrl : showUrl);
+        settlementType->addImage(SettlementType::IMAGE_COREFULLMAP, coreFullUrl);
+        settlementType->addImage(SettlementType::IMAGE_PATHMAP, pathUrl);
+        settlementType->addImage(SettlementType::IMAGE_OVERVIEW, overviewUrl);
+        settlementType->addImage(SettlementType::IMAGE_OVERVIEW3D, overview3DUrl);
+        settlementType->addImage(SettlementType::IMAGE_SATELLITE, satelliteUrl);
         _settlementTypes[layout] = settlementType;
     }
 }
@@ -250,3 +256,12 @@ System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toStrin
 }
 
 SystemLoader::~SystemLoader() { }
+
+
+const QString SettlementType::IMAGE_ICON        = "Icon";
+const QString SettlementType::IMAGE_SATELLITE   = "Satellite Map";
+const QString SettlementType::IMAGE_COREFULLMAP = "Core Full Map";
+const QString SettlementType::IMAGE_OVERVIEW    = "Overview Map";
+const QString SettlementType::IMAGE_PATHMAP     = "Datapoint Path Map";
+const QString SettlementType::IMAGE_OVERVIEW3D  = "3D Overview";
+const QString SettlementType::IMAGE_CORE        = "Core Map";

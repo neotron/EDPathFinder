@@ -38,6 +38,8 @@ public:
 
 public slots:
 
+    void loadSelectedImage(const QString &image);
+
     void copySelectedItem();
 
 private:
@@ -54,3 +56,4 @@ private:
 
     void loadOverviewImage(const QUrl &url);
 };
+

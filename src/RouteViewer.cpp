@@ -18,6 +18,8 @@
 #include "ui_RouteViewer.h"
 
 
+#define MAP_LEGEND_TEXT "Map Legend"
+
 RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWindow(parent), _ui(new Ui::RouteViewer), _iconLoader(nullptr), _imageLoader(nullptr) {
     _ui->setupUi(this);
     QTableView *table = _ui->tableView;
@@ -119,26 +121,32 @@ void RouteViewer::updateSettlementInfo() {
 
     delete _iconLoader;
     _iconLoader = new ImageLoader(_ui->settlementIcon);
-    _iconLoader->startDownload(settlementType->iconUrl());
+    _iconLoader->startDownload(settlementType->imageNamed(SettlementType::IMAGE_ICON));
 
     _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
     _ui->largeImage->setAlignment(Qt::AlignCenter);
     delete _imageLoader;
     _imageLoader = nullptr;
 
-    if(!settlementType->pathMapUrl().isEmpty()) {
-        loadOverviewImage(settlementType->pathMapUrl());
-    } else if(!settlementType->overviewUrl().isEmpty()){
-        loadOverviewImage(settlementType->overviewUrl());
-    } else if(!settlementType->coreUrl().isEmpty()) {
-        loadOverviewImage(settlementType->coreUrl());
-    } else if(!settlementType->showMapUrl().isEmpty()) {
-        loadOverviewImage(settlementType->showMapUrl());
-    } else if(!settlementType->coreFullMapUrl().isEmpty()) {
-        loadOverviewImage(settlementType->coreFullMapUrl());
-    } else if(!settlementType->overview3DUrl().isEmpty()) {
-        loadOverviewImage(settlementType->overview3DUrl());
+    auto images = settlementType->imageTitles();
+    images.append(MAP_LEGEND_TEXT);
+    _ui->imageList->clear();
+    _ui->imageList->addItems(images);
+
+    QString preferredMap = images[0];
+    if(images.contains(SettlementType::IMAGE_PATHMAP)) {
+        preferredMap = SettlementType::IMAGE_PATHMAP;
+    } else if(images.contains(SettlementType::IMAGE_OVERVIEW)) {
+        preferredMap = SettlementType::IMAGE_OVERVIEW;
+    } else if(images.contains(SettlementType::IMAGE_CORE)) {
+        preferredMap = SettlementType::IMAGE_CORE;
+    } else  if(images.contains(SettlementType::IMAGE_COREFULLMAP)) {
+        preferredMap = SettlementType::IMAGE_COREFULLMAP;
+    } else if(images.contains(SettlementType::IMAGE_SATELLITE)) {
+        preferredMap = SettlementType::IMAGE_SATELLITE;
     }
+    _ui->imageList->setCurrentText(preferredMap);
+    loadOverviewImage(settlementType->imageNamed(preferredMap));
 
 }
 
@@ -159,7 +167,16 @@ void RouteViewer::loadOverviewImage(const QUrl &url) {
     _imageLoader->startDownload(url);
 }
 
+void RouteViewer::loadSelectedImage(const QString &image) {
+    if(image == MAP_LEGEND_TEXT) {
+        QPixmap legend(":/legend.jpg");
+        _ui->largeImage->setScaledPixmap(legend);
+    } else {
+        auto       indices        = _ui->tableView->selectionModel()->selectedIndexes();
+        const auto row            = indices[0].row();
+        const auto settlementData = _routeModel->result().getSettlementAtIndex(row);
+        const auto settlementType = settlementData->settlement().type();
 
-
-
-
+        loadOverviewImage(settlementType->imageNamed(image));
+    }
+}

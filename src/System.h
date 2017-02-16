@@ -42,7 +42,7 @@ typedef QList<Planet>     PlanetList;
 typedef QList<System>     SystemList;
 
 enum ThreatLevel {
-    ThreatLevelUnknown = 0,
+    ThreatLevelUnknown                = 0,
     ThreatLevelLow                    = 1 << 0,
     ThreatLevelRestrictedLongDistance = 1 << 1,
     ThreatLevelMedium                 = 1 << 2,
@@ -72,32 +72,24 @@ enum SettlementFlags {
 
 class SettlementType {
 public:
-    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy, const QUrl &iconUrl,
-                   const QUrl &showMapUrl, const QUrl &coreFullMapUrl, const QUrl &overviewUrl, const QUrl &pathMapUrl,
-                   const QUrl &overview3DUrl, const QUrl &coreUrl) : _size(size), _securityLevel(securityLevel),
-                                                                     _economy(economy), _iconUrl(iconUrl),
-                                                                     _showMapUrl(showMapUrl),
-                                                                     _coreFullMapUrl(coreFullMapUrl),
-                                                                     _overviewUrl(overviewUrl), _pathMapUrl(pathMapUrl),
-                                                                     _overview3DUrl(overview3DUrl),
-                                                                     _coreUrl(coreUrl) { }
+    static const QString IMAGE_ICON;
+    static const QString IMAGE_SATELLITE;
+    static const QString IMAGE_COREFULLMAP;
+    static const QString IMAGE_OVERVIEW;
+    static const QString IMAGE_PATHMAP;
+    static const QString IMAGE_OVERVIEW3D;
+    static const QString IMAGE_CORE;
+
+
+    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy)
+            : _size(size), _securityLevel(securityLevel), _economy(economy), _images() { }
 
     SettlementType(const SettlementType &other) : _size(other._size), _securityLevel(other._securityLevel),
-                                                  _economy(other._economy), _iconUrl(other._iconUrl),
-                                                  _showMapUrl(other._showMapUrl),
-                                                  _coreFullMapUrl(other._coreFullMapUrl),
-                                                  _overviewUrl(other._overviewUrl), _pathMapUrl(other._pathMapUrl),
-                                                  _overview3DUrl(other._overview3DUrl), _coreUrl(other._coreUrl) { }
+                                                  _economy(other._economy), _images(other._images) { }
 
     SettlementType(const SettlementType &&other) : _size(other._size), _securityLevel(other._securityLevel),
                                                    _economy(std::move(other._economy)),
-                                                   _iconUrl(std::move(other._iconUrl)),
-                                                   _showMapUrl(std::move(other._showMapUrl)),
-                                                   _coreFullMapUrl(std::move(other._coreFullMapUrl)),
-                                                   _overviewUrl(std::move(other._overviewUrl)),
-                                                   _pathMapUrl(std::move(other._pathMapUrl)),
-                                                   _overview3DUrl(std::move(other._overview3DUrl)),
-                                                   _coreUrl(std::move(other._coreUrl)) { }
+                                                   _images(std::move(other._images)) { }
 
 
     SettlementType() { }
@@ -114,73 +106,46 @@ public:
         return _economy;
     }
 
-    const QUrl &iconUrl() const {
-        return _iconUrl;
-    }
 
-    const QUrl &showMapUrl() const {
-        return _showMapUrl;
-    }
-
-    const QUrl &coreFullMapUrl() const {
-        return _coreFullMapUrl;
-    }
-
-    const QUrl &overviewUrl() const {
-        return _overviewUrl;
-    }
-
-    const QUrl &pathMapUrl() const {
-        return _pathMapUrl;
-    }
-
-    const QUrl &overview3DUrl() const {
-        return _overview3DUrl;
-    }
-
-    const QUrl &coreUrl() const {
-        return _coreUrl;
+    const QUrl imageNamed(const QString &name) const {
+        return _images.contains(name) ? _images[name] : QUrl();
     }
 
     SettlementType &operator=(const SettlementType &&other) {
-        _size           = other._size;
-        _securityLevel  = other._securityLevel;
-        _economy        = std::move(other._economy);
-        _iconUrl        = std::move(other._iconUrl);
-        _showMapUrl     = std::move(other._showMapUrl);
-        _coreFullMapUrl = std::move(other._coreFullMapUrl);
-        _overviewUrl    = std::move(other._overviewUrl);
-        _pathMapUrl     = std::move(other._pathMapUrl);
-        _overview3DUrl  = std::move(other._overview3DUrl);
-        _coreUrl        = std::move(other._coreUrl);
+        _size          = other._size;
+        _securityLevel = other._securityLevel;
+        _economy       = std::move(other._economy);
+        _images        = std::move(other._images);
         return *this;
     }
 
     SettlementType &operator=(const SettlementType &other) {
-        _size           = other._size;
-        _securityLevel  = other._securityLevel;
-        _economy        = other._economy;
-        _iconUrl        = other._iconUrl;
-        _showMapUrl     = other._showMapUrl;
-        _coreFullMapUrl = other._coreFullMapUrl;
-        _overviewUrl    = other._overviewUrl;
-        _pathMapUrl     = other._pathMapUrl;
-        _overview3DUrl  = other._overview3DUrl;
-        _coreUrl        = other._coreUrl;
+        _size          = other._size;
+        _securityLevel = other._securityLevel;
+        _economy       = other._economy;
+        _images        = other._images;
         return *this;
+    }
+
+    void addImage(const QString &name, const QUrl &url) {
+        if(url.isValid()) {
+            _images[name] = url;
+        }
+    }
+
+    const QStringList imageTitles() const {
+        auto keys = _images.keys();
+        keys.removeAll(IMAGE_ICON);
+        keys.sort();
+        return keys;
     }
 
 private:
     SettlementSize _size;
     ThreatLevel    _securityLevel;
     QString        _economy;
-    QUrl           _iconUrl;
-    QUrl           _showMapUrl;
-    QUrl           _coreFullMapUrl;
-    QUrl           _overviewUrl;
-    QUrl           _pathMapUrl;
-    QUrl           _overview3DUrl;
-    QUrl           _coreUrl;
+
+    QMap<QString, QUrl> _images;
 };
 
 class Settlement {
@@ -386,7 +351,9 @@ public:
 signals:
 
     void systemsLoaded(const SystemList &systems);
+
     void progress(int progress);
+
     void sortingSystems();
 
 public slots:
