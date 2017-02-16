@@ -1,9 +1,9 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>dbdump.csv</file>
-    <file>systems.json.gz</file>
     <file>icon512.png</file>
     <file>basetypes.csv</file>
     <file>noimage.png</file>
+    <file>systems.txt.gz</file>
 </qresource>
 </RCC>

@@ -40,15 +40,30 @@
 } while(0)
 
 void SystemLoader::run() {
-    auto json = QJsonDocument::fromJson(_bytes);
-    auto jsonArray = json.array();
-    _router->reserveSystemSpace(jsonArray.size());
-    for(auto systemObj: jsonArray) {
-        _router->addSystem(System(systemObj.toObject()));
-    }
+    loadSystemFromTextFile();
     loadSettlements();
     _router->sortSystemList();
     emit systemsLoaded(_systems);
+}
+
+
+void SystemLoader::loadSystemFromTextFile() {
+    auto           start = QDateTime::currentDateTimeUtc();
+    QStringList    lines(QString(_bytes).split("\n"));
+    for(const auto &qline: lines) {
+        QStringList line = qline.split("\t");
+        if(line.size() != 4) {
+            continue;
+        }
+        auto it   = line.begin();
+        auto name = READ_STR;
+        auto x    = READ_FLOAT;
+        auto y    = READ_FLOAT;
+        auto z    = READ_FLOAT;
+        _router->addSystem(System(name, x, y, z));
+    }
+    auto           end   = QDateTime::currentDateTimeUtc();
+    qDebug() << "text load:" << (end.toMSecsSinceEpoch() - start.toMSecsSinceEpoch());
 }
 
 
@@ -65,25 +80,25 @@ void SystemLoader::loadSettlementTypes() {
         if(line.size() < SETTLEMENT_TYPE_FIELD_COUNT) {
             continue;
         }
-        auto it = line.begin();
-        auto sizeInt = READ_INT;
+        auto           it      = line.begin();
+        auto           sizeInt = READ_INT;
         SettlementSize size;
         switch(sizeInt) {
-        case 3:
-            size = SettlementSizeLarge;
-            break;
-        case 2:
-            size = SettlementSizeMedium;
-            break;
-        default:
-        case 1:
-            size = SettlementSizeSmall;
-            break;
+            case 3:
+                size = SettlementSizeLarge;
+                break;
+            case 2:
+                size = SettlementSizeMedium;
+                break;
+            default:
+            case 1:
+                size = SettlementSizeSmall;
+                break;
         }
-        auto layout = READ_STR;
-        auto securityStr = READ_STR;
+        auto        layout      = READ_STR;
+        auto        securityStr = READ_STR;
         ThreatLevel security;
-        if(securityStr == "High")  {
+        if(securityStr == "High") {
             security = ThreatLeveLHigh;
         } else if(securityStr == "Medium") {
             security = ThreatLevelMedium;
@@ -106,9 +121,9 @@ void SystemLoader::loadSettlementTypes() {
         READ_URL_JPEG(overview3DUrl);
         READ_URL_JPEG(coreUrl);
 
-        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl, pathUrl, overview3DUrl, coreUrl);
+        auto settlementType = new SettlementType(size, security, economy, iconUrl, showUrl, coreFullUrl, overviewUrl,
+                                                 pathUrl, overview3DUrl, coreUrl);
         _settlementTypes[layout] = settlementType;
-
     }
 }
 
@@ -137,14 +152,14 @@ void SystemLoader::loadSettlements() {
         auto it = line.begin();
 
         auto typeStr = READ_STR; // Settlement type
-        auto type = _settlementTypes[typeStr];
+        auto type    = _settlementTypes[typeStr];
         if(!type) {
             qDebug() << "Failed to load settlement type for" << typeStr << " - skipping.";
             continue;
         }
         auto system = READ_STR; // System name
         auto planet = READ_STR; // Planet Name
-        auto name = READ_STR; // Settlement name
+        auto name   = READ_STR; // Settlement name
         SKIP_FIELD; // Map link that's just "map" in file
         if(READ_BOOL) { flags |= SettlementFlagsAnarchy; } // isAnarchy
 
@@ -153,7 +168,7 @@ void SystemLoader::loadSettlements() {
         auto z = READ_FLOAT; // z coordinate
 
         SKIP_FIELD; // distance from origin, not used by app
-        ThreatLevel threat     = (ThreatLevel) (1<<READ_INT); // threat level
+        ThreatLevel threat = (ThreatLevel) (1 << READ_INT); // threat level
 
         if(READ_BOOL) { flags |= SettlementFlagsCoreDataTerminal; }  // has coredata node
         if(READ_BOOL) { flags |= SettlementFlagsJumpClimbRequired; } // needs jumping
@@ -208,8 +223,7 @@ QString System::formatDistance(int64 dist) {
     }
 }
 
-System::System(AStarSystemNode *system)
-        : _name(system->name()), _position(system->position()) {}
+System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) { }
 
 void System::addSettlement(const QString &planetName, const Settlement &settlement) {
     for(auto planet: _planets) {
@@ -221,18 +235,14 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
     _planets.push_back(Planet(planetName, settlement));
 }
 
-System::~System() {}
+System::~System() { }
 
 
-System::System(const QJsonObject &jsonObject)
-        : _name(jsonObject["name"].toString()), _planets(), _position() {
+System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toString()), _planets(), _position() {
     auto coords = jsonObject["coords"].toObject();
     _position.setX((float) coords["x"].toDouble());
     _position.setY((float) coords["y"].toDouble());
     _position.setZ((float) coords["z"].toDouble());
 }
 
-SystemLoader::~SystemLoader() {}
-
-
-
+SystemLoader::~SystemLoader() { }

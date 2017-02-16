@@ -69,3 +69,8 @@ include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES}
 )
+
+add_custom_target(jsonconverter
+        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/jsonconverter/
+        SOURCES jsonconverter/sources/main.swift jsonconverter/package.swift)

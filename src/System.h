@@ -400,4 +400,6 @@ private:
     SystemList                      _systems;
     AStarRouter                     *_router;
     QByteArray                      _bytes;
+
+    void loadSystemFromTextFile();
 };

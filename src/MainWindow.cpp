@@ -297,7 +297,7 @@ void MainWindow::updateSystemCoordinateDisplay(const System &system) const {
 
 void MainWindow::loadCompressedData() {
     showMessage("Loading known systems...", 0);
-    QFile file(":/systems.json.gz");
+    QFile file(":/systems.txt.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
     QByteArray   blob       = file.readAll();
     auto         compressor = new QCompressor(blob);
