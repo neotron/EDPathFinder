@@ -126,7 +126,7 @@ void SystemLoader::loadSettlementTypes() {
         READ_URL_JPEG(coreUrl);
         READ_URL_JPEG(satelliteUrl);
         auto settlementType = new SettlementType(size, security, economy);
-        settlementType->addImage(SettlementType::IMAGE_ICON, iconUrl);
+        settlementType->addImage(SettlementType::IMAGE_BASE_ICON, iconUrl);
         settlementType->addImage(SettlementType::IMAGE_CORE, coreUrl.isValid() ? coreUrl : showUrl);
         settlementType->addImage(SettlementType::IMAGE_COREFULLMAP, coreFullUrl);
         settlementType->addImage(SettlementType::IMAGE_PATHMAP, pathUrl);
@@ -258,7 +258,7 @@ System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toStrin
 SystemLoader::~SystemLoader() { }
 
 
-const QString SettlementType::IMAGE_ICON        = "Icon";
+const QString SettlementType::IMAGE_BASE_ICON        = "Icon";
 const QString SettlementType::IMAGE_SATELLITE   = "Satellite Map";
 const QString SettlementType::IMAGE_COREFULLMAP = "Core Full Map";
 const QString SettlementType::IMAGE_OVERVIEW    = "Overview Map";

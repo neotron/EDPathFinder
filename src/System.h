@@ -72,7 +72,7 @@ enum SettlementFlags {
 
 class SettlementType {
 public:
-    static const QString IMAGE_ICON;
+    static const QString IMAGE_BASE_ICON;
     static const QString IMAGE_SATELLITE;
     static const QString IMAGE_COREFULLMAP;
     static const QString IMAGE_OVERVIEW;
@@ -135,7 +135,7 @@ public:
 
     const QStringList imageTitles() const {
         auto keys = _images.keys();
-        keys.removeAll(IMAGE_ICON);
+        keys.removeAll(SettlementType::IMAGE_BASE_ICON);
         keys.sort();
         return keys;
     }
