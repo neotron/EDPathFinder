@@ -37,9 +37,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainW
     buildLookupMap();
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(
-                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
-                                                                                                     const JournalFile &, const Event &)));
+    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
 }
 
 MainWindow::~MainWindow() {
@@ -57,8 +55,7 @@ void MainWindow::cleanupCheckboxes() {
         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
     }
 
-    connect(_ui->filterCommander, SIGNAL(activated(
-                                                 const QString &)), this, SLOT(updateFilters()));
+    connect(_ui->filterCommander, SIGNAL(activated(const QString &)), this, SLOT(updateFilters()));
 }
 
 void MainWindow::buildLookupMap() {
@@ -305,12 +302,10 @@ void MainWindow::loadCompressedData() {
 
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
-    connect(loader, SIGNAL(systemsLoaded(
-                                   const SystemList &)), this, SLOT(systemsLoaded(
-                                                                            const SystemList &)));
-    connect(compressor, SIGNAL(complete(
-                                       const QByteArray &)), loader, SLOT(dataDecompressed(
-                                                                                  const QByteArray &)));
+    connect(loader, SIGNAL(progress(int)), this, SLOT(systemLoadProgress(int)));
+    connect(loader, SIGNAL(sortingSystems()), this, SLOT(systemSortingProgress()));
+    connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
+    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
 
     compressor->start();
 }
@@ -399,6 +394,15 @@ const QString MainWindow::makeSettlementKey(const QString &system, const QString
     }
     return QString("%1:%2:%3").arg(system).arg(parts.join("")).arg(settlement).toLower();
 }
+
+void MainWindow::systemLoadProgress(int progress) {
+    showMessage(QString("Loading known systems (%1%)...").arg(progress), 0);
+}
+
+void MainWindow::systemSortingProgress() {
+    showMessage("Loading known systems (100%). Sorting...", 0);
+}
+
 
 
 

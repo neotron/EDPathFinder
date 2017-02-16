@@ -55,6 +55,9 @@ public slots:
 
     void handleEvent(const JournalFile &journal, const Event &event);
 
+    void systemLoadProgress(int progress);
+    void systemSortingProgress();
+
 private:
     void cleanupCheckboxes();
 
@@ -89,4 +92,5 @@ private:
     const QString makeSettlementKey(const QString &system, const QString &planet, const QString &settlement) const;
 
     void updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp);
+
 };

@@ -42,6 +42,7 @@
 void SystemLoader::run() {
     loadSystemFromTextFile();
     loadSettlements();
+    emit sortingSystems();
     _router->sortSystemList();
     emit systemsLoaded(_systems);
 }
@@ -50,6 +51,7 @@ void SystemLoader::run() {
 void SystemLoader::loadSystemFromTextFile() {
     auto           start = QDateTime::currentDateTimeUtc();
     QStringList    lines(QString(_bytes).split("\n"));
+    int i = 0;
     for(const auto &qline: lines) {
         QStringList line = qline.split("\t");
         if(line.size() != 4) {
@@ -61,9 +63,11 @@ void SystemLoader::loadSystemFromTextFile() {
         auto y    = READ_FLOAT;
         auto z    = READ_FLOAT;
         _router->addSystem(System(name, x, y, z));
+        if(!(i++%100)) {
+            emit progress((int) (i / (float)lines.size() * 100));
+        }
     }
-    auto           end   = QDateTime::currentDateTimeUtc();
-    qDebug() << "text load:" << (end.toMSecsSinceEpoch() - start.toMSecsSinceEpoch());
+    emit progress(100);
 }
 
 

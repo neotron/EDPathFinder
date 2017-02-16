@@ -386,6 +386,8 @@ public:
 signals:
 
     void systemsLoaded(const SystemList &systems);
+    void progress(int progress);
+    void sortingSystems();
 
 public slots:
 

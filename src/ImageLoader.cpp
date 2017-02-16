@@ -44,7 +44,7 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
         auto scalingLabel = dynamic_cast<AspectRatioPixmapLabel*>(_pixmapLabel);
         if(scalingLabel) {
             scalingLabel->setScaledPixmap(pixmap);
-            scalingLabel->setAlignment(Qt::AlignTop|Qt::AlignLeft);
+            scalingLabel->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
 
         } else {
             _pixmapLabel->setPixmap(pixmap);
