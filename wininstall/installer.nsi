@@ -9,7 +9,8 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-SetCompressor lzma
+;SetCompressor lzma
+SetCompressor zlib
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -52,7 +53,7 @@ ShowUnInstDetails show
 Section "Prerequisites" SEC01
    SetOutPath $INSTDIR\Prerequisites
   MessageBox MB_YESNO "EDPathFinder requires Visual C++ Redistributable for Visual Studio 2015. Do you want to install it?" /SD IDYES IDNO endActiveSync
-   File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\vcredist_x64.exe"
+   File "..\output\EDPathFinder\vcredist_x64.exe"
     ExecWait "$INSTDIR\Prerequisites\vcredist_x64.exe"
     Goto endActiveSync
    endActiveSync:
@@ -61,56 +62,23 @@ SectionEnd
 Section "MainSection" SEC02
   SetOutPath "$INSTDIR\bearer"
   SetOverwrite try
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\bearer\qgenericbearer.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\bearer\qnativewifibearer.dll"
+  File "..\output\EDPathFinder\bearer\*.dll"
   SetOutPath "$INSTDIR"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\D3Dcompiler_47.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\EDPathFinder.exe"
+  File "..\output\EDPathFinder\EDPathFinder.exe"
   CreateDirectory "$SMPROGRAMS\EDPathfinder"
   CreateShortCut "$SMPROGRAMS\EDPathfinder\ED Pathfinder.lnk" "$INSTDIR\EDPathFinder.exe"
   CreateShortCut "$DESKTOP\ED Pathfinder.lnk" "$INSTDIR\EDPathFinder.exe"
   SetOutPath "$INSTDIR\iconengines"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\iconengines\qsvgicon.dll"
+  File "..\output\EDPathFinder\iconengines\qsvgicon.dll"
   SetOutPath "$INSTDIR\imageformats"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qdds.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qgif.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qicns.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qico.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qjpeg.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qsvg.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qtga.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qtiff.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qwbmp.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\imageformats\qwebp.dll"
+  File "..\output\EDPathFinder\imageformats\*"
   SetOutPath "$INSTDIR"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\libEGL.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\libGLESV2.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\opengl32sw.dll"
+  File "..\output\EDPathFinder\*.dll"
   SetOutPath "$INSTDIR\platforms"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\platforms\qwindows.dll"
+  File "..\output\EDPathFinder\platforms\qwindows.dll"
   SetOutPath "$INSTDIR"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\Qt5Core.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\Qt5Gui.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\Qt5Network.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\Qt5Svg.dll"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\Qt5Widgets.dll"
   SetOutPath "$INSTDIR\translations"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_ca.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_cs.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_de.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_en.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_fi.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_fr.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_he.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_hu.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_it.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_ja.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_ko.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_lv.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_pl.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_ru.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_sk.qm"
-  File "..\..\build-EliteTSP-Desktop_Qt_5_7_0_MSVC2015_64bit-Minimum Size Release\EDPathFinder\translations\qt_uk.qm"
+  File "..\output\EDPathFinder\translations\*"
 SectionEnd
 
 Section -AdditionalIcons
