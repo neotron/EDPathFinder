@@ -456,7 +456,6 @@ void MainWindow::updateCommanderAndSystem() {
             name = commanderName;
         }
     }
-    bool changed = false;
     if(_ui->filterCommander->currentText() != name) {
         _ui->filterCommander->setCurrentText(name);
         updateFilters();

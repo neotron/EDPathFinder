@@ -18,14 +18,14 @@
 
 
 #include <QtGui>
-#include <QSqlDatabase>
+//#include <QSqlDatabase>
 
 class Database : public QObject {
 Q_OBJECT
 
 
 public:
-    Database(QObject *parent) : QObject(parent), m_db() { }
+    Database(QObject *parent) : QObject(parent)/*, m_db() */{ }
 
     virtual ~Database();
 
@@ -35,7 +35,7 @@ private:
 private:
     bool openDatabase();
 
-    QSqlDatabase m_db;
+    //QSqlDatabase m_db;
 };
 
 

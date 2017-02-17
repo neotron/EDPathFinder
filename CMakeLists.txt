@@ -30,12 +30,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(QT_USE_QTNETWORK true)
 find_package(Qt5Core REQUIRED)
-find_package(Qt5Sql REQUIRED)
+#find_package(Qt5Sql REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 
-set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::Sql)
+set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent)
 
 link_directories(${ORTOOLS}/lib)
 
