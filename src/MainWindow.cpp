@@ -37,7 +37,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainW
     buildLookupMap();
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
+    connect(_journalWatcher, SIGNAL(onEvent(
+                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
+                                                                                                     const JournalFile &, const Event &)));
+    _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
 }
 
 MainWindow::~MainWindow() {
@@ -55,7 +58,8 @@ void MainWindow::cleanupCheckboxes() {
         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
     }
 
-    connect(_ui->filterCommander, SIGNAL(activated(const QString &)), this, SLOT(updateFilters()));
+    connect(_ui->filterCommander, SIGNAL(activated(
+                                                 const QString &)), this, SLOT(updateFilters()));
 }
 
 void MainWindow::buildLookupMap() {
@@ -133,14 +137,19 @@ void MainWindow::updateFilters() {
         }
     }
 
-    auto commanders = _settlementDates.keys();
+    auto commanders         = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
     if(commanders.size()) {
         commanders.sort();
         auto selectedCommander = _ui->filterCommander->currentText();
-        _ui->filterCommander->clear();
-        _ui->filterCommander->addItems(commanders);
+        for(auto commanderName: commanders){
+            if(_ui->filterCommander->findText(commanderName) < 0) {
+                _ui->filterCommander->addItem(commanderName);
+            }
+        }
         if(!selectedCommander.isEmpty()) {
+            updateSystemForCommander(selectedCommander);
+
             _ui->filterCommander->setCurrentText(selectedCommander);
             if(_ui->filterVisited->isChecked()) {
                 visitedSettlements = _settlementDates[selectedCommander];
@@ -304,8 +313,12 @@ void MainWindow::loadCompressedData() {
     connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, SIGNAL(progress(int)), this, SLOT(systemLoadProgress(int)));
     connect(loader, SIGNAL(sortingSystems()), this, SLOT(systemSortingProgress()));
-    connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
-    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
+    connect(loader, SIGNAL(systemsLoaded(
+                                   const SystemList &)), this, SLOT(systemsLoaded(
+                                                                            const SystemList &)));
+    connect(compressor, SIGNAL(complete(
+                                       const QByteArray &)), loader, SLOT(dataDecompressed(
+                                                                                  const QByteArray &)));
 
     compressor->start();
 }
@@ -331,6 +344,7 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     // Start monitoring.
     auto newerThanDate = QDateTime::currentDateTime()
             .addDays(-16); // Things changed in the last 16 days  - we need 14 days for expire.
+    _loading = true;
 #ifdef Q_OS_OSX
     _journalWatcher
             ->watchDirectory(QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/",
@@ -338,6 +352,8 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
 #else
     _journalWatcher->watchDirectory(QDir::homePath()+"/Saved Games/Frontier Developments/Elite Dangerous/", newerThanDate);
 #endif
+    _loading = false;
+    updateCommanderAndSystem();
 }
 
 void MainWindow::showMessage(const QString &message, int timeout) {
@@ -352,26 +368,44 @@ void MainWindow::updateSliderParams(int size) {
 }
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
-    if(event.type() == EventTypeDatalinkScan) {
-        auto settlementName = journal.settlement();
-        if(settlementName.isEmpty()) {
-            return;
-        }
-        if(settlementName.endsWith("+")) {
-            auto parts = settlementName.split(" ");
-            parts.removeLast();
-            settlementName = parts.join(" ");
-        }
+    switch(event.type()) {
+        case EventTypeDatalinkScan: {
+            auto settlementName = journal.settlement();
+            if(settlementName.isEmpty()) {
+                return;
+            }
+            if(settlementName.endsWith("+")) {
+                auto parts = settlementName.split(" ");
+                parts.removeLast();
+                settlementName = parts.join(" ");
+            }
 
-        auto settlementKey      = makeSettlementKey(journal.system(), journal.body(), settlementName);
-        auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
-        updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
-        if(settlementKey != shortSettlementKey) {
-            updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
+            auto settlementKey      = makeSettlementKey(journal.system(), journal.body(), settlementName);
+            auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
+            updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
+            if(settlementKey != shortSettlementKey) {
+                updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
+            }
+            updateFilters();
+            break;
         }
-        updateFilters();
+        case EventTypeLocation:
+        case EventTypeFSDJump: {
+            CommanderInfo info;
+            if(!_commanderInformation.contains(journal.commander())) {
+                info = _commanderInformation[journal.commander()];
+            }
+            if(event.timestamp() > info._lastEventDate) {
+                info._lastEventDate = event.timestamp();
+                info._system        = journal.system();
+                _commanderInformation[journal.commander()] = info;
+                updateCommanderAndSystem();
+            }
+            break;
+        }
+        default:
+            break; // Be quiet
     }
-  //  qDebug() << "Got Event: "<<event.obj();
 }
 
 void MainWindow::updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp) {
@@ -402,6 +436,49 @@ void MainWindow::systemLoadProgress(int progress) {
 void MainWindow::systemSortingProgress() {
     showMessage("Loading known systems (100%). Sorting...", 0);
 }
+
+void MainWindow::updateCommanderAndSystem() {
+    if(_loading) {
+        return;
+    }
+    CommanderInfo info;
+    QString name;
+    for(auto commanderName: _commanderInformation.keys()) {
+        auto commander = _commanderInformation[commanderName];
+        if(commander._lastEventDate > info._lastEventDate) {
+            info = commander;
+            name = commanderName;
+        }
+    }
+    qDebug() << "Current commander" << name << "in system"<<info._system;
+    if(_ui->filterCommander->findText(name) < 0){
+        _ui->filterCommander->addItem(name);
+    }
+    bool changed = false;
+    if(_ui->filterCommander->currentText() != name) {
+        _ui->filterCommander->setCurrentText(name);
+        updateFilters();
+    }
+    if(_ui->systemName->text() != info._system) {
+        _ui->systemName->setText(info._system);
+        updateSystemCoordinates();
+    }
+}
+
+void MainWindow::updateSystemForCommander(const QString &commander) {
+    if(_loading) {
+        return;
+    }
+    CommanderInfo info = _commanderInformation[commander];
+    if(_ui->systemName->text() != info._system) {
+        _ui->systemName->setText(info._system);
+        updateSystemCoordinates();
+    }
+}
+
+
+
+
 
 
 
