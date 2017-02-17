@@ -34,9 +34,9 @@ namespace operations_research {
         auto &toSystem   = _systems[to];
         ++numDist;
         if(_router) {
-            AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 45.0f);
+            AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 15.0f);
             if(result.valid()) {
-                return (int64) result.route().size();
+                return (int64) result.route().size() * 1000 + fromSystem.distance(toSystem);
             } else {
                 return INT64_MAX;
             }
@@ -45,14 +45,16 @@ namespace operations_research {
     }
 
     void TSPWorker::calculateDistanceMatrix() {
-        auto sz                                             = _systems.size();
+        auto sz = _systems.size();
         _distanceMatrix.resize(sz);
         typedef QPair<QFuture<int64>, QPair<int, int>> FuturePair;
         QList<FuturePair>                              futures;
-        for(int                                        from = 0; from < sz; from++) {
+
+        for(int from = 0; from < sz; from++) {
             _distanceMatrix[from].fill(-1, sz);
         }
-        for(int                                        from = 0; from < sz; from++) {
+
+        for(int from = 0; from < sz; from++) {
             for(int to = 0; to < sz; to++) {
                 int64 dist = 0;
                 if(from != to) {
@@ -79,7 +81,7 @@ namespace operations_research {
     }
 
     void TSPWorker::run() {
-        System *startingSystem = _origin;
+        System *startingSystem             = _origin;
         if(!startingSystem) {
             startingSystem = &_systems[0];
         }
@@ -100,13 +102,14 @@ namespace operations_research {
         calculateDistanceMatrix();
         //qDebug() << "Matrix calculation took " << timer.elapsed();
         timer.restart();
-
-        RoutingModel routing((int) _systems.size(), 1);
-        routing.SetDepot(RoutingModel::NodeIndex(0));
+        RoutingModel            routing((int) _systems.size(), 1, RoutingModel::NodeIndex(0));
         RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
 
         // Setting first solution heuristic (cheapest addition).
-        parameters.set_first_solution_strategy(FirstSolutionStrategy::PARALLEL_CHEAPEST_INSERTION);
+        parameters.set_first_solution_strategy(FirstSolutionStrategy::AUTOMATIC);
+        parameters.set_time_limit_ms(1000);
+        //parameters.set_solution_limit(35);
+        //parameters.set_log_search(true);
         routing.SetArcCostEvaluatorOfAllVehicles(NewPermanentCallback(this, &TSPWorker::systemDistance));
 
         // Solve, returns a solution if any (owned by RoutingModel).
@@ -117,7 +120,7 @@ namespace operations_research {
         RouteResult result;
         if(solution != NULL) {
             QTextStream out(stdout);
-            out <<"System"<< "\t" << "Planet"<< "\t"<<"Settlement" << "\t" << "Distance from previous" << endl;
+//            out <<"System"<< "\t" << "Planet"<< "\t"<<"Settlement" << "\t" << "Distance from previous" << endl;
 
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
@@ -126,7 +129,7 @@ namespace operations_research {
             int       previd       = 0;
             int64     dist         = 0;
 
-            for(int64 node         = routing.Start(route_number);
+            for(int64 node = routing.Start(route_number);
                 !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
                 nodeid = routing.IndexToNode(node).value();
@@ -146,14 +149,15 @@ namespace operations_research {
                 for(auto planet: sys.planets()) {
                     for(auto settlement: planet.settlements()) {
                         result.addEntry(sys, planet, settlement, dist);
-                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
+//                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
                         dist = 0;
                     }
                 }
             }
-            dist     = _systems[0].distance(_systems[previd]);
+
+            dist = _systems[0].distance(_systems[previd]);
         } else {
-            LOG(INFO) << "No solution found.";
+            //         LOG(INFO) << "No solution found.";
         }
         emit taskCompleted(result);
     }

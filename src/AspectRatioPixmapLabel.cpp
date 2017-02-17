@@ -17,13 +17,13 @@
 #include "AspectRatioPixmapLabel.h"
 #include <QDebug>
 
-AspectRatioPixmapLabel::AspectRatioPixmapLabel(QWidget *parent) :
-    QLabel(parent)
-{
+AspectRatioPixmapLabel::AspectRatioPixmapLabel(QWidget *parent) : QLabel(parent) {
 }
 
 void AspectRatioPixmapLabel::updatePixmap() {
-    QLabel::setPixmap(_actualPixmap.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    if(!_actualPixmap.isNull()) {
+        QLabel::setPixmap(_actualPixmap.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
 }
 
 

@@ -123,7 +123,6 @@ namespace operations_research {
         }
 
     signals:
-
         void taskCompleted(const RouteResult &route);
 
     private:

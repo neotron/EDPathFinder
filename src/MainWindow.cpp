@@ -105,7 +105,7 @@ void MainWindow::createRoute() {
                 0);
         _ui->createRouteButton->setEnabled(false);
         TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
-//        workerThread->setRouter(&_router);
+        // workerThread->setRouter(_router);
         connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
         connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
         workerThread->start();
