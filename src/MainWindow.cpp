@@ -368,6 +368,7 @@ void MainWindow::updateSliderParams(int size) {
 }
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
+    //sqDebug() << "Got event"<<event.obj();
     switch(event.type()) {
         case EventTypeDatalinkScan: {
             auto settlementName = journal.settlement();
@@ -392,15 +393,20 @@ void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
         case EventTypeLocation:
         case EventTypeFSDJump: {
             CommanderInfo info;
-            if(!_commanderInformation.contains(journal.commander())) {
+            if(_commanderInformation.contains(journal.commander())) {
                 info = _commanderInformation[journal.commander()];
             }
+
             if(event.timestamp() > info._lastEventDate) {
                 info._lastEventDate = event.timestamp();
                 info._system        = journal.system();
                 _commanderInformation[journal.commander()] = info;
+                if(_ui->filterCommander->findText(journal.commander()) < 0){
+                    _ui->filterCommander->addItem(journal.commander());
+                }
                 updateCommanderAndSystem();
             }
+
             break;
         }
         default:
@@ -449,10 +455,6 @@ void MainWindow::updateCommanderAndSystem() {
             info = commander;
             name = commanderName;
         }
-    }
-    qDebug() << "Current commander" << name << "in system"<<info._system;
-    if(_ui->filterCommander->findText(name) < 0){
-        _ui->filterCommander->addItem(name);
     }
     bool changed = false;
     if(_ui->filterCommander->currentText() != name) {
