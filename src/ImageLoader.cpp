@@ -15,6 +15,8 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QPixmap>
+#include <QStandardPaths>
+#include <QNetworkDiskCache>
 #include "ImageLoader.h"
 #include "AspectRatioPixmapLabel.h"
 
@@ -32,19 +34,25 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
     }
     QVariant attribute = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     if(attribute.isValid()) {
-        QUrl url = attribute.toUrl();
-        _reply = _networkManager->get(QNetworkRequest(url));
+        QUrl url     = attribute.toUrl();
+        auto request = QNetworkRequest(url);
+        request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferCache);
+        _reply = _networkManager->get(request);
         return;
     }
     //qDebug() << "ContentType:" << reply->header(QNetworkRequest::ContentTypeHeader).toString();
     QByteArray data = reply->readAll();
     QPixmap    pixmap;
     pixmap.loadFromData(data);
+    updateLabelWithPixmap(pixmap);
+}
+
+void ImageLoader::updateLabelWithPixmap(const QPixmap &pixmap) const {
     if(_pixmapLabel) {
         auto scalingLabel = dynamic_cast<AspectRatioPixmapLabel*>(_pixmapLabel);
         if(scalingLabel) {
             scalingLabel->setScaledPixmap(pixmap);
-            scalingLabel->setAlignment(Qt::AlignLeft|Qt::AlignVCenter);
+            scalingLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
         } else {
             _pixmapLabel->setPixmap(pixmap);
@@ -54,10 +62,25 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
 
 
 void ImageLoader::startDownload(const QUrl &url) {
+    auto data = _networkManager->cache()->data(url);
+    if(data) {
+        QPixmap pixmap;
+        pixmap.loadFromData(data->readAll());
+        if(!pixmap.isNull()) {
+            updateLabelWithPixmap(pixmap);
+            return;
+        }
+    }
+
     QNetworkRequest request(url);
     _reply = _networkManager->get(request);
 }
 
 ImageLoader::ImageLoader(QLabel *pixmapLabel) : _maxSize(QSize()), _networkManager(new QNetworkAccessManager(this)), _reply(nullptr), _pixmapLabel(pixmapLabel) {
     connect(_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReplyReceived(QNetworkReply *)));
+
+    auto cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation).append("/imagecache");
+    auto cache = new QNetworkDiskCache();
+    cache->setCacheDirectory(cachePath);
+    _networkManager->setCache(cache);
 }

@@ -41,6 +41,8 @@ private:
     QNetworkAccessManager *_networkManager;
     QNetworkReply *_reply;
     QLabel *_pixmapLabel;
+
+    void updateLabelWithPixmap(const QPixmap &pixmap) const;
 };
 
 
