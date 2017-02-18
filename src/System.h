@@ -348,6 +348,18 @@ public:
 
     virtual ~SystemLoader();
 
+    void loadSettlements();
+
+    void loadSettlementTypes();
+
+    const SystemList &systems() const {
+        return _systems;
+    }
+
+    const QMap<QString, SettlementType *> &settlementTypes() const {
+        return _settlementTypes;
+    }
+
 signals:
 
     void systemsLoaded(const SystemList &systems);
@@ -361,9 +373,6 @@ public slots:
     void dataDecompressed(const QByteArray &bytes);
 
 private:
-    void loadSettlements();
-
-    void loadSettlementTypes();
 
     QMap<QString, SettlementType *> _settlementTypes;
     SystemList                      _systems;
