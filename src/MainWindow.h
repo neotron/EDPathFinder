@@ -98,4 +98,6 @@ private:
     bool _loading;
 
     void updateSystemForCommander(const QString &commander);
+
+    int distanceSliderValue() const;
 };

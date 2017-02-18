@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>478</width>
-    <height>623</height>
+    <width>521</width>
+    <height>723</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>478</width>
-    <height>623</height>
+    <width>521</width>
+    <height>723</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,8 +34,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>478</width>
-     <height>544</height>
+     <width>521</width>
+     <height>680</height>
     </size>
    </property>
    <property name="baseSize">
@@ -580,15 +580,90 @@
      </widget>
     </item>
     <item>
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string>Entry Distance Filtering</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="distanceLayout">
+         <property name="spacing">
+          <number>14</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="distanceCheckbox">
+           <property name="text">
+            <string>Max distance from entry</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="distanceSlider">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickInterval">
+            <number>1</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="distanceLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>63</width>
+             <height>22</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>85000 ls</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="unknownDistance">
+         <property name="text">
+          <string>Exclude settlements on planets with unknown entry distance</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <widget class="QGroupBox" name="groupBox_7">
       <property name="title">
        <string>Recently scanned settlements</string>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <property name="spacing">
-        <number>11</number>
-       </property>
-       <item>
+      <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="1">
+        <widget class="QComboBox" name="filterCommander">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <widget class="QCheckBox" name="filterVisited">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -601,16 +676,6 @@
          </property>
          <property name="checked">
           <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="filterCommander">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
          </property>
         </widget>
        </item>
@@ -629,7 +694,7 @@
        <string>Starting System</string>
       </property>
       <property name="flat">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <property name="leftMargin">
@@ -860,7 +925,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>478</width>
+     <width>521</width>
      <height>22</height>
     </rect>
    </property>
@@ -906,14 +971,33 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>229</x>
-     <y>442</y>
+     <x>252</x>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
-     <x>448</x>
-     <y>443</y>
+     <x>497</x>
+     <y>385</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>distanceSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>updateFilters()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1359</x>
+     <y>15</y>
     </hint>
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateFilters()</slot>
+ </slots>
 </ui>

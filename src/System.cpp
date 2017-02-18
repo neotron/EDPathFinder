@@ -40,6 +40,15 @@
 } while(0)
 
 void SystemLoader::run() {
+    QFile distances(":/body_distances.json");
+    if(!distances.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+    auto distanceDoc = QJsonDocument::fromJson(distances.readAll());
+    if(distanceDoc.isObject()){
+        _bodyDistances = distanceDoc.object();
+        qDebug() << "loaded distances"<<_bodyDistances.size();
+    }
     loadSystemFromTextFile();
     loadSettlements();
     emit sortingSystems();
@@ -204,11 +213,15 @@ void SystemLoader::loadSettlements() {
         SKIP_FIELD; // idx
 
         Settlement settlement(name, flags, threat, type);
+        const auto distance = getDistance(system, planet);
+        if(distance) {
+            qDebug() <<system<<planet<<distance;
+        }
         if(lookup.contains(system)) {
-            lookup[system]->addSettlement(planet, settlement);
+            lookup[system]->addSettlement(planet, settlement, distance);
         } else {
-            Planet planetObj(planet, settlement);
-            System systemObj(system, planetObj, x, y, z);
+            Planet     planetObj(planet, distance, settlement);
+            System     systemObj(system, planetObj, x, y, z);
             _systems.push_back(systemObj);
             lookup[system] = &_systems.last();
 
@@ -235,14 +248,14 @@ QString System::formatDistance(int64 dist) {
 
 System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) { }
 
-void System::addSettlement(const QString &planetName, const Settlement &settlement) {
+void System::addSettlement(const QString &planetName, const Settlement &settlement, int distance) {
     for(auto planet: _planets) {
         if(planet.name() == planetName) {
             planet.addSettlement(settlement);
             return;
         }
     }
-    _planets.push_back(Planet(planetName, settlement));
+    _planets.push_back(Planet(planetName, distance, settlement));
 }
 
 System::~System() { }
@@ -256,6 +269,11 @@ System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toStrin
 }
 
 SystemLoader::~SystemLoader() { }
+
+int SystemLoader::getDistance(const QString &system, const QString &planet) {
+    auto systemValue = _bodyDistances.value(system);
+    return systemValue.isObject() ? systemValue.toObject().value(planet).toInt(0) : 0;
+}
 
 
 const QString SettlementType::IMAGE_BASE_ICON        = "Icon";

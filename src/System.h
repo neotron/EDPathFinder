@@ -26,6 +26,7 @@
 #include <QDebug>
 #include <QUrl>
 #include <base/integral_types.h>
+#include <QJsonDocument>
 
 class AStarSystemNode;
 
@@ -81,8 +82,11 @@ public:
     static const QString IMAGE_CORE;
 
 
-    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy)
-            : _size(size), _securityLevel(securityLevel), _economy(economy), _images() { }
+    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy) : _size(size),
+                                                                                             _securityLevel(
+                                                                                                     securityLevel),
+                                                                                             _economy(economy),
+                                                                                             _images() { }
 
     SettlementType(const SettlementType &other) : _size(other._size), _securityLevel(other._securityLevel),
                                                   _economy(other._economy), _images(other._images) { }
@@ -210,27 +214,32 @@ private:
 
 class Planet {
 public:
-    Planet() : _name(), _settlements() { }
+    Planet() : _name(), _distance(0), _settlements() { }
 
-    Planet(const QString &name, const Settlement &settlement) : _name(name), _settlements() {
+    Planet(const QString &name, int distance, const Settlement &settlement) : _name(name), _distance(distance),
+                                                                              _settlements() {
         _settlements.push_back(settlement);
     }
 
-    Planet(const QString &name, const SettlementList &settlements) : _name(name), _settlements(settlements) { }
+    Planet(const QString &name, int distance, const SettlementList &settlements) : _name(name), _distance(distance),
+                                                                                   _settlements(settlements) { }
 
-    Planet(const Planet &&other) : _name(std::move(other._name)), _settlements(std::move(other._settlements)) { }
+    Planet(const Planet &&other) : _name(std::move(other._name)), _distance(other._distance),
+                                   _settlements(std::move(other._settlements)) { }
 
-    Planet(const Planet &other) : _name(other._name), _settlements(other._settlements) { }
+    Planet(const Planet &other) : _name(other._name), _distance(other._distance), _settlements(other._settlements) { }
 
     Planet &operator=(const Planet &other) {
         _name        = other._name;
         _settlements = other._settlements;
+        _distance    = other._distance;
         return *this;
     }
 
     Planet &operator=(const Planet &&other) {
         _name        = std::move(other._name);
         _settlements = std::move(other._settlements);
+        _distance    = other._distance;
         return *this;
     }
 
@@ -246,8 +255,13 @@ public:
         return _name;
     }
 
+    int distance() const {
+        return _distance;
+    }
+
 private:
     QString        _name;
+    int            _distance;
     SettlementList _settlements;
 };
 
@@ -321,7 +335,7 @@ public:
 
     const PlanetList &planets() const { return _planets; }
 
-    void addSettlement(const QString &planetName, const Settlement &settlement);
+    void addSettlement(const QString &planetName, const Settlement &settlement, int distance);
 
     const QString &name() const {
         return _name;
@@ -378,6 +392,9 @@ private:
     SystemList                      _systems;
     AStarRouter                     *_router;
     QByteArray                      _bytes;
+    QJsonObject                     _bodyDistances;
 
     void loadSystemFromTextFile();
+
+    int getDistance(const QString &system, const QString &planet);
 };

@@ -6,5 +6,6 @@
     <file>noimage.png</file>
     <file>systems.txt.gz</file>
     <file>legend.jpg</file>
+    <file>body_distances.json</file>
 </qresource>
 </RCC>

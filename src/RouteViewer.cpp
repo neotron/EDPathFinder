@@ -65,6 +65,9 @@ void RouteViewer::updateSettlementInfo() {
     _ui->settlementLabel->setText(settlement.name());
     _ui->systemLabel->setText(settlementData->systemName());
     _ui->typeLabel->setText(settlementType->economy());
+    _ui->entryDistanceLabel->setText(settlementData->distance() > 0 ?
+                                     QString("%1 ls").arg(settlementData->distance()) : "N/A");
+
     switch(settlement.threatLevel()) {
         case ThreatLevelLow:
             _ui->threatLabel->setText("None");

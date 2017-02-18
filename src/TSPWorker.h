@@ -46,10 +46,10 @@ typedef std::vector<std::vector<QString>> RouteResultMatrix;
 
 class RouteSystemPlanetSettlement {
 
-
 public:
-    RouteSystemPlanetSettlement(const QString &systemName, const QString &planetName, const Settlement &settlement)
-            : _systemName(systemName), _planetName(planetName), _settlement(settlement) { }
+    RouteSystemPlanetSettlement(const QString &systemName, const QString &planetName, int distance,
+                                const Settlement &settlement)
+            : _systemName(systemName), _planetName(planetName), _settlement(settlement), _distance(distance) { }
 
     const QString &systemName() const {
         return _systemName;
@@ -63,11 +63,15 @@ public:
         return _settlement;
     }
 
+    int distance() const {
+        return _distance;
+    }
+
 private:
     const QString _systemName;
     const QString _planetName;
     const Settlement _settlement;
-
+    int _distance;
 };
 
 class RouteResult {

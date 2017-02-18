@@ -37,10 +37,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainW
     buildLookupMap();
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(
-                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
-                                                                                                     const JournalFile &, const Event &)));
+    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
+    _ui->distanceSlider->setMaximum(10000);
+    _ui->distanceSlider->setValue(10000);
 }
 
 MainWindow::~MainWindow() {
@@ -58,8 +58,7 @@ void MainWindow::cleanupCheckboxes() {
         connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
     }
 
-    connect(_ui->filterCommander, SIGNAL(activated(
-                                                 const QString &)), this, SLOT(updateFilters()));
+    connect(_ui->filterCommander, SIGNAL(activated(const QString &)), this, SLOT(updateFilters()));
 }
 
 void MainWindow::buildLookupMap() {
@@ -124,6 +123,9 @@ void MainWindow::updateFilters() {
     QList<QCheckBox *> checkboxes      = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
 
+    int maxDistance                  = distanceSliderValue();
+    const auto distanceFilterChecked = _ui->distanceCheckbox->isChecked();
+    _ui->distanceSlider->setEnabled(distanceFilterChecked);
     for(auto &checkbox : checkboxes) {
         if(checkbox->isChecked()) {
             auto flag = _flagsLookup.find(checkbox->objectName());
@@ -191,6 +193,12 @@ void MainWindow::updateFilters() {
     for(const auto &system : _systems) {
         PlanetList     matchingPlanets;
         for(const auto &planet: system.planets()) {
+            if(_ui->unknownDistance->isChecked() && !planet.distance()) {
+                continue;
+            }
+            if(distanceFilterChecked && maxDistance && planet.distance() && planet.distance() > maxDistance) {
+                continue;
+            }
             SettlementList matchingSettlements;
             for(auto       settlement: planet.settlements()) {
                 auto      settlementKey = makeSettlementKey(system, planet, settlement);
@@ -223,7 +231,7 @@ void MainWindow::updateFilters() {
                 ++matches;
             }
             if(matchingSettlements.size()) {
-                matchingPlanets.push_back(Planet(planet.name(), matchingSettlements));
+                matchingPlanets.push_back(Planet(planet.name(), planet.distance(), matchingSettlements));
             }
         }
         if(matchingPlanets.size()) {
@@ -365,6 +373,15 @@ void MainWindow::updateSliderParams(int size) {
     _ui->systemCountSlider->setMaximum(max);
     _ui->systemCountSlider->setValue(max);
     _ui->systemCountLabel->setText(QString::number(max));
+
+
+}
+
+int MainWindow::distanceSliderValue() const {
+    auto value = _ui->distanceSlider->value();
+    value = std::min(100+(int)(pow(2, log(value) * 2.5))/100, 85000);
+    _ui->distanceLabel->setText(QString("%1 ls").arg(value));
+    return value;
 }
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
@@ -476,30 +493,3 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
         updateSystemCoordinates();
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -173,7 +173,7 @@ void RouteResult::addEntry(const System &system, const Planet &planet, const Set
     row[4] = System::formatDistance(_totalDist);
     _route.emplace_back(row);
 
-    auto routeSettlement = RouteSystemPlanetSettlement(system.name(), planet.name(), settlement);
+    auto routeSettlement = RouteSystemPlanetSettlement(system.name(), planet.name(), planet.distance(), settlement);
     _settlements.emplace_back(routeSettlement);
 }
 
