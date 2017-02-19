@@ -38,6 +38,8 @@ public:
 
     ~MainWindow();
 
+    static const QString journalDirectory();
+
 public slots:
     void systemsLoaded(const SystemList &systems);
 
@@ -58,6 +60,8 @@ public slots:
     void systemLoadProgress(int progress);
     void systemSortingProgress();
 
+    void openMissionTool();
+
 private:
     void cleanupCheckboxes();
 
@@ -72,6 +76,18 @@ private:
     void updateSliderParams(int size);
 
     void updateSystemCoordinateDisplay(const System &system) const;
+    const QString makeSettlementKey(const System &system, const Planet &planet, const Settlement &settlement) const;
+
+    const QString makeSettlementKey(const QString &system, const QString &planet, const QString &settlement) const;
+
+    void updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp);
+
+    void updateCommanderAndSystem();
+
+    void updateSystemForCommander(const QString &commander);
+
+    int distanceSliderValue() const;
+
 
     Ui::MainWindow *_ui;
 
@@ -87,17 +103,6 @@ private:
     JournalWatcher *_journalWatcher;
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
     QMap<QString,CommanderInfo> _commanderInformation;
-    const QString makeSettlementKey(const System &system, const Planet &planet, const Settlement &settlement) const;
-
-    const QString makeSettlementKey(const QString &system, const QString &planet, const QString &settlement) const;
-
-    void updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp);
-
-    void updateCommanderAndSystem();
-
     bool _loading;
 
-    void updateSystemForCommander(const QString &commander);
-
-    int distanceSliderValue() const;
 };

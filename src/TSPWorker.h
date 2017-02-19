@@ -80,6 +80,7 @@ public:
     RouteResult() : _route(), _totalDist(0) { }
 
     void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
+    void addEntry(const System &system, int64 distance);
 
     const QString ly() const {
         return System::formatDistance(_totalDist);
@@ -107,6 +108,7 @@ private:
     RouteResultMatrix _route;
     int64             _totalDist;
     std::vector<RouteSystemPlanetSettlement> _settlements;
+
 };
 
 namespace operations_research {
@@ -116,7 +118,7 @@ namespace operations_research {
     public:
         TSPWorker(SystemList systems, System *system, int maxSystemCount)
                 : QThread(), _systems(systems), _origin(system), _maxSystemCount(maxSystemCount), _router(Q_NULLPTR),
-                  numDist(0) { }
+                  _numDist(0), _systemsOnly(false) { }
 
 
         virtual void run();
@@ -124,6 +126,10 @@ namespace operations_research {
 
         void setRouter(AStarRouter *router) {
             _router = router;
+        }
+
+        void setSystemsOnly(bool systemsOnly) {
+            _systemsOnly = systemsOnly;
         }
 
     signals:
@@ -134,15 +140,18 @@ namespace operations_research {
 
         int64                   systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
 
+        int64 calculateDistance(int from, int to);
+
         SystemList              _systems;
         System                  *_origin;
         int                     _maxSystemCount;
         AStarRouter             *_router;
-        int                     numDist;
+        int                     _numDist;
         QVector<QVector<int64>> _distanceMatrix;
 
-        int64 calculateDistance(int from, int to);
+        bool _systemsOnly;
     };
+
 };
 
 using operations_research::TSPWorker;

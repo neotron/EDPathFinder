@@ -888,6 +888,13 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="text">
+         <string>Custom Routing Tool</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -912,7 +919,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Create Route</string>
+         <string>Create Base Scanning Route</string>
         </property>
        </widget>
       </item>
@@ -996,8 +1003,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openMissionTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>102</x>
+     <y>678</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1344</x>
+     <y>107</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateFilters()</slot>
+  <slot>openMissionTool()</slot>
  </slots>
 </ui>

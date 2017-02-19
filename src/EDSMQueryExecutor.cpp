@@ -28,7 +28,7 @@
 
 EDSMQueryExecutor *EDSMQueryExecutor::systemCoordinateRequest(const QString &systemName) {
     auto queryString = SYSTEM_QUERY_URL.arg(QString(QUrl::toPercentEncoding(systemName)));
-    return new EDSMQueryExecutor(QUrl(queryString), Coordinates);
+    return new EDSMQueryExecutor(QUrl(queryString), Coordinates, systemName);
 }
 
 void EDSMQueryExecutor::run() {
@@ -54,7 +54,7 @@ void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
             return;
         }
     }
-    emit coordinateRequestFailed();
+    emit coordinateRequestFailed(_systemName);
     reply->deleteLater();
 }
 
@@ -62,8 +62,9 @@ EDSMQueryExecutor::~EDSMQueryExecutor() {
     if(_mgr) { _mgr->deleteLater(); }
 }
 
-EDSMQueryExecutor::EDSMQueryExecutor(const QUrl &url, RequestType requestType) : QThread(Q_NULLPTR), _mgr(nullptr),
-                                                                                 _requestType(requestType), _url(url) {
+EDSMQueryExecutor::EDSMQueryExecutor(const QUrl &url, RequestType requestType, const QString &systemName)
+        : QThread(Q_NULLPTR), _mgr(nullptr),
+          _requestType(requestType), _url(url), _systemName(systemName) {
 }
 
 

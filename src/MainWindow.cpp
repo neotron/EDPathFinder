@@ -26,6 +26,7 @@
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
 #include "QCompressor.h"
+#include "MissionRouter.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false),
                                           _router(new AStarRouter(this)), _pendingLookups(),
@@ -353,15 +354,19 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     auto newerThanDate = QDateTime::currentDateTime()
             .addDays(-16); // Things changed in the last 16 days  - we need 14 days for expire.
     _loading = true;
-#ifdef Q_OS_OSX
-    _journalWatcher
-            ->watchDirectory(QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/",
-                             newerThanDate);
-#else
-    _journalWatcher->watchDirectory(QDir::homePath()+"/Saved Games/Frontier Developments/Elite Dangerous/", newerThanDate);
-#endif
+    _journalWatcher->watchDirectory(journalDirectory(), newerThanDate);
     _loading = false;
     updateCommanderAndSystem();
+}
+
+const QString MainWindow::journalDirectory() {
+    QString journalPath;
+#ifdef Q_OS_OSX
+    journalPath = QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/";
+#else
+    journalPath = QDir::homePath()+"/Saved Games/Frontier Developments/Elite Dangerous/";
+#endif
+    return journalPath;
 }
 
 void MainWindow::showMessage(const QString &message, int timeout) {
@@ -492,4 +497,9 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
         _ui->systemName->setText(info._system);
         updateSystemCoordinates();
     }
+}
+
+void MainWindow::openMissionTool() {
+    auto tool = new MissionRouter(this, _router, _systems);
+    tool->show();
 }

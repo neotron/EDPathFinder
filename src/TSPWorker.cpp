@@ -32,7 +32,7 @@ namespace operations_research {
     int64 TSPWorker::calculateDistance(int from, int to) {
         auto &fromSystem = _systems[from];
         auto &toSystem   = _systems[to];
-        ++numDist;
+        ++_numDist;
         if(_router) {
             AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 15.0f);
             if(result.valid()) {
@@ -142,25 +142,39 @@ namespace operations_research {
                 }
 
                 previd = nodeid;
-
-                if(!sys.planets().size()) {
-                    continue;
-                }
-                for(auto planet: sys.planets()) {
-                    for(auto settlement: planet.settlements()) {
-                        result.addEntry(sys, planet, settlement, dist);
+                if(_systemsOnly) {
+                    result.addEntry(sys, dist);
+                } else {
+                    if(!sys.planets().size()) {
+                        continue;
+                    }
+                    for(auto planet: sys.planets()) {
+                        for(auto settlement: planet.settlements()) {
+                            result.addEntry(sys, planet, settlement, dist);
 //                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
-                        dist = 0;
+                            dist = 0;
+                        }
                     }
                 }
             }
-
-            dist = _systems[0].distance(_systems[previd]);
+            if(_systemsOnly) {
+                dist = _systems[0].distance(_systems[previd]);
+                result.addEntry(_systems[0], dist);
+            }
         } else {
             //         LOG(INFO) << "No solution found.";
         }
         emit taskCompleted(result);
     }
+}
+
+void RouteResult::addEntry(const System &system, int64 distance) {
+    _totalDist += distance;
+    std::vector<QString> row(5);
+    row[0] = system.name();
+    row[1] = System::formatDistance(distance);
+    row[2] = System::formatDistance(_totalDist);
+    _route.emplace_back(row);
 }
 
 void RouteResult::addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance) {

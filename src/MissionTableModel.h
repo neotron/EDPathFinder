@@ -20,10 +20,11 @@
 #include <QAbstractTableModel>
 #include "System.h"
 #include "TSPWorker.h"
+#include "MissionScanner.h"
 
-class RouteTableModel : public QAbstractTableModel {
+class MissionTableModel : public QAbstractTableModel {
 public:
-    RouteTableModel(QObject *parent, const RouteResult &result);
+    MissionTableModel(QObject *parent, const QList<Mission> &result);
 
 
     int rowCount(const QModelIndex &parent) const override;
@@ -35,18 +36,10 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
 
-    const RouteResult &result() const {
-        return _result;
-    }
-
-    QString lastDistance(size_t row) const;
-    QString totalDistance(size_t row) const;
-
-    void setSystemsOnly(bool systemsOnly) {
-        _systemsOnly = systemsOnly;
+    const QList<Mission> &missions() const {
+        return _missions;
     }
 
 private:
-    RouteResult _result;
-    bool _systemsOnly;
+    QList<Mission> _missions;
 };

@@ -15,27 +15,27 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "RouteTableModel.h"
+#include "MissionTableModel.h"
 
-RouteTableModel::RouteTableModel(QObject *parent, const RouteResult &result)
-        : QAbstractTableModel(parent), _result(result), _systemsOnly(false) { }
+MissionTableModel::MissionTableModel(QObject *parent, const QList<Mission> &result)
+        : QAbstractTableModel(parent), _missions(result) { }
 
-int RouteTableModel::rowCount(const QModelIndex &) const {
-    return (int) _result.route().size();
+int MissionTableModel::rowCount(const QModelIndex &) const {
+    return _missions.size();
 }
 
-int RouteTableModel::columnCount(const QModelIndex &) const {
-    return (int) _result.route()[0].size() - 2;
+int MissionTableModel::columnCount(const QModelIndex &) const {
+    return 2;
 }
 
-QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
-    auto col   = (size_t) index.column();
-    auto row   = (size_t) index.row();
-    auto route = _result.route();
-    if(row < route.size() && col < route[row].size()) {
+QVariant MissionTableModel::data(const QModelIndex &index, int role) const {
+    auto col   = index.column();
+    auto row   = index.row();
+
+    if(row < _missions.size() && col < 2) {
         switch(role) {
             case Qt::DisplayRole:
-                return route[row][col];
+                return col == 0 ? _missions[row]._origin : _missions[row]._destination;
             case Qt::TextAlignmentRole:
                 return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
             default:
@@ -45,16 +45,14 @@ QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
+QVariant MissionTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
     if(role == Qt::DisplayRole) {
         if(orientation == Qt::Horizontal) {
             switch(section) {
                 case 0:
-                    return "System";
+                    return "Origin System";
                 case 1:
-                    return _systemsOnly ? "Distance" : "Planet";
-                case 2:
-                    return _systemsOnly ? "Cumulative Distance" : "Settlement";
+                    return "Desination System";
                 default:
                     return "";
             }
@@ -62,16 +60,3 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
     }
     return QVariant();
 }
-
-QString RouteTableModel::lastDistance(size_t row) const {
-    auto route = _result.route();
-    return route[row][3];
-}
-
-
-QString RouteTableModel::totalDistance(size_t row) const {
-    auto route = _result.route();
-    return route[row][4];
-}
-
-

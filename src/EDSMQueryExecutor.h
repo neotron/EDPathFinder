@@ -41,7 +41,7 @@ signals:
 
     void coordinatesReceived(const System &);
 
-    void coordinateRequestFailed();
+    void coordinateRequestFailed(const QString &);
 
 public slots:
 
@@ -52,9 +52,10 @@ private:
         Coordinates
     };
 
-    explicit EDSMQueryExecutor(const QUrl &url, RequestType requestType);
+    explicit EDSMQueryExecutor(const QUrl &url, RequestType requestType, const QString &systemName);
 
     QNetworkAccessManager *_mgr;
     RequestType           _requestType;
     const QUrl            _url;
+    const QString         _systemName;
 };
