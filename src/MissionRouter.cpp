@@ -37,12 +37,7 @@ void MissionRouter::refreshMissions() {
     const auto comboBox = _ui->commanders;
     const auto selected = comboBox->currentText();
     comboBox->clear();
-    for(auto cmdr: _scanner.commanders()) {
-        auto missions = _scanner.commanderMission(cmdr);
-        if(missions.size()) {
-            comboBox->addItem(cmdr);
-        }
-    }
+    comboBox->addItems(_scanner.commanders());
     comboBox->setCurrentText(selected);
     updateMissionTable();
 }
