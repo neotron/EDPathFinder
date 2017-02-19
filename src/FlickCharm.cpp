@@ -39,7 +39,7 @@
 **
 ****************************************************************************/
 
-#include "flickcharm.h"
+#include "FlickCharm.h"
 
 #include <QAbstractScrollArea>
 #include <QApplication>

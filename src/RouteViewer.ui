@@ -741,7 +741,7 @@
   <customwidget>
    <class>ImageViewer</class>
    <extends>QScrollArea</extends>
-   <header location="global">src/imageviewer.h</header>
+   <header location="global">src/ImageViewer.h</header>
    <container>1</container>
    <slots>
     <slot>fitToWindow()</slot>
