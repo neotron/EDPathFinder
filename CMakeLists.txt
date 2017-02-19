@@ -7,7 +7,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Include Qt basic functions
 include(QtCommon)
 
-project(EDPathFinder VERSION 1.2)
+project(EDPathFinder VERSION 1.1.2)
 
 set(MSVC_RUNTIME "dynamic")
 
