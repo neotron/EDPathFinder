@@ -25,8 +25,8 @@ set(RESOURCE_FILES resources/resources.qrc)
 add_project_meta(META_FILES_TO_INCLUDE)
 
 set(ORTOOLS ../or-tools/)
-set(PFDIR deps/PathFinder/src/)
-set(JOURNALDIR deps/EDJournalQT/src/)
+set(PFDIR ${PROJECT_SOURCE_DIR}/deps/PathFinder/src/)
+set(JOURNALDIR ${PROJECT_SOURCE_DIR}/deps/EDJournalQT/src/)
 
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
@@ -65,11 +65,11 @@ endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
-file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui ${PATH_FINDER_SRC} ${EDJOURNAL_SRC})
+file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui)
 include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES}
+    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/System.cpp src/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})

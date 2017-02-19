@@ -455,6 +455,62 @@
     </item>
     <item row="0" column="1" rowspan="3">
      <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="2">
+       <widget class="QCheckBox" name="fitImageCheckbox">
+        <property name="text">
+         <string>Fit Image</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="6">
+       <widget class="ImageViewer" name="largeImage">
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAsNeeded</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QAbstractScrollArea::AdjustToContents</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="AspectRatioPixmapLabel" name="pixmap">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>617</width>
+           <height>684</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QPushButton" name="zoomInButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Zoom In</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="imageList">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>1</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+       </widget>
+      </item>
       <item row="0" column="0">
        <widget class="QLabel" name="label">
         <property name="sizePolicy">
@@ -468,46 +524,13 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
-       <widget class="QComboBox" name="imageList"/>
-      </item>
-      <item row="0" column="2">
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::MinimumExpanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item row="1" column="0" colspan="3">
-       <widget class="AspectRatioPixmapLabel" name="largeImage">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-          <horstretch>100</horstretch>
-          <verstretch>100</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>13</pointsize>
-         </font>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="zoomOutButton">
+        <property name="enabled">
+         <bool>false</bool>
         </property>
         <property name="text">
-         <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap resource="../resources/resources.qrc">:/noimage.png</pixmap>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <string>Zoom Out</string>
         </property>
        </widget>
       </item>
@@ -716,9 +739,21 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>ImageViewer</class>
+   <extends>QScrollArea</extends>
+   <header location="global">src/imageviewer.h</header>
+   <container>1</container>
+   <slots>
+    <slot>fitToWindow()</slot>
+    <slot>zoomIn()</slot>
+    <slot>zoomOut()</slot>
+   </slots>
+  </customwidget>
+  <customwidget>
    <class>AspectRatioPixmapLabel</class>
-   <extends>QLabel</extends>
+   <extends>QWidget</extends>
    <header location="global">src/AspectRatioPixmapLabel.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
@@ -732,12 +767,60 @@
    <slot>loadSelectedImage(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>824</x>
-     <y>48</y>
+     <x>764</x>
+     <y>50</y>
     </hint>
     <hint type="destinationlabel">
      <x>1347</x>
      <y>13</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fitImageCheckbox</sender>
+   <signal>stateChanged(int)</signal>
+   <receiver>largeImage</receiver>
+   <slot>fitToWindow()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>819</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>831</x>
+     <y>309</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zoomInButton</sender>
+   <signal>clicked()</signal>
+   <receiver>largeImage</receiver>
+   <slot>zoomIn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>899</x>
+     <y>52</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>857</x>
+     <y>294</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zoomOutButton</sender>
+   <signal>clicked()</signal>
+   <receiver>largeImage</receiver>
+   <slot>zoomOut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1012</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>967</x>
+     <y>359</y>
     </hint>
    </hints>
   </connection>

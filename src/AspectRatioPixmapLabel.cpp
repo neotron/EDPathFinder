@@ -16,23 +16,43 @@
 
 #include "AspectRatioPixmapLabel.h"
 #include <QDebug>
+#include <QPainter>
+#include <QPaintEvent>
 
-AspectRatioPixmapLabel::AspectRatioPixmapLabel(QWidget *parent) : QLabel(parent) {
+AspectRatioPixmapLabel::AspectRatioPixmapLabel(QWidget *parent) : QWidget(parent) {
+    setBackgroundRole(QPalette::Dark);
 }
 
-void AspectRatioPixmapLabel::updatePixmap() {
-    if(!_actualPixmap.isNull()) {
-        QLabel::setPixmap(_actualPixmap.scaled(this->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+void AspectRatioPixmapLabel::paintEvent(QPaintEvent *event) {
+    QWidget::paintEvent(event);
+
+    if(_pixmap.isNull()) {
+        return;
     }
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QSize pixSize = _pixmap.size();
+    pixSize.scale(size(), Qt::KeepAspectRatio);
+
+    QPixmap scaledPix = _pixmap.scaled(pixSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPoint pt(0, (size().height()-pixSize.height())/2);
+    painter.drawPixmap(pt, scaledPix);
 }
 
 
-void AspectRatioPixmapLabel::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-    updatePixmap();
+QSize AspectRatioPixmapLabel::sizeHint() const {
+    return _pixmap.size();
 }
 
-void AspectRatioPixmapLabel::setScaledPixmap(const QPixmap &pixmap) {
-    _actualPixmap = pixmap;
-    updatePixmap();
+const QPixmap *AspectRatioPixmapLabel::pixmap() const {
+    return &_pixmap;
 }
+
+void AspectRatioPixmapLabel::setPixmap(const QPixmap &pixmap) {
+    _pixmap = pixmap;
+    repaint();
+}
+
+

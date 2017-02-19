@@ -1,4 +1,4 @@
-//
+////
 //  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
@@ -13,12 +13,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
 
 #include <QPixmap>
 #include <QStandardPaths>
 #include <QNetworkDiskCache>
 #include "ImageLoader.h"
 #include "AspectRatioPixmapLabel.h"
+#include "ImageViewer.h"
 
 ImageLoader::~ImageLoader() {
      if(_reply) {
@@ -48,14 +50,15 @@ void ImageLoader::onNetworkReplyReceived(QNetworkReply *reply) {
 }
 
 void ImageLoader::updateLabelWithPixmap(const QPixmap &pixmap) const {
-    if(_pixmapLabel) {
-        auto scalingLabel = dynamic_cast<AspectRatioPixmapLabel*>(_pixmapLabel);
+    if(_pixmapHolder) {
+        auto scalingLabel = dynamic_cast<ImageViewer*>(_pixmapHolder);
+        auto pixmapLabel = dynamic_cast<QLabel*>(_pixmapHolder);
         if(scalingLabel) {
-            scalingLabel->setScaledPixmap(pixmap);
-            scalingLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+            scalingLabel->setPixmap(pixmap);
+            //scalingLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
-        } else {
-            _pixmapLabel->setPixmap(pixmap);
+        } else if(pixmapLabel) {
+            pixmapLabel->setPixmap(pixmap);
         }
     }
 }
@@ -76,7 +79,7 @@ void ImageLoader::startDownload(const QUrl &url) {
     _reply = _networkManager->get(request);
 }
 
-ImageLoader::ImageLoader(QLabel *pixmapLabel) : _maxSize(QSize()), _networkManager(new QNetworkAccessManager(this)), _reply(nullptr), _pixmapLabel(pixmapLabel) {
+ImageLoader::ImageLoader(QWidget *pixmapHolder) : _maxSize(QSize()), _networkManager(new QNetworkAccessManager(this)), _reply(nullptr), _pixmapHolder(pixmapHolder) {
     connect(_networkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReplyReceived(QNetworkReply *)));
 
     auto cachePath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation).append("/imagecache");

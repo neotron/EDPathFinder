@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
+//  Copyright (C) 2016-2017  David Hedbor <neotron@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ class ImageLoader: public QObject {
 Q_OBJECT
 
 public:
-    ImageLoader(QLabel *pixmapLabel);
+    ImageLoader(QWidget *pixmapHolder);
     virtual ~ImageLoader();
     void startDownload(const QUrl &url);
 
@@ -40,7 +40,7 @@ private:
     QSize _maxSize;
     QNetworkAccessManager *_networkManager;
     QNetworkReply *_reply;
-    QLabel *_pixmapLabel;
+    QWidget *_pixmapHolder;
 
     void updateLabelWithPixmap(const QPixmap &pixmap) const;
 };

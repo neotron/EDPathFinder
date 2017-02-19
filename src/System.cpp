@@ -47,7 +47,6 @@ void SystemLoader::run() {
     auto distanceDoc = QJsonDocument::fromJson(distances.readAll());
     if(distanceDoc.isObject()){
         _bodyDistances = distanceDoc.object();
-        qDebug() << "loaded distances"<<_bodyDistances.size();
     }
     loadSystemFromTextFile();
     loadSettlements();
@@ -214,9 +213,6 @@ void SystemLoader::loadSettlements() {
 
         Settlement settlement(name, flags, threat, type);
         const auto distance = getDistance(system, planet);
-        if(distance) {
-            qDebug() <<system<<planet<<distance;
-        }
         if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement, distance);
         } else {

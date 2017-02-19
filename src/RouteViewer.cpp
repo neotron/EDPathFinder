@@ -126,8 +126,7 @@ void RouteViewer::updateSettlementInfo() {
     _iconLoader = new ImageLoader(_ui->settlementIcon);
     _iconLoader->startDownload(settlementType->imageNamed(SettlementType::IMAGE_BASE_ICON));
 
-    _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
-    _ui->largeImage->setAlignment(Qt::AlignCenter);
+   // _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
     delete _imageLoader;
     _imageLoader = nullptr;
 
@@ -173,7 +172,7 @@ void RouteViewer::loadOverviewImage(const QUrl &url) {
 void RouteViewer::loadSelectedImage(const QString &image) {
     if(image == MAP_LEGEND_TEXT) {
         QPixmap legend(":/legend.jpg");
-        _ui->largeImage->setScaledPixmap(legend);
+        _ui->largeImage->setPixmap(legend);
     } else {
         auto       indices        = _ui->tableView->selectionModel()->selectedIndexes();
         const auto row            = indices[0].row();

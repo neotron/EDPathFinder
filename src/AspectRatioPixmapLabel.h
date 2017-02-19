@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
+//  Copyright (C) 2016-2017  David Hedbor <neotron@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,23 +16,28 @@
 
 #pragma once
 
-#include <QLabel>
+#include <QWidget>
 #include <QPixmap>
 
-class AspectRatioPixmapLabel : public QLabel
+class AspectRatioPixmapLabel : public QWidget
 {
     Q_OBJECT
-public:
-    void updatePixmap();
-    AspectRatioPixmapLabel(QWidget *parent = 0);
 
-    virtual void setScaledPixmap(const QPixmap &pixmap);
+public:
+
+    virtual QSize sizeHint() const override ;
+
+
+public:
+    explicit AspectRatioPixmapLabel(QWidget *parent = 0);
+    const QPixmap* pixmap() const;
+
+public slots:
+    void setPixmap(const QPixmap&);
 
 protected:
-    virtual void resizeEvent(QResizeEvent *event);
-
+    virtual void paintEvent(QPaintEvent *) override;
 
 private:
-
-    QPixmap _actualPixmap;
+    QPixmap _pixmap;
 };
