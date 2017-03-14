@@ -39,7 +39,7 @@ void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &sys
     if(_pendingLookups.contains(systemName)) {
         return;
     }
-    _pendingLookups << systemName;
+    _pendingLookups << systemName.toLower();
     auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
     connect(executor, &QThread::finished, executor, &QObject::deleteLater);
     connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &SystemEntryCoordinateResolver::systemCoordinatesReceived);
@@ -52,12 +52,12 @@ void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &sys
 
 
 void SystemEntryCoordinateResolver::systemCoordinatesRequestFailed(const QString &systemName) {
-    _pendingLookups.remove(systemName);
+    _pendingLookups.remove(systemName.toLower());
     emit systemLookupFailed(systemName);
 }
 
 void SystemEntryCoordinateResolver::systemCoordinatesReceived(const System &system) {
-    auto systemName = QString(system.name());
+    auto systemName = QString(system.name().toLower());
     _pendingLookups.remove(systemName);
     _router->addSystem(system);
     _router->sortSystemList();

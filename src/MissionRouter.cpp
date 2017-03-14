@@ -38,6 +38,7 @@ void MissionRouter::copySelectedItem() {
 
 MissionRouter::~MissionRouter() {
     delete _ui;
+    delete _systemResolver;
 }
 
 void MissionRouter::refreshMissions() {

@@ -41,7 +41,7 @@ public:
          MissionScanner(QObject *parent);
 
     const QStringList commanders() const {
-        auto commanders = _commanderMissions.keys();
+        auto commanders = _commanderLastSystem.keys();
         commanders.sort();
         return commanders;
     }

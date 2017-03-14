@@ -61,6 +61,7 @@ void MissionScanner::handleEvent(const JournalFile &file, const Event &ev) {
             break;
         case EventTypeFSDJump:
         case EventTypeLocation:
+      //      qDebug() << file.commander() << " in "<<file.system();
             _commanderLastSystem[file.commander()] = file.system();
             break;
         default:
