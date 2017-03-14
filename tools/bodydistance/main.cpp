@@ -44,6 +44,7 @@ int main() {
         return -1;
     }
     int found = 0;
+    int numLines = 0;
     while(!file.atEnd()) {
         auto lineBytes = file.readLine();
         if(lineBytes.isEmpty()) {
@@ -76,8 +77,16 @@ int main() {
     int                  i = 0;
     QList<QFuture<void>> futures;
     QMap<QString,QMap<QString,int>> distances;
+    qint64 numReadBytes(0);
     while(!bodies.atEnd()) {
+
         auto linebytes = bodies.readLine();
+        numReadBytes += linebytes.size() + 1;
+        if(!(++numLines%10000)) {
+            fprintf(stderr, "\rLines parsed: %7d (%3d%%)", numLines, (int) (numReadBytes / (double)bodies.size() * 100));
+            fflush(stderr);
+        }
+
         if(linebytes.isEmpty()) {
             continue;
         }
@@ -117,6 +126,7 @@ int main() {
         rootObject.insert(system, systemObject);
     }
     outputDocument.setObject(rootObject);
+    fprintf(stderr, "\rLines parsed: %-7d            \n", numLines);
 
 
     std::cout << QString(outputDocument.toJson(QJsonDocument::Compact)).toStdString() << std::endl;
