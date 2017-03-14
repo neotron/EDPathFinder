@@ -221,7 +221,7 @@ void SystemLoader::loadSettlements() {
             _systems.push_back(systemObj);
             lookup[system] = &_systems.last();
 
-            if(!_router->getSystemByName(system)) {
+            if(!_router->findSystemByName(system)) {
                 _router->addSystem(systemObj);
             }
         }

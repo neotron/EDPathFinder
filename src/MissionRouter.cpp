@@ -1,29 +1,39 @@
 #include <QListView>
 #include <QCompleter>
 #include "MissionRouter.h"
-#include "ui_MissionRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
 
 MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
         : QMainWindow(parent), _ui(new Ui::MissionRouter), _scanner(this), _router(router), _systems(systems),
-          _currentModel(nullptr), _pendingLookups(), _routingPending(false), _customStops() {
-
+          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr) {
     _ui->setupUi(this);
     refreshMissions();
     auto table = _ui->tableView;
     table->setSelectionBehavior(QTableView::SelectRows);
     table->setSelectionMode(QTableView::SingleSelection);
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
-    QCompleter *completer = new QCompleter(_router, this);
-    completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    QListView *popup = (QListView *) completer->popup();
-    popup->setBatchSize(10);
-    popup->setLayoutMode(QListView::Batched);
-    connect(completer, SIGNAL(activated(
-                                      const QString &)), this, SLOT(addStop()));
-    _ui->customSystem->setCompleter(completer);
+    _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->customSystem);
+
+    connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
+    connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
+    connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
+}
+
+void MissionRouter::copySelectedItem() {
+    auto routeModel = dynamic_cast<RouteTableModel *>(_ui->tableView->model());
+    if(!routeModel) {
+        return;
+    }
+    auto row   = static_cast<size_t>(_ui->tableView->selectionModel()->currentIndex().row());
+    auto route = routeModel->result().route();
+    if(row >= route.size()) {
+        return;
+    }
+    auto name = route[row][0];
+    QApplication::clipboard()->setText(name);
+    _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
 }
 
 MissionRouter::~MissionRouter() {
@@ -71,6 +81,8 @@ void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
     QHeaderView *horizontalHeader = table->horizontalHeader();
     horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     horizontalHeader->setStretchLastSection(true);
+    connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,SLOT(copySelectedItem()));
+
 }
 
 void MissionRouter::optimizeRoute() {
@@ -83,10 +95,10 @@ void MissionRouter::optimizeRoute() {
     auto       systemName = _scanner.commanderSystem(cmdr);
     System     *originSystem(nullptr);
     if(!systemName.isEmpty()) {
-        originSystem = _router->getSystemByName(systemName);
+        originSystem = _router->findSystemByName(systemName);
         if(!originSystem) {
             // Need to fetch coordinates for origin.
-            downloadSystemCoordinates(systemName);
+            _systemResolver->resolve(systemName);
             _routingPending = true;
             return;
         }
@@ -98,9 +110,9 @@ void MissionRouter::optimizeRoute() {
             continue;
         }
         visitedSystems.insert(system._destination);
-        auto missionSystem = _router->getSystemByName(system._destination);
+        auto missionSystem = _router->findSystemByName(system._destination);
         if(!missionSystem) {
-            downloadSystemCoordinates(system._destination);
+            _systemResolver->resolve(system._destination);
             _routingPending = true;
             return;
         }
@@ -130,36 +142,26 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     refreshTableView(model);
 }
 
-void MissionRouter::downloadSystemCoordinates(const QString &systemName) {
-    if(_pendingLookups.contains(systemName)) {
-        return;
-    }
-    _pendingLookups << systemName;
-    _ui->statusbar->showMessage(QString("Fetching system coordinates from EDSM..."), 10000);
-    auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
-    connect(executor, &QThread::finished, executor, &QObject::deleteLater);
-    connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &MissionRouter::systemCoordinatesReceived);
-    connect(executor, &EDSMQueryExecutor::coordinateRequestFailed, this,
-            &MissionRouter::systemCoordinatesRequestFailed);
-    executor->start();
-}
-
-
-void MissionRouter::systemCoordinatesRequestFailed(const QString &systemName) {
+void MissionRouter::onSystemCoordinatesRequestFailed(const QString &systemName) {
     showMessage(QString("Coordinate lookup failed for %1").arg(systemName));
-    _pendingLookups.remove(systemName);
     _routingPending = false;
+    _ui->centralwidget->setEnabled(_systemResolver->isComplete());
 }
 
-void MissionRouter::systemCoordinatesReceived(const System &system) {
-    auto systemName = QString(system.name());
-    _pendingLookups.remove(systemName);
-    _router->addSystem(system);
-    _router->sortSystemList();
-    showMessage(QString("Found coordinates for system: %1").arg(systemName), 4000);
-    if(_routingPending && !_pendingLookups.size()) {
-        _routingPending = false;
-        optimizeRoute();
+void MissionRouter::onSystemCoordinatesReceived(const System &system) {
+    showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
+    if(!_routingPending) {
+        _customStops << system.name();
+        updateMissionTable();
+    }
+    if(_systemResolver->isComplete()) {
+        _ui->centralwidget->setEnabled(true);
+
+        if(_routingPending) {
+            _routingPending = false;
+            optimizeRoute();
+        }
+        _ui->customSystem->setText("");
     }
 }
 
@@ -168,18 +170,18 @@ void MissionRouter::showMessage(const QString &message, int timeout) {
     _ui->statusbar->showMessage(message, timeout);
 }
 
-void MissionRouter::addStop() {
-    const QString system = _ui->customSystem->text();
-    if(!system.isEmpty()) {
-        _customStops << system;
-        updateMissionTable();
-    }
-}
-
 void MissionRouter::clearCustom() {
     _customStops.clear();
     updateMissionTable();
 }
+
+void MissionRouter::onSystemLookupInitiated(const QString &system) {
+    showMessage(QString("Looking up coordinates for system: %1").arg(system), 4000);
+    _ui->centralwidget->setEnabled(false);
+}
+
+
+
 
 
 

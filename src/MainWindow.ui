@@ -648,7 +648,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QGroupBox" name="groupBox_7">
+     <widget class="QGroupBox" name="commanderFilterGroup">
       <property name="title">
        <string>Recently scanned settlements</string>
       </property>

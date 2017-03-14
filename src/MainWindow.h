@@ -21,6 +21,7 @@
 #include <deps/EDJournalQT/src/JournalWatcher.h>
 #include "System.h"
 #include "CommanderInfo.h"
+#include "SystemEntryCoordinateResolver.h"
 
 class RouteResult;
 
@@ -40,7 +41,7 @@ public:
 
     static const QString journalDirectory();
 
-public slots:
+private slots:
     void systemsLoaded(const SystemList &systems);
 
     void createRoute();
@@ -49,11 +50,11 @@ public slots:
 
     void updateFilters();
 
-    void updateSystemCoordinates();
 
-    void systemCoordinatesReceived(const System &system);
+    void systemCoordinatesRequestFailed(const QString &systemName);
 
-    void systemCoordinatesRequestFailed();
+    void systemCoordinatesRequestInitiated(const QString &systemName);
+    void updateSystemCoordinateDisplay(const System &system) ;
 
     void handleEvent(const JournalFile &journal, const Event &event);
 
@@ -69,13 +70,10 @@ private:
 
     void loadCompressedData();
 
-    void downloadSystemCoordinates(const QString &systemName);
-
-    void showMessage(const QString &message, int timeout = 10000);
+    void showMessage(const QString &message, int timeout = 10000) const;
 
     void updateSliderParams(int size);
 
-    void updateSystemCoordinateDisplay(const System &system) const;
     const QString makeSettlementKey(const System &system, const Planet &planet, const Settlement &settlement) const;
 
     const QString makeSettlementKey(const QString &system, const QString &planet, const QString &settlement) const;
@@ -98,11 +96,11 @@ private:
     int32         _matchingSettlementCount;
     bool          _routingPending;
     AStarRouter   *_router;
-    QSet<QString> _pendingLookups;
 
     JournalWatcher *_journalWatcher;
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
     QMap<QString,CommanderInfo> _commanderInformation;
     bool _loading;
 
+    SystemEntryCoordinateResolver *_systemResolver;
 };

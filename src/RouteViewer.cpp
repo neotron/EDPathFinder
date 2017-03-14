@@ -34,8 +34,7 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWind
     horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     horizontalHeader->setStretchLastSection(true);
     setAttribute(Qt::WA_DeleteOnClose, true);
-    connect(table->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), this,
-            SLOT(copySelectedItem()));
+    connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(copySelectedItem()));
     table->selectRow(0);
 }
 
@@ -51,8 +50,8 @@ void RouteViewer::copySelectedItem() {
 
 
 void RouteViewer::updateSettlementInfo() {
-    auto       indices        = _ui->tableView->selectionModel()->selectedIndexes();
-    const auto row            = indices[0].row();
+    auto       index        = _ui->tableView->selectionModel()->currentIndex();
+    const auto row            = index.row();
     const auto settlementData = _routeModel->result().getSettlementAtIndex(row);
     const auto settlement     = settlementData->settlement();
     const auto settlementType = settlement.type();

@@ -129,7 +129,7 @@ public:
 
     AStarResult calculateRoute(const QString &begin, const QString &end, float jumprange);
 
-    System *getSystemByName(const QString &name) {
+    System *findSystemByName(const QString &name) {
         auto lowerName = name.toLower();
         return _systemLookup.contains(lowerName) ? _systemLookup[lowerName] : Q_NULLPTR;
     }

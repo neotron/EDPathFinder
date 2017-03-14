@@ -2,8 +2,10 @@
 #define CUSTOMROUTER_H
 
 #include <QMainWindow>
+#include <ui_MissionRouter.h>
 #include "MissionScanner.h"
 #include "MissionTableModel.h"
+#include "SystemEntryCoordinateResolver.h"
 
 namespace Ui {
     class MissionRouter;
@@ -26,10 +28,9 @@ public slots:
 
     void optimizeRoute();
 
-    void addStop();
-
     void clearCustom();
 
+    void addStop() { _systemResolver->resolve(_ui->customSystem->text());  }
 
 private:
     void refreshTableView(QAbstractItemModel *model) const;
@@ -39,20 +40,25 @@ private:
 
     void routeCalculated(const RouteResult &route);
 
-    void downloadSystemCoordinates(const QString &system);
+private slots:
+    void onSystemLookupInitiated(const QString &systemName);
 
-    void systemCoordinatesReceived(const System &system);
+    void onSystemCoordinatesReceived(const System &system);
 
-    void systemCoordinatesRequestFailed(const QString &);
+    void onSystemCoordinatesRequestFailed(const QString &systemName);
 
+    void copySelectedItem();
+
+private:
     Ui::MissionRouter *_ui;
     MissionScanner    _scanner;
     AStarRouter       *_router;
     const SystemList  &_systems;
     MissionTableModel *_currentModel;
-    QSet<QString>     _pendingLookups;
     bool _routingPending;
     QSet<QString>     _customStops;
+    SystemEntryCoordinateResolver *_systemResolver;
+
 };
 
 #endif // CUSTOMROUTER_H

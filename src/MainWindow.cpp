@@ -24,16 +24,21 @@
 #include "ui_MainWindow.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
-#include "EDSMQueryExecutor.h"
 #include "QCompressor.h"
 #include "MissionRouter.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false),
-                                          _router(new AStarRouter(this)), _pendingLookups(),
-                                          _journalWatcher(new JournalWatcher(this)), _settlementDates() {
+                                          _router(new AStarRouter(this)), _journalWatcher(new JournalWatcher(this)), _settlementDates(), _systemResolver(0) {
     _ui->setupUi(this);
     connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-    connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
+    _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->systemName);
+
+    connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
+    connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
+    connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
+
+
+    //connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
     cleanupCheckboxes();
     buildLookupMap();
     loadCompressedData();
@@ -48,6 +53,7 @@ MainWindow::~MainWindow() {
     delete _ui;
     delete _router;
     delete _journalWatcher;
+    delete _systemResolver;
 }
 
 void MainWindow::cleanupCheckboxes() {
@@ -95,18 +101,16 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 void MainWindow::createRoute() {
     if(_filteredSystems.size() > 0) {
         auto systemName   = _ui->systemName->text();
-        auto originSystem = _router->getSystemByName(systemName);
+        auto originSystem = _router->findSystemByName(systemName);
         if(!originSystem) {
             // Need to fetch coordinates for origin.
-            downloadSystemCoordinates(systemName);
+            _systemResolver->resolve(systemName);
             _routingPending = true;
             return;
         }
         auto routeSize = _ui->systemCountSlider->value();
         updateSystemCoordinateDisplay(*originSystem);
-        showMessage(
-                QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name()),
-                0);
+        showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name()),0);
         _ui->createRouteButton->setEnabled(false);
         TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
         // workerThread->setRouter(_router);
@@ -247,67 +251,28 @@ void MainWindow::updateFilters() {
                                                                                        .arg(_filteredSystems.size()));
 }
 
-void MainWindow::updateSystemCoordinates() {
-    const QString systemName(_ui->systemName->text());
-    if(!systemName.length()) {
-        return;
-    }
-    auto system = _router->getSystemByName(systemName);
-    if(!system) {
-        downloadSystemCoordinates(systemName);
-    } else {
-        updateSystemCoordinateDisplay(*system);
-    }
+void MainWindow::systemCoordinatesRequestInitiated(const QString &systemName) {
+    showMessage(QString("Looking up coordinates for system: %1").arg(systemName));
 }
 
-void MainWindow::downloadSystemCoordinates(const QString &systemName) {
-    if(_pendingLookups.contains(systemName)) {
-        return;
-    }
-    _pendingLookups << systemName;
-    _ui->statusBar->showMessage(QString("Fetching system coordinates from EDSM..."), 10000);
-    auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
-    connect(executor, &QThread::finished, executor, &QObject::deleteLater);
-    connect(executor, &EDSMQueryExecutor::coordinatesReceived, this, &MainWindow::systemCoordinatesReceived);
-    connect(executor, &EDSMQueryExecutor::coordinateRequestFailed, this, &MainWindow::systemCoordinatesRequestFailed);
-    executor->start();
-    _ui->x->setText("-");
-    _ui->y->setText("-");
-    _ui->z->setText("-");
-    _ui->systemName->setEnabled(false);
-    _ui->createRouteButton->setEnabled(false);
-}
-
-void MainWindow::systemCoordinatesRequestFailed() {
-    auto systemName = _ui->systemName->text();
+void MainWindow::systemCoordinatesRequestFailed(const QString &systemName) {
     showMessage(QString("Unknown origin system: %1").arg(systemName));
-    _pendingLookups.remove(systemName);
     _ui->systemName->setEnabled(true);
     _routingPending = false;
 }
 
-
-void MainWindow::systemCoordinatesReceived(const System &system) {
-    updateSystemCoordinateDisplay(system);
-    _ui->systemName->setEnabled(true);
-    auto systemName = QString(system.name());
-    _pendingLookups.remove(systemName);
-    _ui->systemName->setText(systemName);
-    _router->addSystem(system);
-    _router->sortSystemList();
-    showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
-    if(_routingPending) {
-        _routingPending = false;
-        createRoute();
-    }
-}
-
-void MainWindow::updateSystemCoordinateDisplay(const System &system) const {
+void MainWindow::updateSystemCoordinateDisplay(const System &system) {
     _ui->x->setText(QString::number(system.x()));
     _ui->y->setText(QString::number(system.y()));
     _ui->z->setText(QString::number(system.z()));
     _ui->createRouteButton->setEnabled(!_routingPending);
     _ui->systemName->setText(system.name());
+    showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
+
+    if(_routingPending) {
+        _routingPending = false;
+        createRoute();
+    }
 }
 
 void MainWindow::loadCompressedData() {
@@ -322,12 +287,8 @@ void MainWindow::loadCompressedData() {
     connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, SIGNAL(progress(int)), this, SLOT(systemLoadProgress(int)));
     connect(loader, SIGNAL(sortingSystems()), this, SLOT(systemSortingProgress()));
-    connect(loader, SIGNAL(systemsLoaded(
-                                   const SystemList &)), this, SLOT(systemsLoaded(
-                                                                            const SystemList &)));
-    connect(compressor, SIGNAL(complete(
-                                       const QByteArray &)), loader, SLOT(dataDecompressed(
-                                                                                  const QByteArray &)));
+    connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
+    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
 
     compressor->start();
 }
@@ -339,16 +300,6 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     updateSliderParams(_systems.size());
     updateFilters();
     _ui->centralWidget->setEnabled(true);
-
-    QCompleter *completer = new QCompleter(_router, this);
-    completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
-    completer->setCaseSensitivity(Qt::CaseInsensitive);
-    QListView *popup = (QListView *) completer->popup();
-    popup->setBatchSize(10);
-    popup->setLayoutMode(QListView::Batched);
-    connect(completer, SIGNAL(activated(
-                                      const QString &)), this, SLOT(updateSystemCoordinates()));
-    _ui->systemName->setCompleter(completer);
 
     // Start monitoring.
     auto newerThanDate = QDateTime::currentDateTime()
@@ -369,7 +320,7 @@ const QString MainWindow::journalDirectory() {
     return journalPath;
 }
 
-void MainWindow::showMessage(const QString &message, int timeout) {
+void MainWindow::showMessage(const QString &message, int timeout) const {
     _ui->statusBar->showMessage(message, timeout);
 }
 
@@ -478,13 +429,18 @@ void MainWindow::updateCommanderAndSystem() {
             name = commanderName;
         }
     }
-    if(_ui->filterCommander->currentText() != name) {
-        _ui->filterCommander->setCurrentText(name);
-        updateFilters();
-    }
-    if(_ui->systemName->text() != info._system) {
-        _ui->systemName->setText(info._system);
-        updateSystemCoordinates();
+    if(name.isEmpty()) {
+        _ui->commanderFilterGroup->setEnabled(false);
+    } else {
+        _ui->commanderFilterGroup->setEnabled(true);
+        if(_ui->filterCommander->currentText() != name) {
+            _ui->filterCommander->setCurrentText(name);
+            updateFilters();
+        }
+        if(_ui->systemName->text() != info._system) {
+            _ui->systemName->setText(info._system);
+            _systemResolver->resolve(info._system);
+        }
     }
 }
 
@@ -492,10 +448,12 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
     if(_loading) {
         return;
     }
+    _ui->commanderFilterGroup->setEnabled(true);
+
     CommanderInfo info = _commanderInformation[commander];
     if(_ui->systemName->text() != info._system) {
         _ui->systemName->setText(info._system);
-        updateSystemCoordinates();
+        _systemResolver->resolve(info._system);
     }
 }
 
@@ -503,3 +461,6 @@ void MainWindow::openMissionTool() {
     auto tool = new MissionRouter(this, _router, _systems);
     tool->show();
 }
+
+
+

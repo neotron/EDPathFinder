@@ -49,8 +49,8 @@ std::vector<std::pair<Node *, float>> &AStarSystemNode::getChildren() {
 
 
 AStarResult AStarRouter::calculateRoute(const QString &begin, const QString &end, float jumprange) {
-    System *beginSys = getSystemByName(begin);
-    System *endSys   = getSystemByName(end);
+    System *beginSys = findSystemByName(begin);
+    System *endSys   = findSystemByName(end);
     if(beginSys && endSys) {
         AStarCalculator calculator(_systems, *beginSys, *endSys, jumprange);
         return calculator.solve();

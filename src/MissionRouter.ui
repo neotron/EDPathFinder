@@ -226,38 +226,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>customSystem</sender>
-   <signal>editingFinished()</signal>
-   <receiver>MissionRouter</receiver>
-   <slot>addStop()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>249</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>515</x>
-     <y>13</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>customSystem</sender>
-   <signal>returnPressed()</signal>
-   <receiver>MissionRouter</receiver>
-   <slot>addStop()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>148</x>
-     <y>364</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>6</x>
-     <y>386</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pushButton_2</sender>
    <signal>clicked()</signal>
    <receiver>MissionRouter</receiver>
