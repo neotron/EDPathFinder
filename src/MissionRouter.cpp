@@ -87,7 +87,7 @@ void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
 }
 
 void MissionRouter::optimizeRoute() {
-    if(!_currentModel || !_customStops.size()) {
+    if(!(_currentModel || _customStops.size())) {
         return;
     }
     _ui->optimizeButton->setEnabled(false);
