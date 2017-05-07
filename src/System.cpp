@@ -45,10 +45,11 @@ void SystemLoader::run() {
         return;
     }
     auto distanceDoc = QJsonDocument::fromJson(distances.readAll());
-    if(distanceDoc.isObject()){
+    if(distanceDoc.isObject()) {
         _bodyDistances = distanceDoc.object();
     }
     loadSystemFromTextFile();
+    loadValueSystemFromTextFile();
     loadSettlements();
     emit sortingSystems();
     _router->sortSystemList();
@@ -57,27 +58,63 @@ void SystemLoader::run() {
 
 
 void SystemLoader::loadSystemFromTextFile() {
-    auto           start = QDateTime::currentDateTimeUtc();
-    QStringList    lines(QString(_bytes).split("\n"));
-    int            i     = 0;
+    auto start = QDateTime::currentDateTimeUtc();
+    QStringList lines(QString(_bytes).split("\n"));
+    int i = 0;
     for(const auto &qline: lines) {
         QStringList line = qline.split("\t");
         if(line.size() != 4) {
             continue;
         }
-        auto it   = line.begin();
+        auto it = line.begin();
         auto name = READ_STR;
-        auto x    = READ_FLOAT;
-        auto y    = READ_FLOAT;
-        auto z    = READ_FLOAT;
+        auto x = READ_FLOAT;
+        auto y = READ_FLOAT;
+        auto z = READ_FLOAT;
         _router->addSystem(System(name, x, y, z));
         if(!(i++ % 100)) {
-            emit progress((int) (i / (float) lines.size() * 100));
+            emit progress((int) (i / (float) lines.size() * 50));
+        }
+    }
+    emit progress(50);
+}
+
+
+void SystemLoader::loadValueSystemFromTextFile() {
+    auto start = QDateTime::currentDateTimeUtc();
+    QStringList lines(QString(_valueBytes).split("\n"));
+    int i = 0;
+    for(const auto &qline: lines) {
+        QStringList line = qline.split("\t");
+        if(line.size() != 9) {
+            continue;
+        }
+        auto it = line.begin();
+        auto name = READ_STR;
+        auto x = READ_FLOAT;
+        auto y = READ_FLOAT;
+        auto z = READ_FLOAT;
+
+        int8 flags = ValuableBodyFlagsNone;
+
+        if(READ_BOOL) { flags |= ValuableBodyFlagsEW; }
+        if(READ_BOOL) { flags |= ValuableBodyFlagsWW; }
+        if(READ_BOOL) { flags |= ValuableBodyFlagsWT; }
+        if(READ_BOOL) { flags |= ValuableBodyFlagsAW; }
+        if(READ_BOOL) { flags |= ValuableBodyFlagsTF; }
+
+        System *current = _router->findSystemByName(name);
+        if(current) {
+            current->setValueFlags(flags);
+        } else {
+            _router->addSystem(System(name, x, y, z, flags));
+        }
+        if(!(i++ % 100)) {
+            emit progress(50 + (int) (i / (float) lines.size() * 50));
         }
     }
     emit progress(100);
 }
-
 
 void SystemLoader::loadSettlementTypes() {
     QFile systemData(":/basetypes.csv");
@@ -92,23 +129,23 @@ void SystemLoader::loadSettlementTypes() {
         if(line.size() < SETTLEMENT_TYPE_FIELD_COUNT) {
             continue;
         }
-        auto           it      = line.begin();
-        auto           sizeInt = READ_INT;
+        auto it = line.begin();
+        auto sizeInt = READ_INT;
         SettlementSize size;
         switch(sizeInt) {
-            case 3:
-                size = SettlementSizeLarge;
-                break;
-            case 2:
-                size = SettlementSizeMedium;
-                break;
-            default:
-            case 1:
-                size = SettlementSizeSmall;
-                break;
+        case 3:
+            size = SettlementSizeLarge;
+            break;
+        case 2:
+            size = SettlementSizeMedium;
+            break;
+        default:
+        case 1:
+            size = SettlementSizeSmall;
+            break;
         }
-        auto        layout      = READ_STR;
-        auto        securityStr = READ_STR;
+        auto layout = READ_STR;
+        auto securityStr = READ_STR;
         ThreatLevel security;
         if(securityStr == "High") {
             security = ThreatLeveLHigh;
@@ -123,8 +160,8 @@ void SystemLoader::loadSettlementTypes() {
         SKIP_FIELD; // Variation
         SKIP_FIELD; // Variation continued
         SKIP_FIELD; // Type
-        auto economy        = READ_STR; // Military etc
-        auto iconUrl        = READ_URL;
+        auto economy = READ_STR; // Military etc
+        auto iconUrl = READ_URL;
 
         READ_URL_JPEG(showUrl);
         READ_URL_JPEG(coreFullUrl);
@@ -170,14 +207,14 @@ void SystemLoader::loadSettlements() {
         auto it = line.begin();
 
         auto typeStr = READ_STR; // Settlement type
-        auto type    = _settlementTypes[typeStr];
+        auto type = _settlementTypes[typeStr];
         if(!type) {
             qDebug() << "Failed to load settlement type for" << typeStr << " - skipping.";
             continue;
         }
         auto system = READ_STR; // System name
         auto planet = READ_STR; // Planet Name
-        auto name   = READ_STR; // Settlement name
+        auto name = READ_STR; // Settlement name
         SKIP_FIELD; // Map link that's just "map" in file
         if(READ_BOOL) { flags |= SettlementFlagsAnarchy; } // isAnarchy
 
@@ -216,8 +253,8 @@ void SystemLoader::loadSettlements() {
         if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement, distance);
         } else {
-            Planet     planetObj(planet, distance, settlement);
-            System     systemObj(system, planetObj, x, y, z);
+            Planet planetObj(planet, distance, settlement);
+            System systemObj(system, planetObj, x, y, z);
             _systems.push_back(systemObj);
             lookup[system] = &_systems.last();
 
@@ -230,7 +267,16 @@ void SystemLoader::loadSettlements() {
 
 void SystemLoader::dataDecompressed(const QByteArray &bytes) {
     _bytes = bytes;
-    start();
+    if(!_bytes.isEmpty() && !_valueBytes.isEmpty()) {
+        start();
+    }
+}
+
+void SystemLoader::valuableSystemDataDecompressed(const QByteArray &bytes) {
+    _valueBytes = bytes;
+    if(!_bytes.isEmpty() && !_valueBytes.isEmpty()) {
+        start();
+    }
 }
 
 
@@ -242,7 +288,8 @@ QString System::formatDistance(int64 dist) {
     }
 }
 
-System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) { }
+System::System(AStarSystemNode *system)
+        : _name(system->name()), _position(system->position()) {}
 
 void System::addSettlement(const QString &planetName, const Settlement &settlement, int distance) {
     for(auto planet: _planets) {
@@ -254,17 +301,18 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
     _planets.push_back(Planet(planetName, distance, settlement));
 }
 
-System::~System() { }
+System::~System() {}
 
 
-System::System(const QJsonObject &jsonObject) : _name(jsonObject["name"].toString()), _planets(), _position() {
+System::System(const QJsonObject &jsonObject)
+        : _name(jsonObject["name"].toString()), _planets(), _position(), _valueFlags(ValuableBodyFlagsNone) {
     auto coords = jsonObject["coords"].toObject();
     _position.setX((float) coords["x"].toDouble());
     _position.setY((float) coords["y"].toDouble());
     _position.setZ((float) coords["z"].toDouble());
 }
 
-SystemLoader::~SystemLoader() { }
+SystemLoader::~SystemLoader() {}
 
 int SystemLoader::getDistance(const QString &system, const QString &planet) {
     auto systemValue = _bodyDistances.value(system);
@@ -272,10 +320,48 @@ int SystemLoader::getDistance(const QString &system, const QString &planet) {
 }
 
 
-const QString SettlementType::IMAGE_BASE_ICON        = "Icon";
-const QString SettlementType::IMAGE_SATELLITE   = "Satellite Map";
+const QString SettlementType::IMAGE_BASE_ICON = "Icon";
+const QString SettlementType::IMAGE_SATELLITE = "Satellite Map";
 const QString SettlementType::IMAGE_COREFULLMAP = "Core Full Map";
-const QString SettlementType::IMAGE_OVERVIEW    = "Overview Map";
-const QString SettlementType::IMAGE_PATHMAP     = "Datapoint Path Map";
-const QString SettlementType::IMAGE_OVERVIEW3D  = "3D Overview";
-const QString SettlementType::IMAGE_CORE        = "Core Map";
+const QString SettlementType::IMAGE_OVERVIEW = "Overview Map";
+const QString SettlementType::IMAGE_PATHMAP = "Datapoint Path Map";
+const QString SettlementType::IMAGE_OVERVIEW3D = "3D Overview";
+const QString SettlementType::IMAGE_CORE = "Core Map";
+
+const QString System::formatPlanets() const {
+    QStringList planets;
+    if( (_valueFlags & ValuableBodyFlagsEW) == ValuableBodyFlagsEW) {
+        planets.append("Earth-like World");
+    }
+    if( (_valueFlags & ValuableBodyFlagsWT) == ValuableBodyFlagsWT) {
+        planets.append("Water World (TF)");
+    } else if( (_valueFlags & ValuableBodyFlagsWW) == ValuableBodyFlagsWW) {
+        planets.append("Water World");
+    }
+    if( (_valueFlags & ValuableBodyFlagsAW) == ValuableBodyFlagsAW) {
+        planets.append("Ammonia World");
+    }
+    if( (_valueFlags & ValuableBodyFlagsTF) == ValuableBodyFlagsTF) {
+        planets.append("MC/HMC Terraformable");
+    }
+    return planets.join(", ");
+}
+
+int32 System::estimatedValue() const {
+    int32 value = 0;
+    if( (_valueFlags & ValuableBodyFlagsEW) == ValuableBodyFlagsEW) {
+        value += 627;
+    }
+    if( (_valueFlags & ValuableBodyFlagsWT) == ValuableBodyFlagsWT) {
+        value += 695;
+    } else if( (_valueFlags & ValuableBodyFlagsWW) == ValuableBodyFlagsWW) {
+        value += 412;
+    }
+    if( (_valueFlags & ValuableBodyFlagsAW) == ValuableBodyFlagsAW) {
+        value += 320;
+    }
+    if( (_valueFlags & ValuableBodyFlagsTF) == ValuableBodyFlagsTF) {
+        value += 412;
+    }
+    return value;
+}

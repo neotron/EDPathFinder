@@ -888,13 +888,6 @@
        <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="text">
-         <string>Custom Routing Tool</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -936,6 +929,14 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionMission_Custom_Routign"/>
+    <addaction name="actionValuable_Exploration_Router"/>
+   </widget>
+   <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
    <property name="sizeGripEnabled">
@@ -958,6 +959,16 @@
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
+   </property>
+  </action>
+  <action name="actionMission_Custom_Routign">
+   <property name="text">
+    <string>Mission and Custom Router</string>
+   </property>
+  </action>
+  <action name="actionValuable_Exploration_Router">
+   <property name="text">
+    <string>Valuable Exploration Router</string>
    </property>
   </action>
  </widget>
@@ -1004,18 +1015,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
+   <sender>actionMission_Custom_Routign</sender>
+   <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openMissionTool()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>102</x>
-     <y>678</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1344</x>
-     <y>107</y>
+     <x>260</x>
+     <y>361</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionValuable_Exploration_Router</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openExplorationTool()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>361</y>
     </hint>
    </hints>
   </connection>
@@ -1023,5 +1050,6 @@
  <slots>
   <slot>updateFilters()</slot>
   <slot>openMissionTool()</slot>
+  <slot>openExplorationTool()</slot>
  </slots>
 </ui>

@@ -21,114 +21,62 @@
 #include <QCompleter>
 #include <QListView>
 #include "MainWindow.h"
-#include "ui_MainWindow.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
 #include "QCompressor.h"
 #include "MissionRouter.h"
+#include "ValueRouter.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), _ui(new Ui::MainWindow), _routingPending(false),
-                                          _router(new AStarRouter(this)), _journalWatcher(new JournalWatcher(this)), _settlementDates(), _systemResolver(0) {
-    _ui->setupUi(this);
-    connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-    _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->systemName);
-
-    connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
-    connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
-    connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
-
-
-    //connect(_ui->systemName, SIGNAL(editingFinished()), this, SLOT(updateSystemCoordinates()));
-    cleanupCheckboxes();
+MainWindow::MainWindow(QWidget *parent)
+        : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
+          _journalWatcher(new JournalWatcher(this)), _settlementDates() {
     buildLookupMap();
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
+    _ui->menuBar->setEnabled(false);
+    connect(_journalWatcher, SIGNAL(onEvent(
+                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
+                                                                                                     const JournalFile &, const Event &)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
     _ui->distanceSlider->setMaximum(10000);
     _ui->distanceSlider->setValue(10000);
 }
 
 MainWindow::~MainWindow() {
-    delete _ui;
     delete _router;
     delete _journalWatcher;
     delete _systemResolver;
 }
 
-void MainWindow::cleanupCheckboxes() {
-    for(auto checkbox: findChildren<QCheckBox *>()) {
-        connect(checkbox, SIGNAL(stateChanged(int)), this, SLOT(updateFilters()));
-    }
-
-    for(auto radio: findChildren<QRadioButton *>()) {
-        connect(radio, SIGNAL(toggled(bool)), this, SLOT(updateFilters()));
-    }
-
-    connect(_ui->filterCommander, SIGNAL(activated(const QString &)), this, SLOT(updateFilters()));
-}
-
 void MainWindow::buildLookupMap() {
-    _flagsLookup["cdt"]     = SettlementFlagsCoreDataTerminal;
-    _flagsLookup["jump"]    = SettlementFlagsJumpClimbRequired;
-    _flagsLookup["csd"]     = SettlementFlagsClassifiedScanDatabanks;
-    _flagsLookup["csf"]     = SettlementFlagsClassifiedScanFragment;
-    _flagsLookup["cif"]     = SettlementFlagsCrackedIndustrialFirmware;
-    _flagsLookup["dsd"]     = SettlementFlagsDivergentScanData;
-    _flagsLookup["mcf"]     = SettlementFlagsModifiedConsumerFirmware;
-    _flagsLookup["mef"]     = SettlementFlagsModifiedEmbeddedFirmware;
-    _flagsLookup["osk"]     = SettlementFlagsOpenSymmetricKeys;
-    _flagsLookup["sfp"]     = SettlementFlagsSecurityFirmwarePatch;
-    _flagsLookup["slf"]     = SettlementFlagsSpecializedLegacyFirmware;
-    _flagsLookup["tec"]     = SettlementFlagsTaggedEncryptionCodes;
-    _flagsLookup["uef"]     = SettlementFlagsUnusualEncryptedFiles;
+    _flagsLookup["cdt"] = SettlementFlagsCoreDataTerminal;
+    _flagsLookup["jump"] = SettlementFlagsJumpClimbRequired;
+    _flagsLookup["csd"] = SettlementFlagsClassifiedScanDatabanks;
+    _flagsLookup["csf"] = SettlementFlagsClassifiedScanFragment;
+    _flagsLookup["cif"] = SettlementFlagsCrackedIndustrialFirmware;
+    _flagsLookup["dsd"] = SettlementFlagsDivergentScanData;
+    _flagsLookup["mcf"] = SettlementFlagsModifiedConsumerFirmware;
+    _flagsLookup["mef"] = SettlementFlagsModifiedEmbeddedFirmware;
+    _flagsLookup["osk"] = SettlementFlagsOpenSymmetricKeys;
+    _flagsLookup["sfp"] = SettlementFlagsSecurityFirmwarePatch;
+    _flagsLookup["slf"] = SettlementFlagsSpecializedLegacyFirmware;
+    _flagsLookup["tec"] = SettlementFlagsTaggedEncryptionCodes;
+    _flagsLookup["uef"] = SettlementFlagsUnusualEncryptedFiles;
     _flagsLookup["anarchy"] = SettlementFlagsAnarchy;
 }
 
 void MainWindow::routeCalculated(const RouteResult &route) {
-    _ui->centralWidget->setEnabled(true);
-    if(!route.isValid()) {
-        _ui->statusBar->showMessage("No solution found to the given route.", 10000);
-        return;
-    }
-    _ui->statusBar->showMessage("Route calculation completed.", 10000);
-    _ui->createRouteButton->setEnabled(true);
-
+    AbstractBaseWindow::routeCalculated(route);
     RouteViewer *viewer = new RouteViewer(route);
     viewer->show();
 }
 
-void MainWindow::createRoute() {
-    if(_filteredSystems.size() > 0) {
-        auto systemName   = _ui->systemName->text();
-        auto originSystem = _router->findSystemByName(systemName);
-        if(!originSystem) {
-            // Need to fetch coordinates for origin.
-            _systemResolver->resolve(systemName);
-            _routingPending = true;
-            return;
-        }
-        auto routeSize = _ui->systemCountSlider->value();
-        updateSystemCoordinateDisplay(*originSystem);
-        showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name()),0);
-        _ui->createRouteButton->setEnabled(false);
-        TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
-        // workerThread->setRouter(_router);
-        connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
-        connect(workerThread, &TSPWorker::taskCompleted, this, &MainWindow::routeCalculated);
-        workerThread->start();
-        _ui->centralWidget->setEnabled(false);
-    } else {
-        _ui->statusBar->showMessage("No settlements found that matches your filters.", 10000);
-    }
-}
-
 void MainWindow::updateFilters() {
-    int32              settlementFlags = 0;
-    QList<QCheckBox *> checkboxes      = findChildren<QCheckBox *>();
+    int32 settlementFlags = 0;
+    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
 
-    int maxDistance                  = distanceSliderValue();
+    int maxDistance = distanceSliderValue();
     const auto distanceFilterChecked = _ui->distanceCheckbox->isChecked();
     _ui->distanceSlider->setEnabled(distanceFilterChecked);
     for(auto &checkbox : checkboxes) {
@@ -144,12 +92,12 @@ void MainWindow::updateFilters() {
         }
     }
 
-    auto commanders         = _settlementDates.keys();
+    auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
     if(commanders.size()) {
         commanders.sort();
         auto selectedCommander = _ui->filterCommander->currentText();
-        for(auto commanderName: commanders){
+        for(auto commanderName: commanders) {
             if(_ui->filterCommander->findText(commanderName) < 0) {
                 _ui->filterCommander->addItem(commanderName);
             }
@@ -193,10 +141,10 @@ void MainWindow::updateFilters() {
 
     int32 matches = 0;
     _filteredSystems.clear();
-    auto filteredDate         = QDateTime().currentDateTime().addDays(-14); // two weeks.
+    auto filteredDate = QDateTime().currentDateTime().addDays(-14); // two weeks.
 
-    for(const auto &system : _systems) {
-        PlanetList     matchingPlanets;
+    for(const auto &system : *_systems) {
+        PlanetList matchingPlanets;
         for(const auto &planet: system.planets()) {
             if(_ui->unknownDistance->isChecked() && !planet.distance()) {
                 continue;
@@ -205,8 +153,8 @@ void MainWindow::updateFilters() {
                 continue;
             }
             SettlementList matchingSettlements;
-            for(auto       settlement: planet.settlements()) {
-                auto      settlementKey = makeSettlementKey(system, planet, settlement);
+            for(auto settlement: planet.settlements()) {
+                auto settlementKey = makeSettlementKey(system, planet, settlement);
                 QDateTime scanDate;
                 if(visitedSettlements.contains(settlementKey)) {
                     scanDate = visitedSettlements[settlementKey];
@@ -243,7 +191,7 @@ void MainWindow::updateFilters() {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.position()));
         }
     }
-    auto           numSystems = (int) _filteredSystems.size();
+    auto numSystems = (int) _filteredSystems.size();
     updateSliderParams(numSystems);
 
     _matchingSettlementCount = matches;
@@ -251,59 +199,43 @@ void MainWindow::updateFilters() {
                                                                                        .arg(_filteredSystems.size()));
 }
 
-void MainWindow::systemCoordinatesRequestInitiated(const QString &systemName) {
-    showMessage(QString("Looking up coordinates for system: %1").arg(systemName));
-}
-
-void MainWindow::systemCoordinatesRequestFailed(const QString &systemName) {
-    showMessage(QString("Unknown origin system: %1").arg(systemName));
-    _ui->systemName->setEnabled(true);
-    _routingPending = false;
-}
-
-void MainWindow::updateSystemCoordinateDisplay(const System &system) {
-    _ui->x->setText(QString::number(system.x()));
-    _ui->y->setText(QString::number(system.y()));
-    _ui->z->setText(QString::number(system.z()));
-    _ui->createRouteButton->setEnabled(!_routingPending);
-    _ui->systemName->setText(system.name());
-    showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
-
-    if(_routingPending) {
-        _routingPending = false;
-        createRoute();
-    }
-}
-
 void MainWindow::loadCompressedData() {
     showMessage("Loading known systems...", 0);
     QFile file(":/systems.txt.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
-    QByteArray   blob       = file.readAll();
-    auto         compressor = new QCompressor(blob);
-    SystemLoader *loader    = new SystemLoader(_router);
+    auto compressor = new QCompressor(file.readAll());
+
+    QFile file2(":/valuable-systems.csv.gz");
+    if(!file2.open(QIODevice::ReadOnly)) { return; }
+    auto compressor2 = new QCompressor(file2.readAll());
+
+
+    SystemLoader *loader = new SystemLoader(_router);
 
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
+    connect(compressor2, &QThread::finished, compressor2, &QObject::deleteLater);
     connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, SIGNAL(progress(int)), this, SLOT(systemLoadProgress(int)));
     connect(loader, SIGNAL(sortingSystems()), this, SLOT(systemSortingProgress()));
     connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
     connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
+    connect(compressor2, SIGNAL(complete(const QByteArray &)), loader, SLOT(valuableSystemDataDecompressed(const QByteArray &)));
 
     compressor->start();
+    compressor2->start();
 }
 
 void MainWindow::systemsLoaded(const SystemList &systems) {
-    _systems = std::move(systems);
+    _systems->clear();
+    _systems->append(systems);
     _ui->systemCountSlider->setMinimum(1);
     _ui->systemCountSlider->setSingleStep(1);
-    updateSliderParams(_systems.size());
+    updateSliderParams(_systems->size());
     updateFilters();
     _ui->centralWidget->setEnabled(true);
-
-    // Start monitoring.
-    auto newerThanDate = QDateTime::currentDateTime()
-            .addDays(-16); // Things changed in the last 16 days  - we need 14 days for expire.
+    _ui->menuBar->setEnabled(true);
+    // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
+    auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
     _loading = true;
     _journalWatcher->watchDirectory(journalDirectory(), newerThanDate);
     _loading = false;
@@ -320,22 +252,16 @@ const QString MainWindow::journalDirectory() {
     return journalPath;
 }
 
-void MainWindow::showMessage(const QString &message, int timeout) const {
-    _ui->statusBar->showMessage(message, timeout);
-}
-
 void MainWindow::updateSliderParams(int size) {
     auto max = qMin(100, size);
     _ui->systemCountSlider->setMaximum(max);
     _ui->systemCountSlider->setValue(max);
     _ui->systemCountLabel->setText(QString::number(max));
-
-
 }
 
 int MainWindow::distanceSliderValue() const {
     auto value = _ui->distanceSlider->value();
-    value = std::min(100+(int)(pow(2, log(value) * 2.5))/100, 85000);
+    value = std::min(100 + (int) (pow(2, log(value) * 2.5)) / 100, 85000);
     _ui->distanceLabel->setText(QString("%1 ls").arg(value));
     return value;
 }
@@ -343,47 +269,47 @@ int MainWindow::distanceSliderValue() const {
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
     //sqDebug() << "Got event"<<event.obj();
     switch(event.type()) {
-        case EventTypeDatalinkScan: {
-            auto settlementName = journal.settlement();
-            if(settlementName.isEmpty()) {
-                return;
-            }
-            if(settlementName.endsWith("+")) {
-                auto parts = settlementName.split(" ");
-                parts.removeLast();
-                settlementName = parts.join(" ");
-            }
-
-            auto settlementKey      = makeSettlementKey(journal.system(), journal.body(), settlementName);
-            auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
-            updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
-            if(settlementKey != shortSettlementKey) {
-                updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
-            }
-            updateFilters();
-            break;
+    case EventTypeDatalinkScan: {
+        auto settlementName = journal.settlement();
+        if(settlementName.isEmpty()) {
+            return;
         }
-        case EventTypeLocation:
-        case EventTypeFSDJump: {
-            CommanderInfo info;
-            if(_commanderInformation.contains(journal.commander())) {
-                info = _commanderInformation[journal.commander()];
-            }
-
-            if(event.timestamp() > info._lastEventDate) {
-                info._lastEventDate = event.timestamp();
-                info._system        = journal.system();
-                _commanderInformation[journal.commander()] = info;
-                if(_ui->filterCommander->findText(journal.commander()) < 0){
-                    _ui->filterCommander->addItem(journal.commander());
-                }
-                updateCommanderAndSystem();
-            }
-
-            break;
+        if(settlementName.endsWith("+")) {
+            auto parts = settlementName.split(" ");
+            parts.removeLast();
+            settlementName = parts.join(" ");
         }
-        default:
-            break; // Be quiet
+
+        auto settlementKey = makeSettlementKey(journal.system(), journal.body(), settlementName);
+        auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
+        updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
+        if(settlementKey != shortSettlementKey) {
+            updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
+        }
+        updateFilters();
+        break;
+    }
+    case EventTypeLocation:
+    case EventTypeFSDJump: {
+        CommanderInfo info;
+        if(_commanderInformation.contains(journal.commander())) {
+            info = _commanderInformation[journal.commander()];
+        }
+
+        if(event.timestamp() > info._lastEventDate) {
+            info._lastEventDate = event.timestamp();
+            info._system = journal.system();
+            _commanderInformation[journal.commander()] = info;
+            if(_ui->filterCommander->findText(journal.commander()) < 0) {
+                _ui->filterCommander->addItem(journal.commander());
+            }
+            updateCommanderAndSystem();
+        }
+
+        break;
+    }
+    default:
+        break; // Be quiet
     }
 }
 
@@ -458,9 +384,13 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
 }
 
 void MainWindow::openMissionTool() {
-    auto tool = new MissionRouter(this, _router, _systems);
+    auto tool = new MissionRouter(this, _router, *_systems);
     tool->show();
 }
 
+void MainWindow::openExplorationTool() {
+    auto tool = new ValueRouter(this, _router, _systems);
+    tool->show();
+}
 
 

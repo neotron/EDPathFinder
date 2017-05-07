@@ -79,14 +79,14 @@
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Add</string>
+          <string>Add New</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
-          <string>Clear</string>
+          <string>Clear All</string>
          </property>
         </widget>
        </item>

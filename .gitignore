@@ -155,7 +155,10 @@ CMakeLists.txt.user*
 /xcode
 /output
 *.dmg
-
-tools/jsonconverter/.build/*
+tools/*/Packages/
+tools/*/.build/*
 /tools/bodydistance/bodies.jsonl
 /tools/bodydistance/systems_populated.jsonl
+/tools/coordinate-mapper/valuable-bodies.jsonl
+.build/
+/tools/coordinate-mapper/systems.csv

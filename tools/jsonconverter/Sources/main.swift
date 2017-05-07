@@ -15,12 +15,14 @@ extension Coords: Unboxable {
 }
 struct System {
     let name: String
+    let typeName: String
     let coords: Coords
 }
 
 extension System: Unboxable {
     init(unboxer: Unboxer) throws {
         self.name = try unboxer.unbox(key: "name")
+        self.typeName = try unboxer.unbox(key: "type")
         self.coords = try unboxer.unbox(key: "coords")
     }
 }

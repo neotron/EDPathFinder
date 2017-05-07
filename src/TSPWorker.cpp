@@ -81,7 +81,7 @@ namespace operations_research {
     }
 
     void TSPWorker::run() {
-        System *startingSystem             = _origin;
+        System *startingSystem = _origin;
         if(!startingSystem) {
             startingSystem = &_systems[0];
         }
@@ -170,16 +170,21 @@ namespace operations_research {
 
 void RouteResult::addEntry(const System &system, int64 distance) {
     _totalDist += distance;
-    std::vector<QString> row(5);
+    int32 estimatedValue = system.estimatedValue();
+    _totalValue += estimatedValue;
+    std::vector<QString> row(6);
     row[0] = system.name();
     row[1] = System::formatDistance(distance);
     row[2] = System::formatDistance(_totalDist);
+    row[3] = system.formatPlanets();
+    row[4] = QString("%1k").arg(estimatedValue);
+    row[5] = QString("%1k").arg(_totalValue);
     _route.emplace_back(row);
 }
 
 void RouteResult::addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance) {
     _totalDist += distance;
-    std::vector<QString> row(5);
+    std::vector<QString> row(6);
     row[0] = system.name();
     row[1] = planet.name();
     row[2] = settlement.name();

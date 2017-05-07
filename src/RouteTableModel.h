@@ -23,6 +23,13 @@
 
 class RouteTableModel : public QAbstractTableModel {
 public:
+    enum ResultType {
+        ResultTypeSettlement,
+        ResultTypeSystemsOnly,
+        ResultTypeValuableSystems,
+    };
+
+
     RouteTableModel(QObject *parent, const RouteResult &result);
 
 
@@ -42,11 +49,11 @@ public:
     QString lastDistance(size_t row) const;
     QString totalDistance(size_t row) const;
 
-    void setSystemsOnly(bool systemsOnly) {
-        _systemsOnly = systemsOnly;
+    void setResultType(ResultType resultType) {
+        _resultType = resultType;
     }
 
 private:
     RouteResult _result;
-    bool _systemsOnly;
+    ResultType _resultType;
 };

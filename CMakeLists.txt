@@ -75,6 +75,17 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 add_executable(bodydistance tools/bodydistance/main.cpp src/System.cpp src/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
 add_custom_target(jsonconverter
-        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build
+        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build  -c release
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/jsonconverter/
         SOURCES tools/jsonconverter/sources/main.swift tools/jsonconverter/package.swift)
+
+
+add_custom_target(coordinate-mapper
+        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build  -c release
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/coordinate-mapper/
+        SOURCES tools/coordinate-mapper/sources/main.swift tools/coordinate-mapper/package.swift)
+
+add_custom_target(coordinate-mapper-debug
+        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/coordinate-mapper/
+        SOURCES tools/coordinate-mapper/sources/main.swift tools/coordinate-mapper/package.swift)

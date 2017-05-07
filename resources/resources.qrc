@@ -7,5 +7,6 @@
     <file>systems.txt.gz</file>
     <file>legend.jpg</file>
     <file>body_distances.json</file>
+    <file>valuable-systems.csv.gz</file>
 </qresource>
 </RCC>

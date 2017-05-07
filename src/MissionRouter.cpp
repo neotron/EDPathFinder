@@ -139,7 +139,7 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     _ui->statusbar->showMessage("Route calculation completed.", 10000);
     _ui->optimizeButton->setEnabled(true);
     RouteTableModel *model = new RouteTableModel(this, route);
-    model->setSystemsOnly(true);
+    model->setResultType(RouteTableModel::ResultTypeSystemsOnly);
     refreshTableView(model);
 }
 

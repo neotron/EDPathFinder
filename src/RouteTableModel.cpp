@@ -18,28 +18,29 @@
 #include "RouteTableModel.h"
 
 RouteTableModel::RouteTableModel(QObject *parent, const RouteResult &result)
-        : QAbstractTableModel(parent), _result(result), _systemsOnly(false) { }
+        : QAbstractTableModel(parent), _result(result), _resultType(ResultTypeSettlement) {}
 
 int RouteTableModel::rowCount(const QModelIndex &) const {
     return (int) _result.route().size();
 }
 
 int RouteTableModel::columnCount(const QModelIndex &) const {
-    return (int) _result.route()[0].size() - 2;
+    auto size = (int) _result.route()[0].size();
+    return _resultType == ResultTypeValuableSystems ? size : size - 3;
 }
 
 QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
-    auto col   = (size_t) index.column();
-    auto row   = (size_t) index.row();
+    auto col = (size_t) index.column();
+    auto row = (size_t) index.row();
     auto route = _result.route();
     if(row < route.size() && col < route[row].size()) {
         switch(role) {
-            case Qt::DisplayRole:
-                return route[row][col];
-            case Qt::TextAlignmentRole:
-                return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
-            default:
-                return QVariant();
+        case Qt::DisplayRole:
+            return route[row][col];
+        case Qt::TextAlignmentRole:
+            return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
+        default:
+            return QVariant();
         }
     }
     return QVariant();
@@ -49,14 +50,20 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
     if(role == Qt::DisplayRole) {
         if(orientation == Qt::Horizontal) {
             switch(section) {
-                case 0:
-                    return "System";
-                case 1:
-                    return _systemsOnly ? "Distance" : "Planet";
-                case 2:
-                    return _systemsOnly ? "Cumulative Distance" : "Settlement";
-                default:
-                    return "";
+            case 0:
+                return "System";
+            case 1:
+                return _resultType == ResultTypeSettlement ? "Planet" : "Distance";
+            case 2:
+                return _resultType == ResultTypeSettlement ? "Settlement" : "Cumulative Distance";
+            case 3:
+                return _resultType == ResultTypeValuableSystems ? "Planets" : "";
+            case 4:
+                return _resultType == ResultTypeValuableSystems ? "Est Value" : "";
+            case 5:
+                return _resultType == ResultTypeValuableSystems ? "Cumulative Value" : "";
+            default:
+                return "";
             }
         }
     }
@@ -73,5 +80,6 @@ QString RouteTableModel::totalDistance(size_t row) const {
     auto route = _result.route();
     return route[row][4];
 }
+
 
 

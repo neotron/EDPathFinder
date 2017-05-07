@@ -53,6 +53,9 @@ void RouteViewer::updateSettlementInfo() {
     auto       index        = _ui->tableView->selectionModel()->currentIndex();
     const auto row            = index.row();
     const auto settlementData = _routeModel->result().getSettlementAtIndex(row);
+    if(!settlementData) {
+        return;
+    }
     const auto settlement     = settlementData->settlement();
     const auto settlementType = settlement.type();
 

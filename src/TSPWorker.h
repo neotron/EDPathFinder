@@ -77,7 +77,7 @@ private:
 class RouteResult {
 public:
 
-    RouteResult() : _route(), _totalDist(0) { }
+    RouteResult() : _route(), _totalDist(0), _totalValue(0) { }
 
     void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
     void addEntry(const System &system, int64 distance);
@@ -107,8 +107,8 @@ public:
 private:
     RouteResultMatrix _route;
     int64             _totalDist;
-    std::vector<RouteSystemPlanetSettlement> _settlements;
-
+    std::vector<RouteSystemPlanetSettlement> _settlements;\
+    int64 _totalValue;
 };
 
 namespace operations_research {

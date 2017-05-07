@@ -134,6 +134,10 @@ public:
         return _systemLookup.contains(lowerName) ? _systemLookup[lowerName] : Q_NULLPTR;
     }
 
+    const SystemList &systems() const {
+        return _systems;
+    }
+
     virtual QModelIndex index(int row, int column, const QModelIndex &) const;
 
     virtual QModelIndex parent(const QModelIndex &) const;

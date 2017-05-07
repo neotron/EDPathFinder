@@ -22,16 +22,15 @@
 #include "System.h"
 #include "CommanderInfo.h"
 #include "SystemEntryCoordinateResolver.h"
+#include "ui_MainWindow.h"
+#include "AbstractBaseWindow.h"
 
 class RouteResult;
 
 class AStarRouter;
 
-namespace Ui {
-    class MainWindow;
-}
 
-class MainWindow : public QMainWindow {
+class MainWindow : public AbstractBaseWindow<Ui::MainWindow> {
 Q_OBJECT
 
 public:
@@ -41,20 +40,13 @@ public:
 
     static const QString journalDirectory();
 
-private slots:
+protected slots:
     void systemsLoaded(const SystemList &systems);
 
-    void createRoute();
 
-    void routeCalculated(const RouteResult &route);
+    virtual void routeCalculated(const RouteResult &route);
 
-    void updateFilters();
-
-
-    void systemCoordinatesRequestFailed(const QString &systemName);
-
-    void systemCoordinatesRequestInitiated(const QString &systemName);
-    void updateSystemCoordinateDisplay(const System &system) ;
+    virtual void updateFilters();
 
     void handleEvent(const JournalFile &journal, const Event &event);
 
@@ -62,15 +54,13 @@ private slots:
     void systemSortingProgress();
 
     void openMissionTool();
+    void openExplorationTool();
 
 private:
-    void cleanupCheckboxes();
 
     void buildLookupMap();
 
     void loadCompressedData();
-
-    void showMessage(const QString &message, int timeout = 10000) const;
 
     void updateSliderParams(int size);
 
@@ -86,21 +76,12 @@ private:
 
     int distanceSliderValue() const;
 
-
-    Ui::MainWindow *_ui;
-
     QMap<QString, SettlementFlags> _flagsLookup;
 
-    SystemList    _systems;
-    SystemList    _filteredSystems;
     int32         _matchingSettlementCount;
-    bool          _routingPending;
-    AStarRouter   *_router;
 
     JournalWatcher *_journalWatcher;
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
     QMap<QString,CommanderInfo> _commanderInformation;
     bool _loading;
-
-    SystemEntryCoordinateResolver *_systemResolver;
 };

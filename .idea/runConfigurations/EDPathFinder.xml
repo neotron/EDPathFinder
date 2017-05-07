@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="EDPathFinder" type="CMakeRunConfiguration" factoryName="Application" singleton="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="EDPathFinder" TARGET_NAME="EDPathFinder" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="EDPathFinder" RUN_TARGET_NAME="EDPathFinder">
+    <envs />
+    <method />
+  </configuration>
+</component>
