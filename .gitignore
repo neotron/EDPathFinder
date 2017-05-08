@@ -162,3 +162,4 @@ tools/*/.build/*
 /tools/coordinate-mapper/valuable-bodies.jsonl
 .build/
 /tools/coordinate-mapper/systems.csv
+/tools/coordinate-mapper/elws.txt
