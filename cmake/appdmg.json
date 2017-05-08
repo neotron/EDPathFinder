@@ -6,6 +6,6 @@
   "icon-size": 128,
   "contents": [
     { "x": 380, "y": 230, "type": "link", "path": "/Applications" },
-    { "x": 99, "y": 230, "type": "file", "path": "/Users/neotron/Library/Caches/CLion2016.1/cmake/generated/EDPathFinder-3f52e3e9/3f52e3e9/MinSizeRel/EDPathFinder.app" }
+    { "x": 99, "y": 230, "type": "file", "path": "../cmake-build-minsizerel/EDPathFinder.app" }
   ]
 }
