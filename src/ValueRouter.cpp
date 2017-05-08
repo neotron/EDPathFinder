@@ -40,12 +40,13 @@ void ValueRouter::scanJournals() {
 
 void ValueRouter::updateFilters() {
 
-    int8 flags = ValuableBodyFlagsNone;
-    if(_ui->elw->isChecked()) { flags |= ValuableBodyFlagsEW; }
-    if(_ui->ww->isChecked())  { flags |= ValuableBodyFlagsWW; }
-    if(_ui->wwt->isChecked()) { flags |= ValuableBodyFlagsWT; }
-    if(_ui->aw->isChecked())  { flags |= ValuableBodyFlagsAW; }
-    if(_ui->tf->isChecked())  { flags |= ValuableBodyFlagsTF; }
+    QList<int8_t> typeFilter;
+
+    typeFilter.append((int8_t) (_ui->elw->isChecked() ? 1 : 0));
+    typeFilter.append((int8_t) (_ui->ww->isChecked() ? 1 : 0));
+    typeFilter.append((int8_t) (_ui->wwt->isChecked() ? 1 : 0));
+    typeFilter.append((int8_t) (_ui->aw->isChecked() ? 1 : 0));
+    typeFilter.append((int8_t) (_ui->tf->isChecked() ? 1 : 0));
 
     _filteredSystems.clear();
     auto filteredDate = QDateTime().currentDateTime().addDays(-14); // two weeks.
@@ -58,7 +59,7 @@ void ValueRouter::updateFilters() {
     }
 
     for(const auto &system : _router->systems()) {
-        if((system.valueFlags() & flags) != ValuableBodyFlagsNone &&
+        if(system.matchesFilter(typeFilter) &&
            (!excludedSystems || !excludedSystems->contains(system.name().toUpper()))) {
             _filteredSystems.append(system);
         }

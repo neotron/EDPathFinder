@@ -74,12 +74,12 @@ enum SettlementFlags {
 };
 
 enum ValuableBodyFlags {
-    ValuableBodyFlagsNone = 0,
-    ValuableBodyFlagsEW = 1 << 0,
-    ValuableBodyFlagsWW = 1 << 1,
-    ValuableBodyFlagsWT = 1 << 2,
-    ValuableBodyFlagsAW = 1 << 3,
-    ValuableBodyFlagsTF = 1 << 4,
+    ValuableBodyFlagsEW,
+    ValuableBodyFlagsWW,
+    ValuableBodyFlagsWT,
+    ValuableBodyFlagsAW,
+    ValuableBodyFlagsTF,
+    ValuableBodyFlagsCount
 };
 
 
@@ -281,28 +281,29 @@ class System {
 
 public:
 
-    System()  : _name(), _planets(), _position(), _valueFlags(ValuableBodyFlagsNone)  {}
+    System()  : _name(), _planets(), _position(), _numPlanets() {}
 
-    System(const QString &name, float x, float y, float z, int8 valueFlags = ValuableBodyFlagsNone)
-            : _name(name), _position(x, y, z), _valueFlags(valueFlags) {}
+    System(const QString &name, float x, float y, float z)
+            : _name(name), _position(x, y, z), _numPlanets() {}
 
     System(const QString &name, const Planet &planet, float x, float y, float z)
-            : _name(name), _planets(), _position(x, y, z), _valueFlags(ValuableBodyFlagsNone) {
+            : _name(name), _planets(), _position(x, y, z), _numPlanets() {
         _planets.push_back(planet);
     }
 
     System(const QString &system, const PlanetList &planets, const QVector3D &position)
-            : _name(system), _planets(planets), _position(position), _valueFlags(ValuableBodyFlagsNone) {}
+            : _name(system), _planets(planets), _position(position), _numPlanets() {}
 
     System(const QString &name, const QVector3D &position)
-            : _name(name), _position(position), _valueFlags(ValuableBodyFlagsNone) {}
+            : _name(name), _position(position), _numPlanets() {}
 
     System(const System &other)
-            : _name(other._name), _planets(other._planets), _position(other._position), _valueFlags(other._valueFlags) {}
+            : _name(other._name), _planets(other._planets), _position(other._position),
+              _numPlanets(other._numPlanets) {}
 
     System(const System &&other)
             : _name(std::move(other._name)), _planets(std::move(other._planets)),
-              _position(std::move(other._position)), _valueFlags(other._valueFlags) {}
+              _position(std::move(other._position)), _numPlanets(std::move(other._numPlanets)) {}
 
     System(const QJsonObject &jsonObject);
 
@@ -310,7 +311,7 @@ public:
         _name = other._name;
         _planets = other._planets;
         _position = other._position;
-        _valueFlags = other._valueFlags;
+        _numPlanets = other._numPlanets;
         return *this;
     }
 
@@ -318,7 +319,7 @@ public:
         _name = std::move(other._name);
         _planets = std::move(other._planets);
         _position = std::move(other._position);
-        _valueFlags = other._valueFlags;
+        _numPlanets = std::move(other._numPlanets);
         return *this;
     }
 
@@ -350,12 +351,17 @@ public:
         return _position;
     }
 
-    int8_t valueFlags() const {
-        return _valueFlags;
+    void setNumPlanets(const QList<int8_t> &numPlanets) {
+        _numPlanets = numPlanets;
     }
 
-    void setValueFlags(int8_t valueFlags) {
-        _valueFlags = valueFlags;
+    bool matchesFilter(const QList<int8_t> &filter) const {
+        for(int i = 0; i < filter.count() &&  i < _numPlanets.count(); i++) {
+            if(filter[i] > 0 && _numPlanets[i] > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     const PlanetList &planets() const { return _planets; }
@@ -380,7 +386,9 @@ protected:
     QString _name;
     PlanetList _planets;
     QVector3D _position;
-    int8_t _valueFlags;
+    QList<int8_t>  _numPlanets;
+
+    void addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const;
 };
 
 class SystemLoader : public QThread {

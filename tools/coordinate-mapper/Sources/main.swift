@@ -26,7 +26,7 @@ func loadBodies() {
     for systemline in systemrows {
     var systems = 0
         let systemjson = JSON(parseJSON: systemline)
-        guard let systemid = systemjson["id"].int else {
+        guard let systemid = systemjson["system_id"].int else {
             continue
         }
         let existingsystem = valuableSystems[systemid]
@@ -37,20 +37,20 @@ func loadBodies() {
         var system = existingsystem ?? System()
         switch systemjson["type_name"] {
         case "Earth-like world":
-            system.elw = 1
+            system.elw += 1
             elw += 1
         case "Water world":
-            system.ww = 1
+            system.ww += 1
             ww += 1
             if systemjson["terraforming_state_id"] == 2 {
                 system.wwt += 1
             }
         case "Ammonia world":
-            system.aw = 1
+            system.aw += 1
             aw += 1
         default:
             if systemjson["terraforming_state_id"] == 2 {
-                system.tf = 1
+                system.tf += 1
                 tf += 1
             }
         }

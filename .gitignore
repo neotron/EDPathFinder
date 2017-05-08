@@ -163,3 +163,4 @@ tools/*/.build/*
 .build/
 /tools/coordinate-mapper/systems.csv
 /tools/coordinate-mapper/elws.txt
+/tools/coordinate-mapper/system-coords.csv

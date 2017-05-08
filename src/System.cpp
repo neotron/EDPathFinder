@@ -25,6 +25,7 @@
 #define SETTLEMENT_TYPE_FIELD_COUNT 17
 #define EXPECTED_FIELD_COUNT 27
 #define READ_INT (*(it++)).toInt()
+#define READ_CHAR static_cast<int8_t>((*(it++)).toShort())
 #define READ_FLOAT (*(it++)).toFloat()
 #define READ_BOOL (READ_INT == 1)
 #define READ_STR (*(it++))
@@ -95,19 +96,20 @@ void SystemLoader::loadValueSystemFromTextFile() {
         auto y = READ_FLOAT;
         auto z = READ_FLOAT;
 
-        int8 flags = ValuableBodyFlagsNone;
-
-        if(READ_BOOL) { flags |= ValuableBodyFlagsEW; }
-        if(READ_BOOL) { flags |= ValuableBodyFlagsWW; }
-        if(READ_BOOL) { flags |= ValuableBodyFlagsWT; }
-        if(READ_BOOL) { flags |= ValuableBodyFlagsAW; }
-        if(READ_BOOL) { flags |= ValuableBodyFlagsTF; }
+        QList<int8_t> numPlanets;
+        numPlanets.append(READ_CHAR); // elw
+        numPlanets.append(READ_CHAR); // ww
+        numPlanets.append(READ_CHAR); // wwt
+        numPlanets.append(READ_CHAR); // aw
+        numPlanets.append(READ_CHAR); // tf
 
         System *current = _router->findSystemByName(name);
         if(current) {
-            current->setValueFlags(flags);
+            current->setNumPlanets(numPlanets);
         } else {
-            _router->addSystem(System(name, x, y, z, flags));
+            auto system = System(name, x, y, z);
+            system.setNumPlanets(numPlanets);
+            _router->addSystem(system);
         }
         if(!(i++ % 100)) {
             emit progress(50 + (int) (i / (float) lines.size() * 50));
@@ -305,7 +307,7 @@ System::~System() {}
 
 
 System::System(const QJsonObject &jsonObject)
-        : _name(jsonObject["name"].toString()), _planets(), _position(), _valueFlags(ValuableBodyFlagsNone) {
+        : _name(jsonObject["name"].toString()), _planets(), _position(), _numPlanets() {
     auto coords = jsonObject["coords"].toObject();
     _position.setX((float) coords["x"].toDouble());
     _position.setY((float) coords["y"].toDouble());
@@ -330,38 +332,41 @@ const QString SettlementType::IMAGE_CORE = "Core Map";
 
 const QString System::formatPlanets() const {
     QStringList planets;
-    if( (_valueFlags & ValuableBodyFlagsEW) == ValuableBodyFlagsEW) {
-        planets.append("Earth-like World");
+    if(_numPlanets.count() == ValuableBodyFlagsCount) {
+        addSystemString(planets, ValuableBodyFlagsEW, "Earth-like World");
+        addSystemString(planets, ValuableBodyFlagsWT, "Water World (TF)");
+        addSystemString(planets, ValuableBodyFlagsWW, "Water World");
+        addSystemString(planets, ValuableBodyFlagsAW, "Ammonia World");
+        addSystemString(planets, ValuableBodyFlagsTF, "Other TF");
     }
-    if( (_valueFlags & ValuableBodyFlagsWT) == ValuableBodyFlagsWT) {
-        planets.append("Water World (TF)");
-    } else if( (_valueFlags & ValuableBodyFlagsWW) == ValuableBodyFlagsWW) {
-        planets.append("Water World");
-    }
-    if( (_valueFlags & ValuableBodyFlagsAW) == ValuableBodyFlagsAW) {
-        planets.append("Ammonia World");
-    }
-    if( (_valueFlags & ValuableBodyFlagsTF) == ValuableBodyFlagsTF) {
-        planets.append("MC/HMC Terraformable");
-    }
-    return planets.join(", ");
+    return planets.join("\n");
 }
 
 int32 System::estimatedValue() const {
     int32 value = 0;
-    if( (_valueFlags & ValuableBodyFlagsEW) == ValuableBodyFlagsEW) {
-        value += 627;
-    }
-    if( (_valueFlags & ValuableBodyFlagsWT) == ValuableBodyFlagsWT) {
-        value += 695;
-    } else if( (_valueFlags & ValuableBodyFlagsWW) == ValuableBodyFlagsWW) {
-        value += 412;
-    }
-    if( (_valueFlags & ValuableBodyFlagsAW) == ValuableBodyFlagsAW) {
-        value += 320;
-    }
-    if( (_valueFlags & ValuableBodyFlagsTF) == ValuableBodyFlagsTF) {
-        value += 412;
+    if(_numPlanets.count() == ValuableBodyFlagsCount) {
+        value += 627 * _numPlanets[ValuableBodyFlagsEW];
+        value += 412 * (_numPlanets[ValuableBodyFlagsWW] - _numPlanets[ValuableBodyFlagsWT]);
+        value += 695 * _numPlanets[ValuableBodyFlagsWT];
+        value += 320 * _numPlanets[ValuableBodyFlagsAW];
+        value += 412 * _numPlanets[ValuableBodyFlagsTF];
     }
     return value;
+}
+
+void System::addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const {
+    int8_t numPlanets = _numPlanets[type];
+    if(type == ValuableBodyFlagsWW) {
+        numPlanets -= _numPlanets[ValuableBodyFlagsWT];
+    }
+    switch(numPlanets) {
+    case 0:
+        break;
+    case 1:
+        list.append(name);
+        break;
+    default:
+        list.append(QString("%1x%2").arg(name).arg(numPlanets));
+        break;
+    }
 }
