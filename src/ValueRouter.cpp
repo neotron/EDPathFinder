@@ -21,12 +21,8 @@ void ValueRouter::scanJournals() {
     _commanderInformation.clear();
     QDir          dir(MainWindow::journalDirectory(), "Journal.*.log");
     QFileInfoList list        = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
-    auto          monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
 
     for(auto entry: list) {
-        if(entry.lastModified() < monitorDate) {
-            continue;
-        }
         auto file = entry.absoluteFilePath();
         JournalFile journalFile(file);
         connect(&journalFile, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
@@ -36,10 +32,10 @@ void ValueRouter::scanJournals() {
     comboBox->clear();
     comboBox->addItems(_commanderExploredSystems.keys());
     updateCommanderAndSystem();
+    updateFilters();
 }
 
 void ValueRouter::updateFilters() {
-
     QList<int8_t> typeFilter;
 
     typeFilter.append((int8_t) (_ui->elw->isChecked() ? 1 : 0));
@@ -49,7 +45,6 @@ void ValueRouter::updateFilters() {
     typeFilter.append((int8_t) (_ui->tf->isChecked() ? 1 : 0));
 
     _filteredSystems.clear();
-    auto filteredDate = QDateTime().currentDateTime().addDays(-14); // two weeks.
 
     QSet<QString> *excludedSystems(nullptr);
     const QString &filterCommander = _ui->filterCommander->currentText();
@@ -59,7 +54,7 @@ void ValueRouter::updateFilters() {
     }
 
     for(const auto &system : _router->systems()) {
-        if(system.matchesFilter(typeFilter) &&
+        if(system.matchesFilter(typeFilter) && system.estimatedValue() >= _ui->minSystemValue->value() &&
            (!excludedSystems || !excludedSystems->contains(system.name().toUpper()))) {
             _filteredSystems.append(system);
         }
