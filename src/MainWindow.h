@@ -18,7 +18,6 @@
 
 #include <QMainWindow>
 #include <QMap>
-#include <deps/EDJournalQT/src/JournalWatcher.h>
 #include "System.h"
 #include "CommanderInfo.h"
 #include "SystemEntryCoordinateResolver.h"
@@ -70,8 +69,6 @@ private:
 
     void updateSettlementScanDate(const QString &commander, const QString &key, const QDateTime &timestamp);
 
-    void updateCommanderAndSystem();
-
     void updateSystemForCommander(const QString &commander);
 
     int distanceSliderValue() const;
@@ -82,6 +79,6 @@ private:
 
     JournalWatcher *_journalWatcher;
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
-    QMap<QString,CommanderInfo> _commanderInformation;
+
     bool _loading;
 };

@@ -17,12 +17,9 @@
 
 #include <QDebug>
 #include <QCheckBox>
-#include <QRadioButton>
 #include <QCompleter>
 #include <QListView>
 #include "MainWindow.h"
-#include "TSPWorker.h"
-#include "RouteViewer.h"
 #include "QCompressor.h"
 #include "MissionRouter.h"
 #include "ValueRouter.h"
@@ -34,9 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     loadCompressedData();
     _ui->centralWidget->setEnabled(false);
     _ui->menuBar->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(
-                                            const JournalFile &, const Event &)), this, SLOT(handleEvent(
-                                                                                                     const JournalFile &, const Event &)));
+    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
+            this, SLOT(handleEvent( const JournalFile &, const Event &)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
     _ui->distanceSlider->setMaximum(10000);
     _ui->distanceSlider->setValue(10000);
@@ -92,25 +88,24 @@ void MainWindow::updateFilters() {
         }
     }
 
+    auto selectedCommander = _ui->filterCommander->currentText();
     auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
     if(commanders.size()) {
         commanders.sort();
-        auto selectedCommander = _ui->filterCommander->currentText();
         for(auto commanderName: commanders) {
             if(_ui->filterCommander->findText(commanderName) < 0) {
                 _ui->filterCommander->addItem(commanderName);
             }
         }
         if(!selectedCommander.isEmpty()) {
-            updateSystemForCommander(selectedCommander);
-
             _ui->filterCommander->setCurrentText(selectedCommander);
             if(_ui->filterVisited->isChecked()) {
                 visitedSettlements = _settlementDates[selectedCommander];
             }
         }
     }
+    updateSystemForCommander(selectedCommander);
 
     int32 threatFilter = ThreatLevelUnknown;
     if(_ui->restrictedSec->isChecked()) {
@@ -268,6 +263,10 @@ int MainWindow::distanceSliderValue() const {
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
     //sqDebug() << "Got event"<<event.obj();
+    const QString &commander = journal.commander();
+    if(commander.isEmpty()) {
+        return;
+    }
     switch(event.type()) {
     case EventTypeDatalinkScan: {
         auto settlementName = journal.settlement();
@@ -282,32 +281,19 @@ void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
 
         auto settlementKey = makeSettlementKey(journal.system(), journal.body(), settlementName);
         auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
-        updateSettlementScanDate(journal.commander(), settlementKey, event.timestamp());
+        updateSettlementScanDate(commander, settlementKey, event.timestamp());
         if(settlementKey != shortSettlementKey) {
-            updateSettlementScanDate(journal.commander(), shortSettlementKey, event.timestamp());
+            updateSettlementScanDate(commander, shortSettlementKey, event.timestamp());
         }
         updateFilters();
         break;
     }
     case EventTypeLocation:
-    case EventTypeFSDJump: {
-        CommanderInfo info;
-        if(_commanderInformation.contains(journal.commander())) {
-            info = _commanderInformation[journal.commander()];
-        }
-
-        if(event.timestamp() > info._lastEventDate) {
-            info._lastEventDate = event.timestamp();
-            info._system = journal.system();
-            _commanderInformation[journal.commander()] = info;
-            if(_ui->filterCommander->findText(journal.commander()) < 0) {
-                _ui->filterCommander->addItem(journal.commander());
-            }
+    case EventTypeFSDJump:
+        if(updateCommanderInfo(journal, event, commander)  && !_loading) {
             updateCommanderAndSystem();
         }
-
         break;
-    }
     default:
         break; // Be quiet
     }
@@ -340,34 +326,6 @@ void MainWindow::systemLoadProgress(int progress) {
 
 void MainWindow::systemSortingProgress() {
     showMessage("Loading known systems (100%). Sorting...", 0);
-}
-
-void MainWindow::updateCommanderAndSystem() {
-    if(_loading) {
-        return;
-    }
-    CommanderInfo info;
-    QString name;
-    for(auto commanderName: _commanderInformation.keys()) {
-        auto commander = _commanderInformation[commanderName];
-        if(commander._lastEventDate > info._lastEventDate) {
-            info = commander;
-            name = commanderName;
-        }
-    }
-    if(name.isEmpty()) {
-        _ui->commanderFilterGroup->setEnabled(false);
-    } else {
-        _ui->commanderFilterGroup->setEnabled(true);
-        if(_ui->filterCommander->currentText() != name) {
-            _ui->filterCommander->setCurrentText(name);
-            updateFilters();
-        }
-        if(_ui->systemName->text() != info._system) {
-            _ui->systemName->setText(info._system);
-            _systemResolver->resolve(info._system);
-        }
-    }
 }
 
 void MainWindow::updateSystemForCommander(const QString &commander) {

@@ -8,6 +8,7 @@
 #include "ui_ValueRouter.h"
 #include "AbstractBaseWindow.h"
 #include "TSPWorker.h"
+#include "CommanderInfo.h"
 
 class ValueRouter : public AbstractBaseWindow<Ui::ValueRouter> {
 Q_OBJECT
@@ -18,11 +19,15 @@ public:
 
     virtual ~ValueRouter();
 
-
 protected slots:
+    void handleEvent(const JournalFile &file, const Event &ev);
 
+    void scanJournals();
     virtual void updateFilters();
     virtual void routeCalculated(const RouteResult &route);
+    virtual void updateSystem();
+private:
+    QMap<QString, QSet<QString>> _commanderExploredSystems;
 };
 
 #endif // VALUEROUTER_H

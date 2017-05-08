@@ -8,12 +8,14 @@
 #include <QMainWindow>
 #include <QCheckBox>
 #include <QRadioButton>
-#include "System.h"
+#include <deps/EDJournalQT/src/JournalWatcher.h>
 
+#include "System.h"
 #include "AStarRouter.h"
 #include "SystemEntryCoordinateResolver.h"
 #include "TSPWorker.h"
 #include "RouteViewer.h"
+#include "CommanderInfo.h"
 
 
 class BaseSlots : public QMainWindow {
@@ -50,7 +52,8 @@ class AbstractBaseWindow : public BaseSlots {
 
 public:
     AbstractBaseWindow(QWidget *parent, AStarRouter *router, SystemList *systems)
-            : BaseSlots(parent), _ui(new UIClass()), _router(router), _systems(systems), _routingPending(false), _systemsOnly(false) {
+            : BaseSlots(parent), _ui(new UIClass()), _router(router), _systems(systems), _routingPending(false),
+              _systemsOnly(false), _commanderInformation() {
         _ui->setupUi(this);
         connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
         _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->systemName);
@@ -146,6 +149,48 @@ protected :
         _ui->createRouteButton->setEnabled(true);
     }
 
+    bool updateCommanderInfo(const JournalFile &file, const Event &ev, const QString &commander) {
+        CommanderInfo info;
+        if(_commanderInformation.contains(commander)) {
+            info = _commanderInformation[commander];
+        }
+
+        if(ev.timestamp() > info._lastEventDate) {
+            info._lastEventDate = ev.timestamp();
+            info._system = file.system();
+            _commanderInformation[commander] = info;
+            if(_ui->filterCommander->findText(commander) < 0) {
+                _ui->filterCommander->addItem(commander);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    void updateCommanderAndSystem() {
+        QString name;
+        CommanderInfo info;
+        for(auto commanderName: _commanderInformation.keys()) {
+            auto commander = _commanderInformation[commanderName];
+            if(commander._lastEventDate > info._lastEventDate) {
+                info = commander;
+                name = commanderName;
+            }
+        }
+        if(name.isEmpty()) {
+            _ui->commanderFilterGroup->setEnabled(false);
+        } else {
+            _ui->commanderFilterGroup->setEnabled(true);
+            if(_ui->filterCommander->currentText() != name) {
+                _ui->filterCommander->setCurrentText(name);
+                updateFilters();
+            }
+            if(_ui->systemName->text() != info._system) {
+                _ui->systemName->setText(info._system);
+                _systemResolver->resolve(info._system);
+            }
+        }
+    }
 
     UIClass *_ui;
 
@@ -155,5 +200,7 @@ protected :
     SystemList _filteredSystems;
     bool _routingPending;
     bool _systemsOnly;
+
+    QMap<QString,CommanderInfo> _commanderInformation;
 };
 
