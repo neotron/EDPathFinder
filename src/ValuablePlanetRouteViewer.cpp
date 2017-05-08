@@ -43,6 +43,16 @@ ValuablePlanetRouteViewer::~ValuablePlanetRouteViewer() {
 }
 
 void ValuablePlanetRouteViewer::copySelectedItem() {
-    //updateSettlementInfo();
-}
+    auto routeModel = dynamic_cast<RouteTableModel *>(_ui->tableView->model());
+    if(!routeModel) {
+        return;
+    }
+    auto row   = static_cast<size_t>(_ui->tableView->selectionModel()->currentIndex().row());
+    auto route = routeModel->result().route();
+    if(row >= route.size()) {
+        return;
+    }
+    auto name = route[row][0];
+    QApplication::clipboard()->setText(name);
+    _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));}
 
