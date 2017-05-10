@@ -165,3 +165,4 @@ tools/*/.build/*
 /tools/coordinate-mapper/elws.txt
 /tools/coordinate-mapper/system-coords.csv
 /cmake-build-minsizerel
+/cmake-build-relwithdebinfo
