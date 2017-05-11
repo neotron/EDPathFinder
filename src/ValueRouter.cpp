@@ -5,6 +5,7 @@
 
 
 ValueRouter::~ValueRouter() {
+    delete _systemResolverDestination;
 }
 
 ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *systems)
@@ -14,6 +15,12 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
     connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
     connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
     updateFilters();
+
+    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd, _ui->yEnd, _ui->zEnd);
+    connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
+    connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
+    connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
+
 }
 
 void ValueRouter::scanJournals() {
@@ -36,13 +43,13 @@ void ValueRouter::scanJournals() {
 }
 
 void ValueRouter::updateFilters() {
-    QList<int8_t> typeFilter;
+    QList<bool> typeFilter;
 
-    typeFilter.append((int8_t) (_ui->elw->isChecked() ? 1 : 0));
-    typeFilter.append((int8_t) (_ui->ww->isChecked() ? 1 : 0));
-    typeFilter.append((int8_t) (_ui->wwt->isChecked() ? 1 : 0));
-    typeFilter.append((int8_t) (_ui->aw->isChecked() ? 1 : 0));
-    typeFilter.append((int8_t) (_ui->tf->isChecked() ? 1 : 0));
+    typeFilter.append(_ui->elw->isChecked());
+    typeFilter.append(_ui->ww->isChecked());
+    typeFilter.append(_ui->wwt->isChecked());
+    typeFilter.append(_ui->aw->isChecked());
+    typeFilter.append(_ui->tf->isChecked());
 
     _filteredSystems.clear();
 
@@ -61,6 +68,15 @@ void ValueRouter::updateFilters() {
     }
     
     _ui->statusBar->showMessage(QString("Filter matches %1 systems.").arg(_filteredSystems.size()));
+}
+
+void ValueRouter::onRouterCreated(TSPWorker *worker) {
+    auto destinationSystemName = _ui->systemNameEnd->text();
+    if(destinationSystemName.length()) {
+        auto destinationSystem = _router->findSystemByName(destinationSystemName);
+        worker->setDestination(destinationSystem);
+    }
+    worker->start();
 }
 
 void ValueRouter::routeCalculated(const RouteResult &route) {

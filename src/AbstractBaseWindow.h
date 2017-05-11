@@ -56,17 +56,10 @@ public:
               _systemsOnly(false), _commanderInformation() {
         _ui->setupUi(this);
         connect(_ui->createRouteButton, SIGNAL(clicked()), this, SLOT(createRoute()));
-        _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->systemName);
-
-        connect(_systemResolver, SIGNAL(systemLookupInitiated(
-                                                const QString &)), this, SLOT(systemCoordinatesRequestInitiated(
-                                                                                      const QString &)));
-        connect(_systemResolver, SIGNAL(systemLookupFailed(
-                                                const QString &)), this, SLOT(systemCoordinatesRequestFailed(
-                                                                                      const QString &)));
-        connect(_systemResolver, SIGNAL(systemLookupCompleted(
-                                                const System &)), this, SLOT(updateSystemCoordinateDisplay(
-                                                                                     const System &)));
+        _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->systemName, _ui->x, _ui->y, _ui->z);
+        connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
+        connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
+        connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
 
         connectCheckboxes();
     }
@@ -74,22 +67,18 @@ public:
     virtual ~AbstractBaseWindow() { delete _ui; }
 
 protected :
-    void systemCoordinatesRequestInitiated(const QString &systemName) {
+    virtual void systemCoordinatesRequestInitiated(const QString &systemName) {
+        _ui->createRouteButton->setEnabled(false);
         showMessage(QString("Looking up coordinates for system: %1").arg(systemName));
     }
 
-    void systemCoordinatesRequestFailed(const QString &systemName) {
+    virtual void systemCoordinatesRequestFailed(const QString &systemName) {
         showMessage(QString("Unknown origin system: %1").arg(systemName));
-        _ui->systemName->setEnabled(true);
         _routingPending = false;
     }
 
-    void updateSystemCoordinateDisplay(const System &system) {
-        _ui->x->setText(QString::number(system.x()));
-        _ui->y->setText(QString::number(system.y()));
-        _ui->z->setText(QString::number(system.z()));
-        _ui->systemName->setText(system.name());
-        showMessage(QString("Found coordinates for system: %1").arg(_ui->systemName->text()), 4000);
+    virtual void updateSystemCoordinateDisplay(const System &system) {
+        showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
         _ui->createRouteButton->setEnabled(!_routingPending);
         if(_routingPending) {
             _routingPending = false;
@@ -132,11 +121,16 @@ protected :
             // workerThread->setRouter(_router);
             connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
             connect(workerThread, &TSPWorker::taskCompleted, this, &AbstractBaseWindow::routeCalculated);
-            workerThread->start();
             _ui->centralWidget->setEnabled(false);
+            onRouterCreated(workerThread);
         } else {
             _ui->statusBar->showMessage("No results found for your filters.", 10000);
         }
+
+    }
+
+    virtual void onRouterCreated(TSPWorker *worker) {
+        worker->start();
     }
 
     virtual void routeCalculated(const RouteResult &route) {

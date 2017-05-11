@@ -23,11 +23,14 @@ protected slots:
     void handleEvent(const JournalFile &file, const Event &ev);
 
     void scanJournals();
-    virtual void updateFilters();
-    virtual void routeCalculated(const RouteResult &route);
+    virtual void updateFilters() override;
+    virtual void routeCalculated(const RouteResult &route) override;
     virtual void updateSystem();
+    virtual void onRouterCreated(TSPWorker *worker) override;
+
 private:
     QMap<QString, QSet<QString>> _commanderExploredSystems;
+    SystemEntryCoordinateResolver *_systemResolverDestination;
 };
 
 #endif // VALUEROUTER_H

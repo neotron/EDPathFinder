@@ -355,9 +355,9 @@ public:
         _numPlanets = numPlanets;
     }
 
-    bool matchesFilter(const QList<int8_t> &filter) const {
+    bool matchesFilter(const QList<bool> &filter) const {
         for(int i = 0; i < filter.count() &&  i < _numPlanets.count(); i++) {
-            if(filter[i] > 0 && _numPlanets[i] > 0) {
+            if(filter[i] && _numPlanets[i] > 0) {
                 return true;
             }
         }

@@ -31,7 +31,7 @@ namespace operations_research {
 
     int64 TSPWorker::calculateDistance(int from, int to) {
         auto &fromSystem = _systems[from];
-        auto &toSystem   = _systems[to];
+        auto &toSystem = _systems[to];
         ++_numDist;
         if(_router) {
             AStarResult result = _router->calculateRoute(fromSystem.name(), toSystem.name(), 15.0f);
@@ -48,7 +48,7 @@ namespace operations_research {
         auto sz = _systems.size();
         _distanceMatrix.resize(sz);
         typedef QPair<QFuture<int64>, QPair<int, int>> FuturePair;
-        QList<FuturePair>                              futures;
+        QList<FuturePair> futures;
 
         for(int from = 0; from < sz; from++) {
             _distanceMatrix[from].fill(-1, sz);
@@ -59,7 +59,7 @@ namespace operations_research {
                 int64 dist = 0;
                 if(from != to) {
                     if(_distanceMatrix[to][from] == -1) {
-                        auto future   = QtConcurrent::run(this, &TSPWorker::calculateDistance, from, to);
+                        auto future = QtConcurrent::run(this, &TSPWorker::calculateDistance, from, to);
                         auto destPair = QPair<int, int>(from, to);
                         futures.push_back(FuturePair(future, destPair));
                         _distanceMatrix[to][from] = -2;
@@ -80,6 +80,33 @@ namespace operations_research {
         }
     }
 
+    void TSPWorker::cylinder(QVector3D vec_from, QVector3D vec_to, float buffer) {
+
+        auto bufferSquare = buffer * buffer;
+        typedef QPair<System,float> SystemDist;
+        QList<SystemDist> filteredSystems;
+            auto originDestDist = vec_from.distanceToPoint(vec_to)+buffer;
+        for(const auto &s: _systems) {
+            auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
+            auto denominator = (vec_to - vec_from).lengthSquared();
+            auto dist = numerator / denominator;
+            if(dist < bufferSquare
+               && s.position().distanceToPoint(vec_from) < originDestDist
+               && s.position().distanceToPoint(vec_to) < originDestDist) {
+                filteredSystems.push_back(SystemDist(s, dist));
+            }
+        }
+        // qDebug() << "Cylinder of systems contain"<<filteredSystems.size()<<"nodes.";
+        std::sort(filteredSystems.begin(), filteredSystems.end(), [] (const SystemDist& a, const SystemDist &b) {
+            return a.second < b.second;
+        });
+
+        _systems.clear();
+        for(int i = 0; i < filteredSystems.count() && i < _maxSystemCount; i++) {
+            _systems.push_back(filteredSystems[i].first);
+        }
+    }
+
     void TSPWorker::run() {
         System *startingSystem = _origin;
         if(!startingSystem) {
@@ -87,11 +114,16 @@ namespace operations_research {
         }
         QTime timer;
         timer.start();
-        std::sort(_systems.begin(), _systems.end(), [ startingSystem ](const System &a, const System &b) {
-            return a.distance(*startingSystem) < b.distance((*startingSystem));
-        });
-        if(_maxSystemCount < _systems.size()) {
-            _systems.erase(_systems.begin() + _maxSystemCount, _systems.end());
+        if(_destination) {
+            cylinder(startingSystem->position(), _destination->position(), 200);
+            _systems.push_back(*_destination);
+        } else {
+            std::sort(_systems.begin(), _systems.end(), [startingSystem](const System &a, const System &b) {
+                return a.distance(*startingSystem) < b.distance((*startingSystem));
+            });
+            if(_maxSystemCount < _systems.size()) {
+                _systems.erase(_systems.begin() + _maxSystemCount, _systems.end());
+            }
         }
         // Calculate the closest system
         if(_origin && _origin->name() != _systems[0].name()) {
@@ -102,7 +134,7 @@ namespace operations_research {
         calculateDistanceMatrix();
         //qDebug() << "Matrix calculation took " << timer.elapsed();
         timer.restart();
-        RoutingModel            routing((int) _systems.size(), 1, RoutingModel::NodeIndex(0));
+        RoutingModel routing((int) _systems.size(), 1, RoutingModel::NodeIndex(0));
         RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
 
         // Setting first solution heuristic (cheapest addition).
@@ -111,6 +143,13 @@ namespace operations_research {
         //parameters.set_solution_limit(35);
         //parameters.set_log_search(true);
         routing.SetArcCostEvaluatorOfAllVehicles(NewPermanentCallback(this, &TSPWorker::systemDistance));
+
+        if(_destination) {
+            auto endNode = RoutingModel::NodeIndex(_systems.size() - 1);
+            for(int i = 1; i < _systems.size() - 1; i++) {
+                routing.AddPickupAndDelivery(RoutingModel::NodeIndex(i), endNode);
+            }
+        }
 
         // Solve, returns a solution if any (owned by RoutingModel).
         const Assignment *solution = routing.SolveWithParameters(parameters);
@@ -125,16 +164,16 @@ namespace operations_research {
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
-            int       nodeid;
-            int       previd       = 0;
-            int64     dist         = 0;
+            int nodeid;
+            int previd = 0;
+            int64 dist = 0;
 
             for(int64 node = routing.Start(route_number);
                 !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
                 nodeid = routing.IndexToNode(node).value();
 
-                const auto &sys        = _systems[nodeid];
+                const auto &sys = _systems[nodeid];
                 const auto &prevSystem = _systems[previd];
 
                 if(nodeid > 0) {
@@ -157,12 +196,10 @@ namespace operations_research {
                     }
                 }
             }
-            if(_systemsOnly) {
+            if(!_destination && _systemsOnly) {
                 dist = _systems[0].distance(_systems[previd]);
                 result.addEntry(_systems[0], dist);
             }
-        } else {
-            //         LOG(INFO) << "No solution found.";
         }
         emit taskCompleted(result);
     }

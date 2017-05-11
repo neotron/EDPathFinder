@@ -18,6 +18,7 @@
 
 #include <QCompleter>
 #include <QLineEdit>
+#include <QLabel>
 #include "AStarRouter.h"
 
 
@@ -26,7 +27,8 @@ Q_OBJECT
 
 
 public:
-    SystemEntryCoordinateResolver(QObject *parent, AStarRouter *router, QLineEdit *lineEdit);
+    SystemEntryCoordinateResolver(QObject *parent, AStarRouter *router, QLineEdit *lineEdit,
+                                 QLabel *x = nullptr, QLabel *y = nullptr, QLabel *z = nullptr);
 
     void resolve(const QString &systemName);
 
@@ -57,7 +59,9 @@ private:
     AStarRouter   *_router;
     QLineEdit     *_lineEdit;
     QSet<QString> _pendingLookups;
+    QLabel *_x, *_y, *_z;
 
+    void sendSystemLookupCompleted(const System &system);
 };
 
 

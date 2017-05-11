@@ -49,7 +49,7 @@ class RouteSystemPlanetSettlement {
 public:
     RouteSystemPlanetSettlement(const QString &systemName, const QString &planetName, int distance,
                                 const Settlement &settlement)
-            : _systemName(systemName), _planetName(planetName), _settlement(settlement), _distance(distance) { }
+            : _systemName(systemName), _planetName(planetName), _settlement(settlement), _distance(distance) {}
 
     const QString &systemName() const {
         return _systemName;
@@ -77,9 +77,11 @@ private:
 class RouteResult {
 public:
 
-    RouteResult() : _route(), _totalDist(0), _totalValue(0) { }
+    RouteResult()
+            : _route(), _totalDist(0), _totalValue(0) {}
 
     void addEntry(const System &system, const Planet &planet, const Settlement &settlement, int64 distance);
+
     void addEntry(const System &system, int64 distance);
 
     const QString ly() const {
@@ -106,8 +108,9 @@ public:
 
 private:
     RouteResultMatrix _route;
-    int64             _totalDist;
-    std::vector<RouteSystemPlanetSettlement> _settlements;\
+    int64 _totalDist;
+    std::vector<RouteSystemPlanetSettlement> _settlements;
+
     int64 _totalValue;
 };
 
@@ -117,8 +120,8 @@ namespace operations_research {
 
     public:
         TSPWorker(SystemList systems, System *system, int maxSystemCount)
-                : QThread(), _systems(systems), _origin(system), _maxSystemCount(maxSystemCount), _router(Q_NULLPTR),
-                  _numDist(0), _systemsOnly(false) { }
+                : QThread(), _systems(systems), _origin(system), _destination(Q_NULLPTR), _maxSystemCount(maxSystemCount),
+                  _router(Q_NULLPTR), _numDist(0), _systemsOnly(false) {}
 
 
         virtual void run();
@@ -132,26 +135,33 @@ namespace operations_research {
             _systemsOnly = systemsOnly;
         }
 
+        void setDestination(System *destination) {
+            _destination = destination;
+        }
+
     signals:
+
         void taskCompleted(const RouteResult &route);
 
     private:
-        void                    calculateDistanceMatrix();
+        void calculateDistanceMatrix();
 
-        int64                   systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
+        int64 systemDistance(RoutingModel::NodeIndex from, RoutingModel::NodeIndex to);
 
         int64 calculateDistance(int from, int to);
 
-        SystemList              _systems;
-        System                  *_origin;
-        int                     _maxSystemCount;
-        AStarRouter             *_router;
-        int                     _numDist;
+        void cylinder(QVector3D vec_from, QVector3D vec_to, float buffer);
+
+        SystemList _systems;
+        System *_origin;
+        System *_destination;
+        int _maxSystemCount;
+        AStarRouter *_router;
+        int _numDist;
         QVector<QVector<int64>> _distanceMatrix;
 
         bool _systemsOnly;
     };
-
 };
 
 using operations_research::TSPWorker;

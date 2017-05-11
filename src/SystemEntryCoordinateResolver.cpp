@@ -19,9 +19,9 @@
 #include "EDSMQueryExecutor.h"
 
 
-SystemEntryCoordinateResolver::SystemEntryCoordinateResolver(QObject *parent, AStarRouter *router, QLineEdit *lineEdit)
-        : QObject(parent), _router(router), _lineEdit(lineEdit), _pendingLookups() {
-
+SystemEntryCoordinateResolver::SystemEntryCoordinateResolver(QObject *parent, AStarRouter *router, QLineEdit *lineEdit,
+                                                             QLabel *x, QLabel *y, QLabel *z)
+        : QObject(parent), _router(router), _lineEdit(lineEdit), _pendingLookups(),_x(x), _y(y), _z(z) {
     QCompleter *completer = new QCompleter(_router, this);
     completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
@@ -61,7 +61,7 @@ void SystemEntryCoordinateResolver::systemCoordinatesReceived(const System &syst
     _pendingLookups.remove(systemName);
     _router->addSystem(system);
     _router->sortSystemList();
-    emit systemLookupCompleted(system);
+    sendSystemLookupCompleted(system);
 }
 
 
@@ -75,11 +75,14 @@ void SystemEntryCoordinateResolver::onEntry() {
 
 void SystemEntryCoordinateResolver::resolve(const QString &systemName) {
     if(systemName.isEmpty()) {
+        if(_x) { _x->setText("-"); }
+        if(_y) { _y->setText("-"); }
+        if(_z) { _z->setText("-"); }
         return;
     }
     auto system = _router->findSystemByName(systemName);
     if(system) {
-        emit systemLookupCompleted(*system);
+        sendSystemLookupCompleted(*system);
     } else {
         downloadSystemCoordinates(systemName);
     }
@@ -87,6 +90,15 @@ void SystemEntryCoordinateResolver::resolve(const QString &systemName) {
 
 bool SystemEntryCoordinateResolver::isComplete() const {
     return !_pendingLookups.size();
+}
+
+void SystemEntryCoordinateResolver::sendSystemLookupCompleted(const System &system) {
+    if(_x) { _x->setText(QString::number(system.x())); }
+    if(_y) { _y->setText(QString::number(system.y())); }
+    if(_z) { _z->setText(QString::number(system.z())); }
+    _lineEdit->setText(system.name());
+
+    emit systemLookupCompleted(system);
 }
 
 
