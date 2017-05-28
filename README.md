@@ -3,6 +3,10 @@ A program that creates an optimal route that passes through two or more systems 
 
 The settlement data comes from the excellent spreadsheet by Cmdr dja: https://docs.google.com/spreadsheets/d/1IVPYPqXbqC7pYY2UggEXLSO0CMaE0ksZMB2Ejlh0aYI/ - without his work, this project would have been impossible to complete.
 
+# Installing
+
+Download the latest installer release from https://github.com/neotron/EDPathFinder/releases/ (exe for Windows, dmg for OSX)
+
 # Building
 
 EDPathfinder depends on the Google Optimization Tools library and Qt 5.7. CMake is required for compilation. 
