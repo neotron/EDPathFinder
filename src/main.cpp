@@ -18,6 +18,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include "autoupdate/AutoUpdater.h"
 #include "MainWindow.h"
 #include "TSPWorker.h"
 #include "MissionScanner.h"
@@ -29,8 +30,7 @@ Q_DECLARE_METATYPE(SystemList);
 
 int main(int argc, char **argv) {
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
-
-
+    AutoUpdater updater;
 
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();

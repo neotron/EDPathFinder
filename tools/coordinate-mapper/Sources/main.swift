@@ -4,7 +4,7 @@ import Darwin
 
 
 var valuableSystems = [Int:System]()
-var elws = try! String(contentsOfFile: "elws.txt", encoding: .isoLatin1).components(separatedBy: "\n")
+var elws =  [String]() // try! String(contentsOfFile: "elws.txt", encoding: .isoLatin1).components(separatedBy: "\n")
 
 let elwsset = Set(elws.map { $0.uppercased() });
 elws.removeAll()

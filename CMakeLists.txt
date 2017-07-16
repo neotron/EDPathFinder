@@ -7,7 +7,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Include Qt basic functions
 include(QtCommon)
 
-project(EDPathFinder VERSION 1.2.0)
+#set(CMAKE_VERBOSE_MAKEFILE  YES)
+
+project(EDPathFinder VERSION 1.3.0)
 
 set(MSVC_RUNTIME "dynamic")
 
@@ -52,9 +54,9 @@ endif ()
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    find_library(SPARKLE_FRAMEWORK Sparkle "${CMAKE_SOURCE_DIR}/frameworks/")
+    find_library(SPARKLE_FRAMEWORK Sparkle "${CMAKE_SOURCE_DIR}/frameworks/lib/")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ -Wno-import-preprocessor-directive-pedantic")
-    link_libraries(${LINK_LIBS} -lz)
+    link_libraries(${SPARKLE_FRAMEWORK} "-framework Foundation" ${LINK_LIBS} -lz)
 endif ()
 
 if (UNIX)

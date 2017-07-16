@@ -18,6 +18,8 @@
 #import <Sparkle/Sparkle.h>
 #include "AutoUpdater.h"
 
+static SUUpdater *s_updater;
+
 AutoUpdater::AutoUpdater() {
-    [SUUpdater checkForUpdates];
+    s_updater = [[SUUpdater alloc] init];
 }
