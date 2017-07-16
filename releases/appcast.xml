@@ -1,0 +1,10 @@
+<?xml version="1.0" standalone="yes"?><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+<channel>
+<title>EDPathFinder</title>
+<item>
+<title>1.2</title>
+<pubDate>Sun, 16 Jul 2017 14:31:12 -0700</pubDate>
+<sparkle:minimumSystemVersion>10.7</sparkle:minimumSystemVersion>
+<enclosure url="https://neotron.github.io/EDPathFinder/EDPathFinder-.dmg" sparkle:version="1.2.0" sparkle:shortVersionString="1.2" length="33422493" type="application/octet-stream" sparkle:dsaSignature="MC0CFHmmF8ShStMH2mPZbSToIzTrwZzeAhUAgA49yDd/YjPreDmZqey6A5hZAIY="/>
+</item>
+</channel></rss>

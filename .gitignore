@@ -154,7 +154,7 @@ CMakeLists.txt.user*
 /cmake-build-debug
 /xcode
 /output
-*.dmg
+
 tools/*/Packages/
 tools/*/.build/*
 /tools/bodydistance/bodies.jsonl
