@@ -3,7 +3,8 @@
 import PackageDescription
 
 let package = Package(
-    name: "coordinate-mapper",
-    dependencies: [
-            .Package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", versions: Version(1,0,0)..<Version(3, .max, .max)),    ]
+        name: "coordinate-mapper",
+        dependencies: [
+            .Package(url: "https://github.com/utahiosmac/Marshal", majorVersion: 1, minor: 2),
+        ]
 )

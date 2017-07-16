@@ -38,7 +38,7 @@ int main() {
     }
     qDebug() << "Found" << bodycount << "bodies";
     QMap<int, QString> systemIdToName;
-    QFile              file("systems_populated.jsonl");
+    QFile              file("../data/systems_populated.jsonl");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Couldn't open file for reading.";
         return -1;
@@ -68,7 +68,7 @@ int main() {
 
 
     file.close();
-    QFile bodies("bodies.jsonl");
+    QFile bodies("../data/bodies.jsonl");
     if(!bodies.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Couldn't open file for reading.";
         return -1;

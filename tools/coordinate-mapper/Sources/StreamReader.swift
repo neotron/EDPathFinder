@@ -12,7 +12,7 @@ class StreamReader  {
     let delimData : Data
     var buffer : Data
     var atEof : Bool
-
+    var position: Int
     init?(path: String, delimiter: String = "\n", encoding: String.Encoding = .utf8,
           chunkSize: Int = 4096) {
 
@@ -26,6 +26,7 @@ class StreamReader  {
         self.delimData = delimData
         self.buffer = Data(capacity: chunkSize)
         self.atEof = false
+        self.position = 0
     }
 
     deinit {
@@ -33,17 +34,21 @@ class StreamReader  {
     }
 
     /// Return next line, or nil on EOF.
-    func nextLine() -> String? {
+    func nextLine() -> Data? {
         precondition(fileHandle != nil, "Attempt to read from closed file")
 
         // Read data chunks from file until a line delimiter is found:
         while !atEof {
-            if let range = buffer.range(of: delimData) {
+            if self.position < buffer.count,
+               let range = buffer.range(of: delimData, in: self.position..<buffer.count) {
                 // Convert complete line (excluding the delimiter) to a string:
-                let line = String(data: buffer.subdata(in: 0..<range.lowerBound), encoding: encoding)
-                // Remove line (and the delimiter) from the buffer:
-                buffer.removeSubrange(0..<range.upperBound)
+                let line = buffer.subdata(in: self.position..<range.lowerBound)
+                self.position = range.upperBound
                 return line
+            }
+            if self.position > 0 {
+                buffer.removeSubrange(0..<self.position)
+                self.position = 0
             }
             let tmpData = fileHandle.readData(ofLength: chunkSize)
             if tmpData.count > 0 {
@@ -53,7 +58,7 @@ class StreamReader  {
                 atEof = true
                 if buffer.count > 0 {
                     // Buffer contains last line in file (not terminated by delimiter).
-                    let line = String(data: buffer as Data, encoding: encoding)
+                    let line = buffer
                     buffer.count = 0
                     return line
                 }
@@ -77,7 +82,7 @@ class StreamReader  {
 }
 
 extension StreamReader : Sequence {
-    func makeIterator() -> AnyIterator<String> {
+    func makeIterator() -> AnyIterator<Data> {
         return AnyIterator {
             return self.nextLine()
         }

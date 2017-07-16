@@ -2,10 +2,10 @@
   "autoPin": true,
   "pins": [
     {
-      "package": "SwiftyJSON",
+      "package": "Marshal",
       "reason": null,
-      "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON.git",
-      "version": "3.1.4"
+      "repositoryURL": "https://github.com/utahiosmac/Marshal",
+      "version": "1.2.4"
     }
   ],
   "version": 1

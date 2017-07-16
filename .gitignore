@@ -166,3 +166,7 @@ tools/*/.build/*
 /tools/coordinate-mapper/system-coords.csv
 /cmake-build-minsizerel
 /cmake-build-relwithdebinfo
+/tools/data
+/tools/coordinate-mapper/valuable-systems.csv
+/tools/coordinate-mapper/tmp
+cmake-build-*
