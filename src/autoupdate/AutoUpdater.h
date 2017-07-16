@@ -19,11 +19,10 @@
 #define EDPATHFINDER_AUTOUPDATER_H
 
 
-
 class AutoUpdater {
-
+public:
+    AutoUpdater();
 };
-
 
 
 #endif //EDPATHFINDER_AUTOUPDATER_H

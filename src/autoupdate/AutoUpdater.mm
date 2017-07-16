@@ -17,3 +17,7 @@
 
 #import <Sparkle/Sparkle.h>
 #include "AutoUpdater.h"
+
+AutoUpdater::AutoUpdater() {
+    [SUUpdater checkForUpdates];
+}

@@ -52,7 +52,9 @@ endif ()
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ ")
+    find_library(SPARKLE_FRAMEWORK Sparkle "${CMAKE_SOURCE_DIR}/frameworks/")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ -Wno-import-preprocessor-directive-pedantic")
+    link_libraries(${LINK_LIBS} -lz)
 endif ()
 
 if (UNIX)
@@ -65,27 +67,11 @@ endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
-file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui)
-include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
+file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui src/autoupdate/*.cpp src/autoupdate/*.mm src/autoupdate/*.h)
+include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/ ${SPARKLE_FRAMEWORK})
 
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
+    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${SPARKLE_FRAMEWORK}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/System.cpp src/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
-
-add_custom_target(jsonconverter
-        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build  -c release
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/jsonconverter/
-        SOURCES tools/jsonconverter/sources/main.swift tools/jsonconverter/package.swift)
-
-
-add_custom_target(coordinate-mapper
-        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build  -c release
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/coordinate-mapper/
-        SOURCES tools/coordinate-mapper/sources/main.swift tools/coordinate-mapper/package.swift)
-
-add_custom_target(coordinate-mapper-debug
-        COMMAND /Library/Developer/Toolchains/swift-latest.xctoolchain/usr/bin/swift build
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/tools/coordinate-mapper/
-        SOURCES tools/coordinate-mapper/sources/main.swift tools/coordinate-mapper/package.swift)
