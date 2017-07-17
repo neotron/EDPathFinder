@@ -171,3 +171,4 @@ tools/*/.build/*
 /tools/coordinate-mapper/tmp
 cmake-build-*
 workspace.xml
+/src/buildnumber.h

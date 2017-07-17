@@ -1,7 +1,7 @@
 all:
 	@echo mac-package or win-package
 
-OUT := $(shell echo "../EDPathFinder/releases/EDPathFinder-`/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' cmake-build-minsizerel/EDPathFinder.app/Contents/Info.plist`.dmg")
+OUT := $(shell echo "output/EDPathFinder-`/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' cmake-build-minsizerel/EDPathFinder.app/Contents/Info.plist`.dmg")
 
 mac-package:  
 	/workspace/Qt/5.8/clang_64/bin/macdeployqt cmake-build-minsizerel/EDPathFinder.app   -always-overwrite
