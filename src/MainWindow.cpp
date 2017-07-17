@@ -19,10 +19,13 @@
 #include <QCheckBox>
 #include <QCompleter>
 #include <QListView>
+#include <QMessageBox>
 #include "MainWindow.h"
 #include "QCompressor.h"
 #include "MissionRouter.h"
 #include "ValueRouter.h"
+#include "AutoUpdateChecker.h"
+#include "buildnumber.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
@@ -235,7 +238,33 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     _journalWatcher->watchDirectory(journalDirectory(), newerThanDate);
     _loading = false;
     updateCommanderAndSystem();
+
+    AutoUpdateChecker *updater = new AutoUpdateChecker(this);
+    connect(updater, &QThread::finished, updater, &QObject::deleteLater);
+    connect(updater, SIGNAL(newVersionAvailable(const Version &)), this, SLOT(showVersionUpdateDialog(const Version &)));
+    updater->start();
 }
+
+void MainWindow::showVersionUpdateDialog(const Version &newVersion) {
+    const QString title = "Update Available.";
+    const QString message = QString("Version %1 is available for download. You are currently running "
+                                            "version %2. \n\nDo you want to download the new version?")
+            .arg(newVersion.toString()).arg(PROJECT_VERSION);
+
+    auto reply = QMessageBox::question(this, "Update Available!", message,
+                                       QMessageBox::Ignore|QMessageBox::No|QMessageBox::Yes, QMessageBox::Yes);
+    switch(reply) {
+    case QMessageBox::Yes:
+        QDesktopServices::openUrl(RELEASE_URL);
+        break;
+    case QMessageBox::Ignore:
+        QSettings().setValue(AUTO_UPDATE_VERSION_KEY, newVersion.toString());
+        break;
+    default:
+        break; // no-op
+    }
+}
+
 
 const QString MainWindow::journalDirectory() {
     QString journalPath;

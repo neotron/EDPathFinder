@@ -170,3 +170,4 @@ tools/*/.build/*
 /tools/coordinate-mapper/valuable-systems.csv
 /tools/coordinate-mapper/tmp
 cmake-build-*
+workspace.xml

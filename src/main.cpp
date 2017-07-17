@@ -18,22 +18,22 @@
 
 #include <QApplication>
 #include <QDebug>
-#include "autoupdate/AutoUpdater.h"
 #include "MainWindow.h"
-#include "TSPWorker.h"
-#include "MissionScanner.h"
 
 Q_DECLARE_METATYPE(RouteResult);
 Q_DECLARE_METATYPE(SystemList);
+Q_DECLARE_METATYPE(Version);
 
 // namespace operations_research
 
 int main(int argc, char **argv) {
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
-    AutoUpdater updater;
+    QCoreApplication::setOrganizationName("NeoTron Software");
+    QCoreApplication::setApplicationName("EDPathFinder");
 
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();
+    qRegisterMetaType<Version>();
     QApplication a(argc, argv);
     MainWindow w;
     QIcon icon("://icon512.png");

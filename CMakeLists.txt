@@ -13,6 +13,9 @@ project(EDPathFinder VERSION 1.3.0)
 
 set(MSVC_RUNTIME "dynamic")
 
+file(WRITE src/buildnumber.h "#define PROJECT_VERSION \"${PROJECT_VERSION}\"
+")
+
 fix_project_version()
 configure_msvc_runtime()
 
@@ -54,9 +57,8 @@ endif ()
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    find_library(SPARKLE_FRAMEWORK Sparkle "${CMAKE_SOURCE_DIR}/frameworks/lib/")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ -Wno-import-preprocessor-directive-pedantic")
-    link_libraries(${SPARKLE_FRAMEWORK} "-framework Foundation" ${LINK_LIBS} -lz)
+    link_libraries(${LINK_LIBS} -lz)
 endif ()
 
 if (UNIX)
@@ -69,11 +71,11 @@ endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
-file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui src/autoupdate/*.cpp src/autoupdate/*.mm src/autoupdate/*.h)
-include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/ ${SPARKLE_FRAMEWORK})
+file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui)
+include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
 
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${SPARKLE_FRAMEWORK}
+    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/System.cpp src/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})

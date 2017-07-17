@@ -15,11 +15,33 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#import <Sparkle/Sparkle.h>
-#include "AutoUpdater.h"
+#pragma once
+#define RELEASE_URL     QUrl("https://github.com/neotron/EDPathFinder/releases/latest")
 
-static SUUpdater *s_updater;
 
-AutoUpdater::AutoUpdater() {
-    s_updater = [[SUUpdater alloc] init];
-}
+#define AUTO_UPDATE_VERSION_KEY "AutoUpdateVersion"
+
+#include <QThread>
+#include <QNetworkAccessManager>
+class Version;
+
+class AutoUpdateChecker : public QThread {
+    Q_OBJECT
+
+public:
+    AutoUpdateChecker(QObject *parent);
+
+    virtual ~AutoUpdateChecker();
+
+    void run();
+
+signals:
+    void newVersionAvailable(const Version &);
+
+private:
+    void handleRedirectionUrl(const QUrl &);
+
+    QNetworkAccessManager *_mgr;
+
+};
+

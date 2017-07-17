@@ -15,14 +15,28 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef EDPATHFINDER_AUTOUPDATER_H
-#define EDPATHFINDER_AUTOUPDATER_H
+#include <QStringList>
+#include "Version.h"
+#include "buildnumber.h"
 
+Version::Version(): _version(PROJECT_VERSION), _versionInt(0) {
+    parseVersion();
+}
 
-class AutoUpdater {
-public:
-    AutoUpdater();
-};
+Version::Version(const QString &version): _version(version), _versionInt(0) {
+    parseVersion();
+}
 
+void Version::parseVersion() {
+    auto components = _version.split(".");
+    _versionInt = 0;
 
-#endif //EDPATHFINDER_AUTOUPDATER_H
+    for(int i = 0; i < 4; i++) {
+        int val = 0;
+        if(i < components.size()) {
+            val = components[i].toInt();
+        }
+        _versionInt += val;
+        _versionInt <<= 8;
+    }
+}

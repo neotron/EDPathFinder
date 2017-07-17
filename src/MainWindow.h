@@ -23,9 +23,9 @@
 #include "SystemEntryCoordinateResolver.h"
 #include "ui_MainWindow.h"
 #include "AbstractBaseWindow.h"
+#include "Version.h"
 
 class RouteResult;
-
 class AStarRouter;
 
 
@@ -54,6 +54,9 @@ protected slots:
 
     void openMissionTool();
     void openExplorationTool();
+
+private slots:
+    void showVersionUpdateDialog(const Version &newVersion);
 
 private:
 
