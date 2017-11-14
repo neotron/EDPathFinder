@@ -18,7 +18,7 @@
 
 #include <QDebug>
 #include <QtConcurrent>
-#include <constraint_solver/routing_flags.h>
+#include <ortools/constraint_solver/routing_flags.h>
 #include "System.h"
 #include "TSPWorker.h"
 

@@ -30,15 +30,15 @@
 #define READ_BOOL (READ_INT == 1)
 #define READ_STR (*(it++))
 #define READ_URL QUrl(READ_STR)
-#define SKIP_FIELD do { it++; } while(0)
+#define SKIP_FIELD do { it++; } while(false)
 #define READ_MATERIAL (READ_FLOAT > 0.000)
 #define READ_URL_JPEG(X) QUrl X; do { \
     auto url = READ_STR; \
     if(url.length()) { \
         url += ".jpg"; \
-        X = QUrl(url); \
+        (X) = QUrl(url); \
     }\
-} while(0)
+} while(false)
 
 void SystemLoader::run() {
     QFile distances(":/body_distances.json");
@@ -172,6 +172,7 @@ void SystemLoader::loadSettlementTypes() {
         READ_URL_JPEG(overview3DUrl);
         READ_URL_JPEG(coreUrl);
         READ_URL_JPEG(satelliteUrl);
+
         auto settlementType = new SettlementType(size, security, economy);
         settlementType->addImage(SettlementType::IMAGE_BASE_ICON, iconUrl);
         settlementType->addImage(SettlementType::IMAGE_CORE, coreUrl.isValid() ? coreUrl : showUrl);
@@ -225,7 +226,7 @@ void SystemLoader::loadSettlements() {
         auto z = READ_FLOAT; // z coordinate
 
         SKIP_FIELD; // distance from origin, not used by app
-        ThreatLevel threat = (ThreatLevel) (1 << READ_INT); // threat level
+        auto threat = static_cast<ThreatLevel>(1 << READ_INT); // threat level
 
         if(READ_BOOL) { flags |= SettlementFlagsCoreDataTerminal; }  // has coredata node
         if(READ_BOOL) { flags |= SettlementFlagsJumpClimbRequired; } // needs jumping
@@ -247,7 +248,6 @@ void SystemLoader::loadSettlements() {
         if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanFragment; }
 
         auto size = READ_STR;
-//        SKIP_FIELD; // Settlement size, uses settlement raw data.
         SKIP_FIELD; // idx
 
         Settlement settlement(name, flags, threat, type);
@@ -294,7 +294,7 @@ System::System(AStarSystemNode *system)
         : _name(system->name()), _position(system->position()) {}
 
 void System::addSettlement(const QString &planetName, const Settlement &settlement, int distance) {
-    for(auto planet: _planets) {
+    for(auto &planet: _planets) {
         if(planet.name() == planetName) {
             planet.addSettlement(settlement);
             return;
@@ -303,7 +303,7 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
     _planets.push_back(Planet(planetName, distance, settlement));
 }
 
-System::~System() {}
+System::~System() = default;
 
 
 System::System(const QJsonObject &jsonObject)
@@ -314,7 +314,7 @@ System::System(const QJsonObject &jsonObject)
     _position.setZ((float) coords["z"].toDouble());
 }
 
-SystemLoader::~SystemLoader() {}
+SystemLoader::~SystemLoader() = default;
 
 int SystemLoader::getDistance(const QString &system, const QString &planet) {
     auto systemValue = _bodyDistances.value(system);

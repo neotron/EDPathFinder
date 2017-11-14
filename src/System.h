@@ -25,7 +25,7 @@
 #include <QThread>
 #include <QDebug>
 #include <QUrl>
-#include <base/integral_types.h>
+#include <ortools/base/integral_types.h>
 #include <QJsonDocument>
 
 class AStarSystemNode;
@@ -166,34 +166,15 @@ class Settlement {
 public:
 
 
-    Settlement(const QString &name, int32 flags = 0, ThreatLevel threatLevel = ThreatLevelLow,
-               const SettlementType *type = nullptr)
-            : _name(name), _flags(flags), _threatLevel(threatLevel), _type(type) {}
+    explicit Settlement(QString name, int32 flags = 0, ThreatLevel threatLevel = ThreatLevelLow,
+                        const SettlementType *type = nullptr)
+            : _name(std::move(name)), _flags(flags), _threatLevel(threatLevel), _type(type) {}
 
-    Settlement(const Settlement &&other)
-            : _name(std::move(other._name)), _flags(other._flags), _threatLevel(other._threatLevel),
-              _type(other._type) {
-    }
-
-    Settlement(const Settlement &other)
-            : _name(other._name), _flags(other._flags), _threatLevel(other._threatLevel), _type(other._type) {
-    }
-
-    Settlement &operator=(const Settlement &&other) {
-        _name = std::move(other._name);
-        _flags = other._flags;
-        _threatLevel = other._threatLevel;
-        _type = other._type;
-        return *this;
-    }
-
-    Settlement &operator=(const Settlement &other) {
-        _name = other._name;
-        _flags = other._flags;
-        _threatLevel = other._threatLevel;
-        _type = other._type;
-        return *this;
-    }
+    // Copy and assignments.
+    Settlement(Settlement &&other) = default;
+    Settlement(const Settlement &other) = default;
+    Settlement &operator=(Settlement &&other) = default;
+    Settlement &operator=(const Settlement &other)  = default;
 
     const QString &name() const {
         return _name;
@@ -224,36 +205,21 @@ private:
 
 class Planet {
 public:
-    Planet()
-            : _name(), _distance(0), _settlements() {}
+    Planet() : _name(), _distance(0), _settlements() {}
 
-    Planet(const QString &name, int distance, const Settlement &settlement)
-            : _name(name), _distance(distance), _settlements() {
+    Planet(QString name, int distance, const Settlement &settlement)
+            : _name(std::move(name)), _distance(distance), _settlements() {
         _settlements.push_back(settlement);
     }
 
-    Planet(const QString &name, int distance, const SettlementList &settlements)
-            : _name(name), _distance(distance), _settlements(settlements) {}
+    Planet(QString name, int distance, SettlementList settlements)
+            : _name(std::move(name)), _distance(distance), _settlements(std::move(settlements)) {}
 
-    Planet(const Planet &&other)
-            : _name(std::move(other._name)), _distance(other._distance), _settlements(std::move(other._settlements)) {}
-
-    Planet(const Planet &other)
-            : _name(other._name), _distance(other._distance), _settlements(other._settlements) {}
-
-    Planet &operator=(const Planet &other) {
-        _name = other._name;
-        _settlements = other._settlements;
-        _distance = other._distance;
-        return *this;
-    }
-
-    Planet &operator=(const Planet &&other) {
-        _name = std::move(other._name);
-        _settlements = std::move(other._settlements);
-        _distance = other._distance;
-        return *this;
-    }
+    // Copy and assignments.
+    Planet(Planet &&other) = default;
+    Planet(const Planet &other) = default;
+    Planet &operator=(const Planet &other) = default;
+    Planet &operator=(Planet &&other) = default;
 
     const SettlementList &settlements() const {
         return _settlements;
@@ -283,47 +249,29 @@ public:
 
     System()  : _name(), _planets(), _position(), _numPlanets() {}
 
-    System(const QString &name, float x, float y, float z)
-            : _name(name), _position(x, y, z), _numPlanets() {}
+    System(QString name, float x, float y, float z)
+            : _name(std::move(name)), _position(x, y, z), _numPlanets() {}
 
-    System(const QString &name, const Planet &planet, float x, float y, float z)
-            : _name(name), _planets(), _position(x, y, z), _numPlanets() {
+    System(QString name, const Planet &planet, float x, float y, float z)
+            : _name(std::move(name)), _planets(), _position(x, y, z), _numPlanets() {
         _planets.push_back(planet);
     }
 
-    System(const QString &system, const PlanetList &planets, const QVector3D &position)
-            : _name(system), _planets(planets), _position(position), _numPlanets() {}
+    System(QString system, PlanetList planets, const QVector3D &position)
+            : _name(std::move(system)), _planets(std::move(planets)), _position(position), _numPlanets() {}
 
-    System(const QString &name, const QVector3D &position)
-            : _name(name), _position(position), _numPlanets() {}
+    System(QString name, const QVector3D &position)
+            : _name(std::move(name)), _position(position), _numPlanets() {}
+    explicit System(AStarSystemNode *system);
 
-    System(const System &other)
-            : _name(other._name), _planets(other._planets), _position(other._position),
-              _numPlanets(other._numPlanets) {}
+    // Copy and assignment
+    System(const System &other) = default;
+    System(System &&other) = default;
+    System &operator=(const System &other) = default;
+    System &operator=(System &&other) = default;
 
-    System(const System &&other)
-            : _name(std::move(other._name)), _planets(std::move(other._planets)),
-              _position(std::move(other._position)), _numPlanets(std::move(other._numPlanets)) {}
+    explicit System(const QJsonObject &jsonObject);
 
-    System(const QJsonObject &jsonObject);
-
-    System &operator=(const System &other) {
-        _name = other._name;
-        _planets = other._planets;
-        _position = other._position;
-        _numPlanets = other._numPlanets;
-        return *this;
-    }
-
-    System &operator=(const System &&other) {
-        _name = std::move(other._name);
-        _planets = std::move(other._planets);
-        _position = std::move(other._position);
-        _numPlanets = std::move(other._numPlanets);
-        return *this;
-    }
-
-    System(AStarSystemNode *system);
 
     virtual ~System();
 
@@ -395,12 +343,12 @@ class SystemLoader : public QThread {
 Q_OBJECT
 
 public:
-    SystemLoader(AStarRouter *router)
+    explicit SystemLoader(AStarRouter *router)
             : QThread(), _router(router) {}
 
     void run() override;
 
-    virtual ~SystemLoader();
+    ~SystemLoader() override;
 
     void loadSettlements();
 

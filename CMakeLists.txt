@@ -29,7 +29,7 @@ set(RESOURCE_FILES resources/resources.qrc)
 
 add_project_meta(META_FILES_TO_INCLUDE)
 
-set(ORTOOLS ../or-tools/)
+set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools/)
 set(PFDIR ${PROJECT_SOURCE_DIR}/deps/PathFinder/src/)
 set(JOURNALDIR ${PROJECT_SOURCE_DIR}/deps/EDJournalQT/src/)
 
@@ -72,7 +72,7 @@ endif ()
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
 file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui)
-include_directories(SYSTEM ${ORTOOLS}/include deps/PathFinder/src/)
+include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
 
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}

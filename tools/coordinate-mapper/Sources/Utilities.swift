@@ -22,7 +22,7 @@ extension Int  {
     static func seq(_ seq: Data.SubSequence) -> Int? {
         let len = seq.endIndex - seq.startIndex
         let bytesCopy = UnsafeMutablePointer<UInt8>.allocate(capacity: len + 1)
-        seq.base.copyBytes(to: bytesCopy, from: seq.startIndex..<seq.endIndex)
+        seq.copyBytes(to: bytesCopy, from: seq.startIndex..<seq.endIndex)
         bytesCopy[len] = 0
         var value: Int?
         bytesCopy.withMemoryRebound(to: Int8.self, capacity: len+1) {
@@ -36,7 +36,7 @@ extension Double  {
     static func seq(_ seq: Data.SubSequence) -> Double {
         let len = seq.endIndex - seq.startIndex
         let bytesCopy = UnsafeMutablePointer<UInt8>.allocate(capacity: len + 1)
-        seq.base.copyBytes(to: bytesCopy, from: seq.startIndex..<seq.endIndex)
+        seq.copyBytes(to: bytesCopy, from: seq.startIndex..<seq.endIndex)
         bytesCopy[len] = 0
         var value: Double = 0.0
         bytesCopy.withMemoryRebound(to: Int8.self, capacity: len+1) {
@@ -56,7 +56,7 @@ extension String {
             start += 1
             end -= 1
         }
-        let data = seq.base.subdata(in: start..<end)
+        let data = seq.subdata(in: start..<end)
         self.init(data: data, encoding: .utf8)
     }
 }
