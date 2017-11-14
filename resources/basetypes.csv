@@ -1,55 +1,55 @@
-Size	Layout	Security	idx	Size_game	Model	Variation		Type	Function	icons	show	core/full	overview	path	view	2.0 core	2.1 overview	filler
-3	L1L	Low	1	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/EHVAXja	http://i.imgur.com/EHVAXja			http://i.imgur.com/34q6Gxc			1
-3	L1M	Medium	2	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/2svXWWz	http://i.imgur.com/2svXWWz		http://i.imgur.com/ORyskBy	http://i.imgur.com/34q6Gxc			1
-3	L1H	High	3	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/Y406GIE	http://i.imgur.com/Y406GIE	http://i.imgur.com/ss1hGv3		http://i.imgur.com/34q6Gxc			1
-3	L2L	Low	1	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://i.imgur.com/iJdYOMm			http://i.imgur.com/PaDSreY			1
-3	L2M	Medium	2	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://i.imgur.com/N0fE1pb		http://i.imgur.com/d7W5vLG	http://i.imgur.com/PaDSreY			1
-3	L2H	High	3	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://i.imgur.com/HMo5Ubz			http://i.imgur.com/KCCko73			1
-3	L3L	Low	1	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/wXVduOY			http://i.imgur.com/lhCJ5rp			1
-3	L3M	Medium	2	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/PbBRCm3			http://i.imgur.com/ylj3Da2			1
-3	L3H	High	3	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/ySlX58M			http://i.imgur.com/XeXceOp			1
-3	L4M1	Medium	1	+++	Large	1	2	4	Military	http://i.imgur.com/EeK0FeQ.png		http://i.imgur.com/lsQkFzb	http://i.imgur.com/oZI11q5		http://i.imgur.com/fNEGZkH			1
-3	L4M2	Medium	2	+++	Large	2	2	4	Military	http://i.imgur.com/EeK0FeQ.png		http://i.imgur.com/o7hrl5D	http://i.imgur.com/l1sLOpA		http://i.imgur.com/uoGYwDP	http://i.imgur.com/A8MgjLE	http://i.imgur.com/BT8fI69	1
-3	L4H	High	3	+++	Large	1	1	4	Military	http://i.imgur.com/EeK0FeQ.png		http://i.imgur.com/o7hrl5D	http://i.imgur.com/l1sLOpA		http://i.imgur.com/uoGYwDP			1
-2	M1L	Low	1	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/LKvTnZy						1
-2	M1M	Medium	2	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/5Nhvl0S						1
-2	M1H	High	3	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/WB3sPtL						1
-2	M2L	Low	1	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://i.imgur.com/IwuCnyA						1
-2	M2M	Medium	2	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://i.imgur.com/geYAFcK		http://i.imgur.com/ogrFay4	http://i.imgur.com/ilL87NX			
-2	M2H	High	3	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://i.imgur.com/QCoZ3rf						1
-2	M3L	Low	1	++	Medium	1	1	3	Scientific	http://i.imgur.com/yboWxxj.png		http://i.imgur.com/23em77U						1
-2	M3M	Medium	2	++	Medium	1	1	3	Scientific	http://i.imgur.com/yboWxxj.png		http://i.imgur.com/H7rfHq8						1
+Size	Layout	Security	idx	Size_game	Model	Variation	Column1	Type	Function	icons	show	core/full	overview	path	view	2.0 core	2.1 overview	filler
+3	L1L	Low	1	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/EHVAXja	http://i.imgur.com/R5DPkNI		http://i.imgur.com/mle8NUC	http://i.imgur.com/U1mleE1			1
+3	L1M	Medium	2	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/2svXWWz	http://i.imgur.com/AqlTEBZ		http://i.imgur.com/d8xi2x4	http://i.imgur.com/lKH2dNq			1
+3	L1H	High	3	+++	Large	1	1	1	Industrial	http://i.imgur.com/eSLxss4.png	http://i.imgur.com/Y406GIE	http://i.imgur.com/Rwzjt0u	http://i.imgur.com/iYBilJs		http://i.imgur.com/ee44ABz			1
+3	L2L	Low	1	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://imgur.com/XPyYnoc			http://i.imgur.com/PaDSreY			1
+3	L2M	Medium	2	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://imgur.com/h3NA6Wg		http://imgur.com/WlVJuJ3	http://imgur.com/G1NMxxG			1
+3	L2H	High	3	+++	Large	1	1	2	Exploration	http://i.imgur.com/msGFc0z.png		http://imgur.com/2i6N5D6			http://i.imgur.com/KCCko73			1
+3	L3L	Low	1	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/Qf9Mn9S		http://i.imgur.com/fjeysaM	http://i.imgur.com/lhCJ5rp			1
+3	L3M	Medium	2	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/LyvaP8S		http://i.imgur.com/51JCaJ6	http://i.imgur.com/ylj3Da2			1
+3	L3H	High	3	+++	Large	1	1	3	Scientific	http://i.imgur.com/F8K5d1o.png		http://i.imgur.com/lKLMZFA			http://i.imgur.com/XeXceOp			1
+3	L4M1	Medium	1	+++	Large	1	2	4	Military	http://i.imgur.com/EeK0FeQ.png		http://i.imgur.com/lsQkFzb	http://i.imgur.com/oZI11q5		http://imgur.com/fNEGZkH			1
+3	L4M2	Medium	2	+++	Large	2	2	4	Military	http://i.imgur.com/EeK0FeQ.png		http://imgur.com/dHxhUgH	http://imgur.com/GYmAv9d		http://imgur.com/XcOsEaN			1
+3	L4H	High	3	+++	Large	1	1	4	Military	http://i.imgur.com/EeK0FeQ.png		http://i.imgur.com/o7hrl5D	http://i.imgur.com/l1sLOpA		http://imgur.com/uoGYwDP			1
+2	M1L	Low	1	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/EsaTBDb		http://i.imgur.com/3gH9FS6	http://i.imgur.com/C8NmrOc			1
+2	M1M	Medium	2	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/ousYnXp		http://i.imgur.com/mKb2lq3	http://imgur.com/cQn1N7F			1
+2	M1H	High	3	++	Medium	1	1	1	Military	http://i.imgur.com/a0ydYuR.png		http://i.imgur.com/BNhSMhR						1
+2	M2L	Low	1	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://imgur.com/obmFUYk		http://imgur.com/QnD3a1h	http://imgur.com/uGJAy57			1
+2	M2M	Medium	2	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://imgur.com/geYAFcK		http://i.imgur.com/ogrFay4	http://imgur.com/ilL87NX			
+2	M2H	High	3	++	Medium	1	1	2	Refinery	http://i.imgur.com/d46vt5j.png		http://imgur.com/2nZMret			http://imgur.com/V5mbRJO			1
+2	M3L	Low	1	++	Medium	1	1	3	Scientific	http://i.imgur.com/yboWxxj.png		http://i.imgur.com/KfAMDCC		http://i.imgur.com/IwRuoTI	http://imgur.com/U5mKMQf			1
+2	M3M	Medium	2	++	Medium	1	1	3	Scientific	http://i.imgur.com/yboWxxj.png		http://imgur.com/CxALf0v		http://imgur.com/E8MtcUW	http://imgur.com/lVnb468			1
 2	M3H	High	3	++	Medium	1	1	3	Scientific	http://i.imgur.com/yboWxxj.png		http://i.imgur.com/a0cndan	http://i.imgur.com/o1iUKJd					1
-2	M4L	Low	1	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://i.imgur.com/ibgOITO						1
-2	M4M	Medium	2	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://i.imgur.com/qxY6ShT						1
-2	M4H	High	3	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://i.imgur.com/OtlRQfZ	http://i.imgur.com/fkwvkVi	http://i.imgur.com/lnxk4mw				1
-3	M5L	Low	1	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://i.imgur.com/TPWFWIV	http://i.imgur.com/XfrqP3q	http://i.imgur.com/qtGgaP5				1
-3	M5M	Medium	2	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://i.imgur.com/hiexv3K	http://i.imgur.com/7mKA7w5					1
-3	M5H	High	3	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://i.imgur.com/Okpzoal	http://i.imgur.com/dzPX5YA	http://i.imgur.com/1DrrEqg	http://i.imgur.com/0Sz5L18	http://i.imgur.com/M2WxNi9		1
-2	M6L	Low	1	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://i.imgur.com/5qWBICn						1
-2	M6M	Medium	2	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://i.imgur.com/Fhtmen6			http://i.imgur.com/rUpimmL			1
-2	M6H	High	3	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://i.imgur.com/9e3IhKB						1
-1	S1L	Low	1	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png		http://i.imgur.com/HTmJetH						1
-1	S1M	Medium	2	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png		http://i.imgur.com/zdaeiUX						1
-1	S1H	High	3	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png						http://i.imgur.com/SxnxVja		1
-1	S2L	Low	1	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://i.imgur.com/28kZhDc						1
-1	S2M	Medium	2	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://i.imgur.com/ZcfQssY						1
-1	S2H	High	3	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://i.imgur.com/pTaA04N	http://i.imgur.com/puSX4kV					1
-1	S3L	Low	1	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/TJjGqKa						1
-1	S3M	Medium	2	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/5lvWDZb						1
-1	S3H	High	3	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/VSksmsj						1
-1	S4L	Low	1	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/1y4Xd2b						1
-1	S4M	Medium	2	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/bljuito						1
-1	S4H	High	3	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/uEWOd9T						1
-1	S5L	Low	1	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://i.imgur.com/qOPc8S1						1
-1	S5M	Medium	2	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://i.imgur.com/2zPK5AI						1
-1	S5H	High	3	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://i.imgur.com/v7d3dUr			http://i.imgur.com/yA43o9d			1
-	T11									http://i.imgur.com/wyZotw8.png	http://i.imgur.com/kqKNdPi							1
-	T12									http://i.imgur.com/wyZotw8.png	http://i.imgur.com/Uchx9Pl							1
-	T21									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/Ql0zmCS							1
-	T22									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/MKO0xky							1
-	T23									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/YhVcnKi							1
-	T31									http://i.imgur.com/FDnTPrV.png	http://i.imgur.com/TOuJoz0							1
-	T32									http://i.imgur.com/FDnTPrV.png	http://i.imgur.com/wEXf4GH							1
-	T41									http://i.imgur.com/ZkwCZhq.png	http://i.imgur.com/OZTfd4J							1
-	T51									http://i.imgur.com/vwll3Da.png	http://i.imgur.com/KoQGlRB							1
+2	M4L	Low	1	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://imgur.com/ewI1BHc		http://imgur.com/5RYAsBK	http://imgur.com/NFn5zsl			1
+2	M4M	Medium	2	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://imgur.com/Kfg3pn2		http://imgur.com/YMPvrxg	http://imgur.com/NUrPJxZ			1
+2	M4H	High	3	++	Medium	1	1	4	Civilian	http://i.imgur.com/G3Vc3iM.png		http://i.imgur.com/brPGuWO	http://i.imgur.com/woY6U05	http://i.imgur.com/YfCBcCO	http://i.imgur.com/2Z39aZL			1
+3	M5L	Low	1	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://i.imgur.com/TPWFWIV	http://i.imgur.com/XfrqP3q	http://i.imgur.com/qtGgaP5	http://imgur.com/YWWo5TQ			1
+3	M5M	Medium	2	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://imgur.com/dmftIB9	http://i.imgur.com/7mKA7w5	http://imgur.com/o6yrOCr	http://imgur.com/UIWiKRp			1
+3	M5H	High	3	++	Large	1	1	5	Extraction	http://i.imgur.com/jooRG7B.png		http://imgur.com/Okpzoal	http://imgur.com/dzPX5YA	http://imgur.com/1DrrEqg	http://imgur.com/0Sz5L18			1
+2	M6L	Low	1	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://i.imgur.com/OvYkhbV			http://i.imgur.com/F7ZsOlG			1
+2	M6M	Medium	2	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://imgur.com/Fhtmen6			http://imgur.com/rUpimmL			1
+2	M6H	High	3	++	Medium	1	1	6	Industrial	http://i.imgur.com/nLgygEN.png		http://imgur.com/8fj5gBv		http://imgur.com/zLdF5kM	http://imgur.com/XmN70nY			1
+1	S1L	Low	1	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png		http://imgur.com/Z5D9VYy			http://imgur.com/J7TS97d			1
+1	S1M	Medium	2	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png		http://imgur.com/VNFuk6A			http://imgur.com/UMJCwtY			1
+1	S1H	High	3	+ or ""	Small	1	1	1	Extraction	http://i.imgur.com/UYOmhG0.png		http://i.imgur.com/ZmHvqCc				http://i.imgur.com/SxnxVja		1
+1	S2L	Low	1	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://i.imgur.com/28kZhDc			http://imgur.com/Zl5psft			1
+1	S2M	Medium	2	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://i.imgur.com/ZcfQssY			http://imgur.com/jH1MULS			1
+1	S2H	High	3	+ or ""	Small	1	1	2	HighTech	http://i.imgur.com/qIi6Zw0.png		http://imgur.com/lurF07N	http://imgur.com/P81auCD		http://imgur.com/u4X5HWD			1
+1	S3L	Low	1	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/TJjGqKa			http://imgur.com/J5bH0ps	http://i.imgur.com/TJjGqKa		1
+1	S3M	Medium	2	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/5lvWDZb			http://imgur.com/VV5ph4M			1
+1	S3H	High	3	+ or ""	Small	1	1	3	Civilian	http://i.imgur.com/3ZVlZoG.png		http://i.imgur.com/WHosRlg						1
+1	S4L	Low	1	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/1y4Xd2b			http://imgur.com/ItGqMHG			1
+1	S4M	Medium	2	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/aYs1jbT		http://i.imgur.com/FCdtEzn	http://i.imgur.com/HQHjArV			1
+1	S4H	High	3	+ or ""	Small	1	1	4	Outpost	http://i.imgur.com/YBMYAba.png		http://i.imgur.com/uEWOd9T			http://imgur.com/npsuUyl			1
+1	S5L	Low	1	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://i.imgur.com/qOPc8S1			http://imgur.com/gsIxkaO			1
+1	S5M	Medium	2	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://imgur.com/2zPK5AI						1
+1	S5H	High	3	+ or ""	Small	1	1	5	Industrial	http://i.imgur.com/7u0jmOK.png		http://imgur.com/v7d3dUr			http://imgur.com/yA43o9d			1
+	T11									http://i.imgur.com/wyZotw8.png	http://i.imgur.com/kqKNdPi	http://i.imgur.com/kqKNdPi						1
+	T12									http://i.imgur.com/wyZotw8.png	http://i.imgur.com/Uchx9Pl	http://i.imgur.com/Uchx9Pl						1
+	T21									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/Ql0zmCS	http://i.imgur.com/Ql0zmCS						1
+	T22									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/MKO0xky	http://i.imgur.com/MKO0xky						1
+	T23									http://i.imgur.com/2iXuHsB.png	http://i.imgur.com/YhVcnKi	http://i.imgur.com/YhVcnKi						1
+	T31									http://i.imgur.com/FDnTPrV.png	http://i.imgur.com/TOuJoz0	http://i.imgur.com/TOuJoz0						1
+	T32									http://i.imgur.com/FDnTPrV.png	http://i.imgur.com/wEXf4GH	http://i.imgur.com/wEXf4GH						1
+	T41									http://i.imgur.com/ZkwCZhq.png	http://i.imgur.com/OZTfd4J	http://i.imgur.com/OZTfd4J						1
+	T51									http://i.imgur.com/vwll3Da.png	http://i.imgur.com/KoQGlRB	http://imgur.com/KoQGlRB						1
