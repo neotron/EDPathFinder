@@ -27,6 +27,9 @@ if (WIN32)
     configure_file("${PROJECT_SOURCE_DIR}/cmake/windows_metafile.rc.in"
       "windows_metafile.rc"
     )
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/installer.nsi.in"
+      "${PROJECT_SOURCE_DIR}/wininstall/installer.nsi" @ONLY
+    )
     set(RES_FILES "windows_metafile.rc")
     set(CMAKE_RC_COMPILER_INIT windres)
     ENABLE_LANGUAGE(RC)
