@@ -89,7 +89,7 @@ void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
 }
 
 void MissionRouter::optimizeRoute() {
-    if(!(_currentModel || _customStops.size())) {
+    if(!(_currentModel || !_customStops.empty())) {
         return;
     }
     _ui->optimizeButton->setEnabled(false);
@@ -122,6 +122,8 @@ void MissionRouter::optimizeRoute() {
         routeSystems.push_back(System(missionSystem->name(), PlanetList(), missionSystem->position()));
     }
     routeSystems.push_back(*originSystem);
+
+    _ui->statusbar->showMessage(QString("Resolving route for %1 systems...").arg(routeSystems.size()), 10000);
 
     const auto tspWorker = new TSPWorker(routeSystems, originSystem, routeSystems.size());
     tspWorker->setSystemsOnly(true);
@@ -165,6 +167,7 @@ void MissionRouter::onSystemCoordinatesReceived(const System &system) {
             optimizeRoute();
         }
         _ui->customSystem->setText("");
+        QTimer::singleShot(0, _ui->customSystem, SLOT(setFocus()));
     }
 }
 
