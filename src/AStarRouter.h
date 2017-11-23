@@ -36,7 +36,7 @@ public:
 
     AStarResult() : _valid(false) { }
 
-    AStarResult(const AStarSystemList &solution);
+    explicit AStarResult(const AStarSystemList &solution);
 
     const SystemList &route() const {
         return _route;
@@ -53,7 +53,7 @@ public:
 
 private:
     SystemList _route;
-    float      _distance;
+    float      _distance{};
     bool       _valid;
 };
 
@@ -62,10 +62,10 @@ public:
     AStarSystemNode(AStarCalculator &calculator, const System &system)
             : AStarNode(), _system(system), _calculator(calculator) { }
 
-    virtual ~AStarSystemNode() { }
+    ~AStarSystemNode() override = default;
 
     // Distance between this and another node, used by A* algorithm.
-    virtual float distanceTo(AStarNode *node) const override {
+    float distanceTo(AStarNode *node) const override {
         auto other = (AStarSystemNode *) node;
         return _system.position().distanceToPoint(other->_system.position());
     }
@@ -74,7 +74,7 @@ public:
 
     const QVector3D &position() const { return _system.position(); }
 
-    virtual std::vector<std::pair<Node *, float>> &getChildren() override;
+    std::vector<std::pair<Node *, float>> &getChildren() override;
 
 private:
     const System    &_system;
@@ -91,7 +91,7 @@ public:
         cylinder(systems, start.position(), end.position(), 40.0);
     }
 
-    virtual ~AStarCalculator();
+    ~AStarCalculator() override;
 
     void cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer);
 
@@ -116,11 +116,10 @@ Q_OBJECT
 
 public:
 
-    AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup() { }
+    explicit AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup() { }
 
 
-    virtual ~AStarRouter() {
-    }
+    ~AStarRouter() override = default;
 
     void addSystem(const System &system) {
         _systems.push_back(system);
@@ -138,15 +137,15 @@ public:
         return _systems;
     }
 
-    virtual QModelIndex index(int row, int column, const QModelIndex &) const;
+    QModelIndex index(int row, int column, const QModelIndex &) const override;
 
-    virtual QModelIndex parent(const QModelIndex &) const;
+    QModelIndex parent(const QModelIndex &) const override;
 
-    virtual int rowCount(const QModelIndex &) const;
+    int rowCount(const QModelIndex &) const override;
 
-    virtual int columnCount(const QModelIndex &) const;
+    int columnCount(const QModelIndex &) const override;
 
-    virtual QVariant data(const QModelIndex &index, int role) const;
+    QVariant data(const QModelIndex &index, int role) const override;
 
     void sortSystemList();
 protected:

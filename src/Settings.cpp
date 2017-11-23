@@ -18,7 +18,6 @@
 #include <QDir>
 #include <QSettings>
 #include "Settings.h"
-#include "Theme.h"
 
 static const char *const kJournalPathKey = "journalPath";
 static const char *const kThemeKey = "theme";

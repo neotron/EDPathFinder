@@ -51,14 +51,14 @@ class FlickCharm: public QObject
 {
     Q_OBJECT
 public:
-    FlickCharm(QObject *parent = 0);
-    ~FlickCharm();
+    explicit FlickCharm(QObject *parent = nullptr);
+    ~FlickCharm() override;
     void activateOn(QWidget *widget);
     void deactivateFrom(QWidget *widget);
-    bool eventFilter(QObject *object, QEvent *event);
+    bool eventFilter(QObject *object, QEvent *event) override;
 
 protected:
-    void timerEvent(QTimerEvent *event);
+    void timerEvent(QTimerEvent *event) override;
 
 private:
     FlickCharmPrivate *d;

@@ -21,7 +21,6 @@
 #include <QDebug>
 #include "System.h"
 #include "AStarRouter.h"
-#include <QMap>
 
 #define SETTLEMENT_TYPE_FIELD_COUNT 17
 #define EXPECTED_FIELD_COUNT 27
@@ -32,7 +31,7 @@
 #define READ_STR (*(it++))
 #define READ_URL QUrl(READ_STR)
 #define SKIP_FIELD do { it++; } while(false)
-#define READ_MATERIAL(FLAG) do { float val = READ_FLOAT; if(val > 0.000) { flags |= FLAG; materials[FLAG] = val; }; } while(false)
+#define READ_MATERIAL(FLAG) do { float val = READ_FLOAT; if(val > 0.000) { flags |= (FLAG); materials[(FLAG)] = val; }; } while(false)
 #define READ_URL_JPEG(X) QUrl X; do { \
     auto url = READ_STR; \
     if(url.length()) { \

@@ -25,8 +25,8 @@ class ImageLoader: public QObject {
 Q_OBJECT
 
 public:
-    ImageLoader(QWidget *pixmapHolder);
-    virtual ~ImageLoader();
+    explicit ImageLoader(QWidget *pixmapHolder);
+    ~ImageLoader() override;
     void startDownload(const QUrl &url);
 
     void setMaxSize(const QSize &maxSize) {

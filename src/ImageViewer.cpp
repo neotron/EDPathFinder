@@ -92,3 +92,7 @@ void ImageViewer::setPixmap(const QPixmap &pixmap) {
     fitToWindow();
     updateGeometry();
 }
+
+ImageViewer::ImageViewer(QScrollAreaPrivate &dd, QWidget *parent) : QScrollArea(dd, parent) {
+    sharedInitialize();
+}

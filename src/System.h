@@ -58,7 +58,6 @@ enum SettlementSize {
 };
 
 enum SettlementFlags {
-    SettlementFlagsNone = 0,
     SettlementFlagsCoreDataTerminal = 1 << 0,
     SettlementFlagsJumpClimbRequired = 1 << 1,
     SettlementFlagsClassifiedScanDatabanks = 1 << 2,

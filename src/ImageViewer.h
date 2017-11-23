@@ -28,40 +28,40 @@ class QMenu;
 class QScrollArea;
 class QScrollBar;
 
-class ImageViewer : public QScrollArea
-{
-    Q_OBJECT
+class ImageViewer : public QScrollArea {
+Q_OBJECT
 
 public:
-    ImageViewer(QWidget *parent);
+    explicit ImageViewer(QWidget *parent);
 
-    ImageViewer(QScrollAreaPrivate &dd, QWidget *parent) : QScrollArea(dd, parent) {
-        sharedInitialize();
-    }
+    ImageViewer(QScrollAreaPrivate &dd, QWidget *parent);
 
     void setPixmap(const QPixmap &pixmap);
 
 private slots:
 
     void zoomIn();
+
     void zoomOut();
+
     void fitToWindow();
 
 private:
     template<typename T>
-    T findSibling(const QString &aName) const  {
-        QObject *p      = parent();
+    T findSibling(const QString &aName) const {
+        QObject *p = parent();
         return p->findChild<T>(aName);
     }
 
 
 public:
     void scaleImage(double factor);
+
     void adjustScrollBar(QScrollBar *scrollBar, double factor);
 
-    AspectRatioPixmapLabel *_imageLabel;
+    AspectRatioPixmapLabel *_imageLabel = nullptr;
     FlickCharm _flicker;
-    double _scaleFactor;
+    double _scaleFactor{};
 
     void sharedInitialize();
 

@@ -38,6 +38,7 @@
 
 #include <QList>
 #include <QThread>
+#include <utility>
 #include <ortools/constraint_solver/routing.h>
 #include "System.h"
 #include "AStarRouter.h"
@@ -47,9 +48,8 @@ typedef std::vector<std::vector<QString>> RouteResultMatrix;
 class RouteSystemPlanetSettlement {
 
 public:
-    RouteSystemPlanetSettlement(const QString &systemName, const QString &planetName, int distance,
-                                const Settlement &settlement)
-            : _systemName(systemName), _planetName(planetName), _settlement(settlement), _distance(distance) {}
+    RouteSystemPlanetSettlement(QString systemName, QString planetName, int distance, Settlement settlement)
+            : _systemName(std::move(systemName)), _planetName(std::move(planetName)), _settlement(std::move(settlement)), _distance(distance) {}
 
     const QString &systemName() const {
         return _systemName;
@@ -84,10 +84,6 @@ public:
 
     void addEntry(const System &system, int64 distance);
 
-    const QString ly() const {
-        return System::formatDistance(_totalDist, true);
-    }
-
     const RouteResultMatrix &route() const {
         return _route;
     }
@@ -100,7 +96,7 @@ public:
     }
 
     bool isValid() const {
-        return route().size() != 0;
+        return !route().empty();
     }
 
 
@@ -120,11 +116,11 @@ namespace operations_research {
 
     public:
         TSPWorker(SystemList systems, System *system, int maxSystemCount)
-                : QThread(), _systems(systems), _origin(system), _destination(Q_NULLPTR), _maxSystemCount(maxSystemCount),
+                : QThread(), _systems(std::move(systems)), _origin(system), _destination(Q_NULLPTR), _maxSystemCount(maxSystemCount),
                   _router(Q_NULLPTR), _numDist(0), _systemsOnly(false) {}
 
 
-        virtual void run();
+        void run() override;
 
 
         void setRouter(AStarRouter *router) {

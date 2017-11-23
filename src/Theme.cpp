@@ -18,7 +18,6 @@
 #include <QApplication>
 #include <QStyleFactory>
 #include <QPalette>
-#include <QDebug>
 #include "Theme.h"
 #include "Settings.h"
 

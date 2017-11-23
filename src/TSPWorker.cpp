@@ -157,10 +157,7 @@ namespace operations_research {
 
         // Populate result.
         RouteResult result;
-        if(solution != NULL) {
-            QTextStream out(stdout);
-//            out <<"System"<< "\t" << "Planet"<< "\t"<<"Settlement" << "\t" << "Distance from previous" << endl;
-
+        if(solution) {
             // Inspect solution.
             // Only one route here; otherwise iterate from 0 to routing.vehicles() - 1
             const int route_number = 0;
@@ -189,7 +186,6 @@ namespace operations_research {
                     for(const auto &planet: sys.planets()) {
                         for(const auto &settlement: planet.settlements()) {
                             result.addEntry(sys, planet, settlement, dist);
-//                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
                             dist = 0;
                         }
                     }
@@ -226,5 +222,4 @@ void RouteResult::addEntry(const System &system, const Planet &planet, const Set
     _settlements.emplace_back(routeSettlement);
 }
 
-RouteResult::~RouteResult() {
-}
+RouteResult::~RouteResult() = default;
