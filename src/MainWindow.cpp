@@ -133,6 +133,7 @@ void MainWindow::updateFilters() {
         _ui->minMats->setMaximum(_lastMaterialCount);
         _ui->minMats->setValue(_lastMaterialCount);
     }
+
     auto selectedCommander = _ui->filterCommander->currentText();
     auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
@@ -380,7 +381,7 @@ void MainWindow::systemSortingProgress() {
 }
 
 void MainWindow::updateSystemForCommander(const QString &commander) {
-    if(_loading) {
+    if(_loading || commander.isEmpty()) {
         return;
     }
     _ui->commanderFilterGroup->setEnabled(true);
