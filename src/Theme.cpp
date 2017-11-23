@@ -28,6 +28,7 @@ QPalette Theme::s_defaultPalette = QPalette();
 void Theme::applyDark() {
     qApp->setStyle(QStyleFactory::create("Fusion"));
     QPalette darkPalette;
+    
     darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
     darkPalette.setColor(QPalette::WindowText, Qt::white);
     darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
@@ -39,13 +40,23 @@ void Theme::applyDark() {
     darkPalette.setColor(QPalette::ButtonText, Qt::white);
     darkPalette.setColor(QPalette::BrightText, Qt::red);
     darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
-
     darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
 
+    darkPalette.setColor(QPalette::Disabled, QPalette::WindowText, Qt::gray);
+    darkPalette.setColor(QPalette::Disabled, QPalette::Base, QColor(15, 15, 15));
+    darkPalette.setColor(QPalette::Disabled, QPalette::AlternateBase, QColor(33, 33, 33));
+    darkPalette.setColor(QPalette::Disabled, QPalette::ToolTipBase, Qt::gray);
+    darkPalette.setColor(QPalette::Disabled, QPalette::ToolTipText, Qt::gray);
+    darkPalette.setColor(QPalette::Disabled, QPalette::Text, Qt::gray);
+    darkPalette.setColor(QPalette::Disabled, QPalette::Button, QColor(33, 33, 33));
+    darkPalette.setColor(QPalette::Disabled, QPalette::ButtonText, Qt::gray);
+    darkPalette.setColor(QPalette::Disabled, QPalette::Link, QColor(22, 110, 198));
+    darkPalette.setColor(QPalette::Disabled, QPalette::Highlight, QColor(22, 110, 198));
+
     qApp->setPalette(darkPalette);
     QString styleSheet(qApp->styleSheet());
-    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
+    qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #1a427a; border: 1px solid #7f7f7f; }");
 }
 
 void Theme::applyDefault() {

@@ -156,13 +156,16 @@ void RouteViewer::updateSettlementInfo() {
 
 void RouteViewer::setFlag(const Settlement &settlement, QString key, SettlementFlags flag) {
     auto label = _ui->centralwidget->findChild<QLabel*>(key);
+    auto problabel = _ui->centralwidget->findChild<QLabel*>(key+"Prob");
+
     if(label) {
         bool hasFlag = (settlement.flags()&flag) == flag;
         label->setEnabled(hasFlag);
-        QFont font(label->font());
-        font.setBold(hasFlag);
-        label->setFont(font);
+        if(problabel) {
+            problabel->setText(hasFlag ? QString("%1").arg(settlement.materialProbability(flag)) : "");
+        }
     }
+
 }
 
 void RouteViewer::loadOverviewImage(const QUrl &url) {

@@ -85,7 +85,7 @@ public:
     void addEntry(const System &system, int64 distance);
 
     const QString ly() const {
-        return System::formatDistance(_totalDist);
+        return System::formatDistance(_totalDist, true);
     }
 
     const RouteResultMatrix &route() const {

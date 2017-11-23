@@ -37,8 +37,15 @@ QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
         switch(role) {
         case Qt::DisplayRole:
             return route[row][col];
+
         case Qt::TextAlignmentRole:
-            return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
+            switch(_resultType) {
+            default:
+                return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
+            case ResultTypeValuableSystems:
+                return col % 2 ? Qt::AlignRight : Qt::AlignLeft;
+            }
+
         default:
             return QVariant();
         }
@@ -55,13 +62,9 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
             case 1:
                 return _resultType == ResultTypeSettlement ? "Planet" : "Distance";
             case 2:
-                return _resultType == ResultTypeSettlement ? "Settlement" : "Cumulative Distance";
+                return _resultType == ResultTypeSettlement ? "Settlement" : "Planets";
             case 3:
-                return _resultType == ResultTypeValuableSystems ? "Planets" : "";
-            case 4:
-                return _resultType == ResultTypeValuableSystems ? "Est Value" : "";
-            case 5:
-                return _resultType == ResultTypeValuableSystems ? "Cumulative Value" : "";
+                return _resultType == ResultTypeValuableSystems ? "Value" : "";
             default:
                 return "";
             }

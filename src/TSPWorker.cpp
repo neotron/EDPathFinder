@@ -209,13 +209,11 @@ void RouteResult::addEntry(const System &system, int64 distance) {
     _totalDist += distance;
     int32 estimatedValue = system.estimatedValue();
     _totalValue += estimatedValue;
-    std::vector<QString> row(6);
+    std::vector<QString> row(4);
     row[0] = system.name();
-    row[1] = System::formatDistance(distance);
-    row[2] = System::formatDistance(_totalDist);
-    row[3] = system.formatPlanets();
-    row[4] = QString("%1k").arg(estimatedValue);
-    row[5] = QString("%1k").arg(_totalValue);
+    row[1] = QString("%1 / %2").arg(System::formatDistance(distance, true)).arg(System::formatDistance(_totalDist, true));
+    row[2] = system.formatPlanets();
+    row[3] = QString("%1k / %2M").arg(estimatedValue).arg(_totalValue/1000);
     _route.emplace_back(row);
 }
 
@@ -225,8 +223,8 @@ void RouteResult::addEntry(const System &system, const Planet &planet, const Set
     row[0] = system.name();
     row[1] = planet.name();
     row[2] = settlement.name();
-    row[3] = System::formatDistance(distance);
-    row[4] = System::formatDistance(_totalDist);
+    row[3] = System::formatDistance(distance, true);
+    row[4] = System::formatDistance(_totalDist, true);
     _route.emplace_back(row);
 
     auto routeSettlement = RouteSystemPlanetSettlement(system.name(), planet.name(), planet.distance(), settlement);

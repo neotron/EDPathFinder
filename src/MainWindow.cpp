@@ -26,15 +26,43 @@
 #include "ValueRouter.h"
 #include "AutoUpdateChecker.h"
 #include "buildnumber.h"
-#include "Theme.h"
 #include "Preferences.h"
 #include "Settings.h"
 
+#define IS_SET(__FLAGS, __FLAG) (((__FLAGS) & (__FLAG)) == (__FLAG))
+#define CHECKBOX(__BOX, __FLAGS, __FLAG) (__BOX)->setChecked(IS_SET(__FLAGS, __FLAG))
+#define CHECKNAME(__NAME, __FLAGS, __FLAG) CHECKBOX(_ui->__NAME, __FLAGS, __FLAG)
+
+#define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  VAL |= FLAG; } } while(false)
+
+
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
-          _journalWatcher(new JournalWatcher(this)), _settlementDates() {
+          _journalWatcher(new JournalWatcher(this)), _settlementDates(), _lastMaterialCount(0) {
+    int32 flags, sizes, threat;
+    QString commander;
+    Settings::getFilterSettings(flags, sizes, threat, commander);
+
     buildLookupMap();
     loadCompressedData();
+
+    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
+    for(auto &checkbox : checkboxes) {
+        auto flag = _nameToFlagLookup.find(checkbox->objectName());
+        if(flag != _nameToFlagLookup.end()) {
+            CHECKBOX(checkbox, flags, *flag);
+        }
+    }
+
+    CHECKNAME(noSec, threat, ThreatLevelLow);
+    CHECKNAME(mediumSec, threat, ThreatLevelMedium);
+    CHECKNAME(highSec, threat, ThreatLeveLHigh);
+    CHECKNAME(restrictedSec, threat, ThreatLevelRestrictedLongDistance);
+
+    CHECKNAME(smallSize, sizes, SettlementSizeSmall);
+    CHECKNAME(mediumSize, sizes, SettlementSizeMedium);
+    CHECKNAME(largeSize, sizes, SettlementSizeLarge);
+
     _ui->centralWidget->setEnabled(false);
     _ui->menuBar->setEnabled(false);
     connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
@@ -42,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent)
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
     _ui->distanceSlider->setMaximum(10000);
     _ui->distanceSlider->setValue(10000);
+
+    _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
+    _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
+
 }
 
 MainWindow::~MainWindow() {
@@ -51,20 +83,19 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::buildLookupMap() {
-    _flagsLookup["cdt"] = SettlementFlagsCoreDataTerminal;
-    _flagsLookup["jump"] = SettlementFlagsJumpClimbRequired;
-    _flagsLookup["csd"] = SettlementFlagsClassifiedScanDatabanks;
-    _flagsLookup["csf"] = SettlementFlagsClassifiedScanFragment;
-    _flagsLookup["cif"] = SettlementFlagsCrackedIndustrialFirmware;
-    _flagsLookup["dsd"] = SettlementFlagsDivergentScanData;
-    _flagsLookup["mcf"] = SettlementFlagsModifiedConsumerFirmware;
-    _flagsLookup["mef"] = SettlementFlagsModifiedEmbeddedFirmware;
-    _flagsLookup["osk"] = SettlementFlagsOpenSymmetricKeys;
-    _flagsLookup["sfp"] = SettlementFlagsSecurityFirmwarePatch;
-    _flagsLookup["slf"] = SettlementFlagsSpecializedLegacyFirmware;
-    _flagsLookup["tec"] = SettlementFlagsTaggedEncryptionCodes;
-    _flagsLookup["uef"] = SettlementFlagsUnusualEncryptedFiles;
-    _flagsLookup["anarchy"] = SettlementFlagsAnarchy;
+    _nameToFlagLookup["cdt"] = SettlementFlagsCoreDataTerminal;
+    _nameToFlagLookup["jump"] = SettlementFlagsJumpClimbRequired;
+    _nameToFlagLookup["csd"] = SettlementFlagsClassifiedScanDatabanks;
+    _nameToFlagLookup["csf"] = SettlementFlagsClassifiedScanFragment;
+    _nameToFlagLookup["cif"] = SettlementFlagsCrackedIndustrialFirmware;
+    _nameToFlagLookup["dsd"] = SettlementFlagsDivergentScanData;
+    _nameToFlagLookup["mcf"] = SettlementFlagsModifiedConsumerFirmware;
+    _nameToFlagLookup["mef"] = SettlementFlagsModifiedEmbeddedFirmware;
+    _nameToFlagLookup["osk"] = SettlementFlagsOpenSymmetricKeys;
+    _nameToFlagLookup["sfp"] = SettlementFlagsSecurityFirmwarePatch;
+    _nameToFlagLookup["slf"] = SettlementFlagsSpecializedLegacyFirmware;
+    _nameToFlagLookup["tec"] = SettlementFlagsTaggedEncryptionCodes;
+    _nameToFlagLookup["uef"] = SettlementFlagsUnusualEncryptedFiles;
 }
 
 void MainWindow::routeCalculated(const RouteResult &route) {
@@ -74,26 +105,34 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 }
 
 void MainWindow::updateFilters() {
+    float minProbability = _ui->dropProbability->value()/10.0f;
+    _ui->dropProbabilityLabel->setText(QString("%1").arg(minProbability));
+
     int32 settlementFlags = 0;
     QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
     bool jumpsExcluded = false;
-
     int maxDistance = distanceSliderValue();
     const auto distanceFilterChecked = _ui->distanceCheckbox->isChecked();
     _ui->distanceSlider->setEnabled(distanceFilterChecked);
+    QList<SettlementFlags> materialFilters;
     for(auto &checkbox : checkboxes) {
         if(checkbox->isChecked()) {
-            auto flag = _flagsLookup.find(checkbox->objectName());
-            if(flag != _flagsLookup.end()) {
+            auto flag = _nameToFlagLookup.find(checkbox->objectName());
+            if(flag != _nameToFlagLookup.end()) {
+                settlementFlags |= *flag;
                 if(*flag == SettlementFlagsJumpClimbRequired) {
                     jumpsExcluded = true;
                 } else {
-                    settlementFlags |= *flag;
+                    materialFilters.push_back(*flag);
                 }
             }
         }
     }
-
+    if(materialFilters.size() != _lastMaterialCount) {
+        _lastMaterialCount = materialFilters.size();
+        _ui->minMats->setMaximum(_lastMaterialCount);
+        _ui->minMats->setValue(_lastMaterialCount);
+    }
     auto selectedCommander = _ui->filterCommander->currentText();
     auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
@@ -114,31 +153,17 @@ void MainWindow::updateFilters() {
     updateSystemForCommander(selectedCommander);
 
     int32 threatFilter = ThreatLevelUnknown;
-    if(_ui->restrictedSec->isChecked()) {
-        threatFilter |= ThreatLevelRestrictedLongDistance;
-    }
-    if(_ui->mediumSec->isChecked()) {
-        threatFilter |= ThreatLevelMedium;
-    }
-    if(_ui->highSec->isChecked()) {
-        threatFilter |= ThreatLeveLHigh;
-    }
-    if(_ui->noSec->isChecked()) {
-        threatFilter |= ThreatLevelLow;
-    }
+    SET_IF_CHECKED(threatFilter, restrictedSec, ThreatLevelRestrictedLongDistance);
+    SET_IF_CHECKED(threatFilter, mediumSec, ThreatLevelMedium);
+    SET_IF_CHECKED(threatFilter, noSec, ThreatLevelLow);
+    SET_IF_CHECKED(threatFilter, highSec, ThreatLeveLHigh);
 
     int32 settlementSizes = 0;
+    SET_IF_CHECKED(settlementSizes, smallSize, SettlementSizeSmall);
+    SET_IF_CHECKED(settlementSizes, mediumSize, SettlementSizeMedium);
+    SET_IF_CHECKED(settlementSizes, largeSize, SettlementSizeLarge);
 
-    if(_ui->smallSize->isChecked()) {
-        settlementSizes |= SettlementSizeSmall;
-    }
-    if(_ui->mediumSize->isChecked()) {
-        settlementSizes |= SettlementSizeMedium;
-    }
-    if(_ui->largeSize->isChecked()) {
-        settlementSizes |= SettlementSizeLarge;
-    }
-
+    Settings::setFilterSettings(settlementFlags, settlementSizes, threatFilter, selectedCommander);
 
     int32 matches = 0;
     _filteredSystems.clear();
@@ -168,7 +193,13 @@ void MainWindow::updateFilters() {
                 if(scanDate > filteredDate) {
                     continue;
                 }
-                if((settlement.flags() & settlementFlags) != settlementFlags) {
+                int matchingMaterials = 0;
+                for(const auto &flag: materialFilters) {
+                    if(IS_SET(settlement.flags(), flag) && settlement.materialProbability(flag) >= minProbability) {
+                        matchingMaterials++;
+                    }
+                }
+                if(matchingMaterials < _ui->minMats->value()) {
                     continue;
                 }
                 if((settlementSizes & settlement.size()) != settlement.size()) {
@@ -177,8 +208,7 @@ void MainWindow::updateFilters() {
                 if((threatFilter & settlement.threatLevel()) != settlement.threatLevel()) {
                     continue;
                 }
-                if(jumpsExcluded &&
-                   (settlement.flags() & SettlementFlagsJumpClimbRequired) == SettlementFlagsJumpClimbRequired) {
+                if(jumpsExcluded && IS_SET(settlement.flags(), SettlementFlagsJumpClimbRequired)) {
                     continue;
                 }
                 matchingSettlements.push_back(settlement);

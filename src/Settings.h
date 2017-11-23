@@ -19,6 +19,7 @@
 
 #include <QString>
 #include "Theme.h"
+#include "System.h"
 
 class Settings {
 public:
@@ -27,4 +28,7 @@ public:
 
     static Theme::Id theme();
     static void setTheme(Theme::Id theme);
+
+    static void setFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander);
+    static void getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander);
 };

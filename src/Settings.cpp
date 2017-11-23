@@ -50,3 +50,18 @@ void Settings::setTheme(Theme::Id theme) {
     QSettings().setValue(kThemeKey, theme);
 }
 
+void Settings::setFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander) {
+    QSettings settings;
+    settings.setValue("settlement/flags", flags);
+    settings.setValue("settlement/sizes", sizes);
+    settings.setValue("settlement/threat", threat);
+    settings.setValue("settlement/commander", commander);
+}
+
+void Settings::getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander) {
+    QSettings settings;
+    flags = settings.value("settlement/flags", 0).toInt();
+    sizes = settings.value("settlement/sizes", SettlementSizeSmall|SettlementSizeMedium|SettlementSizeLarge).toInt();
+    threat = settings.value("settlement/threat", ThreatLevelLow).toInt();
+    commander = settings.value("settlement/commander", flags).toString();\
+}

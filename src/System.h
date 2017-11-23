@@ -27,6 +27,7 @@
 #include <QUrl>
 #include <ortools/base/integral_types.h>
 #include <QJsonDocument>
+#include <utility>
 
 class AStarSystemNode;
 
@@ -57,6 +58,7 @@ enum SettlementSize {
 };
 
 enum SettlementFlags {
+    SettlementFlagsNone = 0,
     SettlementFlagsCoreDataTerminal = 1 << 0,
     SettlementFlagsJumpClimbRequired = 1 << 1,
     SettlementFlagsClassifiedScanDatabanks = 1 << 2,
@@ -94,19 +96,14 @@ public:
     static const QString IMAGE_CORE;
 
 
-    SettlementType(SettlementSize size, ThreatLevel securityLevel, const QString &economy)
-            : _size(size), _securityLevel(securityLevel), _economy(economy), _images() {}
+    SettlementType(SettlementSize size, ThreatLevel securityLevel, QString economy)
+            : _size(size), _securityLevel(securityLevel), _economy(std::move(economy)), _images() {}
 
-    SettlementType(const SettlementType &other)
-            : _size(other._size), _securityLevel(other._securityLevel), _economy(other._economy),
-              _images(other._images) {}
-
-    SettlementType(const SettlementType &&other)
-            : _size(other._size), _securityLevel(other._securityLevel), _economy(std::move(other._economy)),
-              _images(std::move(other._images)) {}
+    SettlementType(const SettlementType &other) = default;
+    SettlementType(SettlementType &&other) = default;
 
 
-    SettlementType() {}
+    SettlementType() = default;
 
     SettlementSize size() const {
         return _size;
@@ -125,21 +122,8 @@ public:
         return _images.contains(name) ? _images[name] : QUrl();
     }
 
-    SettlementType &operator=(const SettlementType &&other) {
-        _size = other._size;
-        _securityLevel = other._securityLevel;
-        _economy = std::move(other._economy);
-        _images = std::move(other._images);
-        return *this;
-    }
-
-    SettlementType &operator=(const SettlementType &other) {
-        _size = other._size;
-        _securityLevel = other._securityLevel;
-        _economy = other._economy;
-        _images = other._images;
-        return *this;
-    }
+    SettlementType &operator=(SettlementType &&other) = default;
+    SettlementType &operator=(const SettlementType &other) = default;
 
     void addImage(const QString &name, const QUrl &url) {
         if(url.isValid()) {
@@ -166,9 +150,9 @@ class Settlement {
 public:
 
 
-    explicit Settlement(QString name, int32 flags = 0, ThreatLevel threatLevel = ThreatLevelLow,
-                        const SettlementType *type = nullptr)
-            : _name(std::move(name)), _flags(flags), _threatLevel(threatLevel), _type(type) {}
+    explicit Settlement(QString name, int32 flags = 0, ThreatLevel threatLevel = ThreatLevelLow, const SettlementType *type = nullptr,
+                        QMap<SettlementFlags,float> materials = QMap<SettlementFlags,float>())
+            : _name(std::move(name)), _flags(flags), _threatLevel(threatLevel), _type(type), _materialProbabilities(std::move(materials)) {}
 
     // Copy and assignments.
     Settlement(Settlement &&other) = default;
@@ -196,11 +180,16 @@ public:
         return _type;
     }
 
+    float materialProbability(SettlementFlags material) const {
+        return _materialProbabilities.contains(material) ? _materialProbabilities[material] : 0.0f;
+    }
+
 private:
     QString _name;
     int32 _flags;
     ThreatLevel _threatLevel;
     const SettlementType *_type;
+    QMap<SettlementFlags,float> _materialProbabilities;
 };
 
 class Planet {
@@ -281,7 +270,7 @@ public:
         return (int64) distance;
     }
 
-    static QString formatDistance(int64 dist);
+    static QString formatDistance(int64 dist, bool trunc = false);
 
     float z() const {
         return _position.z();

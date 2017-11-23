@@ -75,7 +75,7 @@ private:
 
     int distanceSliderValue() const;
 
-    QMap<QString, SettlementFlags> _flagsLookup;
+    QMap<QString, SettlementFlags> _nameToFlagLookup;
 
     int32         _matchingSettlementCount;
 
@@ -83,4 +83,5 @@ private:
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
 
     bool _loading;
+    int _lastMaterialCount;
 };

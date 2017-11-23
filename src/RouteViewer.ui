@@ -64,8 +64,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>512</width>
-           <height>493</height>
+           <width>502</width>
+           <height>477</height>
           </rect>
          </property>
         </widget>
@@ -614,6 +614,27 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <layout class="QGridLayout" name="materials">
+          <item row="0" column="1">
+           <widget class="QLabel" name="csdProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLabel" name="slfProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLabel" name="mcfProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="slf">
             <property name="font">
@@ -624,20 +645,7 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="csf">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="font">
-             <font/>
-            </property>
-            <property name="text">
-             <string>Classified Scan Fragment</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
+          <item row="1" column="2">
            <widget class="QLabel" name="dsd">
             <property name="font">
              <font/>
@@ -657,17 +665,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="tec">
-            <property name="font">
-             <font/>
-            </property>
-            <property name="text">
-             <string>Tagged Encryption Codes</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
+          <item row="3" column="2">
            <widget class="QLabel" name="sfp">
             <property name="font">
              <font/>
@@ -677,13 +675,13 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="uef">
+          <item row="4" column="2">
+           <widget class="QLabel" name="tec">
             <property name="font">
              <font/>
             </property>
             <property name="text">
-             <string>Unusual Encrypted Files</string>
+             <string>Tagged Encryption Codes</string>
             </property>
            </widget>
           </item>
@@ -707,13 +705,23 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
+          <item row="2" column="2">
            <widget class="QLabel" name="mef">
             <property name="font">
              <font/>
             </property>
             <property name="text">
              <string>Modified Embedded Firmware</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="uef">
+            <property name="font">
+             <font/>
+            </property>
+            <property name="text">
+             <string>Unusual Encrypted Files</string>
             </property>
            </widget>
           </item>
@@ -724,6 +732,75 @@
             </property>
             <property name="text">
              <string>Classified Scan Databanks</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="csf">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="font">
+             <font/>
+            </property>
+            <property name="text">
+             <string>Classified Scan Fragment</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLabel" name="oskProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLabel" name="uefProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLabel" name="cifProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLabel" name="csfProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLabel" name="dsdProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLabel" name="mefProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLabel" name="sfpProb">
+            <property name="text">
+             <string>0.0</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QLabel" name="tecProb">
+            <property name="text">
+             <string>0.0</string>
             </property>
            </widget>
           </item>
@@ -754,7 +831,7 @@
      <x>0</x>
      <y>0</y>
      <width>1040</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

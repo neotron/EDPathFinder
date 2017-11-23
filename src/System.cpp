@@ -21,6 +21,7 @@
 #include <QDebug>
 #include "System.h"
 #include "AStarRouter.h"
+#include <QMap>
 
 #define SETTLEMENT_TYPE_FIELD_COUNT 17
 #define EXPECTED_FIELD_COUNT 27
@@ -31,7 +32,7 @@
 #define READ_STR (*(it++))
 #define READ_URL QUrl(READ_STR)
 #define SKIP_FIELD do { it++; } while(false)
-#define READ_MATERIAL (READ_FLOAT > 0.000)
+#define READ_MATERIAL(FLAG) do { float val = READ_FLOAT; if(val > 0.000) { flags |= FLAG; materials[FLAG] = val; }; } while(false)
 #define READ_URL_JPEG(X) QUrl X; do { \
     auto url = READ_STR; \
     if(url.length()) { \
@@ -199,6 +200,7 @@ void SystemLoader::loadSettlements() {
     QMap<QString, System *> lookup;
     _systems.clear();
     _systems.reserve(lines.size());
+
     for(const auto &qline: lines) {
         QStringList line = qline.split("\t");
         if(line.size() < EXPECTED_FIELD_COUNT) {
@@ -209,7 +211,7 @@ void SystemLoader::loadSettlements() {
 
         auto it = line.begin();
 
-        auto typeStr = READ_STR; // Settle`ment type
+        auto typeStr = READ_STR; // Settlement type
         auto type = _settlementTypes[typeStr];
         if(!type) {
             qDebug() << "Failed to load settlement type for" << typeStr << " - skipping.";
@@ -235,22 +237,23 @@ void SystemLoader::loadSettlements() {
         SKIP_FIELD; // Notes/comments
 
         // Data material flags
-        if(READ_MATERIAL) { flags |= SettlementFlagsUnusualEncryptedFiles; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsSpecializedLegacyFirmware; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsTaggedEncryptionCodes; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsModifiedConsumerFirmware; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanDatabanks; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsCrackedIndustrialFirmware; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsOpenSymmetricKeys; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsSecurityFirmwarePatch; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsDivergentScanData; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsModifiedEmbeddedFirmware; }
-        if(READ_MATERIAL) { flags |= SettlementFlagsClassifiedScanFragment; }
+        QMap<SettlementFlags, float> materials;
+        READ_MATERIAL(SettlementFlagsUnusualEncryptedFiles);
+        READ_MATERIAL(SettlementFlagsSpecializedLegacyFirmware);
+        READ_MATERIAL(SettlementFlagsTaggedEncryptionCodes);
+        READ_MATERIAL(SettlementFlagsModifiedConsumerFirmware);
+        READ_MATERIAL(SettlementFlagsClassifiedScanDatabanks);
+        READ_MATERIAL(SettlementFlagsCrackedIndustrialFirmware);
+        READ_MATERIAL(SettlementFlagsOpenSymmetricKeys);
+        READ_MATERIAL(SettlementFlagsSecurityFirmwarePatch);
+        READ_MATERIAL(SettlementFlagsDivergentScanData);
+        READ_MATERIAL(SettlementFlagsModifiedEmbeddedFirmware);
+        READ_MATERIAL(SettlementFlagsClassifiedScanFragment);
 
         auto size = READ_STR;
         SKIP_FIELD; // idx
 
-        Settlement settlement(name, flags, threat, type);
+        Settlement settlement(name, flags, threat, type, materials);
         const auto distance = getDistance(system, planet);
         if(lookup.contains(system)) {
             lookup[system]->addSettlement(planet, settlement, distance);
@@ -282,9 +285,11 @@ void SystemLoader::valuableSystemDataDecompressed(const QByteArray &bytes) {
 }
 
 
-QString System::formatDistance(int64 dist) {
+QString System::formatDistance(int64 dist, bool trunc) {
     if(dist > 0) {
-        return QString("%1.%2").arg(dist / 10).arg(dist % 10);
+        return trunc
+               ? QString("%1").arg(static_cast<int64>(dist / 10.0))
+               : QString("%1.%2").arg(dist / 10).arg(dist % 10);
     } else {
         return "0.0";
     }
@@ -345,11 +350,11 @@ const QString System::formatPlanets() const {
 int32 System::estimatedValue() const {
     int32 value = 0;
     if(_numPlanets.count() == ValuableBodyFlagsCount) {
-        value += 627 * _numPlanets[ValuableBodyFlagsEW];
-        value += 412 * (_numPlanets[ValuableBodyFlagsWW] - _numPlanets[ValuableBodyFlagsWT]);
-        value += 695 * _numPlanets[ValuableBodyFlagsWT];
-        value += 320 * _numPlanets[ValuableBodyFlagsAW];
-        value += 412 * _numPlanets[ValuableBodyFlagsTF];
+        value += 552 * _numPlanets[ValuableBodyFlagsEW];
+        value += 370 * (_numPlanets[ValuableBodyFlagsWW] - _numPlanets[ValuableBodyFlagsWT]);
+        value += 611 * _numPlanets[ValuableBodyFlagsWT];
+        value += 281 * _numPlanets[ValuableBodyFlagsAW];
+        value += 362 * _numPlanets[ValuableBodyFlagsTF];
     }
     return value;
 }

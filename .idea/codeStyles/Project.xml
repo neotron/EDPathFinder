@@ -25,5 +25,11 @@
         <pair source="c" header="h" fileNamingConvention="NONE" />
       </extensions>
     </Objective-C-extensions>
+    <codeStyleSettings language="ObjectiveC">
+      <option name="INDENT_CASE_FROM_SWITCH" value="false" />
+      <indentOptions>
+        <option name="TAB_SIZE" value="8" />
+      </indentOptions>
+    </codeStyleSettings>
   </code_scheme>
 </component>
