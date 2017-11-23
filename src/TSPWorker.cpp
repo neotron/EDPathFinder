@@ -168,8 +168,7 @@ namespace operations_research {
             int previd = 0;
             int64 dist = 0;
 
-            for(int64 node = routing.Start(route_number);
-                !routing.IsEnd(node);
+            for(int64 node = routing.Start(route_number); !routing.IsEnd(node);
                 node = solution->Value(routing.NextVar(node))) {
                 nodeid = routing.IndexToNode(node).value();
 
@@ -184,21 +183,17 @@ namespace operations_research {
                 if(_systemsOnly) {
                     result.addEntry(sys, dist);
                 } else {
-                    if(!sys.planets().size()) {
+                    if(sys.planets().empty()) {
                         continue;
                     }
-                    for(auto planet: sys.planets()) {
-                        for(auto settlement: planet.settlements()) {
+                    for(const auto &planet: sys.planets()) {
+                        for(const auto &settlement: planet.settlements()) {
                             result.addEntry(sys, planet, settlement, dist);
 //                        out <<sys.name()<< "\t" << planet.name()<< "\t"<<settlement.name() << "\t" << dist<<endl;
                             dist = 0;
                         }
                     }
                 }
-            }
-            if(!_destination && _systemsOnly) {
-                dist = _systems[0].distance(_systems[previd]);
-                result.addEntry(_systems[0], dist);
             }
         }
         emit taskCompleted(result);

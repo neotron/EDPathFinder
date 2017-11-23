@@ -31,12 +31,11 @@ void ValueRouter::scanJournals() {
     QDir dir(Settings::journalPath(), "Journal.*.log");
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
 
-    for(auto entry: list) {
+    for(const auto &entry: list) {
         auto file = entry.absoluteFilePath();
         JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(
-                                             const JournalFile &, const Event &)), this, SLOT(handleEvent(
-                                                                                                      const JournalFile &, const Event &)));
+        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, const Event &)),
+                this, SLOT(handleEvent(const JournalFile &, const Event &)));
         journalFile.parse();
     }
     const auto comboBox = _ui->filterCommander;
@@ -96,19 +95,19 @@ void ValueRouter::handleEvent(const JournalFile &file, const Event &ev) {
         return;
     }
     switch(ev.type()) {
-        case EventTypeLocation:
-        case EventTypeFSDJump:
-            if(updateCommanderInfo(file, ev, commander)) {
-                if(!_commanderExploredSystems.contains(commander)) {
-                    _commanderExploredSystems[commander] = QSet<QString>();
-                }
+    case EventTypeLocation:
+    case EventTypeFSDJump:
+        if (updateCommanderInfo(file, ev, commander)) {
+            if (!_commanderExploredSystems.contains(commander)) {
+                _commanderExploredSystems[commander] = QSet<QString>();
             }
-            break;
-        case EventTypeScan:
-            _commanderExploredSystems[commander].insert(systemName.toUpper());
-            break;
-        default:
-            break;
+        }
+        break;
+    case EventTypeScan:
+        _commanderExploredSystems[commander].insert(systemName.toUpper());
+        break;
+    default:
+        break;
     }
 }
 
