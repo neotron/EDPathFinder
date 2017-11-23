@@ -345,6 +345,13 @@ void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
         if(updateCommanderInfo(journal, event, commander)  && !_loading) {
             updateCommanderAndSystem();
         }
+        if(!_router->findSystemByName(journal.system())) {
+            QVector3D pos(event.position());
+            if(!pos.isNull()) {
+                const System &system = System(journal.system(), pos);
+                _router->addSystem(system);
+            }
+        }
         break;
     default:
         break; // Be quiet

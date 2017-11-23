@@ -181,13 +181,3 @@ void MissionRouter::onSystemLookupInitiated(const QString &system) {
     _ui->centralwidget->setEnabled(false);
 }
 
-
-
-
-
-
-
-
-
-
-

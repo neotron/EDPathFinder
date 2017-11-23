@@ -31,8 +31,8 @@ void MissionScanner::scanJournals() {
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
     auto monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
 
-    for(auto entry: list) {
-        if(entry.lastModified() < monitorDate) {
+    for (auto entry: list) {
+        if (entry.lastModified() < monitorDate) {
             continue;
         }
         auto file = entry.absoluteFilePath();
@@ -46,29 +46,37 @@ void MissionScanner::scanJournals() {
 
 void MissionScanner::handleEvent(const JournalFile &file, const Event &ev) {
     QDateTime now = QDateTime::currentDateTimeUtc();
-    switch(ev.type()) {
-        case EventTypeMissionAccepted:
+    switch (ev.type()) {
+    case EventTypeMissionAccepted:
 //            qDebug() << ev.obj();
-            if(ev.date("Expiry") >= now) {
-                auto destination = ev.string("DestinationSystem");
-                if(!destination.isEmpty() && file.system() != destination) {
-                    auto mission = Mission(destination, file.system());
-                    _commanderMissions[file.commander()][ev.integer("MissionID")] = mission;
-                }
+        if (ev.date("Expiry") >= now) {
+            auto destination = ev.string("DestinationSystem");
+            if (!destination.isEmpty() && file.system() != destination) {
+                auto mission = Mission(destination, file.system());
+                _commanderMissions[file.commander()][ev.integer("MissionID")] = mission;
             }
-            break;
-        case EventTypeMissionAbandoned:
-        case EventTypeMissionFailed:
-        case EventTypeMissionCompleted:
-            _commanderMissions[file.commander()].remove(ev.integer("MissionID"));
-            break;
-        case EventTypeFSDJump:
-        case EventTypeLocation:
-      //      qDebug() << file.commander() << " in "<<file.system();
-            _commanderLastSystem[file.commander()] = file.system();
-            break;
-        default:
-            break;
+        }
+        break;
+    case EventTypeMissionRedirected: {
+        auto destination = ev.string("NewDestinationSystem");
+        auto missionId = ev.integer("MissionID");
+        if (!destination.isEmpty() && _commanderMissions[file.commander()].contains(missionId)) {
+            _commanderMissions[file.commander()][missionId]._destination = destination;
+        }
+    }
+        break;
+    case EventTypeMissionAbandoned:
+    case EventTypeMissionFailed:
+    case EventTypeMissionCompleted:
+        _commanderMissions[file.commander()].remove(ev.integer("MissionID"));
+        break;
+    case EventTypeFSDJump:
+    case EventTypeLocation:
+        //      qDebug() << file.commander() << " in "<<file.system();
+        _commanderLastSystem[file.commander()] = file.system();
+        break;
+    default:
+        break;
     }
 }
 
