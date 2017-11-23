@@ -912,8 +912,10 @@
     <property name="title">
      <string>Tools</string>
     </property>
-    <addaction name="actionMission_Custom_Routign"/>
+    <addaction name="actionMission_Custom_Routing"/>
     <addaction name="actionValuable_Exploration_Router"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
    </widget>
    <addaction name="menuTools"/>
   </widget>
@@ -932,22 +934,28 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionPreferences">
-   <property name="text">
-    <string>Preferences</string>
-   </property>
-   <property name="menuRole">
-    <enum>QAction::AboutRole</enum>
-   </property>
-  </action>
-  <action name="actionMission_Custom_Routign">
+  <action name="actionMission_Custom_Routing">
    <property name="text">
     <string>Mission and Custom Router</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
    </property>
   </action>
   <action name="actionValuable_Exploration_Router">
    <property name="text">
     <string>Valuable Exploration Router</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Options</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
    </property>
   </action>
  </widget>
@@ -968,12 +976,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>388</y>
+     <x>275</x>
+     <y>329</y>
     </hint>
     <hint type="destinationlabel">
      <x>497</x>
-     <y>385</y>
+     <y>326</y>
     </hint>
    </hints>
   </connection>
@@ -984,8 +992,8 @@
    <slot>updateFilters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>254</x>
-     <y>446</y>
+     <x>396</x>
+     <y>215</y>
     </hint>
     <hint type="destinationlabel">
      <x>1359</x>
@@ -994,7 +1002,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionMission_Custom_Routign</sender>
+   <sender>actionMission_Custom_Routing</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>openMissionTool()</slot>
@@ -1025,10 +1033,27 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionPreferences</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openPreferences()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>281</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateFilters()</slot>
   <slot>openMissionTool()</slot>
   <slot>openExplorationTool()</slot>
+  <slot>openPreferences()</slot>
  </slots>
 </ui>

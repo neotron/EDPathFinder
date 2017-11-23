@@ -26,6 +26,9 @@
 #include "ValueRouter.h"
 #include "AutoUpdateChecker.h"
 #include "buildnumber.h"
+#include "Theme.h"
+#include "Preferences.h"
+#include "Settings.h"
 
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
@@ -66,7 +69,7 @@ void MainWindow::buildLookupMap() {
 
 void MainWindow::routeCalculated(const RouteResult &route) {
     AbstractBaseWindow::routeCalculated(route);
-    RouteViewer *viewer = new RouteViewer(route);
+    auto viewer = new RouteViewer(route, this);
     viewer->show();
 }
 
@@ -94,9 +97,9 @@ void MainWindow::updateFilters() {
     auto selectedCommander = _ui->filterCommander->currentText();
     auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
-    if(commanders.size()) {
+    if(!commanders.empty()) {
         commanders.sort();
-        for(auto commanderName: commanders) {
+        for(const auto &commanderName: commanders) {
             if(_ui->filterCommander->findText(commanderName) < 0) {
                 _ui->filterCommander->addItem(commanderName);
             }
@@ -151,7 +154,7 @@ void MainWindow::updateFilters() {
                 continue;
             }
             SettlementList matchingSettlements;
-            for(auto settlement: planet.settlements()) {
+            for(const auto &settlement: planet.settlements()) {
                 auto settlementKey = makeSettlementKey(system, planet, settlement);
                 QDateTime scanDate;
                 if(visitedSettlements.contains(settlementKey)) {
@@ -181,11 +184,11 @@ void MainWindow::updateFilters() {
                 matchingSettlements.push_back(settlement);
                 ++matches;
             }
-            if(matchingSettlements.size()) {
+            if(!matchingSettlements.empty()) {
                 matchingPlanets.push_back(Planet(planet.name(), planet.distance(), matchingSettlements));
             }
         }
-        if(matchingPlanets.size()) {
+        if(!matchingPlanets.empty()) {
             _filteredSystems.push_back(System(system.name(), matchingPlanets, system.position()));
         }
     }
@@ -208,7 +211,7 @@ void MainWindow::loadCompressedData() {
     auto compressor2 = new QCompressor(file2.readAll());
 
 
-    SystemLoader *loader = new SystemLoader(_router);
+    auto loader = new SystemLoader(_router);
 
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
     connect(compressor2, &QThread::finished, compressor2, &QObject::deleteLater);
@@ -235,11 +238,11 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
     auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
     _loading = true;
-    _journalWatcher->watchDirectory(journalDirectory(), newerThanDate);
+    _journalWatcher->watchDirectory(Settings::journalPath(), newerThanDate);
     _loading = false;
     updateCommanderAndSystem();
 
-    AutoUpdateChecker *updater = new AutoUpdateChecker(this);
+    auto updater(new AutoUpdateChecker(this));
     connect(updater, &QThread::finished, updater, &QObject::deleteLater);
     connect(updater, SIGNAL(newVersionAvailable(const Version &)), this, SLOT(showVersionUpdateDialog(const Version &)));
     updater->start();
@@ -263,17 +266,6 @@ void MainWindow::showVersionUpdateDialog(const Version &newVersion) {
     default:
         break; // no-op
     }
-}
-
-
-const QString MainWindow::journalDirectory() {
-    QString journalPath;
-#ifdef Q_OS_OSX
-    journalPath = QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/";
-#else
-    journalPath = QDir::homePath()+"/Saved Games/Frontier Developments/Elite Dangerous/";
-#endif
-    return journalPath;
 }
 
 void MainWindow::updateSliderParams(int size) {
@@ -378,6 +370,13 @@ void MainWindow::openMissionTool() {
 void MainWindow::openExplorationTool() {
     auto tool = new ValueRouter(this, _router, _systems);
     tool->show();
+}
+
+void MainWindow::openPreferences() {
+    auto prefs = new Preferences(this);
+    connect(prefs, SIGNAL(journalPathUpdated(const QString &, const QString &)),
+            _journalWatcher, SLOT(journalPathChanged(const QString &, const QString &)));
+    prefs->show();
 }
 
 

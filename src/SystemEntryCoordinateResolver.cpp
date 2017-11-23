@@ -22,12 +22,14 @@
 SystemEntryCoordinateResolver::SystemEntryCoordinateResolver(QObject *parent, AStarRouter *router, QLineEdit *lineEdit,
                                                              QLabel *x, QLabel *y, QLabel *z)
         : QObject(parent), _router(router), _lineEdit(lineEdit), _pendingLookups(),_x(x), _y(y), _z(z) {
-    QCompleter *completer = new QCompleter(_router, this);
+    auto completer = new QCompleter(_router, this);
     completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
-    QListView *popup = (QListView *) completer->popup();
+
+    auto popup = new QListView();
     popup->setBatchSize(10);
     popup->setLayoutMode(QListView::Batched);
+    completer->setPopup(popup);
     connect(completer, SIGNAL(activated(const QString &)), this, SLOT(onCompletion(const QString &)));
     _lineEdit->setCompleter(completer);
     connect(_lineEdit, SIGNAL(editingFinished()), this, SLOT(onEntry()));

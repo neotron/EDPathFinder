@@ -15,38 +15,16 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+#pragma once
 
-#include <QApplication>
-#include <QDebug>
-#include "MainWindow.h"
+#include <QString>
 #include "Theme.h"
 
-Q_DECLARE_METATYPE(RouteResult);
-Q_DECLARE_METATYPE(SystemList);
-Q_DECLARE_METATYPE(Version);
+class Settings {
+public:
+    static QString journalPath();
+    static void setJournalPath(const QString &path);
 
-// namespace operations_research
-
-int main(int argc, char **argv) {
-    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
-    QCoreApplication::setOrganizationName("NeoTron Software");
-    QCoreApplication::setApplicationName("EDPathFinder");
-
-    qRegisterMetaType<RouteResult>();
-    qRegisterMetaType<SystemList>();
-    qRegisterMetaType<Version>();
-    QApplication a(argc, argv);
-
-    Theme::s_defaultPalette = a.palette();
-    Theme::applyTheme();
-
-    MainWindow w;
-    QIcon icon("://icon512.png");
-    w.setWindowIcon(icon);
-    w.show();
-
-
-    return a.exec();
-}
-
-
+    static Theme::Id theme();
+    static void setTheme(Theme::Id theme);
+};

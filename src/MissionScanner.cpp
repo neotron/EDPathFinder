@@ -19,6 +19,7 @@
 #include <QDirIterator>
 #include "MainWindow.h"
 #include "MissionScanner.h"
+#include "Settings.h"
 
 MissionScanner::MissionScanner(QObject *parent)
         : QObject(parent), _commanderMissions() {
@@ -26,9 +27,9 @@ MissionScanner::MissionScanner(QObject *parent)
 
 void MissionScanner::scanJournals() {
     _commanderMissions.clear();
-    QDir          dir(MainWindow::journalDirectory(), "Journal.*.log");
-    QFileInfoList list        = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
-    auto          monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
+    QDir dir(Settings::journalPath(), "Journal.*.log");
+    QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
+    auto monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
 
     for(auto entry: list) {
         if(entry.lastModified() < monitorDate) {
@@ -36,7 +37,9 @@ void MissionScanner::scanJournals() {
         }
         auto file = entry.absoluteFilePath();
         JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
+        connect(&journalFile, SIGNAL(onEvent(
+                                             const JournalFile &, const Event &)), this, SLOT(handleEvent(
+                                                                                                      const JournalFile &, const Event &)));
         journalFile.parse();
     }
 }

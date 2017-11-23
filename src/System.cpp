@@ -209,7 +209,7 @@ void SystemLoader::loadSettlements() {
 
         auto it = line.begin();
 
-        auto typeStr = READ_STR; // Settlement type
+        auto typeStr = READ_STR; // Settle`ment type
         auto type = _settlementTypes[typeStr];
         if(!type) {
             qDebug() << "Failed to load settlement type for" << typeStr << " - skipping.";

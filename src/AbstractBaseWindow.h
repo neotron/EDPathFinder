@@ -44,6 +44,9 @@ protected slots:
     virtual void openMissionTool() {}
 
     virtual void openExplorationTool() {}
+
+    virtual void openPreferences() {}
+
 };
 
 

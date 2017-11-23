@@ -2,6 +2,7 @@
 #include "ValueRouter.h"
 #include "ValuablePlanetRouteViewer.h"
 #include "MainWindow.h"
+#include "Settings.h"
 
 
 ValueRouter::~ValueRouter() {
@@ -13,26 +14,29 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
     _systemsOnly = true;
     scanJournals();
     connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
-    connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
+    connect(_ui->filterCommander, SIGNAL(currentTextChanged(
+                                                 const QString &)), this, SLOT(updateSystem()));
     updateFilters();
 
-    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd, _ui->yEnd, _ui->zEnd);
+    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,
+                                                                   _ui->yEnd, _ui->zEnd);
     connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
-
 }
 
 void ValueRouter::scanJournals() {
     _commanderExploredSystems.clear();
     _commanderInformation.clear();
-    QDir          dir(MainWindow::journalDirectory(), "Journal.*.log");
-    QFileInfoList list        = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
+    QDir dir(Settings::journalPath(), "Journal.*.log");
+    QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
 
     for(auto entry: list) {
         auto file = entry.absoluteFilePath();
         JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, const Event &)), this, SLOT(handleEvent(const JournalFile &, const Event &)));
+        connect(&journalFile, SIGNAL(onEvent(
+                                             const JournalFile &, const Event &)), this, SLOT(handleEvent(
+                                                                                                      const JournalFile &, const Event &)));
         journalFile.parse();
     }
     const auto comboBox = _ui->filterCommander;
@@ -66,7 +70,7 @@ void ValueRouter::updateFilters() {
             _filteredSystems.append(system);
         }
     }
-    
+
     _ui->statusBar->showMessage(QString("Filter matches %1 systems.").arg(_filteredSystems.size()));
 }
 
@@ -92,19 +96,19 @@ void ValueRouter::handleEvent(const JournalFile &file, const Event &ev) {
         return;
     }
     switch(ev.type()) {
-    case EventTypeLocation:
-    case EventTypeFSDJump:
-        if(updateCommanderInfo(file, ev, commander)) {
-            if(!_commanderExploredSystems.contains(commander)) {
-                _commanderExploredSystems[commander] = QSet<QString>();
+        case EventTypeLocation:
+        case EventTypeFSDJump:
+            if(updateCommanderInfo(file, ev, commander)) {
+                if(!_commanderExploredSystems.contains(commander)) {
+                    _commanderExploredSystems[commander] = QSet<QString>();
+                }
             }
-        }
-        break;
-    case EventTypeScan:
-        _commanderExploredSystems[commander].insert(systemName.toUpper());
-        break;
-    default:
-        break;
+            break;
+        case EventTypeScan:
+            _commanderExploredSystems[commander].insert(systemName.toUpper());
+            break;
+        default:
+            break;
     }
 }
 

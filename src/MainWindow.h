@@ -35,25 +35,24 @@ Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = 0);
 
-    ~MainWindow();
-
-    static const QString journalDirectory();
+    ~MainWindow() override;
 
 protected slots:
     void systemsLoaded(const SystemList &systems);
 
 
-    virtual void routeCalculated(const RouteResult &route);
+    void routeCalculated(const RouteResult &route) override;
 
-    virtual void updateFilters();
+    void updateFilters() override;
 
     void handleEvent(const JournalFile &journal, const Event &event);
 
     void systemLoadProgress(int progress);
     void systemSortingProgress();
 
-    void openMissionTool();
-    void openExplorationTool();
+    void openMissionTool() override;
+    void openExplorationTool() override;
+    void openPreferences() override;
 
 private slots:
     void showVersionUpdateDialog(const Version &newVersion);
