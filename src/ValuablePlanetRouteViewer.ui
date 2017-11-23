@@ -90,12 +90,71 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExport_as_CSV"/>
+    <addaction name="actionExport_as_Tab_Newline_Separated"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExport_as_CSV">
+   <property name="text">
+    <string>Export as CSV...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExport_as_Tab_Newline_Separated">
+   <property name="text">
+    <string>Export as Tab Separated...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExport_as_CSV</sender>
+   <signal>triggered()</signal>
+   <receiver>ValuablePlanetRouteViewer</receiver>
+   <slot>exportAsCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>281</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport_as_Tab_Newline_Separated</sender>
+   <signal>triggered()</signal>
+   <receiver>ValuablePlanetRouteViewer</receiver>
+   <slot>exportAsTabNewline()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>281</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>loadSelectedImage(QString)</slot>
+  <slot>exportAsCSV()</slot>
+  <slot>exportAsTabNewline()</slot>
  </slots>
 </ui>

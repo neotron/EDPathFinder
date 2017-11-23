@@ -117,3 +117,4 @@ void ValueRouter::updateSystem() {
     _ui->systemName->setText(system);
     _systemResolver->resolve(system);
 }
+

@@ -20,6 +20,7 @@
 #include <QAbstractTableModel>
 #include "System.h"
 #include "TSPWorker.h"
+class QTableView;
 
 class RouteTableModel : public QAbstractTableModel {
 public:
@@ -52,6 +53,10 @@ public:
     void setResultType(ResultType resultType) {
         _resultType = resultType;
     }
+
+    static void exportTableViewToCSV(QTableView *table);
+    static void exportTableViewToTabNewline(QTableView *table);
+    static void exportTableView(QTableView *table, const QString &fileName, bool isCSV);
 
 private:
     RouteResult _result;

@@ -48,7 +48,7 @@
     <item>
      <widget class="QTabWidget" name="filterTabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="materialFilterTab">
        <attribute name="title">
@@ -1089,8 +1089,8 @@
    <slot>updateFilters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>396</x>
-     <y>215</y>
+     <x>384</x>
+     <y>252</y>
     </hint>
     <hint type="destinationlabel">
      <x>520</x>
@@ -1169,8 +1169,8 @@
    <slot>updateFilters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>307</x>
-     <y>215</y>
+     <x>289</x>
+     <y>226</y>
     </hint>
     <hint type="destinationlabel">
      <x>514</x>
@@ -1185,8 +1185,8 @@
    <slot>updateFilters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>264</x>
-     <y>251</y>
+     <x>246</x>
+     <y>262</y>
     </hint>
     <hint type="destinationlabel">
      <x>515</x>

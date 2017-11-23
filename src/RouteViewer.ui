@@ -225,7 +225,7 @@
            <string/>
           </property>
           <property name="pixmap">
-           <pixmap resource="../resources/resources.qrc">:/noimage.png</pixmap>
+           <pixmap>:/noimage.png</pixmap>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -834,8 +834,32 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExport_as_CSV"/>
+    <addaction name="actionExport_as_Tab_Separated"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionExport_as_CSV">
+   <property name="text">
+    <string>Export as CSV...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExport_as_Tab_Separated">
+   <property name="text">
+    <string>Export as Tab Separated...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -856,9 +880,7 @@
    <container>1</container>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>imageList</sender>
@@ -867,8 +889,8 @@
    <slot>loadSelectedImage(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>764</x>
-     <y>50</y>
+     <x>734</x>
+     <y>61</y>
     </hint>
     <hint type="destinationlabel">
      <x>1347</x>
@@ -883,8 +905,8 @@
    <slot>fitToWindow()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>937</x>
-     <y>60</y>
+     <x>822</x>
+     <y>57</y>
     </hint>
     <hint type="destinationlabel">
      <x>831</x>
@@ -899,8 +921,8 @@
    <slot>zoomIn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1028</x>
-     <y>68</y>
+     <x>913</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
      <x>857</x>
@@ -915,8 +937,8 @@
    <slot>zoomOut()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1133</x>
-     <y>68</y>
+     <x>1018</x>
+     <y>65</y>
     </hint>
     <hint type="destinationlabel">
      <x>967</x>
@@ -924,8 +946,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExport_as_CSV</sender>
+   <signal>triggered()</signal>
+   <receiver>RouteViewer</receiver>
+   <slot>exportAsCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>519</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport_as_Tab_Separated</sender>
+   <signal>triggered()</signal>
+   <receiver>RouteViewer</receiver>
+   <slot>exportAsTabNewline()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>519</x>
+     <y>292</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>loadSelectedImage(QString)</slot>
+  <slot>exportAsCSV()</slot>
+  <slot>exportAsTabNewline()</slot>
  </slots>
 </ui>

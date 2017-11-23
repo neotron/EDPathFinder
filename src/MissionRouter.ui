@@ -141,6 +141,49 @@
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>516</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionExport_as_CSV"/>
+    <addaction name="actionExport_as_Tab_Separated"/>
+    <addaction name="actionImport_Systems"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <action name="actionExport_as_CSV">
+   <property name="text">
+    <string>Export as CSV...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionExport_as_Tab_Separated">
+   <property name="text">
+    <string>Export as Tab Separated...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionImport_Systems">
+   <property name="text">
+    <string>Import Newline Separated...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -247,6 +290,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionExport_as_CSV</sender>
+   <signal>triggered()</signal>
+   <receiver>MissionRouter</receiver>
+   <slot>exportAsCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>257</x>
+     <y>230</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport_as_Tab_Separated</sender>
+   <signal>triggered()</signal>
+   <receiver>MissionRouter</receiver>
+   <slot>exportAsTabNewline()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImport_Systems</sender>
+   <signal>triggered()</signal>
+   <receiver>MissionRouter</receiver>
+   <slot>importSystems()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>230</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refreshMissions()</slot>
@@ -254,5 +345,8 @@
   <slot>optimizeRoute()</slot>
   <slot>addStop()</slot>
   <slot>clearCustom()</slot>
+  <slot>exportAsCSV()</slot>
+  <slot>exportAsTabNewline()</slot>
+  <slot>importSystems()</slot>
  </slots>
 </ui>

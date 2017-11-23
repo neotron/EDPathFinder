@@ -1,5 +1,7 @@
 #include <QListView>
 #include <QCompleter>
+#include <QFileDialog>
+#include <QMessageBox>
 #include "MissionRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
@@ -56,7 +58,7 @@ void MissionRouter::refreshMissions() {
 void MissionRouter::updateMissionTable() {
     auto cmdr = _ui->commanders->currentText();
 
-    if(cmdr.isEmpty() && !_customStops.size()) {
+    if(cmdr.isEmpty() && _customStops.empty()) {
         _ui->tableView->setModel(nullptr);
         _currentModel = nullptr;
         return;
@@ -66,7 +68,7 @@ void MissionRouter::updateMissionTable() {
     if(!_ui->includeMissionSystems->isChecked()) {
         missionList.clear();
     }
-    for(auto system: _customStops) {
+    for(auto &system: _customStops) {
         missionList << Mission(system, "Custom");
     }
     _currentModel = new MissionTableModel(this, missionList);
@@ -138,7 +140,7 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     }
     _ui->statusbar->showMessage("Route calculation completed.", 10000);
     _ui->optimizeButton->setEnabled(true);
-    RouteTableModel *model = new RouteTableModel(this, route);
+    auto model = new RouteTableModel(this, route);
     model->setResultType(RouteTableModel::ResultTypeSystemsOnly);
     refreshTableView(model);
 }
@@ -181,3 +183,46 @@ void MissionRouter::onSystemLookupInitiated(const QString &system) {
     _ui->centralwidget->setEnabled(false);
 }
 
+void MissionRouter::exportAsCSV() {
+    RouteTableModel::exportTableViewToCSV(_ui->tableView);
+}
+
+void MissionRouter::addStop() { _systemResolver->resolve(_ui->customSystem->text());  }
+
+void MissionRouter::exportAsTabNewline() {
+    RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
+}
+
+void MissionRouter::importSystems() {
+    QString filters("Text files (*.txt);;All files (*.*)");
+    QString defaultFilter("Text files (*.txt)");
+    QString fileName = QFileDialog::getOpenFileName(this, "Import file", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).front(),
+                                                    filters, &defaultFilter);
+    if(fileName.isEmpty()) {
+        return;
+    }
+
+    QFile file(fileName);
+    if(!file.open(QFile::ReadOnly)) {
+        QMessageBox messageBox;
+        messageBox.critical(0,"Failed to open file","The file provided couldn't be opened for reading. Try another file");
+        messageBox.setFixedSize(300,200);
+        messageBox.show();
+        return;
+    }
+    QTextStream stream(&file);
+    bool appended = false;
+    for(auto line = stream.readLine(); !line.isNull(); line = stream.readLine()) {
+        auto components = line.split("\t");
+        if(!components.isEmpty()) {
+            const QString &trimmed = components[0].trimmed();
+            if (!trimmed.isEmpty() && trimmed != "System") {
+                _customStops << trimmed;
+                appended = true;
+            }
+        }
+    }
+    if(appended) {
+        updateMissionTable();
+    }
+}

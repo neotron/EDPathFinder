@@ -23,20 +23,18 @@ public:
 public slots:
 
     void refreshMissions();
-
     void updateMissionTable();
-
     void optimizeRoute();
-
     void clearCustom();
-
-    void addStop() { _systemResolver->resolve(_ui->customSystem->text());  }
+    void addStop();
+    void exportAsCSV();
+    void exportAsTabNewline();
+    void importSystems();
 
 private:
     void refreshTableView(QAbstractItemModel *model) const;
 
     void showMessage(const QString &message, int timeout = 10000);
-
 
     void routeCalculated(const RouteResult &route);
 

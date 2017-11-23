@@ -187,3 +187,11 @@ void RouteViewer::loadSelectedImage(const QString &image) {
         loadOverviewImage(settlementType->imageNamed(image));
     }
 }
+
+void RouteViewer::exportAsCSV() {
+    RouteTableModel::exportTableViewToCSV(_ui->tableView);
+}
+
+void RouteViewer::exportAsTabNewline() {
+    RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
+}

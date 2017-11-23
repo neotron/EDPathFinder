@@ -39,8 +39,9 @@ public:
 public slots:
 
     void loadSelectedImage(const QString &image);
-
     void copySelectedItem();
+    void exportAsCSV();
+    void exportAsTabNewline();
 
 private:
     Ui::RouteViewer *_ui;

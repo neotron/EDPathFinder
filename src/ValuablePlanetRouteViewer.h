@@ -34,11 +34,13 @@ Q_OBJECT
 public:
     explicit ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent = 0);
 
-    ~ValuablePlanetRouteViewer();
+    ~ValuablePlanetRouteViewer() override;
 
 public slots:
 
     void copySelectedItem();
+    void exportAsCSV();
+    void exportAsTabNewline();
 
 private:
     Ui::ValuablePlanetRouteViewer *_ui;
