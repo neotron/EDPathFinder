@@ -17,8 +17,8 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <src/System.h>
-#include <src/AStarRouter.h>
+#include "SystemLoader.h"
+#include "AStarRouter.h"
 
 int main() {
     AStarRouter router;

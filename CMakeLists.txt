@@ -70,12 +70,15 @@ else ()
 endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
-file(GLOB PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h)
-file(GLOB SOURCE_FILES src/*.cpp src/*.h src/*.ui)
-include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
+file(GLOB_RECURSE PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h )
+file(GLOB_RECURSE SRC_FILES src/*.cpp src/*.h src/*.ui)
 
+HEADER_DIRECTORIES(INCLUDE_DIRS src/)
+
+include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
+include_directories(src src/Widgets ${INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SOURCE_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
+    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
 )
 
-add_executable(bodydistance tools/bodydistance/main.cpp src/System.cpp src/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
+add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})

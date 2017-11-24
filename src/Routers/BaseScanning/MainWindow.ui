@@ -48,7 +48,7 @@
     <item>
      <widget class="QTabWidget" name="filterTabs">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="materialFilterTab">
        <attribute name="title">
@@ -1067,7 +1067,7 @@
   <customwidget>
    <class>NoBeepLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">src/NoBeepLineEdit.h</header>
+   <header location="global">src/Widgets/NoBeepLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

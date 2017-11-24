@@ -155,7 +155,7 @@ namespace operations_research {
 
         // Solve, returns a solution if any (owned by RoutingModel).
         const Assignment *solution = routing.SolveWithParameters(parameters);
-        //qDebug() << "Routing took " << timer.elapsed();
+        //qDebug() << "RoutingTools took " << timer.elapsed();
 
         // Populate result.
         RouteResult result;

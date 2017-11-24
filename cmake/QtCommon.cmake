@@ -116,6 +116,17 @@ macro(configure_msvc_runtime)
 endmacro()
 
 
+macro(HEADER_DIRECTORIES return_list DIR)
+    file(GLOB_RECURSE new_list ${DIR}/*.h)
+    set(dir_list "")
+    foreach(file_path ${new_list})
+        get_filename_component(dir_path ${file_path} PATH)
+        set(dir_list ${dir_list} ${dir_path})
+    endforeach()
+    list(REMOVE_DUPLICATES dir_list)
+    set(${return_list} ${dir_list})
+endmacro()
+
 init_os_bundle()
 init_qt()
 fix_win_compiler()

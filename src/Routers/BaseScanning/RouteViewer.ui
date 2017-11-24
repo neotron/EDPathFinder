@@ -865,7 +865,7 @@
   <customwidget>
    <class>ImageViewer</class>
    <extends>QScrollArea</extends>
-   <header location="global">src/ImageViewer.h</header>
+   <header location="global">src/Widgets/ImageViewer.h</header>
    <container>1</container>
    <slots>
     <slot>fitToWindow()</slot>
@@ -876,7 +876,7 @@
   <customwidget>
    <class>AspectRatioPixmapLabel</class>
    <extends>QWidget</extends>
-   <header location="global">src/AspectRatioPixmapLabel.h</header>
+   <header location="global">src/Widgets/AspectRatioPixmapLabel.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

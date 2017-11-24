@@ -597,7 +597,7 @@
   <customwidget>
    <class>NoBeepLineEdit</class>
    <extends>QLineEdit</extends>
-   <header location="global">src/NoBeepLineEdit.h</header>
+   <header location="global">src/Widgets/NoBeepLineEdit.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
