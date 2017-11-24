@@ -18,6 +18,8 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QSplashScreen>
+#include <src/Widgets/SplashScreen.h>
 #include "MainWindow.h"
 #include "Theme.h"
 
@@ -40,12 +42,20 @@ int main(int argc, char *argv[]) {
     Theme::s_defaultPalette = a.palette();
     Theme::applyTheme();
 
+    QPixmap pixmap(":/iconsplash.png");
+    SplashScreen *splash = new SplashScreen(pixmap);
     MainWindow w;
-    QIcon icon("://icon512.png");
+    QIcon icon(pixmap);
     w.setWindowIcon(icon);
+    splash->connectListener(&w);
+    splash->show();
+    while(w.loading()) {
+        usleep(1000);
+        a.processEvents();
+    }
     w.show();
-
-
+    splash->finish(&w);
+    delete splash;
     return a.exec();
 }
 

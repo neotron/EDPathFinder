@@ -450,4 +450,8 @@ void MainWindow::openPreferences() {
     prefs->show();
 }
 
+bool MainWindow::loading() const {
+    return _loading;
+}
+
 

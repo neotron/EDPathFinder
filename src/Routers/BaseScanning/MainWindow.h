@@ -37,6 +37,8 @@ public:
 
     ~MainWindow() override;
 
+    bool loading() const;
+
 protected slots:
     void systemsLoaded(const SystemList &systems);
 

@@ -9,7 +9,7 @@ include(QtCommon)
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.3.0)
+project(EDPathFinder VERSION 1.4.0)
 
 set(MSVC_RUNTIME "dynamic")
 

@@ -49,6 +49,9 @@ protected slots:
 
     virtual void saveSettings() const {}
 
+signals:
+    void onMessage(const QString &message) const;
+
 };
 
 
@@ -93,6 +96,7 @@ protected :
 
     void showMessage(const QString &message, int timeout = 10000) const {
         _ui->statusBar->showMessage(message, timeout);
+        emit onMessage(message);
     }
 
     void connectCheckboxes() {

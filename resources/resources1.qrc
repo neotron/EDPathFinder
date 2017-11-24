@@ -1,6 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
-    <file>icon512.png</file>
+    <file>iconsplash.png</file>
     <file>basetypes.csv</file>
     <file>noimage.png</file>
     <file>body_distances.json</file>
