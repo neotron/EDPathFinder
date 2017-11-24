@@ -50,8 +50,7 @@ int main(int argc, char *argv[]) {
     splash->connectListener(&w);
     splash->show();
     while(w.loading()) {
-        usleep(1000);
-        a.processEvents();
+        a.processEvents(QEventLoop::AllEvents, 5);
     }
     w.show();
     splash->finish(&w);
