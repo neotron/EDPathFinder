@@ -47,6 +47,8 @@ protected slots:
 
     virtual void openPreferences() {}
 
+    virtual void saveSettings() const {}
+
 };
 
 

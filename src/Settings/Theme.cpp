@@ -79,7 +79,7 @@ void Theme::applyTheme(Id theme) {
             applyDark();
             break;
         case Settings:
-            applyTheme(Settings::theme());
+            applyTheme(Settings::restoreTheme());
             break;
     }
 }

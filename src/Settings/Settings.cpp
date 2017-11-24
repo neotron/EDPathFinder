@@ -17,12 +17,16 @@
 
 #include <QDir>
 #include <QSettings>
+#include <QStandardPaths>
 #include "Settings.h"
 
-static const char *const kJournalPathKey = "journalPath";
+// Uncomment to enable debug for settings.
+// #define SETTINGS_DEBUG 1
+
+static const char *const kJournalPathKey = "restoreJournalPath";
 static const char *const kThemeKey = "theme";
 
-QString Settings::journalPath() {
+QString Settings::restoreJournalPath() {
     QString journalPath;
 #ifdef Q_OS_OSX
     journalPath = QDir::homePath() + "/Library/Application Support/Frontier Developments/Elite Dangerous/";
@@ -33,11 +37,11 @@ QString Settings::journalPath() {
     return settingsPath.isEmpty() ? journalPath : settingsPath;
 }
 
-void Settings::setJournalPath(const QString &path) {
+void Settings::saveJournalPath(const QString &path) {
     QSettings().setValue(kJournalPathKey, path);
 }
 
-Theme::Id Settings::theme() {
+Theme::Id Settings::restoreTheme() {
     int theme = QSettings().value(kThemeKey, Theme::Default).toInt();
     if(theme >= 0 && theme < Theme::Settings) {
         return static_cast<Theme::Id>(theme);
@@ -45,11 +49,11 @@ Theme::Id Settings::theme() {
     return Theme::Default;
 }
 
-void Settings::setTheme(Theme::Id theme) {
+void Settings::saveTheme(Theme::Id theme) {
     QSettings().setValue(kThemeKey, theme);
 }
 
-void Settings::setFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander) {
+void Settings::saveFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander) {
     QSettings settings;
     settings.setValue("settlement/flags", flags);
     settings.setValue("settlement/sizes", sizes);
@@ -57,7 +61,7 @@ void Settings::setFilterSettings(int32 flags, int32 sizes, int32 threat, const Q
     settings.setValue("settlement/commander", commander);
 }
 
-void Settings::getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander) {
+void Settings::restoreFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander) {
     QSettings settings;
     flags = settings.value("settlement/flags", 0).toInt();
     sizes = settings.value("settlement/sizes", SettlementSizeSmall|SettlementSizeMedium|SettlementSizeLarge).toInt();
@@ -65,28 +69,53 @@ void Settings::getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QStr
     commander = settings.value("settlement/commander", flags).toString();\
 }
 
-int Settings::get(const QString &key, int32 defaultValue) {
+int Settings::restore(const QString &key, int32 defaultValue) {
     bool isOk = false;
     int value = QSettings().value(key, defaultValue).toInt(&isOk);
+#ifdef SETTINGS_DEBUG
     qDebug() <<  "GET"<<key << "=" <<value << "default ="<<defaultValue;
+#endif
     return isOk ? value : defaultValue;
 }
 
-float Settings::get(const QString &key, float defaultValue) {
+float Settings::restore(const QString &key, float defaultValue) {
     bool isOk = false;
     float value = QSettings().value(key, defaultValue).toFloat(&isOk);
+#ifdef SETTINGS_DEBUG
     qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+#endif
     return isOk ? value : defaultValue;
 }
 
-bool Settings::get(const QString &key, bool defaultValue) {
+bool Settings::restore(const QString &key, bool defaultValue) {
     bool value = QSettings().value(key, defaultValue).toBool();
+#ifdef SETTINGS_DEBUG
     qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+#endif
     return value;
 }
 
-void Settings::set(const QString &key, const QVariant &value) {
+void Settings::save(const QString &key, const QVariant &value) {
+#ifdef SETTINGS_DEBUG
     qDebug() <<  "SET"<<key << "=" <<value;
-
+#endif
     QSettings().setValue(key, value);
+}
+
+QString Settings::restore(const QString &key, QString &defaultValue) {
+    auto value = QSettings().value(key, defaultValue).toString();
+#ifdef SETTINGS_DEBUG
+    qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+#endif
+    return value.isEmpty() ? defaultValue : value;
+}
+
+QString Settings::restoreSavePath() {
+    auto defaultPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    auto path = restore("file/savePath", defaultPath);
+    return QFileInfo(path).exists() ? path : defaultPath;
+}
+
+void Settings::saveSavePath(const QString &fileName) {
+    save("file/savePath", QFileInfo(fileName).canonicalPath());
 }

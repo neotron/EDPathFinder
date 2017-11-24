@@ -27,7 +27,7 @@ MissionScanner::MissionScanner(QObject *parent)
 
 void MissionScanner::scanJournals() {
     _commanderMissions.clear();
-    QDir dir(Settings::journalPath(), "Journal.*.log");
+    QDir dir(Settings::restoreJournalPath(), "Journal.*.log");
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
     auto monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
 

@@ -25,27 +25,30 @@
 #define CHECKBOX(__BOX, __FLAGS, __FLAG) (__BOX)->setChecked(IS_SET(__FLAGS, __FLAG))
 #define CHECKNAME(__NAME, __FLAGS, __FLAG) CHECKBOX(_ui->__NAME, __FLAGS, __FLAG)
 
-#define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  VAL |= FLAG; } } while(false)
-#define RESTORE_VALUE(NAME, KEY) _ui->NAME->setValue(Settings::get(KEY, _ui->NAME->value()))
-#define RESTORE_CHECKED(NAME, KEY) _ui->NAME->setChecked(Settings::get(KEY, _ui->NAME->isChecked()))
-#define SAVE_VALUE(NAME, KEY) Settings::set(KEY, _ui->NAME->value())
-#define SAVE_CHECKED(NAME, KEY) Settings::set(KEY, _ui->NAME->isChecked())
+#define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  (VAL) |= (FLAG); } } while(false)
+#define RESTORE_VALUE(NAME, KEY) _ui->NAME->setValue(Settings::restore(KEY, _ui->NAME->value()))
+#define RESTORE_CHECKED(NAME, KEY) _ui->NAME->setChecked(Settings::restore(KEY, _ui->NAME->isChecked()))
+#define SAVE_VALUE(NAME, KEY) Settings::save(KEY, _ui->NAME->value())
+#define SAVE_CHECKED(NAME, KEY) Settings::save(KEY, _ui->NAME->isChecked())
 
 class Settings {
 public:
 
-    static QString journalPath();
-    static void setJournalPath(const QString &path);
+    static QString restoreJournalPath();
+    static void saveJournalPath(const QString &path);
 
-    static Theme::Id theme();
-    static void setTheme(Theme::Id theme);
+    static Theme::Id restoreTheme();
+    static void saveTheme(Theme::Id theme);
 
-    static void setFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander);
-    static void getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander);
+    static void saveFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander);
+    static void restoreFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander);
 
-    static void set(const QString &key, const QVariant &value);
+    static QString restoreSavePath();
+    static void saveSavePath(const QString &fileName);
 
-    static int get(const QString &key, int32 defaultValue);
-    static float get(const QString &key, float defaultValue);
-    static bool get(const QString &key, bool defaultValue);
+    static void save(const QString &key, const QVariant &value);
+    static int restore(const QString &key, int32 defaultValue);
+    static QString restore(const QString &key, QString &defaultValue);
+    static float restore(const QString &key, float defaultValue);
+    static bool restore(const QString &key, bool defaultValue);
 };

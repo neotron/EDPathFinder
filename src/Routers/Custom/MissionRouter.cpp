@@ -2,6 +2,7 @@
 #include <QCompleter>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <src/Settings/Settings.h>
 #include "MissionRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
@@ -192,7 +193,9 @@ void MissionRouter::exportAsCSV() {
     RouteTableModel::exportTableViewToCSV(_ui->tableView);
 }
 
-void MissionRouter::addStop() { _systemResolver->resolve(_ui->customSystem->text());  }
+void MissionRouter::addStop() {
+    _systemResolver->resolve(_ui->customSystem->text());
+}
 
 void MissionRouter::exportAsTabNewline() {
     RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
@@ -201,11 +204,13 @@ void MissionRouter::exportAsTabNewline() {
 void MissionRouter::importSystems() {
     QString filters("Text files (*.txt);;All files (*.*)");
     QString defaultFilter("Text files (*.txt)");
-    QString fileName = QFileDialog::getOpenFileName(this, "Import file", QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation).front(),
+    QString fileName = QFileDialog::getOpenFileName(this, "Import file", Settings::restoreSavePath(),
                                                     filters, &defaultFilter);
     if(fileName.isEmpty()) {
         return;
     }
+
+    Settings::saveSavePath(fileName);
 
     QFile file(fileName);
     if(!file.open(QFile::ReadOnly)) {
@@ -215,6 +220,7 @@ void MissionRouter::importSystems() {
         messageBox.show();
         return;
     }
+
     QTextStream stream(&file);
     bool appended = false;
     for(auto line = stream.readLine(); !line.isNull(); line = stream.readLine()) {

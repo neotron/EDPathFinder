@@ -17,6 +17,7 @@
 
 #include <QTableView>
 #include <QFileDialog>
+#include <src/Settings/Settings.h>
 #include "RouteTableModel.h"
 
 RouteTableModel::RouteTableModel(QObject *parent, const RouteResult &result)
@@ -89,8 +90,7 @@ QString RouteTableModel::totalDistance(size_t row) const {
 void RouteTableModel::exportTableViewToCSV(QTableView *table) {
     QString filters("CSV files (*.csv);;All files (*.*)");
     QString defaultFilter("CSV files (*.csv)");
-    QString fileName = QFileDialog::getSaveFileName(0, "Save file", QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-                                                    filters, &defaultFilter);
+    QString fileName = QFileDialog::getSaveFileName(nullptr, "Save file", Settings::restoreSavePath(), filters, &defaultFilter);
 
     exportTableView(table, fileName, true);
 
@@ -99,8 +99,7 @@ void RouteTableModel::exportTableViewToCSV(QTableView *table) {
 void RouteTableModel::exportTableViewToTabNewline(QTableView *table) {
     QString filters("Text files (*.txt);;All files (*.*)");
     QString defaultFilter("Text files (*.txt)");
-    QString fileName = QFileDialog::getSaveFileName(0, "Save file", QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation),
-                                                    filters, &defaultFilter);
+    QString fileName = QFileDialog::getSaveFileName(0, "Save file", Settings::restoreSavePath(), filters, &defaultFilter);
 
     exportTableView(table, fileName, false);
 }
@@ -109,35 +108,37 @@ void RouteTableModel::exportTableView(QTableView *table, const QString &fileName
     if(fileName.isEmpty()) {
         return;
     }
+    Settings::saveSavePath(fileName);
     QFile file(fileName);
+    if(!file.open(QFile::WriteOnly | QFile::Truncate)) {
+        return;
+    }
+
     QAbstractItemModel *model = table->model();
     QString sep(isCSV ? ";" : "\t");
-    if (file.open(QFile::WriteOnly | QFile::Truncate)) {
-        QTextStream data(&file);
-        QStringList strList;
-        for (int i = 0; i < model->columnCount(); i++) {
-            const auto header = model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
-            if (header.length() > 0) {
-                strList.append(isCSV ? "\"" + header + "\"" : header);
+    QTextStream data(&file);
+    QStringList strList;
+    for(int i = 0; i < model->columnCount(); i++) {
+        const auto header = model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString();
+        if(header.length() > 0) {
+            strList.append(isCSV ? "\"" + header + "\"" : header);
+        } else {
+            strList.append("");
+        }
+    }
+    data << strList.join(sep) << endl;
+    for(int i = 0; i < model->rowCount(); i++) {
+        strList.clear();
+        for(int j = 0; j < model->columnCount(); j++) {
+            auto field = model->data(model->index(i, j)).toString();
+            if(field.length() > 0) {
+                field = field.replace("\n", ", ");
+                strList.append(isCSV ? "\"" + field + "\"" : field);
             } else {
                 strList.append("");
             }
         }
         data << strList.join(sep) << endl;
-        for (int i = 0; i < model->rowCount(); i++) {
-            strList.clear();
-            for (int j = 0; j < model->columnCount(); j++) {
-                auto field = model->data(model->index(i, j)).toString();
-                if (field.length() > 0) {
-                    field = field.replace("\n", ", ");
-                    strList.append(isCSV ? "\"" + field + "\"" : field);
-                } else {
-                    strList.append("");
-                }
-            }
-            data << strList.join(sep) << endl;
-        }
-        file.close();
     }
-
+    file.close();
 }

@@ -87,7 +87,7 @@ private:
     bool _loading;
     int _lastMaterialCount;
 
-    void saveSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter, int32 settlementSizes) const;
+    void saveMainSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter, int32 settlementSizes) const;
 
     float updateProbabilityLabel() const;
 };

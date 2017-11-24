@@ -609,12 +609,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>236</x>
-     <y>167</y>
+     <x>259</x>
+     <y>153</y>
     </hint>
     <hint type="destinationlabel">
-     <x>431</x>
-     <y>165</y>
+     <x>441</x>
+     <y>150</y>
     </hint>
    </hints>
   </connection>
@@ -625,12 +625,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>349</x>
-     <y>242</y>
+     <x>373</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>419</x>
-     <y>243</y>
+     <x>437</x>
+     <y>217</y>
     </hint>
    </hints>
   </connection>
@@ -641,12 +641,12 @@
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>242</x>
-     <y>233</y>
+     <x>266</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
-     <x>425</x>
-     <y>240</y>
+     <x>437</x>
+     <y>217</y>
     </hint>
    </hints>
   </connection>
@@ -657,8 +657,8 @@
    <slot>updateFilters()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>124</x>
-     <y>239</y>
+     <x>148</x>
+     <y>217</y>
     </hint>
     <hint type="destinationlabel">
      <x>1359</x>
@@ -666,8 +666,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>systemCountSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>ValueRouter</receiver>
+   <slot>saveSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>152</x>
+     <y>138</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>458</x>
+     <y>480</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateFilters()</slot>
+  <slot>saveSettings()</slot>
  </slots>
 </ui>

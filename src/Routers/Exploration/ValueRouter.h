@@ -16,21 +16,24 @@ Q_OBJECT
 public:
     ValueRouter(QWidget *parent, AStarRouter *router, SystemList *systems);
 
-
     virtual ~ValueRouter();
 
 protected slots:
-    void handleEvent(const JournalFile &file, const Event &ev);
+    void updateFilters() override;
+    void routeCalculated(const RouteResult &route) override;
+    void onRouterCreated(TSPWorker *worker) override;
 
+    void handleEvent(const JournalFile &file, const Event &ev);
     void scanJournals();
-    virtual void updateFilters() override;
-    virtual void routeCalculated(const RouteResult &route) override;
-    virtual void updateSystem();
-    virtual void onRouterCreated(TSPWorker *worker) override;
+    void updateSystem();
+    void saveSettings() const override;
 
 private:
+    void restoreSettings() const;
+
     QMap<QString, QSet<QString>> _commanderExploredSystems;
     SystemEntryCoordinateResolver *_systemResolverDestination;
+
 };
 
 #endif // VALUEROUTER_H

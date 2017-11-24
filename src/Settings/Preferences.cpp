@@ -13,7 +13,7 @@ Preferences::Preferences(QWidget *parent)
     connect(this, SIGNAL(rejected()), SLOT(revertTheme()));
     _buttonGroup.addButton(_ui->defaultTheme, Theme::Default);
     _buttonGroup.addButton(_ui->darkTheme, Theme::Dark);
-    switch(Settings::theme()) {
+    switch(Settings::restoreTheme()) {
         default:
             _ui->defaultTheme->setChecked(true);
             break;
@@ -21,7 +21,7 @@ Preferences::Preferences(QWidget *parent)
             _ui->darkTheme->setChecked(true);
             break;
     }
-    _ui->journalPath->setText(Settings::journalPath());
+    _ui->journalPath->setText(Settings::restoreJournalPath());
     connect(&_buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(themeChanged()));
 
     connect(_ui->journalEdit, SIGNAL(clicked()), this, SLOT(selectJournalPath()));
@@ -32,15 +32,15 @@ Preferences::~Preferences() {
 }
 
 void Preferences::savePreferences() {
-    const auto oldPath = Settings::journalPath();
+    const auto oldPath = Settings::restoreJournalPath();
     const auto newPath = _ui->journalPath->text();
 
     if(QDir(oldPath) != QDir(newPath)) {
-        Settings::setJournalPath(newPath);
+        Settings::saveJournalPath(newPath);
         emit journalPathUpdated(oldPath, newPath);
     }
 
-    Settings::setTheme(selectedThemeId());
+    Settings::saveTheme(selectedThemeId());
 }
 
 void Preferences::themeChanged() {
@@ -56,7 +56,7 @@ Theme::Id Preferences::selectedThemeId() {
 }
 void Preferences::selectJournalPath() {
     QString dir = QFileDialog::getExistingDirectory(this, "Select Journal Directory",
-                                                    Settings::journalPath(),
+                                                    Settings::restoreJournalPath(),
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     if(!dir.isEmpty()) {
         _ui->journalPath->setText(dir);

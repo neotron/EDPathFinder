@@ -58,7 +58,7 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::restoreSettings() {
     int32 flags, sizes, threat;
     QString commander;
-    Settings::getFilterSettings(flags, sizes, threat, commander);
+    Settings::restoreFilterSettings(flags, sizes, threat, commander);
     auto checkboxes = findChildren<QCheckBox*>();
     for(auto &checkbox : checkboxes) {
         auto flag = _nameToFlagLookup.find(checkbox->objectName());
@@ -93,7 +93,7 @@ float MainWindow::updateProbabilityLabel() const {
     return minProbability;
 }
 
-void MainWindow::saveSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter,
+void MainWindow::saveMainSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter,
                               int32 settlementSizes) const {
     SAVE_VALUE(minMats, kMinMatsSettingsKey);
     SAVE_VALUE(dropProbability, kMinDropProbabilitySettingsKey);
@@ -103,7 +103,7 @@ void MainWindow::saveSettings(int32 settlementFlags, const QString &selectedComm
     SAVE_CHECKED(distanceCheckbox, kDistanceCheckboxSettingsKey);
     SAVE_CHECKED(unknownDistance, kUnknownDistanceSettingsKey);
 
-    Settings::setFilterSettings(settlementFlags, settlementSizes, threatFilter, selectedCommander);
+    Settings::saveFilterSettings(settlementFlags, settlementSizes, threatFilter, selectedCommander);
 }
 
 MainWindow::~MainWindow() {
@@ -197,7 +197,7 @@ void MainWindow::updateFilters() {
     SET_IF_CHECKED(settlementSizes, mediumSize, SettlementSizeMedium);
     SET_IF_CHECKED(settlementSizes, largeSize, SettlementSizeLarge);
 
-    saveSettings(settlementFlags, selectedCommander, threatFilter, settlementSizes);
+    saveMainSettings(settlementFlags, selectedCommander, threatFilter, settlementSizes);
 
     int32 matches = 0;
     _filteredSystems.clear();
@@ -301,7 +301,7 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     _ui->menuBar->setEnabled(true);
     // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
     auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
-    _journalWatcher->watchDirectory(Settings::journalPath(), newerThanDate);
+    _journalWatcher->watchDirectory(Settings::restoreJournalPath(), newerThanDate);
     _loading = false;
 
     updateCommanderAndSystem();
