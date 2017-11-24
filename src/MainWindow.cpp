@@ -28,25 +28,38 @@
 #include "buildnumber.h"
 #include "Preferences.h"
 #include "Settings.h"
+#include "SystemLoader.h"
 
-#define IS_SET(__FLAGS, __FLAG) (((__FLAGS) & (__FLAG)) == (__FLAG))
-#define CHECKBOX(__BOX, __FLAGS, __FLAG) (__BOX)->setChecked(IS_SET(__FLAGS, __FLAG))
-#define CHECKNAME(__NAME, __FLAGS, __FLAG) CHECKBOX(_ui->__NAME, __FLAGS, __FLAG)
-
-#define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  VAL |= FLAG; } } while(false)
-
+static const char *const kMinMatsSettingsKey = "settlement/minMats";
+static const char *const kMinDropProbabilitySettingsKey = "settlement/minDropProbability";
+static const char *const kSystemCountSliderSettingsKey = "settlement/minSystemCount";
+static const char *const kDistanceSliderSettingsKey = "settlement/maxDistance";
+static const char *const kDistanceCheckboxSettingsKey = "settlement/maxDistanceCheckbox";
+static const char *const kUnknownDistanceSettingsKey = "settlement/unknownDistanceCheckbox";
 
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
-          _journalWatcher(new JournalWatcher(this)), _settlementDates(), _lastMaterialCount(0) {
-    int32 flags, sizes, threat;
-    QString commander;
-    Settings::getFilterSettings(flags, sizes, threat, commander);
-
+          _journalWatcher(new JournalWatcher(this)), _settlementDates(), _loading(true), _lastMaterialCount(-1) {
     buildLookupMap();
     loadCompressedData();
 
-    QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
+    restoreSettings();
+
+    _ui->centralWidget->setEnabled(false);
+    _ui->menuBar->setEnabled(false);
+    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
+            this, SLOT(handleEvent( const JournalFile &, const Event &)));
+    _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
+
+    _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
+    _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
+}
+
+void MainWindow::restoreSettings() {
+    int32 flags, sizes, threat;
+    QString commander;
+    Settings::getFilterSettings(flags, sizes, threat, commander);
+    auto checkboxes = findChildren<QCheckBox*>();
     for(auto &checkbox : checkboxes) {
         auto flag = _nameToFlagLookup.find(checkbox->objectName());
         if(flag != _nameToFlagLookup.end()) {
@@ -63,17 +76,34 @@ MainWindow::MainWindow(QWidget *parent)
     CHECKNAME(mediumSize, sizes, SettlementSizeMedium);
     CHECKNAME(largeSize, sizes, SettlementSizeLarge);
 
-    _ui->centralWidget->setEnabled(false);
-    _ui->menuBar->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
-            this, SLOT(handleEvent( const JournalFile &, const Event &)));
-    _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
-    _ui->distanceSlider->setMaximum(10000);
-    _ui->distanceSlider->setValue(10000);
+    _ui->minMats->setMaximum(100); // Set a large value so we can set it properly.
+    RESTORE_VALUE(minMats, kMinMatsSettingsKey);
+    RESTORE_VALUE(dropProbability, kMinDropProbabilitySettingsKey);
+    RESTORE_VALUE(systemCountSlider, kSystemCountSliderSettingsKey);
+    RESTORE_VALUE(distanceSlider, kDistanceSliderSettingsKey);
+    RESTORE_CHECKED(distanceCheckbox, kDistanceCheckboxSettingsKey);
+    RESTORE_CHECKED(unknownDistance, kUnknownDistanceSettingsKey);
+    distanceSliderValue();
+    updateProbabilityLabel();
+}
 
-    _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
-    _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
+float MainWindow::updateProbabilityLabel() const {
+    float minProbability = _ui->dropProbability->value() / 10.0f;
+    _ui->dropProbabilityLabel->setText(QString("%1").arg(minProbability));
+    return minProbability;
+}
 
+void MainWindow::saveSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter,
+                              int32 settlementSizes) const {
+    SAVE_VALUE(minMats, kMinMatsSettingsKey);
+    SAVE_VALUE(dropProbability, kMinDropProbabilitySettingsKey);
+    SAVE_VALUE(systemCountSlider, kSystemCountSliderSettingsKey);
+    SAVE_VALUE(distanceSlider, kDistanceSliderSettingsKey);
+
+    SAVE_CHECKED(distanceCheckbox, kDistanceCheckboxSettingsKey);
+    SAVE_CHECKED(unknownDistance, kUnknownDistanceSettingsKey);
+
+    Settings::setFilterSettings(settlementFlags, settlementSizes, threatFilter, selectedCommander);
 }
 
 MainWindow::~MainWindow() {
@@ -105,8 +135,9 @@ void MainWindow::routeCalculated(const RouteResult &route) {
 }
 
 void MainWindow::updateFilters() {
-    float minProbability = _ui->dropProbability->value()/10.0f;
-    _ui->dropProbabilityLabel->setText(QString("%1").arg(minProbability));
+    if(_loading) { return; }
+
+    float minProbability = updateProbabilityLabel();
 
     int32 settlementFlags = 0;
     QList<QCheckBox *> checkboxes = findChildren<QCheckBox *>();
@@ -129,11 +160,13 @@ void MainWindow::updateFilters() {
         }
     }
     if(materialFilters.size() != _lastMaterialCount) {
+        _ui->minMats->setMaximum(materialFilters.size());
+        if(_lastMaterialCount >= 0) {
+            _ui->minMats->setValue(materialFilters.size());
+        }
         _lastMaterialCount = materialFilters.size();
-        _ui->minMats->setMaximum(_lastMaterialCount);
-        _ui->minMats->setValue(_lastMaterialCount);
+        _ui->minMats->setEnabled(_lastMaterialCount > 0);
     }
-
     auto selectedCommander = _ui->filterCommander->currentText();
     auto commanders = _settlementDates.keys();
     auto visitedSettlements = QMap<QString, QDateTime>();
@@ -164,7 +197,7 @@ void MainWindow::updateFilters() {
     SET_IF_CHECKED(settlementSizes, mediumSize, SettlementSizeMedium);
     SET_IF_CHECKED(settlementSizes, largeSize, SettlementSizeLarge);
 
-    Settings::setFilterSettings(settlementFlags, settlementSizes, threatFilter, selectedCommander);
+    saveSettings(settlementFlags, selectedCommander, threatFilter, settlementSizes);
 
     int32 matches = 0;
     _filteredSystems.clear();
@@ -200,7 +233,7 @@ void MainWindow::updateFilters() {
                         matchingMaterials++;
                     }
                 }
-                if(matchingMaterials < _ui->minMats->value()) {
+                if(_ui->minMats->isEnabled() && matchingMaterials < _ui->minMats->value()) {
                     continue;
                 }
                 if((settlementSizes & settlement.size()) != settlement.size()) {
@@ -233,15 +266,15 @@ void MainWindow::updateFilters() {
 
 void MainWindow::loadCompressedData() {
     showMessage("Loading known systems...", 0);
+
     QFile file(":/systems.txt.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
-    auto compressor = new QCompressor(file.readAll());
 
     QFile file2(":/valuable-systems.csv.gz");
     if(!file2.open(QIODevice::ReadOnly)) { return; }
+    
+    auto compressor = new QCompressor(file.readAll());
     auto compressor2 = new QCompressor(file2.readAll());
-
-
     auto loader = new SystemLoader(_router);
 
     connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
@@ -268,9 +301,9 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     _ui->menuBar->setEnabled(true);
     // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
     auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
-    _loading = true;
     _journalWatcher->watchDirectory(Settings::journalPath(), newerThanDate);
     _loading = false;
+
     updateCommanderAndSystem();
 
     auto updater(new AutoUpdateChecker(this));

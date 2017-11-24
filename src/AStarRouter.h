@@ -19,6 +19,7 @@
 #include <QtGui>
 #include <deps/PathFinder/src/PathFinder.h>
 #include <deps/PathFinder/src/AStar.h>
+#include <unordered_map>
 #include "System.h"
 
 class AStarRouter;
@@ -123,15 +124,23 @@ public:
 
     void addSystem(const System &system) {
         _systems.push_back(system);
-        _systemLookup[system.name().toLower()] = &_systems.back();
+        _systemLookup[system.key()] = &_systems.back();
     }
 
     AStarResult calculateRoute(const QString &begin, const QString &end, float jumprange);
 
     System *findSystemByName(const QString &name) {
         auto lowerName = name.toLower();
-        return _systemLookup.contains(lowerName) ? _systemLookup[lowerName] : Q_NULLPTR;
+        auto found = _systemLookup.find(lowerName.toStdString());
+        return found == _systemLookup.end() ? nullptr : found->second;
     }
+
+
+    System *findSystemByKey(const std::string &key) {
+        auto found = _systemLookup.find(key);
+        return found == _systemLookup.end() ? nullptr : found->second;
+    }
+
 
     const SystemList &systems() const {
         return _systems;
@@ -156,7 +165,7 @@ protected:
 
 private:
     SystemList              _systems;
-    QMap<QString, System *> _systemLookup;
+    std::unordered_map<std::string, System *> _systemLookup;
 };
 
 

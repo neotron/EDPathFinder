@@ -21,8 +21,19 @@
 #include "Theme.h"
 #include "System.h"
 
+#define IS_SET(__FLAGS, __FLAG) (((__FLAGS) & (__FLAG)) == (__FLAG))
+#define CHECKBOX(__BOX, __FLAGS, __FLAG) (__BOX)->setChecked(IS_SET(__FLAGS, __FLAG))
+#define CHECKNAME(__NAME, __FLAGS, __FLAG) CHECKBOX(_ui->__NAME, __FLAGS, __FLAG)
+
+#define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  VAL |= FLAG; } } while(false)
+#define RESTORE_VALUE(NAME, KEY) _ui->NAME->setValue(Settings::get(KEY, _ui->NAME->value()))
+#define RESTORE_CHECKED(NAME, KEY) _ui->NAME->setChecked(Settings::get(KEY, _ui->NAME->isChecked()))
+#define SAVE_VALUE(NAME, KEY) Settings::set(KEY, _ui->NAME->value())
+#define SAVE_CHECKED(NAME, KEY) Settings::set(KEY, _ui->NAME->isChecked())
+
 class Settings {
 public:
+
     static QString journalPath();
     static void setJournalPath(const QString &path);
 
@@ -31,4 +42,10 @@ public:
 
     static void setFilterSettings(int32 flags, int32 sizes, int32 threat, const QString &commander);
     static void getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QString &commander);
+
+    static void set(const QString &key, const QVariant &value);
+
+    static int get(const QString &key, int32 defaultValue);
+    static float get(const QString &key, float defaultValue);
+    static bool get(const QString &key, bool defaultValue);
 };

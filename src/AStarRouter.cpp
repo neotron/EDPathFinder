@@ -65,13 +65,13 @@ AStarCalculator::~AStarCalculator() {
     _nodes.clear();
 }
 
+// Return all systems in a cylinder formed between the two vectors
 void AStarCalculator::cylinder(const SystemList &stars, QVector3D vec_from, QVector3D vec_to, float buffer) {
-
-    auto           bufferSquare = buffer * buffer;
+    auto bufferSquare = buffer * buffer;
     for(const auto &s: stars) {
-        auto numerator   = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
+        auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
         auto denominator = (vec_to - vec_from).lengthSquared();
-        auto dist        = numerator / denominator;
+        auto dist = numerator / denominator;
         if(dist < bufferSquare) {
             auto systemNode = new AStarSystemNode(*this, s);
             _nodes.push_back(systemNode);
@@ -118,7 +118,7 @@ int AStarRouter::rowCount(const QModelIndex &) const {
 }
 
 QModelIndex AStarRouter::parent(const QModelIndex &) const {
-    return QModelIndex();
+    return {};
 }
 
 QModelIndex AStarRouter::index(int row, int column, const QModelIndex &) const {
@@ -127,11 +127,9 @@ QModelIndex AStarRouter::index(int row, int column, const QModelIndex &) const {
 
 void AStarRouter::sortSystemList() {
     beginResetModel();
-    std::sort(_systems.begin(), _systems.end(), [ ](const System &a, const System &b) {
-        return a.name() < b.name();
-    });
+    std::sort(_systems.begin(), _systems.end());
     for(auto &system: _systems) {
-        _systemLookup[system.name().toLower()] = &system;
+        _systemLookup[system.key()] = &system;
     }
     endResetModel();
 }

@@ -48,7 +48,7 @@
     <item>
      <widget class="QTabWidget" name="filterTabs">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="materialFilterTab">
        <attribute name="title">
@@ -587,6 +587,12 @@
                  <horstretch>1</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="maximum">
+                <number>10000</number>
+               </property>
+               <property name="value">
+                <number>10000</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>

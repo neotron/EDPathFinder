@@ -50,19 +50,20 @@ void RouteViewer::copySelectedItem() {
 
 
 void RouteViewer::updateSettlementInfo() {
-    auto       index        = _ui->tableView->selectionModel()->currentIndex();
-    const auto row            = index.row();
+    auto index = _ui->tableView->selectionModel()->currentIndex();
+    const auto row = index.row();
     const auto settlementData = _routeModel->result().getSettlementAtIndex(row);
     if(!settlementData) {
         return;
     }
-    const auto settlement     = settlementData->settlement();
+    const auto settlement = settlementData->settlement();
     const auto settlementType = settlement.type();
 
     QApplication::clipboard()->setText(settlementData->systemName());
-    _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(settlementData->systemName()));
-    _ui->lastDistanceLabel->setText(QString("%1 ly").arg(_routeModel->lastDistance((size_t)row)));
-    _ui->startDistanceLabel->setText(QString("%1 ly").arg(_routeModel->totalDistance((size_t)row)));
+    _ui->statusbar->showMessage(
+            QString("Copied system name `%1' to the system clipboard.").arg(settlementData->systemName()));
+    _ui->lastDistanceLabel->setText(QString("%1 ly").arg(_routeModel->lastDistance((size_t) row)));
+    _ui->startDistanceLabel->setText(QString("%1 ly").arg(_routeModel->totalDistance((size_t) row)));
     _ui->planetLabel->setText(settlementData->planetName());
     _ui->settlementLabel->setText(settlement.name());
     _ui->systemLabel->setText(settlementData->systemName());
@@ -71,43 +72,49 @@ void RouteViewer::updateSettlementInfo() {
                                      QString("%1 ls").arg(settlementData->distance()) : "N/A");
 
     switch(settlement.threatLevel()) {
-        case ThreatLevelLow:
-            _ui->threatLabel->setText("None");
-            break;
-        case ThreatLevelRestrictedLongDistance:
-            _ui->threatLabel->setText("Restricted");
-            break;
-        case ThreatLevelMedium:
-            _ui->threatLabel->setText("Medium");
-            break;
-        case ThreatLeveLHigh:
-            _ui->threatLabel->setText("High");
-            break;
-        case ThreatLevelUnknown:break;
+    case ThreatLevelLow:
+        _ui->threatLabel->setText("None");
+        break;
+    case ThreatLevelRestrictedLongDistance:
+        _ui->threatLabel->setText("Restricted");
+        break;
+    case ThreatLevelMedium:
+        _ui->threatLabel->setText("Medium");
+        break;
+    case ThreatLeveLHigh:
+        _ui->threatLabel->setText("High");
+        break;
+    case ThreatLevelUnknown:
+        _ui->threatLabel->setText("Unknown");
+        break;
     }
     switch(settlement.size()) {
-        case SettlementSizeSmall:
-            _ui->sizeLabel->setText("Small");
-            break;
-        case SettlementSizeMedium:
-            _ui->sizeLabel->setText("Medium");
-            break;
-        case SettlementSizeLarge:
-            _ui->sizeLabel->setText("Large");
-            break;
+    case SettlementSizeSmall:
+        _ui->sizeLabel->setText("Small");
+        break;
+    case SettlementSizeMedium:
+        _ui->sizeLabel->setText("Medium");
+        break;
+    case SettlementSizeLarge:
+        _ui->sizeLabel->setText("Large");
+        break;
+    case SettlementSizeUnknown:
+        _ui->sizeLabel->setText("Unknown");
+        break;
+
     }
     switch(settlementType->securityLevel()) {
-        case ThreatLevelUnknown:
-        case ThreatLevelRestrictedLongDistance:
-        case ThreatLevelLow:
-            _ui->securityLabel->setText("Low");
-            break;
-        case ThreatLevelMedium:
-            _ui->securityLabel->setText("Medium");
-            break;
-        case ThreatLeveLHigh:
-            _ui->securityLabel->setText("High");
-            break;
+    case ThreatLevelUnknown:
+    case ThreatLevelRestrictedLongDistance:
+    case ThreatLevelLow:
+        _ui->securityLabel->setText("Low");
+        break;
+    case ThreatLevelMedium:
+        _ui->securityLabel->setText("Medium");
+        break;
+    case ThreatLeveLHigh:
+        _ui->securityLabel->setText("High");
+        break;
     }
     setFlag(settlement, "cdt", SettlementFlagsCoreDataTerminal);
     setFlag(settlement, "jump", SettlementFlagsJumpClimbRequired);
@@ -128,7 +135,7 @@ void RouteViewer::updateSettlementInfo() {
     _iconLoader = new ImageLoader(_ui->settlementIcon);
     _iconLoader->startDownload(settlementType->imageNamed(SettlementType::IMAGE_BASE_ICON));
 
-   // _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
+    // _ui->largeImage->setPixmap(QPixmap(":/noimage.png"));
     delete _imageLoader;
     _imageLoader = nullptr;
 
@@ -142,7 +149,7 @@ void RouteViewer::updateSettlementInfo() {
         preferredMap = SettlementType::IMAGE_PATHMAP;
     } else if(images.contains(SettlementType::IMAGE_CORE)) {
         preferredMap = SettlementType::IMAGE_CORE;
-    } else  if(images.contains(SettlementType::IMAGE_COREFULLMAP)) {
+    } else if(images.contains(SettlementType::IMAGE_COREFULLMAP)) {
         preferredMap = SettlementType::IMAGE_COREFULLMAP;
     } else if(images.contains(SettlementType::IMAGE_OVERVIEW)) {
         preferredMap = SettlementType::IMAGE_OVERVIEW;
@@ -151,7 +158,6 @@ void RouteViewer::updateSettlementInfo() {
     }
     _ui->imageList->setCurrentText(preferredMap);
     loadOverviewImage(settlementType->imageNamed(preferredMap));
-
 }
 
 void RouteViewer::setFlag(const Settlement &settlement, QString key, SettlementFlags flag) {

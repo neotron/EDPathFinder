@@ -121,7 +121,9 @@ void MissionRouter::optimizeRoute() {
         }
         routeSystems.push_back(System(missionSystem->name(), PlanetList(), missionSystem->position()));
     }
-    routeSystems.push_back(*originSystem);
+    if(originSystem) {
+        routeSystems.push_back(*originSystem);
+    }
 
     _ui->statusbar->showMessage(QString("Resolving route for %1 systems...").arg(routeSystems.size()), 10000);
 

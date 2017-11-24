@@ -75,6 +75,8 @@ private:
 
     int distanceSliderValue() const;
 
+    void restoreSettings();
+
     QMap<QString, SettlementFlags> _nameToFlagLookup;
 
     int32         _matchingSettlementCount;
@@ -84,4 +86,8 @@ private:
 
     bool _loading;
     int _lastMaterialCount;
+
+    void saveSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter, int32 settlementSizes) const;
+
+    float updateProbabilityLabel() const;
 };

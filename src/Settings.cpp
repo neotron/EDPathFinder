@@ -64,3 +64,29 @@ void Settings::getFilterSettings(int32 &flags, int32 &sizes, int32 &threat, QStr
     threat = settings.value("settlement/threat", ThreatLevelLow).toInt();
     commander = settings.value("settlement/commander", flags).toString();\
 }
+
+int Settings::get(const QString &key, int32 defaultValue) {
+    bool isOk = false;
+    int value = QSettings().value(key, defaultValue).toInt(&isOk);
+    qDebug() <<  "GET"<<key << "=" <<value << "default ="<<defaultValue;
+    return isOk ? value : defaultValue;
+}
+
+float Settings::get(const QString &key, float defaultValue) {
+    bool isOk = false;
+    float value = QSettings().value(key, defaultValue).toFloat(&isOk);
+    qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+    return isOk ? value : defaultValue;
+}
+
+bool Settings::get(const QString &key, bool defaultValue) {
+    bool value = QSettings().value(key, defaultValue).toBool();
+    qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+    return value;
+}
+
+void Settings::set(const QString &key, const QVariant &value) {
+    qDebug() <<  "SET"<<key << "=" <<value;
+
+    QSettings().setValue(key, value);
+}

@@ -85,7 +85,8 @@ namespace operations_research {
         auto bufferSquare = buffer * buffer;
         typedef QPair<System,float> SystemDist;
         QList<SystemDist> filteredSystems;
-            auto originDestDist = vec_from.distanceToPoint(vec_to)+buffer;
+        auto originDestDist = vec_from.distanceToPoint(vec_to)+buffer;
+
         for(const auto &s: _systems) {
             auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
             auto denominator = (vec_to - vec_from).lengthSquared();
@@ -96,6 +97,7 @@ namespace operations_research {
                 filteredSystems.push_back(SystemDist(s, dist));
             }
         }
+
         // qDebug() << "Cylinder of systems contain"<<filteredSystems.size()<<"nodes.";
         std::sort(filteredSystems.begin(), filteredSystems.end(), [] (const SystemDist& a, const SystemDist &b) {
             return a.second < b.second;

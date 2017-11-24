@@ -1,5 +1,11 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <Objective-C>
+      <option name="FIELDS_PREFIX" value="_" />
+      <option name="GETTERS_PREFIX" value="" />
+      <option name="GENERATE_COMPARISON_OPERATORS_USE_STD_TIE" value="true" />
+      <option name="INTRODUCE_GLOBALS_TO_HEADER" value="false" />
+    </Objective-C>
     <Objective-C-extensions>
       <file>
         <option name="com.jetbrains.cidr.lang.util.OCDeclarationKind" value="Import" />

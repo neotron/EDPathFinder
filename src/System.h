@@ -52,6 +52,7 @@ enum ThreatLevel {
 };
 
 enum SettlementSize {
+    SettlementSizeUnknown = 0,
     SettlementSizeSmall = 1 << 0,
     SettlementSizeMedium = 1 << 1,
     SettlementSizeLarge = 1 << 2
@@ -100,9 +101,7 @@ public:
 
     SettlementType(const SettlementType &other) = default;
     SettlementType(SettlementType &&other) = default;
-
-
-    SettlementType() = default;
+    SettlementType(): _size(SettlementSizeUnknown), _securityLevel(ThreatLevelUnknown) {}
 
     SettlementSize size() const {
         return _size;
@@ -260,7 +259,6 @@ public:
 
     explicit System(const QJsonObject &jsonObject);
 
-
     virtual ~System();
 
 // Return distance as a fixed point value with two decimals. Used by TSP
@@ -312,6 +310,19 @@ public:
 
     int32 estimatedValue() const;
 
+    void setKey(std::string key);
+
+    const std::string &key() const;
+    static const std::string makeKey(const QString &name);
+
+    bool operator<(const System &rhs) const;
+
+    bool operator>(const System &rhs) const;
+
+    bool operator<=(const System &rhs) const;
+
+    bool operator>=(const System &rhs) const;
+
 protected:
 
     System(float x, float y, float z)
@@ -323,58 +334,6 @@ protected:
     PlanetList _planets;
     QVector3D _position;
     QList<int8_t>  _numPlanets;
-
+    mutable std::string _key;
     void addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const;
-};
-
-class SystemLoader : public QThread {
-Q_OBJECT
-
-public:
-    explicit SystemLoader(AStarRouter *router)
-            : QThread(), _router(router) {}
-
-    void run() override;
-
-    ~SystemLoader() override;
-
-    void loadSettlements();
-
-    void loadSettlementTypes();
-
-    const SystemList &systems() const {
-        return _systems;
-    }
-
-    const QMap<QString, SettlementType *> &settlementTypes() const {
-        return _settlementTypes;
-    }
-
-signals:
-
-    void systemsLoaded(const SystemList &systems);
-
-    void progress(int progress);
-
-    void sortingSystems();
-
-public slots:
-
-    void dataDecompressed(const QByteArray &bytes);
-
-    void valuableSystemDataDecompressed(const QByteArray &bytes);
-
-private:
-
-    QMap<QString, SettlementType *> _settlementTypes;
-    SystemList _systems;
-    AStarRouter *_router;
-    QByteArray _bytes;
-    QByteArray _valueBytes;
-    QJsonObject _bodyDistances;
-
-    void loadSystemFromTextFile();
-    void loadValueSystemFromTextFile();
-
-    int getDistance(const QString &system, const QString &planet);
 };

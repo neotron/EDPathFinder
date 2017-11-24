@@ -21,24 +21,25 @@
 #include <src/AStarRouter.h>
 
 int main() {
-    AStarRouter  router;
+    AStarRouter router;
     SystemLoader loader(&router);
 
     loader.loadSettlements();
-    auto systems                                   = loader.systems();
+    auto systems = loader.systems();
     qDebug() << systems.size();
 
-    QMap<QString, QMap<QString, QPair<QString,QString>>> bodyLookup;
-    int                                  bodycount = 0;
-    for(auto                             system: systems) {
+    QMap<QString, QMap<QString, QPair<QString, QString>>> bodyLookup;
+    int bodycount = 0;
+    for(auto system: systems) {
         for(auto planet: system.planets()) {
-            bodyLookup[system.name().toLower()][planet.name().toLower()] = QPair<QString,QString>(system.name(), planet.name());
+            bodyLookup[system.name().toLower()][planet.name().toLower()] = QPair<QString, QString>(system.name(),
+                                                                                                   planet.name());
         }
         bodycount++;
     }
     qDebug() << "Found" << bodycount << "bodies";
     QMap<int, QString> systemIdToName;
-    QFile              file("../data/systems_populated.jsonl");
+    QFile file("../data/systems_populated.jsonl");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Couldn't open file for reading.";
         return -1;
@@ -54,9 +55,9 @@ int main() {
         if(doc.isEmpty() || !doc.isObject()) {
             continue;
         }
-        auto    jsonObject = doc.object();
-        int     id         = jsonObject.value("id").toInt(0);
-        QString name       = jsonObject.value("name").toString();
+        auto jsonObject = doc.object();
+        int id = jsonObject.value("id").toInt(0);
+        QString name = jsonObject.value("name").toString();
         if(id && !name.isEmpty()) {
             systemIdToName[id] = name.toLower();
             if(bodyLookup.contains(name.toLower())) {
@@ -74,16 +75,17 @@ int main() {
         return -1;
     }
     int systemmatch = 0;
-    int                  i = 0;
+    int i = 0;
     QList<QFuture<void>> futures;
-    QMap<QString,QMap<QString,int>> distances;
+    QMap<QString, QMap<QString, int>> distances;
     qint64 numReadBytes(0);
     while(!bodies.atEnd()) {
 
         auto linebytes = bodies.readLine();
         numReadBytes += linebytes.size() + 1;
-        if(!(++numLines%10000)) {
-            fprintf(stderr, "\rLines parsed: %7d (%3d%%)", numLines, (int) (numReadBytes / (double)bodies.size() * 100));
+        if(!(++numLines % 10000)) {
+            fprintf(stderr, "\rLines parsed: %7d (%3d%%)", numLines,
+                    (int) (numReadBytes / (double) bodies.size() * 100));
             fflush(stderr);
         }
 
@@ -95,7 +97,7 @@ int main() {
             continue;
         }
         auto jsonObject = doc.object();
-        int  dist       = jsonObject.value("distance_to_arrival").toInt(0);
+        int dist = jsonObject.value("distance_to_arrival").toInt(0);
         if(!dist) {
             continue;
         }
@@ -103,8 +105,8 @@ int main() {
         if(!systemIdToName.contains(id)) {
             continue;
         }
-        auto    system = systemIdToName[id];
-        QString name   = jsonObject.value("name").toString().toLower();
+        auto system = systemIdToName[id];
+        QString name = jsonObject.value("name").toString().toLower();
         name.replace(system + " ", "");
         if(bodyLookup.contains(system)) {
             systemmatch++;
@@ -131,7 +133,7 @@ int main() {
 
     std::cout << QString(outputDocument.toJson(QJsonDocument::Compact)).toStdString() << std::endl;
 
-    #if 0
+#if 0
     for(auto s: bodyLookup.keys()) {
         for(auto p: bodyLookup[s].keys()) {
             if(!bodyLookup[s][p]) {
