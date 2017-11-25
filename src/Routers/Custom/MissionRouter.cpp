@@ -2,7 +2,8 @@
 #include <QCompleter>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <src/Settings/Settings.h>
+#include "Settings.h"
+#include "WindowMenu.h"
 #include "MissionRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
@@ -11,6 +12,7 @@ MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemL
         : QMainWindow(parent), _ui(new Ui::MissionRouter), _scanner(this), _router(router), _systems(systems),
           _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr) {
     _ui->setupUi(this);
+    _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
     refreshMissions();
     auto table = _ui->tableView;
     table->setSelectionBehavior(QTableView::SelectRows);

@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+#include <src/Utility/WindowMenu.h>
 #include "RouteViewer.h"
 #include "ui_RouteViewer.h"
 
@@ -24,6 +25,8 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWind
     _ui->setupUi(this);
     QTableView *table = _ui->tableView;
     _routeModel = new RouteTableModel(this, result);
+    setWindowTitle(QString("Settlement Route (%1, %2 hops)").arg(result.route()[0][0])
+                           .arg(result.route().size()));
     table->setModel(_routeModel);
     table->resizeColumnsToContents();
     table->resizeRowsToContents();
@@ -36,6 +39,7 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWind
     setAttribute(Qt::WA_DeleteOnClose, true);
     connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(copySelectedItem()));
     table->selectRow(0);
+    _ui->menubar->addMenu(new WindowMenu(this, _ui->menubar));
 }
 
 RouteViewer::~RouteViewer() {

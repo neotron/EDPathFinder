@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+#include "WindowMenu.h"
 #include "ValuablePlanetRouteViewer.h"
 #include "ui_ValuablePlanetRouteViewer.h"
 
@@ -21,6 +22,9 @@
 ValuablePlanetRouteViewer::ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent)
         : QMainWindow(parent), _ui(new Ui::ValuablePlanetRouteViewer) {
     _ui->setupUi(this);
+    setWindowTitle(QString("Exploration Route (%1, %2 hops)").arg(result.route()[0][0])
+                           .arg(result.route().size()));
+    _ui->menubar->addMenu(new WindowMenu(this, _ui->menubar));
     QTableView *table = _ui->tableView;
     _routeModel = new RouteTableModel(this, result);
     _routeModel->setResultType(RouteTableModel::ResultTypeValuableSystems);

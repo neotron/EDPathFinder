@@ -20,6 +20,7 @@
 #include <QCompleter>
 #include <QListView>
 #include <QMessageBox>
+#include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
 #include "MissionRouter.h"
@@ -40,6 +41,8 @@ static const char *const kUnknownDistanceSettingsKey = "settlement/unknownDistan
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
           _journalWatcher(new JournalWatcher(this)), _settlementDates(), _loading(true), _lastMaterialCount(-1) {
+
+    _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar, false));
     buildLookupMap();
     loadCompressedData();
 

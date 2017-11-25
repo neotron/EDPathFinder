@@ -1,6 +1,6 @@
 QT_MA=5
 QT_MI=9
-QT_PA=3
+QT_PA=2
 QT=${QT_MA}.${QT_MI}.${QT_PA}
 QTUS=${QT_MA}_${QT_MI}_${QT_PA}
 all:

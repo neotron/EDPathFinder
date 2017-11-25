@@ -1,4 +1,5 @@
 #include <QRadioButton>
+#include "WindowMenu.h"
 #include "ValueRouter.h"
 #include "ValuablePlanetRouteViewer.h"
 #include "MainWindow.h"
@@ -20,13 +21,13 @@ ValueRouter::~ValueRouter() {
 
 ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *systems)
         : AbstractBaseWindow(parent, router, systems), _systemResolverDestination(nullptr) {
+    _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
     restoreSettings();
 
     _systemsOnly = true;
     scanJournals();
     connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
     connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
-    updateFilters();
 
     _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,
                                                                    _ui->yEnd, _ui->zEnd);
@@ -34,6 +35,7 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
     connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
 
+    updateFilters();
 }
 
 void ValueRouter::scanJournals() {

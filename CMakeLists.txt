@@ -18,7 +18,7 @@ file(WRITE src/buildnumber.h "#define PROJECT_VERSION \"${PROJECT_VERSION}\"
 
 fix_project_version()
 configure_msvc_runtime()
-
+set(CMAKE_USE_RELATIVE_PATHS ON)
 set(RESOURCE_FOLDER resources)
 set(ICON_NAME icon512)
 set(COMPANY "David Hedbor")
@@ -73,10 +73,10 @@ file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB_RECURSE PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h )
 file(GLOB_RECURSE SRC_FILES src/*.cpp src/*.h src/*.ui)
 
-HEADER_DIRECTORIES(INCLUDE_DIRS src/)
+HEADER_DIRECTORIES(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
 
 include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
-include_directories(src src/Widgets ${INCLUDE_DIRS})
+include_directories(AFTER ${INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
 )
