@@ -32,10 +32,11 @@ class MessageToaster: public QObject
 {
 
 public:
-    void send(const QString &title, const QString &message);
+    static void send(const QString &title, const QString &message);
 
     static MessageToaster &instance();
 
+    ~MessageToaster() override;
 
 protected:
 #ifdef Q_OS_WIN
@@ -50,6 +51,7 @@ protected:
 
 #endif
 private:
+    void sendMessage(const QString &title, const QString &message);
     explicit MessageToaster(QObject *parent);
 
 #ifdef Q_OS_WIN

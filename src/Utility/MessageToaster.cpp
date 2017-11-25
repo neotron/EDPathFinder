@@ -17,12 +17,14 @@
 
 #include "MessageToaster.h"
 #include "NotificationMacOS.h"
-using namespace WinToastLib;
-
-
-MessageToaster::MessageToaster(QObject *parent) : QObject(parent),
 #ifdef Q_OS_WIN
-                                                  _isInitialized(false)
+using namespace WinToastLib;
+#endif
+
+
+MessageToaster::MessageToaster(QObject *parent) : QObject(parent)
+#ifdef Q_OS_WIN
+                                                  , _isInitialized(false)
 #endif
 {
 #ifdef Q_OS_WIN
@@ -46,7 +48,7 @@ MessageToaster &MessageToaster::instance() {
     return *s_instance;
 }
 
-void MessageToaster::send(const QString &title, const QString &message) {
+void MessageToaster::sendMessage(const QString &title, const QString &message) {
 #ifdef Q_OS_MAC
     NotificationMacOS::send(title, message);
 #endif
@@ -62,6 +64,10 @@ void MessageToaster::send(const QString &title, const QString &message) {
     }
 #endif
 }
+void MessageToaster::send(const QString &title, const QString &message) {
+    MessageToaster::instance().sendMessage(title, message);
+}
+MessageToaster::~MessageToaster() = default;
 
 #ifdef Q_OS_WIN
 

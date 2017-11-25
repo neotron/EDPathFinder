@@ -28,6 +28,8 @@ namespace Ui {
     class ValuablePlanetRouteViewer;
 }
 
+class JournalWatcher;
+
 class ValuablePlanetRouteViewer : public QMainWindow {
 Q_OBJECT
 
@@ -37,14 +39,14 @@ public:
     ~ValuablePlanetRouteViewer() override;
 
 public slots:
-
+    void handleEvent(const JournalFile &journal, const Event &event);
     void copySelectedItem();
     void exportAsCSV();
     void exportAsTabNewline();
 
 private:
     Ui::ValuablePlanetRouteViewer *_ui;
-
+    JournalWatcher *_journalWatcher;
     RouteTableModel *_routeModel;
 
 };

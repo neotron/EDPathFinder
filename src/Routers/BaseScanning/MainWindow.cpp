@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
     _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
-    MessageToaster::instance().send("Hello world", "This is cool");
+
 }
 
 void MainWindow::restoreSettings() {
