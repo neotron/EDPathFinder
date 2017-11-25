@@ -65,6 +65,7 @@ if (UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14  -DARCH_K8 -Wno-deprecated ")
     link_libraries(${LINK_LIBS} -lz)
 else ()
+    set(WINTOAST "deps/wintoast/src/wintoastlib.cpp" "deps/wintoast/src/wintoastlib.h")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS /W1")
     link_libraries(${LINK_LIBS})
 endif ()
@@ -78,7 +79,7 @@ HEADER_DIRECTORIES(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
 include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
 include_directories(AFTER ${INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC}
+    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${WINTOAST}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})

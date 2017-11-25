@@ -4,3 +4,6 @@
 [submodule "deps/EDJournalQT"]
 	path = deps/EDJournalQT
 	url = git@github.com:neotron/EDJournalQT.git
+[submodule "deps/WinToast"]
+	path = deps/WinToast
+	url = git@github.com:mohabouje/WinToast.git
