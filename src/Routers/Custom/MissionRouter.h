@@ -7,6 +7,8 @@
 #include "MissionTableModel.h"
 #include "SystemEntryCoordinateResolver.h"
 
+class RouteProgressAnnouncer;
+
 namespace Ui {
     class MissionRouter;
 }
@@ -56,7 +58,7 @@ private:
     bool _routingPending;
     QSet<QString>     _customStops;
     SystemEntryCoordinateResolver *_systemResolver;
-
+    RouteProgressAnnouncer *_progressAnnouncer;
 };
 
 #endif // CUSTOMROUTER_H

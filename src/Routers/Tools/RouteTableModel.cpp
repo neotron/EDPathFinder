@@ -142,3 +142,7 @@ void RouteTableModel::exportTableView(QTableView *table, const QString &fileName
     }
     file.close();
 }
+
+RouteTableModel::ResultType RouteTableModel::resultType() const {
+    return _resultType;
+}

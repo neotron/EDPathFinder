@@ -24,6 +24,7 @@
 #define NOMINMAX
 #include "deps/WinToast/src/wintoastlib.h"
 #endif
+class QTextToSpeech;
 
 class MessageToaster: public QObject
 #ifdef Q_OS_WIN
@@ -53,6 +54,7 @@ protected:
 private:
     void sendMessage(const QString &title, const QString &message);
     explicit MessageToaster(QObject *parent);
+    QTextToSpeech *_speech;
 
 #ifdef Q_OS_WIN
 

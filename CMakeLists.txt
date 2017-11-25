@@ -44,8 +44,9 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
+find_package(Qt5TextToSpeech REQUIRED)
 
-set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent)
+set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::TextToSpeech)
 
 link_directories(${ORTOOLS}/lib)
 

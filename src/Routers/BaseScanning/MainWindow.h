@@ -83,7 +83,6 @@ private:
 
     int32         _matchingSettlementCount;
 
-    JournalWatcher *_journalWatcher;
     QMap<QString,QMap<QString,QDateTime>> _settlementDates;
 
     bool _loading;

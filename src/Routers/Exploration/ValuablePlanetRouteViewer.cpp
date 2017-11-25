@@ -15,15 +15,19 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 #include <deps/EDJournalQT/src/JournalWatcher.h>
-#include <src/Utility/MessageToaster.h>
+#include <src/Notifications/RouteProgressAnnouncer.h>
+#include "MessageToaster.h"
+#include "System.h"
+#include "TSPWorker.h"
+#include "RouteTableModel.h"
+#include "ImageLoader.h"
 #include "WindowMenu.h"
-#include "Settings.h"
 #include "ValuablePlanetRouteViewer.h"
 #include "ui_ValuablePlanetRouteViewer.h"
 
 
 ValuablePlanetRouteViewer::ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent)
-        : QMainWindow(parent), _ui(new Ui::ValuablePlanetRouteViewer),  _journalWatcher(new JournalWatcher(this)) {
+        : QMainWindow(parent), _ui(new Ui::ValuablePlanetRouteViewer) {
     _ui->setupUi(this);
     setWindowTitle(QString("Exploration Route (%1, %2 hops)").arg(result.route()[0][0])
                            .arg(result.route().size()));
@@ -31,6 +35,10 @@ ValuablePlanetRouteViewer::ValuablePlanetRouteViewer(const RouteResult &result, 
     QTableView *table = _ui->tableView;
     _routeModel = new RouteTableModel(this, result);
     _routeModel->setResultType(RouteTableModel::ResultTypeValuableSystems);
+
+    // Will get deleted automatically.
+    new RouteProgressAnnouncer(this, _routeModel, table);
+
     table->setModel(_routeModel);
     table->resizeColumnsToContents();
     table->resizeRowsToContents();
@@ -43,14 +51,11 @@ ValuablePlanetRouteViewer::ValuablePlanetRouteViewer(const RouteResult &result, 
     setAttribute(Qt::WA_DeleteOnClose, true);
     connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(copySelectedItem()));
     table->selectRow(0);
-    _journalWatcher->watchDirectory(Settings::restoreJournalPath());
-    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
-            this, SLOT(handleEvent( const JournalFile &, const Event &)));
+
 }
 
 ValuablePlanetRouteViewer::~ValuablePlanetRouteViewer() {
     delete _ui;
-    delete _journalWatcher;\
 }
 
 void ValuablePlanetRouteViewer::copySelectedItem() {
@@ -75,41 +80,3 @@ void ValuablePlanetRouteViewer::exportAsCSV() {
 void ValuablePlanetRouteViewer::exportAsTabNewline() {
     RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
 }
-
-void ValuablePlanetRouteViewer::handleEvent(const JournalFile &journal, const Event &event) {
-    switch(event.type()) {
-    case EventTypeFSDJump:
-    case EventTypeLocation: {
-        // This means we changed system or opened the game. 
-        auto &route = _routeModel->result().route();
-        size_t arrivedAt = 0;
-        bool hasArrived = false;
-        for(size_t hop = 0; hop < route.size(); hop++) {
-            if(!route[hop][0].compare(journal.system(), Qt::CaseInsensitive)) {
-                arrivedAt = hop;
-                hasArrived = true;
-                break;
-            }
-        }
-        if(!hasArrived) {
-            return;
-        }
-        _ui->tableView->selectRow(static_cast<int>(arrivedAt));
-
-        if(arrivedAt == route.size()-1) {
-            // Last route
-            MessageToaster::send("Final destination reached.", 
-                                 QString("You have arrived at %1, which is is the final route destination.").arg(route[arrivedAt][0]));
-        } else {
-            auto nextSystem = route[arrivedAt + 1][0];
-            MessageToaster::send(QString("You have arrived at %1.").arg(route[arrivedAt][0]),
-                                 QString("The next system in your route, %1, has been copied to the clipboard.").arg(nextSystem));
-            QApplication::clipboard()->setText(nextSystem);
-        }
-    }
-        break;
-    default:
-        break;
-    }
-}
-

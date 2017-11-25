@@ -15,6 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 #include <src/Utility/WindowMenu.h>
+#include "RouteProgressAnnouncer.h"
 #include "RouteViewer.h"
 #include "ui_RouteViewer.h"
 
@@ -40,6 +41,9 @@ RouteViewer::RouteViewer(const RouteResult &result, QWidget *parent) : QMainWind
     connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(copySelectedItem()));
     table->selectRow(0);
     _ui->menubar->addMenu(new WindowMenu(this, _ui->menubar));
+
+    // auto-deleted when parent is deleted.
+    new RouteProgressAnnouncer(this, _routeModel, table);
 }
 
 RouteViewer::~RouteViewer() {

@@ -2,6 +2,7 @@
 #include <QCompleter>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "RouteProgressAnnouncer.h"
 #include "Settings.h"
 #include "WindowMenu.h"
 #include "MissionRouter.h"
@@ -61,6 +62,9 @@ void MissionRouter::refreshMissions() {
 void MissionRouter::updateMissionTable() {
     auto cmdr = _ui->commanders->currentText();
 
+    delete _progressAnnouncer;
+    _progressAnnouncer = nullptr;
+
     if(cmdr.isEmpty() && _customStops.empty()) {
         _ui->tableView->setModel(nullptr);
         _currentModel = nullptr;
@@ -88,7 +92,6 @@ void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
     horizontalHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
     horizontalHeader->setStretchLastSection(true);
     connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,SLOT(copySelectedItem()));
-
 }
 
 void MissionRouter::optimizeRoute() {
@@ -150,6 +153,7 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     auto model = new RouteTableModel(this, route);
     model->setResultType(RouteTableModel::ResultTypeSystemsOnly);
     refreshTableView(model);
+    _progressAnnouncer = new RouteProgressAnnouncer(this, model, _ui->tableView);
 }
 
 void MissionRouter::onSystemCoordinatesRequestFailed(const QString &systemName) {

@@ -54,6 +54,8 @@ public:
         _resultType = resultType;
     }
 
+    ResultType resultType() const;
+
     static void exportTableViewToCSV(QTableView *table);
     static void exportTableViewToTabNewline(QTableView *table);
     static void exportTableView(QTableView *table, const QString &fileName, bool isCSV);

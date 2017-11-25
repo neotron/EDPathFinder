@@ -14,7 +14,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-
+#include <QDebug>
+#include <QTextToSpeech>
+#include <QVoice>
 #include "MessageToaster.h"
 #include "NotificationMacOS.h"
 #ifdef Q_OS_WIN
@@ -22,7 +24,7 @@ using namespace WinToastLib;
 #endif
 
 
-MessageToaster::MessageToaster(QObject *parent) : QObject(parent)
+MessageToaster::MessageToaster(QObject *parent) : QObject(parent), _speech(new QTextToSpeech(this))
 #ifdef Q_OS_WIN
                                                   , _isInitialized(false)
 #endif
@@ -49,6 +51,7 @@ MessageToaster &MessageToaster::instance() {
 }
 
 void MessageToaster::sendMessage(const QString &title, const QString &message) {
+    _speech->say(title + " "+ message);
 #ifdef Q_OS_MAC
     NotificationMacOS::send(title, message);
 #endif

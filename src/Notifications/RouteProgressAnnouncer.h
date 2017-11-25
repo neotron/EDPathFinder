@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016-2017  David Hedbor <neotron@gmail.com>
+//  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -15,35 +15,31 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+
 #pragma once
+#include <QObject>
 
-#include <QMainWindow>
-#include <QItemSelection>
 
-class RouteResult;
+class QTableView;
 class RouteTableModel;
+class JournalFile;
+class Event;
 
-namespace Ui {
-    class ValuablePlanetRouteViewer;
-}
-
-
-class ValuablePlanetRouteViewer : public QMainWindow {
+class RouteProgressAnnouncer : QObject {
 Q_OBJECT
-
 public:
-    explicit ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent = 0);
+    RouteProgressAnnouncer(QObject *parent, RouteTableModel *routeModel, QTableView *tableView);
 
-    ~ValuablePlanetRouteViewer() override;
+    ~RouteProgressAnnouncer() override;
 
 public slots:
-    void copySelectedItem();
-    void exportAsCSV();
-    void exportAsTabNewline();
-
+    void handleEventSystemOnly(const JournalFile &journal, const Event &event);
+    void handleEventSettlements(const JournalFile &journal, const Event &event);
 private:
-    Ui::ValuablePlanetRouteViewer *_ui;
     RouteTableModel *_routeModel;
+    QTableView *_tableView;
 
+    size_t findArrivalHop(const JournalFile &journal, bool matchSettlement, bool &matchFound) const;
 };
+
 

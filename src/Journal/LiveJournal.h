@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2016-2017  David Hedbor <neotron@gmail.com>
+//  Copyright (C) 2016  David Hedbor <neotron@gmail.com>
 //
 //  This program is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -14,36 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
+// Singleton class used to get live event updates.
+//
 
 #pragma once
+#include <QCoreApplication>
+#include <deps/EDJournalQT/src/JournalFile.h>
+#include <deps/EDJournalQT/src/Event.h>
+#include <deps/EDJournalQT/src/JournalWatcher.h>
 
-#include <QMainWindow>
-#include <QItemSelection>
+class LiveJournal : public QObject {
+    Q_OBJECT
 
-class RouteResult;
-class RouteTableModel;
-
-namespace Ui {
-    class ValuablePlanetRouteViewer;
-}
-
-
-class ValuablePlanetRouteViewer : public QMainWindow {
-Q_OBJECT
 
 public:
-    explicit ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent = 0);
-
-    ~ValuablePlanetRouteViewer() override;
+    static LiveJournal *instance();
+    void startWatching(const QDateTime &newerThanDate);
 
 public slots:
-    void copySelectedItem();
-    void exportAsCSV();
-    void exportAsTabNewline();
+    void handleEvent(const JournalFile &, const Event &);
+    void journalPathChanged(const QString &from, const QString &to);
 
+signals:
+    void onEvent(const JournalFile &, const Event &);
 private:
-    Ui::ValuablePlanetRouteViewer *_ui;
-    RouteTableModel *_routeModel;
+    explicit LiveJournal(QObject *parent);
 
+    JournalWatcher *_watcher;
 };
+
 

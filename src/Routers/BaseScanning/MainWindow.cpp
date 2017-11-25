@@ -20,6 +20,7 @@
 #include <QCompleter>
 #include <QListView>
 #include <QMessageBox>
+#include "LiveJournal.h"
 #include "MessageToaster.h"
 #include "WindowMenu.h"
 #include "MainWindow.h"
@@ -41,7 +42,7 @@ static const char *const kUnknownDistanceSettingsKey = "settlement/unknownDistan
 
 MainWindow::MainWindow(QWidget *parent)
         : AbstractBaseWindow(parent, new AStarRouter(), new SystemList()),
-          _journalWatcher(new JournalWatcher(this)), _settlementDates(), _loading(true), _lastMaterialCount(-1) {
+          _settlementDates(), _loading(true), _lastMaterialCount(-1) {
 
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar, false));
     buildLookupMap();
@@ -51,13 +52,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->centralWidget->setEnabled(false);
     _ui->menuBar->setEnabled(false);
-    connect(_journalWatcher, SIGNAL(onEvent(const JournalFile &, const Event &)),
+    connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),
             this, SLOT(handleEvent( const JournalFile &, const Event &)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
     _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
-
+    MessageToaster::send("Hello world.", "How are you?");
 }
 
 void MainWindow::restoreSettings() {
@@ -113,7 +114,6 @@ void MainWindow::saveMainSettings(int32 settlementFlags, const QString &selected
 
 MainWindow::~MainWindow() {
     delete _router;
-    delete _journalWatcher;
     delete _systemResolver;
 }
 
@@ -306,7 +306,7 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     _ui->menuBar->setEnabled(true);
     // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
     auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
-    _journalWatcher->watchDirectory(Settings::restoreJournalPath(), newerThanDate);
+    LiveJournal::instance()->startWatching(newerThanDate);
     _loading = false;
 
     updateCommanderAndSystem();
@@ -451,7 +451,7 @@ void MainWindow::openExplorationTool() {
 void MainWindow::openPreferences() {
     auto prefs = new Preferences(this);
     connect(prefs, SIGNAL(journalPathUpdated(const QString &, const QString &)),
-            _journalWatcher, SLOT(journalPathChanged(const QString &, const QString &)));
+            LiveJournal::instance(), SLOT(journalPathChanged(const QString &, const QString &)));
     prefs->show();
 }
 
