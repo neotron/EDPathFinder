@@ -94,6 +94,8 @@ void ValuablePlanetRouteViewer::handleEvent(const JournalFile &journal, const Ev
         if(!hasArrived) {
             return;
         }
+        _ui->tableView->selectRow(static_cast<int>(arrivedAt));
+
         if(arrivedAt == route.size()-1) {
             // Last route
             MessageToaster::send("Final destination reached.", 
@@ -104,7 +106,6 @@ void ValuablePlanetRouteViewer::handleEvent(const JournalFile &journal, const Ev
                                  QString("The next system in your route, %1, has been copied to the clipboard.").arg(nextSystem));
             QApplication::clipboard()->setText(nextSystem);
         }
-        _ui->tableView->selectRow(static_cast<int>(arrivedAt));
     }
         break;
     default:
