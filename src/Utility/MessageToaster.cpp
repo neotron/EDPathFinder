@@ -17,9 +17,25 @@
 
 #include "MessageToaster.h"
 #include "NotificationMacOS.h"
+using namespace WinToastLib;
 
-MessageToaster::MessageToaster(QObject *parent) : QObject(parent) {
 
+MessageToaster::MessageToaster(QObject *parent) : QObject(parent),
+#ifdef Q_OS_WIN
+                                                  _isInitialized(false)
+#endif
+{
+#ifdef Q_OS_WIN
+    WinToast::instance()->setAppName(L"EDPathFinder");
+    WinToast::instance()->setAppUserModelId(
+            WinToast::configureAUMI(L"NeoTron", L"EDPathFinder", L"EDPathFinder", LPROJECT_VERSION));
+    if (!WinToast::instance()->initialize()) {
+        std::wcout << L"Error, could not initialize the lib!" << std::endl;
+        return;
+    }
+    _isInitialized = true;
+
+#endif
 }
 
 MessageToaster &MessageToaster::instance() {
@@ -34,5 +50,31 @@ void MessageToaster::send(const QString &title, const QString &message) {
 #ifdef Q_OS_MAC
     NotificationMacOS::send(title, message);
 #endif
+#ifdef Q_OS_WIN
+    if(!_isInitialized) {
+        return;
+    }
+    WinToastTemplate templ = WinToastTemplate(WinToastTemplate::Text02);
+    templ.setTextField(title.toStdWString(), WinToastTemplate::FirstLine);
+    templ.setTextField(message.toStdWString(), WinToastTemplate::SecondLine);
+    if (!WinToast::instance()->showToast(templ, this)) {
+        std::wcout << L"Error: Could not launch your toast notification!" << std::endl;
+    }
+#endif
 }
 
+#ifdef Q_OS_WIN
+
+void MessageToaster::toastActivated() const {
+}
+
+void MessageToaster::toastActivated(int actionIndex) const {
+}
+
+void MessageToaster::toastDismissed(IWinToastHandler::WinToastDismissalReason state) const {
+}
+
+void MessageToaster::toastFailed() const {
+}
+
+#endif

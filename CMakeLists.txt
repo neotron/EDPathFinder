@@ -13,7 +13,9 @@ project(EDPathFinder VERSION 1.4.0)
 
 set(MSVC_RUNTIME "dynamic")
 
-file(WRITE src/buildnumber.h "#define PROJECT_VERSION \"${PROJECT_VERSION}\"
+file(WRITE src/buildnumber.h "#pragma once
+#define PROJECT_VERSION \"${PROJECT_VERSION}\"
+#define LPROJECT_VERSION L\"${PROJECT_VERSION}\"
 ")
 
 fix_project_version()

@@ -19,14 +19,42 @@
 
 #include <QObject>
 #include <QCoreApplication>
+#ifdef Q_OS_WIN
+#include "buildnumber.h"
+#define NOMINMAX
+#include "deps/WinToast/src/wintoastlib.h"
+#endif
 
-class MessageToaster: public QObject {
-Q_OBJECT
+class MessageToaster: public QObject
+#ifdef Q_OS_WIN
+        , protected WinToastLib::IWinToastHandler
+#endif
+{
 
-    explicit MessageToaster(QObject *parent);
 public:
     void send(const QString &title, const QString &message);
+
     static MessageToaster &instance();
 
- };
+
+protected:
+#ifdef Q_OS_WIN
+
+    void toastActivated() const override;
+
+    void toastActivated(int actionIndex) const override;
+
+    void toastDismissed(WinToastDismissalReason state) const override;
+
+    void toastFailed() const override;
+
+#endif
+private:
+    explicit MessageToaster(QObject *parent);
+
+#ifdef Q_OS_WIN
+
+    bool _isInitialized;
+#endif
+};
 
