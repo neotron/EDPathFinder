@@ -34,6 +34,7 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
     connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
+    setAttribute(Qt::WA_DeleteOnClose, true);
 
     updateFilters();
 }
