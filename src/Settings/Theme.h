@@ -16,7 +16,7 @@
 //
 
 #pragma once
-#import <QPalette>
+#include <QPalette>
 
 class Theme {
 public:

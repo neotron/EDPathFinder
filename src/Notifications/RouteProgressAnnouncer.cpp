@@ -87,8 +87,6 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
         // This means we changed system or opened the game.
         arrivedAt = findArrivalHop(journal, false, hasArrived);
         if(hasArrived) {
-            _tableView->selectRow(static_cast<int>(arrivedAt));
-
             auto &currentHop = route[arrivedAt];
             QString settlement = QString("Make your way towards %1").arg(currentHop[2]);
             if(!currentHop[1].isEmpty()) {
@@ -99,6 +97,9 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
         }
         break;
     case EventTypeApproachSettlement:
+        findArrivalHop(journal, true, hasArrived);
+        break;
+    case EventTypeTouchdown:
         arrivedAt = findArrivalHop(journal, true, hasArrived);
         if(hasArrived) {
             auto &currentHop = route[arrivedAt];
@@ -113,7 +114,8 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
                     // Same system.
                     next += "in this system.";
                 } else {
-                    next += QString("in %1. It has been copied to the clipboard.");
+                    next += QString("in %1. System name copied to the clipboard.").arg(nextHop[0]);
+                    QApplication::clipboard()->setText(nextHop[0]);
                 }
                 MessageToaster::send(QString("You have arrived at %1.").arg(currentHop[2]), next);
             } else {
@@ -134,12 +136,13 @@ size_t RouteProgressAnnouncer::findArrivalHop(const JournalFile &journal, bool m
     for(size_t hop = 0; hop < route.size(); hop++) {
         if(!route[hop][0].compare(journal.system(), Qt::CaseInsensitive)) {
             if(matchSettlement && _routeModel->resultType() == RouteTableModel::ResultTypeSettlement) {
-                if(route[hop][2].compare(journal.settlement(), Qt::CaseInsensitive)) {
+                if(route[hop][2].compare(journal.settlement().split(" +")[0], Qt::CaseInsensitive)) {
                     continue; // didn't match settlement
                 }
             }
             matchedHop = hop;
             matchFound = true;
+            _tableView->selectRow(static_cast<int>(hop));
             break;
         }
     }

@@ -11,7 +11,7 @@
 
 MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
         : QMainWindow(parent), _ui(new Ui::MissionRouter), _scanner(this), _router(router), _systems(systems),
-          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr) {
+          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr), _progressAnnouncer(nullptr) {
     _ui->setupUi(this);
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
     refreshMissions();
