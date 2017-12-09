@@ -24,17 +24,17 @@
 #include <QJsonObject>
 
 class System;
-class PresetsEntry  {
+class PresetEntry  {
 public:
-    PresetsEntry(const QJsonObject &obj);
+    PresetEntry(const QJsonObject &obj);
 
-    PresetsEntry(const PresetsEntry &other) = default;
+    PresetEntry(const PresetEntry &other) = default;
 
-    PresetsEntry(PresetsEntry &&other) = default;
+    PresetEntry(PresetEntry &&other) = default;
 
-    PresetsEntry &operator=(const PresetsEntry &other) = default;
+    PresetEntry &operator=(const PresetEntry &other) = default;
 
-    PresetsEntry &operator=(PresetsEntry &&other) = default;
+    PresetEntry &operator=(PresetEntry &&other) = default;
 
     const QString &shortDescription() const;
 
@@ -69,4 +69,4 @@ private:
     QString _type;
 };
 
-typedef QList<PresetsEntry> CustomSystemEntryList;
+typedef QList<PresetEntry> PresetEntryList;

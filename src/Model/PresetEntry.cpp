@@ -15,7 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#include "PresetsEntry.h"
+#include "PresetEntry.h"
 
 static const char *const kShortNameKey = "short";
 static const char *const kSysNameKey = "sys";
@@ -23,7 +23,7 @@ static const char *const kDetailsKey = "desc";
 static const char *const kUrlKey = "url";
 static const char *const kTypeKey = "type";
 
-PresetsEntry::PresetsEntry(const QJsonObject &obj):
+PresetEntry::PresetEntry(const QJsonObject &obj):
         _systemName(obj.value(kSysNameKey).toString()),
         _shortDescription(obj.value(kShortNameKey).toString()),
         _details(obj.value(kDetailsKey).toString()),
@@ -33,39 +33,39 @@ PresetsEntry::PresetsEntry(const QJsonObject &obj):
 
 }
 
-const QString &PresetsEntry::shortDescription() const {
+const QString &PresetEntry::shortDescription() const {
     return _shortDescription;
 }
 
-void PresetsEntry::setShortDescription(const QString &shortDescription) {
+void PresetEntry::setShortDescription(const QString &shortDescription) {
     _shortDescription = shortDescription;
 }
 
-const QString &PresetsEntry::details() const {
+const QString &PresetEntry::details() const {
     return _details;
 }
 
-void PresetsEntry::setDetails(const QString &details) {
+void PresetEntry::setDetails(const QString &details) {
     _details = details;
 }
 
-const QString &PresetsEntry::systemName() const {
+const QString &PresetEntry::systemName() const {
     return _systemName;
 }
 
-void PresetsEntry::setSystemName(const QString &systemName) {
+void PresetEntry::setSystemName(const QString &systemName) {
     _systemName = systemName;
 }
 
-const QString &PresetsEntry::urlString() const {
+const QString &PresetEntry::urlString() const {
     return _urlString;
 }
 
-void PresetsEntry::setUrlString(const QString &urlString) {
+void PresetEntry::setUrlString(const QString &urlString) {
     _urlString = urlString;
 }
 
-QJsonObject PresetsEntry::toJson() const {
+QJsonObject PresetEntry::toJson() const {
     QJsonObject object;
     object[kSysNameKey] = _systemName;
     object[kShortNameKey] = _shortDescription;
@@ -75,15 +75,15 @@ QJsonObject PresetsEntry::toJson() const {
     return object;
 }
 
-bool PresetsEntry::isValid() const {
+bool PresetEntry::isValid() const {
     return !_systemName.isEmpty() && !_shortDescription.isEmpty();
 }
 
-const QString &PresetsEntry::type() const {
+const QString &PresetEntry::type() const {
     return _type;
 }
 
-void PresetsEntry::setType(const QString &type) {
+void PresetEntry::setType(const QString &type) {
     _type = type;
 }
 

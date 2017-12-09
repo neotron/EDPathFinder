@@ -19,10 +19,12 @@
 #include <QJsonArray>
 #include <QDebug>
 #include <QMenuBar>
-#include "PresetsManager.h"
+#include <QDialog>
 
-CustomSystemEntryList PresetsManager::loadFile(const QString &fileName) {
-    CustomSystemEntryList entries;
+#include "PresetsManager.h"
+#include "PresetSelector.h"
+PresetEntryList PresetsManager::loadFile(const QString &fileName) {
+    PresetEntryList entries;
     QFile file(fileName);
     if(!file.open(QFile::ReadOnly | QFile::Text)) {
         return entries;
@@ -39,7 +41,7 @@ CustomSystemEntryList PresetsManager::loadFile(const QString &fileName) {
             if(!obj.isObject()) {
                 continue;
             }
-            PresetsEntry entry(obj.toObject());
+            PresetEntry entry(obj.toObject());
             if(entry.isValid()) {
                 entries.push_back(entry);
             }
@@ -48,7 +50,7 @@ CustomSystemEntryList PresetsManager::loadFile(const QString &fileName) {
     return entries;
 }
 
-const CustomSystemEntryList & PresetsManager::loadPreset(CustomPreset preset) {
+const PresetEntryList & PresetsManager::loadPreset(CustomPreset preset) {
     if(!_presets.contains(preset)) {
         loadPresetFile(preset);
     }
@@ -82,7 +84,9 @@ void PresetsManager::addPresetsTo(QMenuBar *menuBar) {
     for(const auto &name: presetNames) {
         auto action = new QAction(name, menu);
         action->connect(action, &QAction::triggered, [=]() {
-            loadPreset(_presetNames[name]);
+            auto selector = new PresetSelector(nullptr, loadPreset(_presetNames[name]));
+            selector->setModal(true);
+            selector->open();
         });
         menu->addAction(action);
     }

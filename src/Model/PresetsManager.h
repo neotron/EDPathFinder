@@ -17,7 +17,7 @@
 
 
 #pragma once
-#import <PresetsEntry.h>
+#import <PresetEntry.h>
 #include <QFile>
 #include <QMap>
 #include <QMenu>
@@ -35,13 +35,13 @@ class PresetsManager {
 public:
     PresetsManager();
 
-    CustomSystemEntryList loadFile(const QString &fileName);
-    const CustomSystemEntryList & loadPreset(CustomPreset preset);
+    PresetEntryList loadFile(const QString &fileName);
+    const PresetEntryList & loadPreset(CustomPreset preset);
 
     void addPresetsTo(QMenuBar *menuBar);
 
 private:
-    QMap<CustomPreset, CustomSystemEntryList> _presets;
+    QMap<CustomPreset, PresetEntryList> _presets;
     QMap<QString, CustomPreset> _presetNames;
     void loadPresetFile(CustomPreset preset);
 };
