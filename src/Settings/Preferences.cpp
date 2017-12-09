@@ -9,6 +9,7 @@
 Preferences::Preferences(QWidget *parent)
         : QDialog(parent), _ui(new Ui::Preferences) {
     _ui->setupUi(this);
+    setModal(true);
     connect(this, SIGNAL(accepted()), SLOT(savePreferences()));
     connect(this, SIGNAL(rejected()), SLOT(revertTheme()));
     _buttonGroup.addButton(_ui->defaultTheme, Theme::Default);

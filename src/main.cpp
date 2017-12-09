@@ -29,6 +29,7 @@ Q_DECLARE_METATYPE(Version);
 
 // namespace operations_research
 
+//#define USE_SPLASH
 int main(int argc, char *argv[]) {
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
     QCoreApplication::setOrganizationName("NeoTron Software");
@@ -43,18 +44,22 @@ int main(int argc, char *argv[]) {
     Theme::applyTheme();
 
     QPixmap pixmap(":/iconsplash.png");
-    SplashScreen *splash = new SplashScreen(pixmap);
-    MainWindow w;
+    MainWindow mainWindow;
     QIcon icon(pixmap);
-    w.setWindowIcon(icon);
-    splash->connectListener(&w);
+    mainWindow.setWindowIcon(icon);
+#ifdef USE_SPLASH
+    SplashScreen *splash = new SplashScreen(pixmap);
+    splash->connectListener(&mainWindow);
     splash->show();
-    while(w.loading()) {
+    while(mainWindow.loading()) {
         a.processEvents(QEventLoop::AllEvents, 5);
     }
-    w.show();
-    splash->finish(&w);
+#endif
+    mainWindow.show();
+#ifdef USE_SPLASH
+    splash->finish(&mainWindow);
     delete splash;
+#endif
     return a.exec();
 }
 

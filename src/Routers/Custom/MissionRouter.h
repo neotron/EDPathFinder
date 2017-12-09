@@ -6,6 +6,7 @@
 #include "MissionScanner.h"
 #include "MissionTableModel.h"
 #include "SystemEntryCoordinateResolver.h"
+#include "PresetsManager.h"
 
 class RouteProgressAnnouncer;
 
@@ -20,7 +21,7 @@ Q_OBJECT
 public:
     explicit MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems);
 
-    ~MissionRouter();
+    ~MissionRouter() override;
 
 public slots:
 
@@ -59,6 +60,7 @@ private:
     QSet<QString>     _customStops;
     SystemEntryCoordinateResolver *_systemResolver;
     RouteProgressAnnouncer *_progressAnnouncer;
+    PresetsManager _presetManager;
 };
 
 #endif // CUSTOMROUTER_H

@@ -16,7 +16,7 @@ Q_OBJECT
 public:
     ValueRouter(QWidget *parent, AStarRouter *router, SystemList *systems);
 
-    virtual ~ValueRouter();
+    ~ValueRouter() override;
 
 protected slots:
     void updateFilters() override;

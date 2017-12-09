@@ -1,0 +1,5 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/presets">
+    <file>engineers.json</file>
+</qresource>
+</RCC>

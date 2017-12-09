@@ -1,0 +1,122 @@
+[
+  {
+    "type": "Engineer",
+    "short": "Tod \"The Blaster\" Mcquinn",
+    "desc": "Kinetic weapons",
+    "sys": "Wolf 397"
+  },
+  {
+    "type": "Engineer",
+    "short": "Felicity Farseer",
+    "desc": "FSD, Thrusters, PowerPlant, Shield Booster, Interdictor",
+    "sys": "Deciat"
+  },
+  {
+    "type": "Engineer",
+    "short": "Elvira Martuuk",
+    "desc": "FSD, Shield Cell Bank, Shield Generator, Thrusters",
+    "sys": "Khun"
+  },
+  {
+    "type": "Engineer",
+    "short": "Liz Ryder",
+    "desc": "Explosive armaments & protection",
+    "sys": "Eurybia"
+  },
+  {
+    "type": "Engineer",
+    "short": "The Dweller",
+    "desc": "Lasers, Power Distributors",
+    "sys": "Wyrd"
+  },
+  {
+    "type": "Engineer",
+    "short": "Lei Cheung",
+    "desc": "Shield Generators, Boosters",
+    "sys": "Laksak"
+  },
+  {
+    "type": "Engineer",
+    "short": "Selene Jean",
+    "desc": "Hull Reinforcements, Armour",
+    "sys": "Kuk"
+  },
+  {
+    "type": "Engineer",
+    "short": "Hera Tani",
+    "desc": "Detailed Surface Scanner, Power Plant, Power Distributo",
+    "sys": "Kuwemaki"
+  },
+  {
+    "type": "Engineer",
+    "short": "Broo Tarquin",
+    "desc": "Beam Laser, Burst Laser, Pulse Laser",
+    "sys": "Muang"
+  },
+  {
+    "type": "Engineer",
+    "short": "Marco Qwent",
+    "desc": "Power Plant, Power Distributor",
+    "sys": "Sirius"
+  },
+  {
+    "type": "Engineer",
+    "short": "Zacariah Nemo",
+    "desc": "Fragment, Multi-cannons, Plasma Accelerator",
+    "sys": "Yoru"
+  },
+  {
+    "type": "Engineer",
+    "short": "Didi Vatermann",
+    "desc": "Shield equipment",
+    "sys": "Leesti"
+  },
+  {
+    "type": "Engineer",
+    "short": "Colonel Bris Dekker",
+    "desc": "FSD, Interdictor",
+    "sys": "Sol"
+  },
+  {
+    "type": "Engineer",
+    "short": "Juri Ishmaak",
+    "desc": "Sensors, Mine Launcher, Missile Rack, Torpedo Pylon",
+    "sys": "Giryak"
+  },
+  {
+    "type": "Engineer",
+    "short": "Professor Palin",
+    "desc": "FSD, Thrusters",
+    "sys": "Maia"
+  },
+  {
+    "type": "Engineer",
+    "short": "Bill Turner",
+    "desc": "Plasma Accelerator, Utilities",
+    "sys": "Alioth"
+  },
+  {
+    "type": "Engineer",
+    "short": "Lori Jameson",
+    "desc": "Scanners, Utilities",
+    "sys": "Shinrarta Dezhra"
+  },
+  {
+    "type": "Engineer",
+    "short": "Ram Tah",
+    "desc": "Defences, Limpets",
+    "sys": "Meene"
+  },
+  {
+    "type": "Engineer",
+    "short": "Tiana Fortune",
+    "desc": "Limpets, Scanners",
+    "sys": "Achenar"
+  },
+  {
+    "type": "Engineer",
+    "short": "The Sarge",
+    "desc": "Limpets, Cannons",
+    "sys": "Beta-3 Tucani"
+  }
+]

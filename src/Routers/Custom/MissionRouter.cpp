@@ -25,6 +25,9 @@ MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemL
     connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
     connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
+
+    _presetManager.addPresetsTo(_ui->menuBar);
+
 }
 
 void MissionRouter::copySelectedItem() {

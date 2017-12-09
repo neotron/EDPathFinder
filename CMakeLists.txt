@@ -27,7 +27,7 @@ set(COMPANY "David Hedbor")
 set(COPYRIGHT "Copyright (c) 2016 David Hedbor. All rights reserved.")
 set(IDENTIFIER "org.hedbor.EDPathFinder")
 
-file(GLOB RESOURCE_FILES resources/*.qrc)
+file(GLOB_RECURSE RESOURCE_FILES resources/*.qrc)
 
 add_project_meta(META_FILES_TO_INCLUDE)
 

@@ -58,7 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
     _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
-    MessageToaster::send("Hello world.", "How are you?");
 }
 
 void MainWindow::restoreSettings() {
@@ -439,12 +438,12 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
 }
 
 void MainWindow::openMissionTool() {
-    auto tool = new MissionRouter(this, _router, *_systems);
+    auto tool = new MissionRouter(nullptr, _router, *_systems);
     tool->show();
 }
 
 void MainWindow::openExplorationTool() {
-    auto tool = new ValueRouter(this, _router, _systems);
+    auto tool = new ValueRouter(nullptr, _router, _systems);
     tool->show();
 }
 

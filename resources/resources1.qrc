@@ -1,8 +1,9 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-    <file>iconsplash.png</file>
-    <file>basetypes.csv</file>
-    <file>noimage.png</file>
-    <file>body_distances.json</file>
-</qresource>
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>iconsplash.png</file>
+        <file>basetypes.csv</file>
+        <file>noimage.png</file>
+        <file>body_distances.json</file>
+    </qresource>
 </RCC>

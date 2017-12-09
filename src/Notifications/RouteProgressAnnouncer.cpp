@@ -108,7 +108,7 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
                 auto &nextHop = route[arrivedAt + 1];
                 QString next = QString("Your next stop is %1, ").arg(nextHop[2]);
                 if(!nextHop[1].isEmpty()) {
-                    next += QString(", on planet %1, ").arg(nextHop[1]);
+                    next += QString("on planet %1, ").arg(nextHop[1]);
                 }
                 if(nextHop[0] == currentHop[0]) {
                     // Same system.
