@@ -91,7 +91,7 @@ void SystemEntryCoordinateResolver::resolve(const QString &systemName) {
 }
 
 bool SystemEntryCoordinateResolver::isComplete() const {
-    return !_pendingLookups.empty();
+    return _pendingLookups.empty();
 }
 
 void SystemEntryCoordinateResolver::sendSystemLookupCompleted(const System &system) {

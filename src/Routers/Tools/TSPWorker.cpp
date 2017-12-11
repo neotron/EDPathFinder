@@ -117,7 +117,9 @@ namespace operations_research {
         QTime timer;
         timer.start();
         if(_destination) {
-            cylinder(startingSystem->position(), _destination->position(), 200);
+            if(!_isPresets) {
+                cylinder(startingSystem->position(), _destination->position(), 200);
+            }
             _systems.push_back(*_destination);
         } else {
             std::sort(_systems.begin(), _systems.end(), [startingSystem](const System &a, const System &b) {
@@ -127,8 +129,9 @@ namespace operations_research {
                 _systems.erase(_systems.begin() + _maxSystemCount, _systems.end());
             }
         }
+
         // Calculate the closest system
-        if(_origin && _origin->name() != _systems[0].name()) {
+        if(_origin && (!_systems.size() || _origin->name() != _systems[0].name())) {
             _systems.push_front(*_origin);
         }
         //qDebug() << "Sorting and resizing took " << timer.elapsed();
@@ -253,9 +256,11 @@ void RouteResult::addEntryWithPresets(const System &system, int64 distance) {
         row[2] = preset.type();
         row[3] = preset.shortDescription();
         row[4] = preset.details();
-    } else {
+    } else if(!_route.size()) {
         row[2] = "Origin";
         row[3] = "Starting System";
+    } else {
+        row[2] = "Destination";
     }
     _route.emplace_back(row);
 }

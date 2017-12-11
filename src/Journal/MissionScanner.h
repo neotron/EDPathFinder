@@ -38,7 +38,7 @@ struct Mission {
 class MissionScanner : public QObject {
 Q_OBJECT
 public:
-         MissionScanner(QObject *parent);
+    explicit MissionScanner(QObject *parent);
 
     const QStringList commanders() const {
         auto commanders = _commanderLastSystem.keys();
@@ -46,10 +46,12 @@ public:
         return commanders;
     }
 
-    const QList<Mission> commanderMission(const QString &cmdr) { return _commanderMissions[cmdr].values(); }
-    const QString commanderSystem(const QString &cmdr) { return _commanderLastSystem[cmdr]; }
+    const QList<Mission> commanderMission(const QString &cmdr);
+    const QString commanderSystem(const QString &cmdr);
 
     void scanJournals();
+
+    const QString &recentCommander() const;
 
 private slots:
 
@@ -58,6 +60,7 @@ private slots:
 private:
     QMap<QString, QMap<int, Mission>> _commanderMissions;
     QMap<QString, QString>            _commanderLastSystem;
+    QString _recentCommander;
 };
 
 

@@ -29,8 +29,7 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
     connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
     connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
 
-    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,
-                                                                   _ui->yEnd, _ui->zEnd);
+    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,_ui->yEnd, _ui->zEnd);
     connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));

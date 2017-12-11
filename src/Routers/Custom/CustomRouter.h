@@ -2,7 +2,7 @@
 #define CUSTOMROUTER_H
 
 #include <QMainWindow>
-#include <ui_MissionRouter.h>
+#include <ui_CustomRouter.h>
 #include "MissionScanner.h"
 #include "PresetsTableModel.h"
 #include "SystemEntryCoordinateResolver.h"
@@ -11,17 +11,17 @@
 class RouteProgressAnnouncer;
 
 namespace Ui {
-    class MissionRouter;
+    class CustomRouter;
 }
 
-class MissionRouter : public QMainWindow {
+class CustomRouter : public QMainWindow {
 Q_OBJECT
 
 
 public:
-    explicit MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems);
+    explicit CustomRouter(QWidget *parent, AStarRouter *router, const SystemList &systems);
 
-    ~MissionRouter() override;
+    ~CustomRouter() override;
 
 public slots:
 
@@ -33,6 +33,7 @@ public slots:
     void exportAsCSV();
     void exportAsTabNewline();
     void importSystems();
+    void changeCommander(const QString &cmdr);
 
 private:
     void refreshTableView(QAbstractItemModel *model) const;
@@ -48,19 +49,23 @@ private slots:
 
     void onSystemCoordinatesRequestFailed(const QString &systemName);
 
+    void onSystemCoordinatesReceivedCustom(const System &system);
+
     void copySelectedItem();
 
 private:
-    Ui::MissionRouter *_ui;
+    Ui::CustomRouter *_ui;
     MissionScanner    _scanner;
     AStarRouter       *_router;
     const SystemList  &_systems;
     PresetsTableModel *_currentModel;
     bool _routingPending;
     QSet<PresetEntry>     _customStops;
-    SystemEntryCoordinateResolver *_systemResolver;
     RouteProgressAnnouncer *_progressAnnouncer;
     PresetsManager *_presetsManager;
+    QList<SystemEntryCoordinateResolver*> _resolvers;
+
+    bool resolversComplete();
 };
 
 #endif // CUSTOMROUTER_H

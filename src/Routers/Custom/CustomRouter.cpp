@@ -5,27 +5,42 @@
 #include "RouteProgressAnnouncer.h"
 #include "Settings.h"
 #include "WindowMenu.h"
-#include "MissionRouter.h"
+#include "CustomRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
 
-MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
-        : QMainWindow(parent), _ui(new Ui::MissionRouter), _scanner(this), _router(router), _systems(systems),
-          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr), _progressAnnouncer(nullptr),
-          _presetsManager(new PresetsManager(this)) {
+CustomRouter::CustomRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
+        : QMainWindow(parent), _ui(new Ui::CustomRouter()), _scanner(this), _router(router), _systems(systems),
+          _currentModel(nullptr), _routingPending(false), _customStops(), _progressAnnouncer(nullptr),
+          _presetsManager(new PresetsManager(this)), _resolvers() {
     _ui->setupUi(this);
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
+
+    // Adding new systems
+    auto systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->customSystem);
+    connect(systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceivedCustom(const System &)));
+    _resolvers.push_back(systemResolver);
+
+    systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->originSystem, _ui->ox, _ui->oy, _ui->oz);
+    connect(systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
+    _resolvers.push_back(systemResolver);
+
+    systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->destinationSystem, _ui->dx, _ui->dy, _ui->dz);
+    connect(systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
+    connect(systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
+    _resolvers.push_back(systemResolver);
+    
     refreshMissions();
     auto table = _ui->tableView;
     table->setSelectionBehavior(QTableView::SelectRows);
     table->setSelectionMode(QTableView::SingleSelection);
     setAttribute(Qt::WA_DeleteOnClose, true);
 
-    _systemResolver = new SystemEntryCoordinateResolver(this, _router, _ui->customSystem);
-
-    connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
-    connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
-    connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
     _ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     _presetsManager->addPresetsTo(_ui->menuBar);
     connect(_presetsManager, &PresetsManager::didSelectEntries, [=](const PresetEntryList &list) {
@@ -36,7 +51,7 @@ MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemL
     });
 }
 
-void MissionRouter::copySelectedItem() {
+void CustomRouter::copySelectedItem() {
     auto routeModel = dynamic_cast<RouteTableModel *>(_ui->tableView->model());
     if(!routeModel) {
         return;
@@ -51,12 +66,11 @@ void MissionRouter::copySelectedItem() {
     _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
 }
 
-MissionRouter::~MissionRouter() {
+CustomRouter::~CustomRouter() {
     delete _ui;
-    delete _systemResolver;
 }
 
-void MissionRouter::refreshMissions() {
+void CustomRouter::refreshMissions() {
     _ui->optimizeButton->setEnabled(false);
     _scanner.scanJournals();
 
@@ -64,11 +78,15 @@ void MissionRouter::refreshMissions() {
     const auto selected = comboBox->currentText();
     comboBox->clear();
     comboBox->addItems(_scanner.commanders());
-    comboBox->setCurrentText(selected);
+    if(selected.isEmpty()) {
+        changeCommander(_scanner.recentCommander());
+    } else {
+        comboBox->setCurrentText(selected);
+    }
     updateMissionTable();
 }
 
-void MissionRouter::updateMissionTable() {
+void CustomRouter::updateMissionTable() {
     auto cmdr = _ui->commanders->currentText();
 
     delete _progressAnnouncer;
@@ -97,9 +115,12 @@ void MissionRouter::updateMissionTable() {
     _currentModel = new PresetsTableModel(this, stops);
     _ui->optimizeButton->setEnabled(true);
     refreshTableView(_currentModel);
+    if(_ui->originSystem->text().isEmpty()) {
+        _ui->originSystem->setText(_scanner.commanderSystem(cmdr));
+    }
 }
 
-void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
+void CustomRouter::refreshTableView(QAbstractItemModel *model) const {
     auto table = _ui->tableView;
     table->setModel(model);
     table->resizeColumnsToContents();
@@ -110,28 +131,30 @@ void MissionRouter::refreshTableView(QAbstractItemModel *model) const {
     connect(table->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this,SLOT(copySelectedItem()));
 }
 
-void MissionRouter::optimizeRoute() {
+void CustomRouter::optimizeRoute() {
     if(!(_currentModel || !_customStops.empty())) {
         return;
     }
     _ui->optimizeButton->setEnabled(false);
     SystemList routeSystems;
     auto       cmdr       = _ui->commanders->currentText();
-    auto       systemName = _scanner.commanderSystem(cmdr);
+    auto       systemName = _ui->originSystem->text();
     System     *originSystem(nullptr);
     if(!systemName.isEmpty()) {
         originSystem = _router->findSystemByName(systemName);
         if(!originSystem) {
             // Need to fetch coordinates for origin.
-            _systemResolver->resolve(systemName);
+            _resolvers.first()->resolve(systemName);
             _routingPending = true;
             return;
         }
     }
+
+    // Add systems from the custom route, and resolve any unresolved systems.
     for(const auto &stop: _currentModel->stops()) {
         auto missionSystem = _router->findSystemByName(stop.systemName());
         if(!missionSystem) {
-            _systemResolver->resolve(stop.systemName());
+            _resolvers.first()->resolve(stop.systemName());
             _routingPending = true;
             return;
         }
@@ -139,24 +162,30 @@ void MissionRouter::optimizeRoute() {
         system.setPresetEntry(stop);
         routeSystems.push_back(system);
     }
-    if(originSystem) {
-        routeSystems.push_back(*originSystem);
-    }
 
     _ui->statusbar->showMessage(QString("Resolving route for %1 systems...").arg(routeSystems.size()), 10000);
 
+    // Create new system resolver.
     const auto tspWorker = new TSPWorker(routeSystems, originSystem, routeSystems.size());
     tspWorker->setSystemsOnly(true);
     tspWorker->setIsPresets(true);
+
+    // Set optional destination system.
+    auto destinationSystemName = _ui->destinationSystem->text();
+    if(!destinationSystemName.isEmpty()) {
+        auto destinationSystem = _router->findSystemByName(destinationSystemName);
+        tspWorker->setDestination(destinationSystem);
+    }
+
+
     TSPWorker *workerThread(tspWorker);
     // workerThread->setRouter(_router);
     connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
-    connect(workerThread, &TSPWorker::taskCompleted, this, &MissionRouter::routeCalculated);
+    connect(workerThread, &TSPWorker::taskCompleted, this, &CustomRouter::routeCalculated);
     workerThread->start();
-    //_ui->centralWidget->setEnabled(false);
 }
 
-void MissionRouter::routeCalculated(const RouteResult &route) {
+void CustomRouter::routeCalculated(const RouteResult &route) {
     if(!route.isValid()) {
         _ui->statusbar->showMessage("No solution found to the given route.", 10000);
         return;
@@ -169,19 +198,25 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     _progressAnnouncer = new RouteProgressAnnouncer(this, model, _ui->tableView);
 }
 
-void MissionRouter::onSystemCoordinatesRequestFailed(const QString &systemName) {
+void CustomRouter::onSystemCoordinatesRequestFailed(const QString &systemName) {
     showMessage(QString("Coordinate lookup failed for %1").arg(systemName));
     _routingPending = false;
-    _ui->centralwidget->setEnabled(_systemResolver->isComplete());
+
+    _ui->centralwidget->setEnabled(resolversComplete());
 }
 
-void MissionRouter::onSystemCoordinatesReceived(const System &system) {
-    showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
+void CustomRouter::onSystemCoordinatesReceivedCustom(const System &system) {
     if(!_routingPending) {
         _customStops << PresetEntry(system.name());
         updateMissionTable();
     }
-    if(_systemResolver->isComplete()) {
+    QTimer::singleShot(0, _ui->customSystem, SLOT(setFocus()));
+    onSystemCoordinatesReceived(system);
+}
+
+void CustomRouter::onSystemCoordinatesReceived(const System &system) {
+    showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
+    if(resolversComplete()) {
         _ui->centralwidget->setEnabled(true);
 
         if(_routingPending) {
@@ -189,38 +224,37 @@ void MissionRouter::onSystemCoordinatesReceived(const System &system) {
             optimizeRoute();
         }
         _ui->customSystem->setText("");
-        QTimer::singleShot(0, _ui->customSystem, SLOT(setFocus()));
     }
 }
 
 
-void MissionRouter::showMessage(const QString &message, int timeout) {
+void CustomRouter::showMessage(const QString &message, int timeout) {
     _ui->statusbar->showMessage(message, timeout);
 }
 
-void MissionRouter::clearCustom() {
+void CustomRouter::clearCustom() {
     _customStops.clear();
     updateMissionTable();
 }
 
-void MissionRouter::onSystemLookupInitiated(const QString &system) {
+void CustomRouter::onSystemLookupInitiated(const QString &system) {
     showMessage(QString("Looking up coordinates for system: %1").arg(system), 4000);
     _ui->centralwidget->setEnabled(false);
 }
 
-void MissionRouter::exportAsCSV() {
+void CustomRouter::exportAsCSV() {
     RouteTableModel::exportTableViewToCSV(_ui->tableView);
 }
 
-void MissionRouter::addStop() {
-    _systemResolver->resolve(_ui->customSystem->text());
+void CustomRouter::addStop() {
+    _resolvers.first()->resolve(_ui->customSystem->text());
 }
 
-void MissionRouter::exportAsTabNewline() {
+void CustomRouter::exportAsTabNewline() {
     RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
 }
 
-void MissionRouter::importSystems() {
+void CustomRouter::importSystems() {
     QString filters("Text files (*.txt);;All files (*.*)");
     QString defaultFilter("Text files (*.txt)");
     QString fileName = QFileDialog::getOpenFileName(this, "Import file", Settings::restoreSavePath(),
@@ -247,7 +281,9 @@ void MissionRouter::importSystems() {
         if(!components.isEmpty()) {
             const QString &trimmed = components[0].trimmed();
             if (!trimmed.isEmpty() && trimmed != "System") {
-                _customStops << PresetEntry(trimmed);
+                auto entry = PresetEntry(trimmed);
+                entry.setType("Imported");
+                _customStops << entry;
                 appended = true;
             }
         }
@@ -255,4 +291,19 @@ void MissionRouter::importSystems() {
     if(appended) {
         updateMissionTable();
     }
+}
+
+void CustomRouter::changeCommander(const QString &cmdr) {
+    auto system = _scanner.commanderSystem(cmdr);
+    _ui->originSystem->setText(system);
+    _resolvers[1]->resolve(system);
+}
+
+bool CustomRouter::resolversComplete() {
+    for(const auto &resolver: _resolvers) {
+        if(!resolver->isComplete()) {
+            return false;
+        }
+    }
+    return true;
 }

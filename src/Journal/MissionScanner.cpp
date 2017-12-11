@@ -37,15 +37,15 @@ void MissionScanner::scanJournals() {
         }
         auto file = entry.absoluteFilePath();
         JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(
-                                             const JournalFile &, const Event &)), this, SLOT(handleEvent(
-                                                                                                      const JournalFile &, const Event &)));
+        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, const Event &)),
+                this, SLOT(handleEvent(const JournalFile &, const Event &)));
         journalFile.parse();
     }
 }
 
 void MissionScanner::handleEvent(const JournalFile &file, const Event &ev) {
     QDateTime now = QDateTime::currentDateTimeUtc();
+    _recentCommander = file.commander();
     switch (ev.type()) {
     case EventTypeMissionAccepted:
 //            qDebug() << ev.obj();
@@ -79,5 +79,11 @@ void MissionScanner::handleEvent(const JournalFile &file, const Event &ev) {
         break;
     }
 }
+
+const QString &MissionScanner::recentCommander() const { return _recentCommander; }
+
+const QString MissionScanner::commanderSystem(const QString &cmdr) { return _commanderLastSystem[cmdr]; }
+
+const QList<Mission> MissionScanner::commanderMission(const QString &cmdr) { return _commanderMissions[cmdr].values(); }
 
 

@@ -25,7 +25,7 @@
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
-#include "MissionRouter.h"
+#include "CustomRouter.h"
 #include "ValueRouter.h"
 #include "AutoUpdateChecker.h"
 #include "buildnumber.h"
@@ -438,7 +438,7 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
 }
 
 void MainWindow::openMissionTool() {
-    auto tool = new MissionRouter(nullptr, _router, *_systems);
+    auto tool = new CustomRouter(nullptr, _router, *_systems);
     tool->show();
 }
 
