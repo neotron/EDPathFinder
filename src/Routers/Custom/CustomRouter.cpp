@@ -70,7 +70,8 @@ void CustomRouter::copySelectedItem() {
     auto shortDesc = route[row][3];
     if(_bearingCalculator) {
         for(auto stop: _customStops) {
-            if(stop.systemName() == name && stop.type() == type && stop.shortDescription() == shortDesc) {
+            if(!stop.systemName().compare(name, Qt::CaseInsensitive)
+               && stop.type() == type && stop.shortDescription() == shortDesc) {
                 if(stop.lat() != 0.0 || stop.lat() != 0.0) {
                     _bearingCalculator->setDestination(stop.lat(), stop.lon(), stop.radius());
                 }
@@ -328,7 +329,7 @@ void CustomRouter::openBearingCalculator() {
         _bearingCalculator->activateWindow();
         _bearingCalculator->raise();
     }
-    _bearingCalculator = new BearingCalculator();
+    _bearingCalculator = new BearingCalculator(this);
     _bearingCalculator->setModal(false);
     _bearingCalculator->show();
 
