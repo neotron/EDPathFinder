@@ -17,7 +17,7 @@
 
 
 #pragma once
-#import <PresetEntry.h>
+#include "PresetEntry.h"
 #include <QFile>
 #include <QMap>
 #include <QMenu>

@@ -8,25 +8,25 @@
   {
     "short": "Stuart Retreat",
     "sys": "HIP 15329",
-    "desc": "Planet A 3 C\nCoords: -62.61 -44.26",
+    "desc": "Planet A 3 C\nCoords: -62.61, -44.26",
     "type": "INRA"
   },
   {
     "short": "Klatt Enterprises",
     "sys": "Alnath",
-    "desc": "Planet A 2 A A\nCoords: 4.0186 133.5426",
+    "desc": "Planet A 2 A A\nCoords: 4.0186, 133.5426",
     "type": "INRA"
   },
   {
     "short": "Mayes Chemical Plant",
     "sys": "HIP 59382",
-    "desc": "Planet 1 B\nCoords: 11.41 177.06",
+    "desc": "Planet 1 B\nCoords: 11.41, 177.06",
     "type": "INRA"
   },
   {
     "short": "Hogan Depot",
     "sys": "HIP 7158",
-    "desc": "Planet A 2 B\nCoords: -44.63 -63.78",
+    "desc": "Planet A 2 B\nCoords: -44.63, -63.78",
     "type": "INRA"
   },
   {
@@ -38,25 +38,25 @@
   {
     "short": "Almeida Landing",
     "sys": "Conn",
-    "desc": "Planet A 3 A\nCoords: 73.38 102.37",
+    "desc": "Planet A 3 A\nCoords: 73.38, 102.37",
     "type": "INRA"
   },
   {
     "short": "Carmichael Point",
     "sys": "HIP 16824",
-    "desc": "Planet A 2 F\nCoords: 73.87 61.87",
+    "desc": "Planet A 2 F\nCoords: 73.87, 61.87",
     "type": "INRA"
   },
   {
     "short": "Stack",
     "sys": "HIP 12099",
-    "desc": "Planet 1A\nCoords: -72.62 -67.52",
+    "desc": "Planet 1A\nCoords: -72.62, -67.52",
     "type": "INRA"
   },
   {
     "short": "Taylor Keep",
     "sys": "12 Trianguli",
-    "desc": "Planet 1A\nCoords: -51.57 130.6",
+    "desc": "Planet 1A\nCoords: -51.57, 130.6",
     "type": "INRA"
   }
 ]
