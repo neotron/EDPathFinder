@@ -28,6 +28,7 @@
 #include <ortools/base/integral_types.h>
 #include <QJsonDocument>
 #include <utility>
+#include "PresetEntry.h"
 
 class AStarSystemNode;
 
@@ -234,7 +235,7 @@ class System {
 
 public:
 
-    System()  : _name(), _planets(), _position(), _numPlanets() {}
+    System()  : _name(), _planets(), _position(), _numPlanets(), _presetEntry() {}
 
     System(QString name, float x, float y, float z)
             : _name(std::move(name)), _position(x, y, z), _numPlanets() {}
@@ -323,6 +324,10 @@ public:
 
     bool operator>=(const System &rhs) const;
 
+    const PresetEntry &presetEntry() const;
+
+    void setPresetEntry(const PresetEntry &presetEntry);
+
 protected:
 
     System(float x, float y, float z)
@@ -335,5 +340,7 @@ protected:
     QVector3D _position;
     QList<int8_t>  _numPlanets;
     mutable std::string _key;
+    PresetEntry _presetEntry;
+
     void addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const;
 };

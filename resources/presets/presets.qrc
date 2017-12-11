@@ -1,5 +1,8 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/presets">
     <file>engineers.json</file>
+    <file>inra.json</file>
+    <file>generation.json</file>
+    <file>crashsites.json</file>
 </qresource>
 </RCC>

@@ -29,7 +29,7 @@ int RouteTableModel::rowCount(const QModelIndex &) const {
 
 int RouteTableModel::columnCount(const QModelIndex &) const {
     auto size = (int) _result.route()[0].size();
-    return _resultType == ResultTypeValuableSystems ? size : size - 3;
+    return _resultType == ResultTypeValuableSystems || _resultType == ResultTypePresets ? size : size - 3;
 }
 
 QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
@@ -45,6 +45,8 @@ QVariant RouteTableModel::data(const QModelIndex &index, int role) const {
             switch(_resultType) {
             default:
                 return col < 3 ? Qt::AlignLeft : Qt::AlignRight;
+            case ResultTypePresets:
+                return Qt::AlignLeft;
             case ResultTypeValuableSystems:
                 return col % 2 ? Qt::AlignRight : Qt::AlignLeft;
             }
@@ -65,9 +67,28 @@ QVariant RouteTableModel::headerData(int section, Qt::Orientation orientation, i
             case 1:
                 return _resultType == ResultTypeSettlement ? "Planet" : "Distance";
             case 2:
-                return _resultType == ResultTypeSettlement ? "Settlement" : "Planets";
+                switch(_resultType) {
+                case ResultTypeSettlement:
+                    return "Settlement";
+                case ResultTypeSystemsOnly:
+                    return "";
+                case ResultTypeValuableSystems:
+                    return "Planets";
+                case ResultTypePresets:
+                    return "Type";
+                }
             case 3:
-                return _resultType == ResultTypeValuableSystems ? "Value" : "";
+                switch(_resultType) {
+                case ResultTypeSettlement:
+                case ResultTypeSystemsOnly:
+                    return "";
+                case ResultTypeValuableSystems:
+                    return "Value";
+                case ResultTypePresets:
+                    return "Name";
+                }
+            case 4:
+                return _resultType == ResultTypePresets ? "Notes" : "";
             default:
                 return "";
             }

@@ -33,6 +33,7 @@ RouteProgressAnnouncer::RouteProgressAnnouncer(QObject *parent, RouteTableModel 
         connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),
                 this, SLOT(handleEventSettlements(const JournalFile &, const Event &)));
         break;
+    case RouteTableModel::ResultTypePresets:
     case RouteTableModel::ResultTypeSystemsOnly:
     case RouteTableModel::ResultTypeValuableSystems:
         connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),

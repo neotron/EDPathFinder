@@ -1,0 +1,32 @@
+[
+  {
+    "short": "Thargoid Crash Site",
+    "sys": "Pleiades Sector AB-W B2-4 ",
+    "desc": "Planet 9 A\nCoords: -26.37, 97.70",
+    "type": "Crash Site"
+  },
+  {
+    "short": "Thargoid Crash Site",
+    "sys": "HIP 17862",
+    "desc": "Planet 6 C A\nCoords: 30.32, -98.58",
+    "type": "Crash Site"
+  },
+  {
+    "short": "Thargoid Crash Site",
+    "sys": "HIP 17403",
+    "desc": "Planet A 4 A\nCoords: -34.98, -141.41",
+    "type": "Crash Site"
+  },
+  {
+    "short": "Cmdr Jameson, Crashed Cobra",
+    "sys": "HIP 12099",
+    "desc": "Planet 1 B\nCoords: -54.36, -50.36",
+    "type": "Crash Site"
+  },
+  {
+    "short": "Crashed Thargoid Scout",
+    "sys": "HIP 17125",
+    "desc": "Planet A 3\nCoords: 65.8228, 48.8618",
+    "type": "Crash Site"
+  }
+]

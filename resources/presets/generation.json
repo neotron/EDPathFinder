@@ -1,0 +1,56 @@
+[
+  {
+    "type": "Generation Ship",
+    "short": "Artemis",
+    "sys": "Mu Cassiopeia",
+    "desc": "Orbits C 1"
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Lazarus",
+    "sys": "Virudnir",
+    "desc": "Orbits Virudnir 6"
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Atlas",
+    "sys": "Charick Drift",
+    "desc": "Orbits White Dwarf Charick Drift A"
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Hyperion",
+    "sys": "Lalande 2966",
+    "desc": "Fly to Lalande 2966 4, target \"Yemaki\", fly about 7kls, target \"Lyncis Sector EL-Y C8\", and fly about 8.5kls."
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Lycaon",
+    "sys": "Alaunus",
+    "desc": "Fly to Alaunus 10, target system \"Horae\", fly ~22kls, target \"COL 285 Sector RP-L B22-7\", and fly about 30kls."
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Odysseus",
+    "sys": "Ross 859",
+    "desc": "Orbits planet B 1"
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Pleione",
+    "sys": "Hez Ur",
+    "desc": "Fly to Hez Ur 5, target \"Teuten\", and fly about 8kls."
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Thetis",
+    "sys": "Nefertem",
+    "desc": "Orbits planet 6 A."
+  },
+  {
+    "type": "Generation Ship",
+    "short": "Venusian",
+    "sys": "Kitae",
+    "desc": "Set course for \"Zephyrus\", and fly about 2.5kl."
+  }
+]

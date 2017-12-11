@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <ui_MissionRouter.h>
 #include "MissionScanner.h"
-#include "MissionTableModel.h"
+#include "PresetsTableModel.h"
 #include "SystemEntryCoordinateResolver.h"
 #include "PresetsManager.h"
 
@@ -55,12 +55,12 @@ private:
     MissionScanner    _scanner;
     AStarRouter       *_router;
     const SystemList  &_systems;
-    MissionTableModel *_currentModel;
+    PresetsTableModel *_currentModel;
     bool _routingPending;
-    QSet<QString>     _customStops;
+    QSet<PresetEntry>     _customStops;
     SystemEntryCoordinateResolver *_systemResolver;
     RouteProgressAnnouncer *_progressAnnouncer;
-    PresetsManager _presetManager;
+    PresetsManager *_presetsManager;
 };
 
 #endif // CUSTOMROUTER_H

@@ -11,7 +11,8 @@
 
 MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
         : QMainWindow(parent), _ui(new Ui::MissionRouter), _scanner(this), _router(router), _systems(systems),
-          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr), _progressAnnouncer(nullptr) {
+          _currentModel(nullptr), _routingPending(false), _customStops(), _systemResolver(nullptr), _progressAnnouncer(nullptr),
+          _presetsManager(new PresetsManager(this)) {
     _ui->setupUi(this);
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
     refreshMissions();
@@ -25,9 +26,14 @@ MissionRouter::MissionRouter(QWidget *parent, AStarRouter *router, const SystemL
     connect(_systemResolver, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(onSystemLookupInitiated(const QString &)));
     connect(_systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
     connect(_systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
-
-    _presetManager.addPresetsTo(_ui->menuBar);
-
+    _ui->tableView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    _presetsManager->addPresetsTo(_ui->menuBar);
+    connect(_presetsManager, &PresetsManager::didSelectEntries, [=](const PresetEntryList &list) {
+        for(const auto &preset: list) {
+            _customStops << preset;
+        }
+        updateMissionTable();
+    });
 }
 
 void MissionRouter::copySelectedItem() {
@@ -78,10 +84,17 @@ void MissionRouter::updateMissionTable() {
     if(!_ui->includeMissionSystems->isChecked()) {
         missionList.clear();
     }
-    for(auto &system: _customStops) {
-        missionList << Mission(system, "Custom");
+    PresetEntryList stops;
+    for(auto &stop: _customStops) {
+        stops.push_back(stop);
     }
-    _currentModel = new MissionTableModel(this, missionList);
+    for(auto &mission: missionList) {
+        PresetEntry entry(mission._destination);
+        entry.setType("Mission");
+        entry.setShortDescription("Starts in "+mission._origin);
+        stops.push_back(entry);
+    }
+    _currentModel = new PresetsTableModel(this, stops);
     _ui->optimizeButton->setEnabled(true);
     refreshTableView(_currentModel);
 }
@@ -115,20 +128,16 @@ void MissionRouter::optimizeRoute() {
             return;
         }
     }
-    QSet<QString> visitedSystems;
-    visitedSystems.insert(systemName);
-    for(auto system: _currentModel->missions()) {
-        if(visitedSystems.contains(system._destination)) {
-            continue;
-        }
-        visitedSystems.insert(system._destination);
-        auto missionSystem = _router->findSystemByName(system._destination);
+    for(const auto &stop: _currentModel->stops()) {
+        auto missionSystem = _router->findSystemByName(stop.systemName());
         if(!missionSystem) {
-            _systemResolver->resolve(system._destination);
+            _systemResolver->resolve(stop.systemName());
             _routingPending = true;
             return;
         }
-        routeSystems.push_back(System(missionSystem->name(), PlanetList(), missionSystem->position()));
+        auto system = System(missionSystem->name(), PlanetList(), missionSystem->position());
+        system.setPresetEntry(stop);
+        routeSystems.push_back(system);
     }
     if(originSystem) {
         routeSystems.push_back(*originSystem);
@@ -138,6 +147,7 @@ void MissionRouter::optimizeRoute() {
 
     const auto tspWorker = new TSPWorker(routeSystems, originSystem, routeSystems.size());
     tspWorker->setSystemsOnly(true);
+    tspWorker->setIsPresets(true);
     TSPWorker *workerThread(tspWorker);
     // workerThread->setRouter(_router);
     connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
@@ -154,7 +164,7 @@ void MissionRouter::routeCalculated(const RouteResult &route) {
     _ui->statusbar->showMessage("Route calculation completed.", 10000);
     _ui->optimizeButton->setEnabled(true);
     auto model = new RouteTableModel(this, route);
-    model->setResultType(RouteTableModel::ResultTypeSystemsOnly);
+    model->setResultType(RouteTableModel::ResultTypePresets);
     refreshTableView(model);
     _progressAnnouncer = new RouteProgressAnnouncer(this, model, _ui->tableView);
 }
@@ -168,7 +178,7 @@ void MissionRouter::onSystemCoordinatesRequestFailed(const QString &systemName) 
 void MissionRouter::onSystemCoordinatesReceived(const System &system) {
     showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
     if(!_routingPending) {
-        _customStops << system.name();
+        _customStops << PresetEntry(system.name());
         updateMissionTable();
     }
     if(_systemResolver->isComplete()) {
@@ -237,7 +247,7 @@ void MissionRouter::importSystems() {
         if(!components.isEmpty()) {
             const QString &trimmed = components[0].trimmed();
             if (!trimmed.isEmpty() && trimmed != "System") {
-                _customStops << trimmed;
+                _customStops << PresetEntry(trimmed);
                 appended = true;
             }
         }

@@ -179,7 +179,9 @@ namespace operations_research {
                 }
 
                 previd = nodeid;
-                if(_systemsOnly) {
+                if(_isPresets) {
+                    result.addEntryWithPresets(sys, dist);
+                } else  if(_systemsOnly) {
                     result.addEntry(sys, dist);
                 } else {
                     if(sys.planets().empty()) {
@@ -195,6 +197,22 @@ namespace operations_research {
             }
         }
         emit taskCompleted(result);
+    }
+
+    void TSPWorker::setIsPresets(bool isPresets) {
+        _isPresets = isPresets;
+    }
+
+    void TSPWorker::setDestination(System *destination) {
+        _destination = destination;
+    }
+
+    void TSPWorker::setSystemsOnly(bool systemsOnly) {
+        _systemsOnly = systemsOnly;
+    }
+
+    void TSPWorker::setRouter(AStarRouter *router) {
+        _router = router;
     }
 }
 
@@ -222,6 +240,24 @@ void RouteResult::addEntry(const System &system, const Planet &planet, const Set
 
     auto routeSettlement = RouteSystemPlanetSettlement(system.name(), planet.name(), planet.distance(), settlement);
     _settlements.emplace_back(routeSettlement);
+}
+
+void RouteResult::addEntryWithPresets(const System &system, int64 distance) {
+    _totalDist += distance;
+    std::vector<QString> row(5);
+    row[0] = system.name();
+    row[1] = QString("%1 / %2").arg(System::formatDistance(distance, true)).arg(System::formatDistance(_totalDist, true));
+
+    const auto &preset = system.presetEntry();
+    if(preset.isValid()) {
+        row[2] = preset.type();
+        row[3] = preset.shortDescription();
+        row[4] = preset.details();
+    } else {
+        row[2] = "Origin";
+        row[3] = "Starting System";
+    }
+    _route.emplace_back(row);
 }
 
 RouteResult::~RouteResult() = default;

@@ -28,6 +28,7 @@ public:
         ResultTypeSettlement,
         ResultTypeSystemsOnly,
         ResultTypeValuableSystems,
+        ResultTypePresets,
     };
 
 

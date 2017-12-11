@@ -30,15 +30,18 @@ enum CustomPreset {
     CustomPresetCrashSites,
 };
 
-class PresetsManager {
-
+class PresetsManager : public QObject {
+    Q_OBJECT
 public:
-    PresetsManager();
+    PresetsManager(QObject *parent);
 
     PresetEntryList loadFile(const QString &fileName);
     const PresetEntryList & loadPreset(CustomPreset preset);
 
     void addPresetsTo(QMenuBar *menuBar);
+
+signals:
+    void didSelectEntries(const PresetEntryList &list);
 
 private:
     QMap<CustomPreset, PresetEntryList> _presets;

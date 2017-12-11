@@ -137,3 +137,11 @@ bool System::operator<=(const System &rhs) const {
 bool System::operator>=(const System &rhs) const {
     return !(*this < rhs);
 }
+
+const PresetEntry &System::presetEntry() const {
+    return _presetEntry;
+}
+
+void System::setPresetEntry(const PresetEntry &presetEntry) {
+    _presetEntry = presetEntry;
+}

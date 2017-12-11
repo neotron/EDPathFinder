@@ -24,11 +24,11 @@ static const char *const kUrlKey = "url";
 static const char *const kTypeKey = "type";
 
 PresetEntry::PresetEntry(const QJsonObject &obj):
-        _systemName(obj.value(kSysNameKey).toString()),
-        _shortDescription(obj.value(kShortNameKey).toString()),
-        _details(obj.value(kDetailsKey).toString()),
-        _urlString(obj.value(kUrlKey).toString()),
-        _type(obj.value(kTypeKey).toString())
+        _systemName(obj.value(kSysNameKey).toString().trimmed()),
+        _shortDescription(obj.value(kShortNameKey).toString().trimmed()),
+        _details(obj.value(kDetailsKey).toString().trimmed()),
+        _urlString(obj.value(kUrlKey).toString().trimmed()),
+        _type(obj.value(kTypeKey).toString().trimmed())
 {
 
 }
@@ -85,5 +85,19 @@ const QString &PresetEntry::type() const {
 
 void PresetEntry::setType(const QString &type) {
     _type = type;
+}
+
+PresetEntry::PresetEntry(const QString &systemName)
+        : _systemName(systemName), _shortDescription("Manual stop"), _type("Custom")
+{
+}
+
+bool PresetEntry::operator==(const PresetEntry &rhs) const {
+    return std::tie(_systemName, _shortDescription, _type) ==
+           std::tie(rhs._systemName, rhs._shortDescription, rhs._type);
+}
+
+bool PresetEntry::operator!=(const PresetEntry &rhs) const {
+    return !(rhs == *this);
 }
 

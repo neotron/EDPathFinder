@@ -67,7 +67,7 @@ void PresetsManager::loadPresetFile(CustomPreset preset) {
         fileName = "generation";
         break;
     case CustomPresetINRA:
-        fileName = "INRA";
+        fileName = "inra";
         break;
     case CustomPresetCrashSites:
         fileName = "crashsites";
@@ -85,15 +85,18 @@ void PresetsManager::addPresetsTo(QMenuBar *menuBar) {
         auto action = new QAction(name, menu);
         action->connect(action, &QAction::triggered, [=]() {
             auto selector = new PresetSelector(nullptr, loadPreset(_presetNames[name]));
-            selector->setModal(true);
             selector->open();
+            connect(selector, &PresetSelector::didSelectEntries, [=](const PresetEntryList &list) {
+                emit didSelectEntries(list);
+            });
         });
         menu->addAction(action);
     }
     menuBar->addMenu(menu);
 }
 
-PresetsManager::PresetsManager() {
+
+PresetsManager::PresetsManager(QObject *parent) : QObject(parent) {
     _presetNames["Engineers"] = CustomPresetEngineers;
     _presetNames["Crash Sites"] = CustomPresetCrashSites;
     _presetNames["INRA"] = CustomPresetINRA;

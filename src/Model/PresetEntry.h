@@ -26,15 +26,22 @@
 class System;
 class PresetEntry  {
 public:
-    PresetEntry(const QJsonObject &obj);
+    explicit PresetEntry(const QJsonObject &obj);
+    explicit PresetEntry(const QString &systemName);
+    PresetEntry() = default;
 
     PresetEntry(const PresetEntry &other) = default;
 
     PresetEntry(PresetEntry &&other) = default;
 
+
     PresetEntry &operator=(const PresetEntry &other) = default;
 
     PresetEntry &operator=(PresetEntry &&other) = default;
+
+    bool operator==(const PresetEntry &rhs) const;
+
+    bool operator!=(const PresetEntry &rhs) const;
 
     const QString &shortDescription() const;
 
@@ -68,5 +75,11 @@ private:
     QString _urlString;
     QString _type;
 };
+
+inline uint qHash(const PresetEntry &key, uint seed) {
+    uint hash = qHash(key.systemName(), seed);
+    hash = qHash(key.type(), hash);
+    return qHash(key.shortDescription(), hash);
+}
 
 typedef QList<PresetEntry> PresetEntryList;

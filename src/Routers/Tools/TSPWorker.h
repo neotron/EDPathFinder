@@ -102,6 +102,8 @@ public:
 
     virtual ~RouteResult();
 
+    void addEntryWithPresets(const System &system, int64 distance);
+
 private:
     RouteResultMatrix _route;
     int64 _totalDist;
@@ -117,23 +119,19 @@ namespace operations_research {
     public:
         TSPWorker(SystemList systems, System *system, int maxSystemCount)
                 : QThread(), _systems(std::move(systems)), _origin(system), _destination(Q_NULLPTR), _maxSystemCount(maxSystemCount),
-                  _router(Q_NULLPTR), _numDist(0), _systemsOnly(false) {}
+                  _router(Q_NULLPTR), _numDist(0), _systemsOnly(false), _isPresets(false) {}
 
 
         void run() override;
 
 
-        void setRouter(AStarRouter *router) {
-            _router = router;
-        }
+        void setRouter(AStarRouter *router);
 
-        void setSystemsOnly(bool systemsOnly) {
-            _systemsOnly = systemsOnly;
-        }
+        void setSystemsOnly(bool systemsOnly);
 
-        void setDestination(System *destination) {
-            _destination = destination;
-        }
+        void setDestination(System *destination);
+
+        void setIsPresets(bool isPresets);
 
     signals:
 
@@ -155,8 +153,8 @@ namespace operations_research {
         AStarRouter *_router;
         int _numDist;
         QVector<QVector<int64>> _distanceMatrix;
-
         bool _systemsOnly;
+        bool _isPresets;
     };
 };
 

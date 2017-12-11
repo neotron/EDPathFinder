@@ -18,13 +18,14 @@
 #pragma once
 
 #include <QAbstractTableModel>
+#include <src/Model/PresetEntry.h>
 #include "System.h"
 #include "TSPWorker.h"
 #include "MissionScanner.h"
 
-class MissionTableModel : public QAbstractTableModel {
+class PresetsTableModel : public QAbstractTableModel {
 public:
-    MissionTableModel(QObject *parent, const QList<Mission> &result);
+    PresetsTableModel(QObject *parent, const PresetEntryList &result);
 
 
     int rowCount(const QModelIndex &parent) const override;
@@ -36,10 +37,10 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
 
 
-    const QList<Mission> &missions() const {
-        return _missions;
+    const PresetEntryList &stops() const {
+        return _stops;
     }
 
 private:
-    QList<Mission> _missions;
+    PresetEntryList _stops;
 };
