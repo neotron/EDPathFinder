@@ -8,11 +8,15 @@
 #include "CustomRouter.h"
 #include "RouteViewer.h"
 #include "EDSMQueryExecutor.h"
+#include "PresetsTableModel.h"
+#include "SystemEntryCoordinateResolver.h"
+#include "PresetsManager.h"
+#include "BearingCalculator.h"
 
 CustomRouter::CustomRouter(QWidget *parent, AStarRouter *router, const SystemList &systems)
         : QMainWindow(parent), _ui(new Ui::CustomRouter()), _scanner(this), _router(router), _systems(systems),
           _currentModel(nullptr), _routingPending(false), _customStops(), _progressAnnouncer(nullptr),
-          _presetsManager(new PresetsManager(this)), _resolvers() {
+          _presetsManager(new PresetsManager(this)), _resolvers(), _bearingCalculator(nullptr) {
     _ui->setupUi(this);
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
 
@@ -62,6 +66,18 @@ void CustomRouter::copySelectedItem() {
         return;
     }
     auto name = route[row][0];
+    auto type = route[row][2];
+    auto shortDesc = route[row][3];
+    if(_bearingCalculator) {
+        for(auto stop: _customStops) {
+            if(stop.systemName() == name && stop.type() == type && stop.shortDescription() == shortDesc) {
+                if(stop.lat() != 0.0 || stop.lat() != 0.0) {
+                    _bearingCalculator->setDestination(stop.lat(), stop.lon(), stop.radius());
+                }
+                break;
+            }
+        }
+    }
     QApplication::clipboard()->setText(name);
     _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
 }
@@ -227,7 +243,6 @@ void CustomRouter::onSystemCoordinatesReceived(const System &system) {
     }
 }
 
-
 void CustomRouter::showMessage(const QString &message, int timeout) {
     _ui->statusbar->showMessage(message, timeout);
 }
@@ -306,4 +321,19 @@ bool CustomRouter::resolversComplete() {
         }
     }
     return true;
+}
+
+void CustomRouter::openBearingCalculator() {
+    if(_bearingCalculator) {
+        _bearingCalculator->activateWindow();
+        _bearingCalculator->raise();
+    }
+    _bearingCalculator = new BearingCalculator();
+    _bearingCalculator->setModal(false);
+    _bearingCalculator->show();
+
+    connect(_bearingCalculator, &BearingCalculator::accepted, [=]() {
+        delete _bearingCalculator;
+        _bearingCalculator = nullptr;
+    });
 }

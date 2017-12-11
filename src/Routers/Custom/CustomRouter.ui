@@ -344,7 +344,14 @@
     <addaction name="actionExport_as_Tab_Separated"/>
     <addaction name="actionImport_Systems"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionBearing_Calculator"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTools"/>
   </widget>
   <action name="actionExport_as_CSV">
    <property name="text">
@@ -370,6 +377,14 @@
     <string>Ctrl+I</string>
    </property>
   </action>
+  <action name="actionBearing_Calculator">
+   <property name="text">
+    <string>Bearing Calculator</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -387,7 +402,7 @@
    <slot>refreshMissions()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
+     <x>332</x>
      <y>310</y>
     </hint>
     <hint type="destinationlabel">
@@ -419,7 +434,7 @@
    <slot>optimizeRoute()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>589</x>
+     <x>461</x>
      <y>586</y>
     </hint>
     <hint type="destinationlabel">
@@ -435,11 +450,11 @@
    <slot>addStop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>485</x>
-     <y>385</y>
+     <x>450</x>
+     <y>538</y>
     </hint>
     <hint type="destinationlabel">
-     <x>515</x>
+     <x>467</x>
      <y>13</y>
     </hint>
    </hints>
@@ -451,11 +466,11 @@
    <slot>clearCustom()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>580</x>
-     <y>385</y>
+     <x>251</x>
+     <y>586</y>
     </hint>
     <hint type="destinationlabel">
-     <x>515</x>
+     <x>467</x>
      <y>13</y>
     </hint>
    </hints>
@@ -471,7 +486,7 @@
      <y>318</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1516</x>
+     <x>467</x>
      <y>17</y>
     </hint>
    </hints>
@@ -540,6 +555,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionBearing_Calculator</sender>
+   <signal>triggered()</signal>
+   <receiver>CustomRouter</receiver>
+   <slot>openBearingCalculator()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>233</x>
+     <y>305</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refreshMissions()</slot>
@@ -551,5 +582,6 @@
   <slot>exportAsTabNewline()</slot>
   <slot>importSystems()</slot>
   <slot>changeCommander(QString)</slot>
+  <slot>openBearingCalculator()</slot>
  </slots>
 </ui>

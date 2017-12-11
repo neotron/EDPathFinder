@@ -32,6 +32,7 @@
 #include "Preferences.h"
 #include "Settings.h"
 #include "SystemLoader.h"
+#include "BearingCalculator.h"
 
 static const char *const kMinMatsSettingsKey = "settlement/minMats";
 static const char *const kMinDropProbabilitySettingsKey = "settlement/minDropProbability";
@@ -444,6 +445,12 @@ void MainWindow::openMissionTool() {
 
 void MainWindow::openExplorationTool() {
     auto tool = new ValueRouter(nullptr, _router, _systems);
+    tool->show();
+}
+
+void MainWindow::openBearingCalculator() {
+    auto tool = new BearingCalculator();
+    tool->setModal(false);
     tool->show();
 }
 

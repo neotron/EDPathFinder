@@ -4,11 +4,13 @@
 #include <QMainWindow>
 #include <ui_CustomRouter.h>
 #include "MissionScanner.h"
-#include "PresetsTableModel.h"
-#include "SystemEntryCoordinateResolver.h"
-#include "PresetsManager.h"
 
+class PresetsTableModel;
 class RouteProgressAnnouncer;
+class BearingCalculator;
+class SystemEntryCoordinateResolver;
+class PresetsManager;
+class RouteResult;
 
 namespace Ui {
     class CustomRouter;
@@ -34,6 +36,7 @@ public slots:
     void exportAsTabNewline();
     void importSystems();
     void changeCommander(const QString &cmdr);
+    void openBearingCalculator();
 
 private:
     void refreshTableView(QAbstractItemModel *model) const;
@@ -54,6 +57,8 @@ private slots:
     void copySelectedItem();
 
 private:
+    bool resolversComplete();
+
     Ui::CustomRouter *_ui;
     MissionScanner    _scanner;
     AStarRouter       *_router;
@@ -64,8 +69,7 @@ private:
     RouteProgressAnnouncer *_progressAnnouncer;
     PresetsManager *_presetsManager;
     QList<SystemEntryCoordinateResolver*> _resolvers;
-
-    bool resolversComplete();
+    BearingCalculator *_bearingCalculator;
 };
 
 #endif // CUSTOMROUTER_H

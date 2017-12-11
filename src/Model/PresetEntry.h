@@ -47,7 +47,7 @@ public:
 
     void setShortDescription(const QString &shortDescription);
 
-    const QString &details() const;
+    const QString details() const;
 
     void setDetails(const QString &details);
 
@@ -63,6 +63,22 @@ public:
 
     void setType(const QString &type);
 
+    const QString &planet() const;
+
+    void setPlanet(const QString &planet);
+
+    double lat() const;
+
+    void setLat(double lat);
+
+    double lon() const;
+
+    void setLon(double lon);
+
+    double radius() const;
+
+    void setRadius(double radius);
+
     QJsonObject toJson() const;
 
     bool isValid() const;
@@ -74,6 +90,8 @@ private:
     QString _details;
     QString _urlString;
     QString _type;
+    QString _planet;
+    double _lat, _lon, _radius;
 };
 
 inline uint qHash(const PresetEntry &key, uint seed) {

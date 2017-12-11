@@ -2,61 +2,91 @@
   {
     "short": "Hollis Gateway",
     "sys": "Hermitage",
-    "desc": "Planet 4a\nCoords: -53.75, 157.61",
-    "type": "INRA"
+    "planet": "4 a",
+    "lat": -53.75,
+    "lon": 157.61,
+    "type": "INRA",
+    "radius": 906
   },
   {
     "short": "Stuart Retreat",
     "sys": "HIP 15329",
-    "desc": "Planet A 3 C\nCoords: -62.61, -44.26",
-    "type": "INRA"
+    "planet": "A 3 c",
+    "lat": -62.61,
+    "lon": -44.26,
+    "type": "INRA",
+    "radius": 1512
   },
   {
     "short": "Klatt Enterprises",
     "sys": "Alnath",
-    "desc": "Planet A 2 A A\nCoords: 4.0186, 133.5426",
-    "type": "INRA"
+    "planet": "A 2 a a",
+    "lat": 4.0186,
+    "lon": 133.5426,
+    "type": "INRA",
+    "radius": 993
   },
   {
     "short": "Mayes Chemical Plant",
     "sys": "HIP 59382",
-    "desc": "Planet 1 B\nCoords: 11.41, 177.06",
-    "type": "INRA"
+    "planet": "1 b",
+    "lat": 11.41,
+    "lon": 177.06,
+    "type": "INRA",
+    "radius": 817
   },
   {
     "short": "Hogan Depot",
     "sys": "HIP 7158",
-    "desc": "Planet A 2 B\nCoords: -44.63, -63.78",
-    "type": "INRA"
+    "planet": "A 2 b",
+    "lat": -44.63,
+    "lon": -63.78,
+    "type": "INRA",
+    "radius": 1030
   },
   {
     "short": "Velasquez Medical Research Center",
     "sys": "LP 389-95",
-    "desc": "Planet 7\nCoords: 57.96, 50.03",
-    "type": "INRA"
+    "planet": "7",
+    "lat": 57.96,
+    "lon": 50.03,
+    "type": "INRA",
+    "radius": 3880
   },
   {
     "short": "Almeida Landing",
     "sys": "Conn",
-    "desc": "Planet A 3 A\nCoords: 73.38, 102.37",
-    "type": "INRA"
+    "planet": "A 3 a",
+    "lat": 73.38,
+    "lon": 102.37,
+    "type": "INRA",
+    "radius": 2997
   },
   {
     "short": "Carmichael Point",
     "sys": "HIP 16824",
-    "desc": "Planet A 2 F\nCoords: 73.87, 61.87",
-    "type": "INRA"
+    "planet": "A 2 f",
+    "lat": 73.87,
+    "lon": 61.87,
+    "type": "INRA",
+    "radius": 1238
   },
   {
     "short": "Stack",
     "sys": "HIP 12099",
-    "desc": "Planet 1A\nCoords: -72.62, -67.52",
-    "type": "INRA"
+    "planet": "1 a",
+    "lat": -72.62,
+    "lon": -67.52,
+    "type": "INRA",
+    "radius": 861
   },
   {
     "short": "Taylor Keep",
     "sys": "12 Trianguli",
-    "desc": "Planet 1A\nCoords: -51.57, 130.6",
-    "type": "INRA"
+    "planet": "A 1",
+    "lat": -51.57,
+    "lon": 130.6,
+    "type": "INRA",
+    "radius": 5308
   }
 ]

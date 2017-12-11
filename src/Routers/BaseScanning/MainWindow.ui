@@ -1017,6 +1017,7 @@
     </property>
     <addaction name="actionMission_Custom_Routing"/>
     <addaction name="actionValuable_Exploration_Router"/>
+    <addaction name="actionBearing_Calculator"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
@@ -1059,6 +1060,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionBearing_Calculator">
+   <property name="text">
+    <string>Bearing Calculator</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>
@@ -1200,11 +1209,28 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionBearing_Calculator</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>openBearingCalculator()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>260</x>
+     <y>273</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>updateFilters()</slot>
   <slot>openMissionTool()</slot>
   <slot>openExplorationTool()</slot>
   <slot>openPreferences()</slot>
+  <slot>openBearingCalculator()</slot>
  </slots>
 </ui>

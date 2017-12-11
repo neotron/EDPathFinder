@@ -49,6 +49,9 @@ protected slots:
 
     virtual void saveSettings() const {}
 
+    virtual void openBearingCalculator() {}
+
+
 signals:
     void onMessage(const QString &message) const;
 

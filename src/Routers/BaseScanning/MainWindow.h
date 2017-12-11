@@ -55,6 +55,7 @@ protected slots:
     void openMissionTool() override;
     void openExplorationTool() override;
     void openPreferences() override;
+    void openBearingCalculator() override;
 
 private slots:
     void showVersionUpdateDialog(const Version &newVersion);
