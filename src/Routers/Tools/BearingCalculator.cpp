@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include "BearingCalculator.h"
 #include "ui_BearingCalculator.h"
@@ -38,10 +39,10 @@ void BearingCalculator::calculateBearingAndDistance() {
     auto R = _ui->radius->text().toDouble(&hasRadius);
     double distance = 0.0;
     if(hasRadius && R > 0) {
-        auto Δφ = (end.lat - start.lat).toRadians();
-        auto Δλ = (end.lon - start.lon).toRadians();
+        deltaLat = (end.lat - start.lat).toRadians();
+        deltaLon = (end.lon - start.lon).toRadians();
 
-        auto a = sin(Δφ / 2) * sin(Δφ / 2) + cos(latStart) * cos(latDest) * sin(Δλ / 2) * sin(Δλ / 2);
+        auto a = sin(deltaLat / 2) * sin(deltaLat / 2) + cos(latStart) * cos(latDest) * sin(deltaLon / 2) * sin(deltaLon / 2);
         auto c = 2 * atan2(sqrt(a), sqrt(1 - a));
         distance = R * c;
         if(distance > 1) {
