@@ -25,14 +25,14 @@ class JournalFile;
 class Event;
 
 struct Mission {
-    Mission(const QString &destination, const QString &origin)
-            : _destination(destination), _origin(origin) { }
+    Mission(const QString destination, const QString origin, const QString station)
+            : _destination(std::move(destination)), _origin(std::move(origin)), _station(std::move(station)) { }
 
-    Mission()
-            : _destination(), _origin() { }
+    Mission() = default;
 
     QString _destination;
     QString _origin;
+    QString _station;
 };
 
 class MissionScanner : public QObject {

@@ -48,11 +48,11 @@ void MissionScanner::handleEvent(const JournalFile &file, const Event &ev) {
     _recentCommander = file.commander();
     switch (ev.type()) {
     case EventTypeMissionAccepted:
-//            qDebug() << ev.obj();
+         //   qDebug() << ev.obj();
         if (ev.date("Expiry") >= now) {
             auto destination = ev.string("DestinationSystem");
             if (!destination.isEmpty() && file.system() != destination) {
-                auto mission = Mission(destination, file.system());
+                auto mission = Mission(destination, file.system(), ev.string("DestinationStation"));
                 _commanderMissions[file.commander()][ev.integer("MissionID")] = mission;
             }
         }

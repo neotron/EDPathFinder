@@ -123,10 +123,28 @@ void CustomRouter::updateMissionTable() {
     for(auto &stop: _customStops) {
         stops.push_back(stop);
     }
+    QMap<QString, int> sysCount;
+    QMap<QString, QSet<QString>> sysStations;
+
     for(auto &mission: missionList) {
-        PresetEntry entry(mission._destination);
+        if(!sysCount.contains(mission._destination)) {
+            sysCount[mission._destination] = 1;
+            sysStations[mission._destination] = QSet<QString>();
+        } else {
+            sysCount[mission._destination]++;
+        }
+        if(!mission._station.isEmpty()) {
+            sysStations[mission._destination].insert(mission._station);
+        }
+    }
+    for(auto system: sysCount.keys()) {
+        PresetEntry entry(system);
         entry.setType("Mission");
-        entry.setShortDescription("Starts in "+mission._origin);
+        auto count = sysCount[system];
+        entry.setShortDescription(QString("%1 mission%2 here").arg(count).arg(count == 1 ? "" : "s"));
+        auto stations = QStringList(sysStations[system].toList());
+        std::sort(stations.begin(), stations.end());
+        entry.setDetails(QString("Mission stations: %1").arg(stations.join(", ")));
         stops.push_back(entry);
     }
     _currentModel = new PresetsTableModel(this, stops);
