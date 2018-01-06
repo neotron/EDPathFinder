@@ -212,6 +212,7 @@ void CustomRouter::routeCalculated(const RouteResult &route) {
     auto model = new RouteTableModel(this, route);
     model->setResultType(RouteTableModel::ResultTypePresets);
     refreshTableView(model);
+    delete _progressAnnouncer;
     _progressAnnouncer = new RouteProgressAnnouncer(this, model, _ui->tableView);
 }
 
