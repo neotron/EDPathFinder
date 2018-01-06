@@ -140,7 +140,7 @@ namespace operations_research {
         //qDebug() << "Matrix calculation took " << timer.elapsed();
         timer.restart();
         RoutingModel routing((int) _systems.size(), 1, RoutingModel::NodeIndex(0));
-        RoutingSearchParameters parameters = BuildSearchParametersFromFlags();
+        auto parameters = BuildSearchParametersFromFlags();
 
         // Setting first solution heuristic (cheapest addition).
         parameters.set_first_solution_strategy(FirstSolutionStrategy::AUTOMATIC);
@@ -157,7 +157,7 @@ namespace operations_research {
         }
 
         // Solve, returns a solution if any (owned by RoutingModel).
-        const Assignment *solution = routing.SolveWithParameters(parameters);
+        auto solution = routing.SolveWithParameters(parameters);
         //qDebug() << "RoutingTools took " << timer.elapsed();
 
         // Populate result.

@@ -28,6 +28,7 @@
 #define SET_IF_CHECKED(VAL, CHECKBOX, FLAG) do {  if(_ui->CHECKBOX->isChecked()) {  (VAL) |= (FLAG); } } while(false)
 #define RESTORE_VALUE(NAME, KEY) _ui->NAME->setValue(Settings::restore(KEY, _ui->NAME->value()))
 #define RESTORE_CHECKED(NAME, KEY) _ui->NAME->setChecked(Settings::restore(KEY, _ui->NAME->isChecked()))
+#define RESTORE_CHECKED_DEFAULT(NAME, KEY, DEFAULT) _ui->NAME->setChecked(Settings::restore(KEY, DEFAULT))
 #define SAVE_VALUE(NAME, KEY) Settings::save(KEY, _ui->NAME->value())
 #define SAVE_CHECKED(NAME, KEY) Settings::save(KEY, _ui->NAME->isChecked())
 
@@ -48,7 +49,8 @@ public:
 
     static void save(const QString &key, const QVariant &value);
     static int restore(const QString &key, int32 defaultValue);
-    static QString restore(const QString &key, QString &defaultValue);
+    static QString restore(const QString &key, const QString &defaultValue);
     static float restore(const QString &key, float defaultValue);
+    static double restore(const QString &key, double defaultValue);
     static bool restore(const QString &key, bool defaultValue);
 };

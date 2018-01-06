@@ -87,6 +87,15 @@ float Settings::restore(const QString &key, float defaultValue) {
     return isOk ? value : defaultValue;
 }
 
+double Settings::restore(const QString &key, double defaultValue) {
+    bool isOk = false;
+    double value = QSettings().value(key, defaultValue).toDouble(&isOk);
+#ifdef SETTINGS_DEBUG
+    qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;
+#endif
+    return isOk ? value : defaultValue;
+}
+
 bool Settings::restore(const QString &key, bool defaultValue) {
     bool value = QSettings().value(key, defaultValue).toBool();
 #ifdef SETTINGS_DEBUG
@@ -102,7 +111,7 @@ void Settings::save(const QString &key, const QVariant &value) {
     QSettings().setValue(key, value);
 }
 
-QString Settings::restore(const QString &key, QString &defaultValue) {
+QString Settings::restore(const QString &key, const QString &defaultValue) {
     auto value = QSettings().value(key, defaultValue).toString();
 #ifdef SETTINGS_DEBUG
     qDebug() << "GET"<< key << "=" <<value << "default ="<<defaultValue;

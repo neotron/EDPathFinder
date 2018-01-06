@@ -39,6 +39,8 @@ public:
 
     ~MessageToaster() override;
 
+    void loadSettings();
+
 protected:
 #ifdef Q_OS_WIN
 
@@ -60,5 +62,16 @@ private:
 
     bool _isInitialized;
 #endif
+    bool _voiceEnabled;
+    bool _textEnabled;
+
+public:
+    static const char* kTextNotificationsEnabledKey;
+    static const char* kVoiceNotificationsEnabledKey;
+    static const char* kVoiceKey;
+    static const char* kVoiceRateKey;
+    static const char* kVoicePitchKey;
+
+
 };
 

@@ -17,12 +17,18 @@
 #include <QDebug>
 #include <QTextToSpeech>
 #include <QVoice>
+#include <src/Settings/Settings.h>
 #include "MessageToaster.h"
 #include "NotificationMacOS.h"
 #ifdef Q_OS_WIN
 using namespace WinToastLib;
 #endif
 
+const char* MessageToaster::kTextNotificationsEnabledKey = "notifications/textEnabled";
+const char* MessageToaster::kVoiceNotificationsEnabledKey = "notifications/voiceEnabled";
+const char* MessageToaster::kVoiceKey = "notifications/voice";
+const char* MessageToaster::kVoiceRateKey = "notifications/rate";
+const char* MessageToaster::kVoicePitchKey = "notifications/pitch";
 
 MessageToaster::MessageToaster(QObject *parent) : QObject(parent), _speech(new QTextToSpeech(this))
 #ifdef Q_OS_WIN
@@ -40,6 +46,7 @@ MessageToaster::MessageToaster(QObject *parent) : QObject(parent), _speech(new Q
     _isInitialized = true;
 
 #endif
+    loadSettings();
 }
 
 MessageToaster &MessageToaster::instance() {
@@ -50,22 +57,41 @@ MessageToaster &MessageToaster::instance() {
     return *s_instance;
 }
 
+void MessageToaster::loadSettings() {
+    _voiceEnabled = Settings::restore(kVoiceNotificationsEnabledKey, true);
+    _textEnabled = Settings::restore(kTextNotificationsEnabledKey, true);
+
+    auto voiceName = Settings::restore(kVoiceKey, _speech->voice().name());
+    for(const auto &voice: _speech->availableVoices()) {
+        if(voice.name() == voiceName) {
+            _speech->setVoice(voice);
+            break;
+        }
+    }
+    _speech->setPitch(Settings::restore(kVoicePitchKey, 0.0));
+    _speech->setRate(Settings::restore(kVoiceRateKey, 0.0));
+}
+
 void MessageToaster::sendMessage(const QString &title, const QString &message) {
-    _speech->say(title + " "+ message);
+    if(_voiceEnabled) {
+        _speech->say(title + " " + message);
+    }
+    if(_textEnabled) {
 #ifdef Q_OS_MAC
-    NotificationMacOS::send(title, message);
+        NotificationMacOS::send(title, message);
 #endif
 #ifdef Q_OS_WIN
-    if(!_isInitialized) {
-        return;
-    }
-    WinToastTemplate templ = WinToastTemplate(WinToastTemplate::Text02);
-    templ.setTextField(title.toStdWString(), WinToastTemplate::FirstLine);
-    templ.setTextField(message.toStdWString(), WinToastTemplate::SecondLine);
-    if (!WinToast::instance()->showToast(templ, this)) {
-        std::wcout << L"Error: Could not launch your toast notification!" << std::endl;
-    }
+        if(!_isInitialized) {
+            return;
+        }
+        WinToastTemplate templ = WinToastTemplate(WinToastTemplate::Text02);
+        templ.setTextField(title.toStdWString(), WinToastTemplate::FirstLine);
+        templ.setTextField(message.toStdWString(), WinToastTemplate::SecondLine);
+        if(!WinToast::instance()->showToast(templ, this)) {
+            std::wcout << L"Error: Could not launch your toast notification!" << std::endl;
+        }
 #endif
+    }
 }
 void MessageToaster::send(const QString &title, const QString &message) {
     MessageToaster::instance().sendMessage(title, message);
