@@ -1,5 +1,5 @@
-#ifndef VALUEROUTER_H
-#define VALUEROUTER_H
+#pragma once
+
 
 #include <QMainWindow>
 #include "AStarRouter.h"
@@ -35,5 +35,3 @@ private:
     SystemEntryCoordinateResolver *_systemResolverDestination;
 
 };
-
-#endif // VALUEROUTER_H

@@ -1,5 +1,4 @@
-#ifndef CUSTOMROUTER_H
-#define CUSTOMROUTER_H
+#pragma once
 
 #include <QMainWindow>
 #include <ui_CustomRouter.h>
@@ -71,5 +70,3 @@ private:
     QList<SystemEntryCoordinateResolver*> _resolvers;
     BearingCalculator *_bearingCalculator;
 };
-
-#endif // CUSTOMROUTER_H

@@ -1,8 +1,13 @@
-#ifndef BEARINGCALCULATOR_H
-#define BEARINGCALCULATOR_H
+#pragma once
 
 #include <QDialog>
 #include <QLineEdit>
+
+#ifdef Q_OS_WINDOWS
+#define _USE_MATH_DEFINES
+#endif
+
+#include <cmath>
 
 
 namespace Ui {
@@ -55,5 +60,3 @@ private:
 
     const LatLong coordsFor(QLineEdit *lat, QLineEdit *lon, bool *ok);
 };
-
-#endif // BEARINGCALCULATOR_H

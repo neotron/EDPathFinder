@@ -75,20 +75,20 @@ public:
         connectCheckboxes();
     }
 
-    virtual ~AbstractBaseWindow() { delete _ui; }
+    ~AbstractBaseWindow() override { delete _ui; }
 
 protected :
-    virtual void systemCoordinatesRequestInitiated(const QString &systemName) {
+    void systemCoordinatesRequestInitiated(const QString &systemName) override {
         _ui->createRouteButton->setEnabled(false);
         showMessage(QString("Looking up coordinates for system: %1").arg(systemName));
     }
 
-    virtual void systemCoordinatesRequestFailed(const QString &systemName) {
+    void systemCoordinatesRequestFailed(const QString &systemName) override {
         showMessage(QString("Unknown origin system: %1").arg(systemName));
         _routingPending = false;
     }
 
-    virtual void updateSystemCoordinateDisplay(const System &system) {
+    void updateSystemCoordinateDisplay(const System &system) override {
         showMessage(QString("Found coordinates for system: %1").arg(system.name()), 4000);
         _ui->createRouteButton->setEnabled(!_routingPending);
         if(_routingPending) {
@@ -114,7 +114,7 @@ protected :
         connect(_ui->filterCommander, SIGNAL(activated(const QString &)), this, SLOT(updateFilters()));
     }
 
-    virtual void createRoute() {
+    void createRoute() override {
         if(_filteredSystems.size() > 0) {
             auto systemName = _ui->systemName->text();
             auto originSystem = _router->findSystemByName(systemName);
@@ -128,7 +128,7 @@ protected :
             updateSystemCoordinateDisplay(*originSystem);
             showMessage(QString("Calculating route with %1 systems starting at %2...").arg(routeSize).arg(originSystem->name()),0);
             _ui->createRouteButton->setEnabled(false);
-            TSPWorker *workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
+            auto workerThread(new TSPWorker(_filteredSystems, originSystem, routeSize));
             workerThread->setSystemsOnly(_systemsOnly);
             // workerThread->setRouter(_router);
             connect(workerThread, &QThread::finished, workerThread, &QObject::deleteLater);
@@ -145,7 +145,7 @@ protected :
         worker->start();
     }
 
-    virtual void routeCalculated(const RouteResult &route) {
+    void routeCalculated(const RouteResult &route) override {
         _ui->centralWidget->setEnabled(true);
         if(!route.isValid()) {
             _ui->statusBar->showMessage("No solution found to the given route.", 10000);

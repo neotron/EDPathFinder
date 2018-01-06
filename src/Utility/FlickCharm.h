@@ -39,8 +39,7 @@
 **
 ****************************************************************************/
 
-#ifndef FLICKCHARM_H
-#define FLICKCHARM_H
+#pragma once
 
 #include <QObject>
 
@@ -63,5 +62,3 @@ protected:
 private:
     FlickCharmPrivate *d;
 };
-
-#endif // FLICKCHARM_H

@@ -21,18 +21,17 @@
 #include <QListView>
 #include <QMessageBox>
 #include "LiveJournal.h"
-#include "MessageToaster.h"
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
 #include "CustomRouter.h"
 #include "ValueRouter.h"
 #include "AutoUpdateChecker.h"
-#include "buildnumber.h"
 #include "Preferences.h"
 #include "Settings.h"
 #include "SystemLoader.h"
 #include "BearingCalculator.h"
+#include "Version.h"
 
 static const char *const kMinMatsSettingsKey = "settlement/minMats";
 static const char *const kMinDropProbabilitySettingsKey = "settlement/minDropProbability";
@@ -296,6 +295,7 @@ void MainWindow::loadCompressedData() {
 }
 
 void MainWindow::systemsLoaded(const SystemList &systems) {
+    showMessage(QString("Loading of %1 systems complete.").arg(systems.count()), 5000);
     _systems->clear();
     _systems->append(systems);
     _ui->systemCountSlider->setMinimum(1);
@@ -321,7 +321,7 @@ void MainWindow::showVersionUpdateDialog(const Version &newVersion) {
     const QString title = "Update Available.";
     const QString message = QString("Version %1 is available for download. You are currently running "
                                             "version %2. \n\nDo you want to download the new version?")
-            .arg(newVersion.toString()).arg(PROJECT_VERSION);
+            .arg(newVersion.toString()).arg(Version().toString());
 
     auto reply = QMessageBox::question(this, "Update Available!", message,
                                        QMessageBox::Ignore|QMessageBox::No|QMessageBox::Yes, QMessageBox::Yes);
@@ -352,7 +352,7 @@ int MainWindow::distanceSliderValue() const {
 }
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
-    //sqDebug() << "Got event"<<event.obj();
+    qDebug() << "Got event"<<event.obj();
     const QString &commander = journal.commander();
     if(commander.isEmpty()) {
         return;

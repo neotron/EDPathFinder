@@ -1,5 +1,3 @@
-#define _USE_MATH_DEFINES
-#include <math.h>
 #include "BearingCalculator.h"
 #include "ui_BearingCalculator.h"
 

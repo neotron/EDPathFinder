@@ -15,9 +15,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-#ifndef EDPATHFINDER_VERSION_H
-#define EDPATHFINDER_VERSION_H
-
+#pragma once
 
 #include <QString>
 
@@ -57,6 +55,4 @@ private:
     QString _version;
     qint64 _versionInt;
 };
-
-
-#endif //EDPATHFINDER_VERSION_H
+#pragma once

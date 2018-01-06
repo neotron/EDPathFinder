@@ -1,5 +1,4 @@
-#ifndef PRESETSELECTOR_H
-#define PRESETSELECTOR_H
+#pragma once
 
 #include <QDialog>
 #include "PresetEntry.h"
@@ -30,4 +29,3 @@ private:
     PresetEntryList _presets;
 };
 
-#endif // PRESETSELECTOR_H
