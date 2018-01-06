@@ -58,7 +58,7 @@ void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, c
             auto &route = _routeModel->result().route();
             _tableView->selectRow(static_cast<int>(arrivedAt));
             QString nextSystem;
-            for(int i = arrivedAt + 1; i < route.size(); i++) {
+            for(size_t i = arrivedAt + 1; i < route.size(); i++) {
                 auto system = route[i][0];
                 if(system != route[arrivedAt][0]) {
                     nextSystem = system;
