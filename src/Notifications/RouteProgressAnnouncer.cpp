@@ -57,14 +57,20 @@ void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, c
         if(hasArrived) {
             auto &route = _routeModel->result().route();
             _tableView->selectRow(static_cast<int>(arrivedAt));
+            QString nextSystem;
+            for(int i = arrivedAt + 1; i < route.size(); i++) {
+                auto system = route[i][0];
+                if(system != route[arrivedAt][0]) {
+                    nextSystem = system;
+                }
+            }
 
-            if(arrivedAt == route.size() - 1) {
+            if(nextSystem.isEmpty()) {
                 // Last route
                 MessageToaster::send("Final destination reached.",
                                      QString("You have arrived at %1, which is is the final route destination.").arg(
                                              route[arrivedAt][0]));
             } else {
-                auto nextSystem = route[arrivedAt + 1][0];
                 MessageToaster::send(QString("You have arrived at %1.").arg(route[arrivedAt][0]),
                                      QString("The next system in your route, %1, has been copied to the clipboard.").arg(
                                              nextSystem));
