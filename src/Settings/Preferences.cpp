@@ -93,6 +93,8 @@ void Preferences::selectJournalPath() {
 
 
 void Preferences::testTTS() {
+    _speech->stop();
+
     auto pitch = convertedSliderValue(_ui->pitchSlider);
     auto rate = convertedSliderValue(_ui->rateSlider);
     auto voiceName = _ui->voices->currentData().toString();
@@ -102,10 +104,9 @@ void Preferences::testTTS() {
             _speech->setVoice(voice);
         }
     }
+
     _speech->setRate(rate);
     _speech->setPitch(pitch);
-
-    //_speech->stop();
     _speech->say(QString("I am %1. Will you journey from Sol to Distant Worlds with me?").arg(voiceName));
 
 }

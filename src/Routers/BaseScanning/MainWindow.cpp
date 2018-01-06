@@ -352,7 +352,7 @@ int MainWindow::distanceSliderValue() const {
 }
 
 void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
-    qDebug() << "Got event"<<event.obj();
+//    qDebug() << "Got event"<<event.obj();
     const QString &commander = journal.commander();
     if(commander.isEmpty()) {
         return;
