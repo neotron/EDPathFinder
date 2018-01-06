@@ -67,8 +67,8 @@ private:
     QByteArray _bytes;
     QByteArray _valueBytes;
     QJsonObject _bodyDistances;
-
-    void loadSystemFromTextFile();
+    QAtomicInt _progress1, _progress2;
+    SystemList * loadSystemFromTextFile();
     void loadValueSystemFromTextFile();
 
     int getDistance(const QString &system, const QString &planet);

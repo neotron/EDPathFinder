@@ -62,7 +62,6 @@ void SystemEntryCoordinateResolver::systemCoordinatesReceived(const System &syst
     auto systemName = QString(system.name().toLower());
     _pendingLookups.remove(systemName);
     _router->addSystem(system);
-    _router->sortSystemList();
     sendSystemLookupCompleted(system);
 }
 

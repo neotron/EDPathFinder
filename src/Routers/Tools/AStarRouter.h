@@ -117,29 +117,19 @@ Q_OBJECT
 
 public:
 
-    explicit AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup() { }
+    explicit AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup(), _isUnsorted(false), _lock(QMutex::Recursive) { }
 
 
     ~AStarRouter() override = default;
 
-    void addSystem(const System &system) {
-        _systems.push_back(system);
-        _systemLookup[system.key()] = &_systems.back();
-    }
+    void addSystem(const System &system);
 
     AStarResult calculateRoute(const QString &begin, const QString &end, float jumprange);
 
-    System *findSystemByName(const QString &name) {
-        auto lowerName = name.toLower();
-        auto found = _systemLookup.find(lowerName.toStdString());
-        return found == _systemLookup.end() ? nullptr : found->second;
-    }
+    System *findSystemByName(const QString &name);
 
 
-    System *findSystemByKey(const std::string &key) {
-        auto found = _systemLookup.find(key);
-        return found == _systemLookup.end() ? nullptr : found->second;
-    }
+    System *findSystemByKey(const std::string &key);
 
 
     const SystemList &systems() const {
@@ -164,8 +154,11 @@ protected:
     }
 
 private:
-    SystemList              _systems;
+    SystemList _systems;
     std::unordered_map<std::string, System *> _systemLookup;
+    bool _isUnsorted;
+    QMutex _lock;
+
 };
 
 

@@ -20,6 +20,7 @@
 #include <QCompleter>
 #include <QListView>
 #include <QMessageBox>
+#include <QComboBox>
 #include "LiveJournal.h"
 #include "WindowMenu.h"
 #include "MainWindow.h"

@@ -19,6 +19,7 @@
 #include <QJsonDocument>
 #include <QDateTime>
 #include <QTextStream>
+#include <QtConcurrent>
 #include "AStarRouter.h"
 #include "SystemLoader.h"
 
@@ -50,8 +51,29 @@ void SystemLoader::run() {
     if(distanceDoc.isObject()) {
         _bodyDistances = distanceDoc.object();
     }
-    loadSystemFromTextFile();
-    loadValueSystemFromTextFile();
+    auto systemLoader = QtConcurrent::run(this, &SystemLoader::loadSystemFromTextFile);
+    auto valueLoader = QtConcurrent::run(this, &SystemLoader::loadValueSystemFromTextFile);
+    _progress1 = 0;
+    _progress2 = 0;
+    systemLoader.waitForFinished();
+    valueLoader.waitForFinished();
+    emit progress(90);
+    auto systemList = systemLoader.result();
+    int oldProgress = 0;
+    size_t processed = 0;
+    for(const auto &system: *systemList) {
+        if(!_router->findSystemByKey(system.key())) {
+            _router->addSystem(system);
+        }
+        ++processed;
+        int currProgress = static_cast<int>(processed / static_cast<double>(systemList->count())*10);
+         if(currProgress != oldProgress) {
+             emit progress(currProgress+90);
+             oldProgress = currProgress;
+         }
+    }
+    delete systemList;
+
     loadSettlements();
     emit sortingSystems();
     _router->sortSystemList();
@@ -59,7 +81,8 @@ void SystemLoader::run() {
 }
 
 
-void SystemLoader::loadSystemFromTextFile() {
+SystemList * SystemLoader::loadSystemFromTextFile() {
+    SystemList *systems = new SystemList();
     QTextStream lines(_bytes);
     int i(0);
     int oldProgress = 0;
@@ -74,15 +97,16 @@ void SystemLoader::loadSystemFromTextFile() {
         auto x = READ_FLOAT;
         auto y = READ_FLOAT;
         auto z = READ_FLOAT;
-        _router->addSystem(System(name, x, y, z));
-        int currProgress = (int) (i / (float) _valueBytes.size() * 50);
+        systems->push_back(System(name, x, y, z));
+        _progress1 = std::min(45, (int) (i / (float) _bytes.size() * 45));
+        int currProgress = _progress1 + _progress2;
         if(currProgress != oldProgress) {
             emit progress(currProgress);
             oldProgress = currProgress;
         }
 
     }
-    emit progress(50);
+    return systems;
 }
 
 
@@ -118,13 +142,13 @@ void SystemLoader::loadValueSystemFromTextFile() {
             system.setNumPlanets(numPlanets);
             _router->addSystem(system);
         }
-        auto currProgress = (int) (i / (float) _valueBytes.size() * 50);
+        _progress2 = std::min(45, (int) (i / (float) _bytes.size() * 45));
+        int currProgress = _progress1 + _progress2;
         if(currProgress != oldProgress) {
-            emit progress(50 + currProgress);
+            emit progress(currProgress);
             oldProgress = currProgress;
         }
     }
-    emit progress(100);
 }
 
 void SystemLoader::loadSettlementTypes() {

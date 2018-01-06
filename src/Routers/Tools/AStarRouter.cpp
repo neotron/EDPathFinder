@@ -104,6 +104,8 @@ AStarResult AStarCalculator::solve() {
 QVariant AStarRouter::data(const QModelIndex &index, int role) const {
     if((role == Qt::EditRole || role == Qt::DisplayRole) && index.row() < (int) _systems.size() &&
        index.column() == 0) {
+        // This is incredibly ugly but allows for lazy sorting.
+        const_cast<AStarRouter*>(this)->sortSystemList();
         return _systems[index.row()].name();
     }
     return QVariant();
@@ -126,10 +128,32 @@ QModelIndex AStarRouter::index(int row, int column, const QModelIndex &) const {
 }
 
 void AStarRouter::sortSystemList() {
-    beginResetModel();
-    std::sort(_systems.begin(), _systems.end());
-    for(auto &system: _systems) {
-        _systemLookup[system.key()] = &system;
+    QMutexLocker lock(&_lock);
+    if(_isUnsorted) {
+        _isUnsorted = false;
+        beginResetModel();
+        std::sort(_systems.begin(), _systems.end());
+        for(auto &system: _systems) {
+            _systemLookup[system.key()] = &system;
+        }
+        endResetModel();
     }
-    endResetModel();
+}
+
+System *AStarRouter::findSystemByKey(const std::string &key) {
+    auto found = _systemLookup.find(key);
+    return found == _systemLookup.end() ? nullptr : found->second;
+}
+
+System *AStarRouter::findSystemByName(const QString &name) {
+    auto lowerName = name.toLower();
+    auto found = _systemLookup.find(lowerName.toStdString());
+    return found == _systemLookup.end() ? nullptr : found->second;
+}
+
+void AStarRouter::addSystem(const System &system) {
+    QMutexLocker lock(&_lock);
+    _isUnsorted = true;
+    _systems.push_back(system);
+    _systemLookup[system.key()] = &_systems.back();
 }
