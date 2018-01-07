@@ -11,7 +11,7 @@ include(QtCommon)
 
 project(EDPathFinder VERSION 1.4.0)
 
-set(MSVC_RUNTIME "dynamic")
+set(MSVC_RUNTIME "dynamicmak")
 
 file(WRITE src/buildnumber.h "#pragma once
 #define PROJECT_VERSION \"${PROJECT_VERSION}\"
@@ -20,6 +20,7 @@ file(WRITE src/buildnumber.h "#pragma once
 
 fix_project_version()
 configure_msvc_runtime()
+
 set(CMAKE_USE_RELATIVE_PATHS ON)
 set(RESOURCE_FOLDER resources)
 set(ICON_NAME icon512)
@@ -70,10 +71,10 @@ if (UNIX)
     link_libraries(${LINK_LIBS} -lz ${FOUNDATION})
 
     file(GLOB_RECURSE MM_FILES src/*.mm)
-else ()
+else (MSVC)
     set(WINTOAST "deps/wintoast/src/wintoastlib.cpp" "deps/wintoast/src/wintoastlib.h")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS /W1")
-    link_libraries(${LINK_LIBS})
+    set(DOUTPUT "deps/SaitekDirectOutput/DirectOutput.h")
+    link_libraries(${LINK_LIBS} "${PROJECT_SOURCE_DIR}/deps/SaitekDirectOutput/DirectOutput.lib")
 endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
@@ -85,7 +86,14 @@ HEADER_DIRECTORIES(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
 include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
 include_directories(AFTER ${INCLUDE_DIRS})
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${WINTOAST} ${MM_FILES}
+    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${WINTOAST} ${MM_FILES} ${DOUTPUT}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
+
+if  (WIN32)
+    # copy dlls.
+    configure_file("deps/SaitekDirectOutput/DirectOutput.dll" "${PROJECT_BINARY_DIR}/DirectOutput.dll" COPYONLY)
+    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.9.3/msvc2015_64/bin/windeployqt.exe" --verbose 0 "${PROJECT_NAME}.exe"
+            WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
+endif ()

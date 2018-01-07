@@ -25,7 +25,9 @@
 #include <QThread>
 #include <QDebug>
 #include <QUrl>
+#pragma warning(push, 0)
 #include <ortools/base/integral_types.h>
+#pragma warning(pop)
 #include <QJsonDocument>
 #include <utility>
 #include "PresetEntry.h"

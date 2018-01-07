@@ -31,6 +31,14 @@ Q_DECLARE_METATYPE(Version);
 
 //#define USE_SPLASH
 int main(int argc, char *argv[]) {
+    // Enable console debug output on Windows, if started from a console window.
+#ifdef _WIN32
+    if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+        FILE *fpo, *fpe;
+        freopen_s(&fpo, "CONOUT$", "w", stdout);
+        freopen_s(&fpe, "CONOUT$", "w", stderr);
+    }
+#endif
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
     QCoreApplication::setOrganizationName("NeoTron Software");
     QCoreApplication::setApplicationName("EDPathFinder");

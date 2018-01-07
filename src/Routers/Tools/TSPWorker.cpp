@@ -18,7 +18,9 @@
 
 #include <QDebug>
 #include <QtConcurrent>
+#pragma warning(push, 0)
 #include <ortools/constraint_solver/routing_flags.h>
+#pragma warning(pop)
 #include "System.h"
 #include "TSPWorker.h"
 

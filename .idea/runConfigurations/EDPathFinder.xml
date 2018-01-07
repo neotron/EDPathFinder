@@ -1,6 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="EDPathFinder" type="CMakeRunConfiguration" factoryName="Application" singleton="true" PASS_PARENT_ENVS_2="true" PROJECT_NAME="EDPathFinder" TARGET_NAME="EDPathFinder" CONFIG_NAME="MinSizeRel" RUN_TARGET_PROJECT_NAME="EDPathFinder" RUN_TARGET_NAME="EDPathFinder">
-    <envs />
+    <envs>
+      <env name="Path" value="C:\User Programs\Qt\bin;C:\Users\neotron\.babun\cygwin\home\neotron\src\EliteTSP\deps\SaitekDirectOutput;%Path%" />
+    </envs>
     <method />
   </configuration>
 </component>

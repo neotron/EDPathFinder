@@ -70,6 +70,17 @@ if (MSVC)
         WIN32_EXECUTABLE YES
         LINK_FLAGS "/ENTRY:mainCRTStartup"
     )
+    # Force to always compile with specified warning level
+
+    if (NOT VC_WARNING_LEVEL)
+        set(VC_WARNING_LEVEL "/W4")
+    endif()
+    if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+        string(REGEX REPLACE "/W[0-4]" "${VC_WARNING_LEVEL}" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    else()
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${VC_WARNING_LEVEL}")
+    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS")
 endif()
 endmacro()
 
