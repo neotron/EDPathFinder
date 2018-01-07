@@ -6,7 +6,7 @@
 #ifdef Q_OS_WIN
 #include <QDebug>
 #include <deps/EDJournalQT/src/Event.h>
-
+#include <deps/EDJournalQT/src/JournalFile.h>
 
 //{
 //   "timestamp":"2018-01-01T00:24:58Z",
@@ -39,9 +39,9 @@
 //   "RotationPeriod":112277.226563,
 //   "AxialTilt":0.232441
 //}
-void ScanMFDPage::updateWithEvent(const Event &ev) {
+bool ScanMFDPage::update(const JournalFile &journal, const Event &ev) {
     if(ev.type() != EventTypeScan) {
-        return;
+        return false;
     }
     _lastBodyName = ev.string("BodyName");
     qDebug() << "Scan event in " << _lastBodyName;
@@ -108,6 +108,7 @@ void ScanMFDPage::updateWithEvent(const Event &ev) {
     _lines.append(line2);
     _lines.append(line3);
     qDebug() << "Updated summary lines to"<<endl <<_lines;
+    return true;
 }
 
 QString ScanMFDPage::displayName() const {

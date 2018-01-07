@@ -11,7 +11,7 @@ class ScanMFDPage: public MFDPage {
 public:
     explicit ScanMFDPage(QObject *parent);
 
-    void updateWithEvent(const Event &ev) override;
+    bool update(const JournalFile &journal, const Event &ev) override;
 
     bool scrollWheelclick() override;
 

@@ -5,16 +5,24 @@
 
 #pragma once
 #include "MFDPage.h"
+#include <QMap>
 
 #ifdef Q_OS_WIN
-
 class MaterialLogMFDPage: public MFDPage {
 public:
-    MaterialLogMFDPage(QObject *parent);
+    explicit MaterialLogMFDPage(QObject *parent);
 
-    void updateWithEvent(const Event &ev) override;
+    bool update(const JournalFile &journal, const Event &ev) override;
 
     bool scrollWheelclick() override;
+
+private:
+    QMap<QString,int> _materalDeltas{};
+    QStringList _changeOrder;
+
+    bool changeMaterial(const QString &materialName, int delta);
+
+    void updateLines();
 };
 
 #endif

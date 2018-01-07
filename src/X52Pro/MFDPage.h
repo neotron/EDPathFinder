@@ -5,10 +5,12 @@
 
 #pragma once
 #include <QObject>
+
 #ifdef Q_OS_WIN
 #include "windows.h"
 
 class Event;
+class JournalFile;
 
 class MFDPage : public QObject {
     Q_OBJECT
@@ -22,7 +24,7 @@ public:
     void setLines(const QStringList &lines);
     DWORD numLines() const;
 
-    virtual void updateWithEvent(const Event &ev) {};
+    virtual bool update(const JournalFile &journal, const Event &ev) { return false; };
     virtual bool scrollWheelclick() { return false; }
 
 protected:
