@@ -10,6 +10,8 @@ include(QtCommon)
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
 project(EDPathFinder VERSION 1.4.0)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(MSVC_RUNTIME "dynamicmak")
 
@@ -61,12 +63,12 @@ endif ()
 
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.8 -stdlib=libc++ -Wno-import-preprocessor-directive-pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -mmacosx-version-min=10.9 -stdlib=libc++ -Wno-import-preprocessor-directive-pedantic")
     link_libraries(${LINK_LIBS} -lz)
 endif ()
 
 if (UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14  -DARCH_K8 -Wno-deprecated ")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DARCH_K8 -Wno-deprecated ")
     find_library(FOUNDATION Foundation)
     link_libraries(${LINK_LIBS} -lz ${FOUNDATION})
 

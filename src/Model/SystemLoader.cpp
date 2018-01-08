@@ -82,8 +82,9 @@ void SystemLoader::run() {
 
 
 SystemList * SystemLoader::loadSystemFromTextFile() {
-    SystemList *systems = new SystemList();
+    auto systems = new SystemList();
     QTextStream lines(_bytes);
+    int myPart = 30;
     int i(0);
     int oldProgress = 0;
     for(auto qline = lines.readLine();  !lines.atEnd(); qline = lines.readLine()) {
@@ -98,7 +99,7 @@ SystemList * SystemLoader::loadSystemFromTextFile() {
         auto y = READ_FLOAT;
         auto z = READ_FLOAT;
         systems->push_back(System(name, x, y, z));
-        _progress1 = std::min(45, (int) (i / (float) _bytes.size() * 45));
+        _progress1 = (int) (i / (float) _bytes.size() * myPart);
         int currProgress = _progress1 + _progress2;
         if(currProgress != oldProgress) {
             emit progress(currProgress);
@@ -106,6 +107,7 @@ SystemList * SystemLoader::loadSystemFromTextFile() {
         }
 
     }
+    _progress1 = myPart;
     return systems;
 }
 
@@ -113,6 +115,7 @@ SystemList * SystemLoader::loadSystemFromTextFile() {
 void SystemLoader::loadValueSystemFromTextFile() {
     QTextStream lines(_valueBytes);
     int i = 0;
+    int myPart = 60;
     int oldProgress = 0;
     for(auto qline = lines.readLine();  !lines.atEnd(); qline = lines.readLine()) {
         QStringList line = qline.split("\t");
@@ -142,13 +145,14 @@ void SystemLoader::loadValueSystemFromTextFile() {
             system.setNumPlanets(numPlanets);
             _router->addSystem(system);
         }
-        _progress2 = std::min(45, (int) (i / (float) _bytes.size() * 45));
+        _progress2 = (int) (i / (float) _valueBytes.size() * myPart);
         int currProgress = _progress1 + _progress2;
         if(currProgress != oldProgress) {
             emit progress(currProgress);
             oldProgress = currProgress;
         }
     }
+    _progress2 = myPart;
 }
 
 void SystemLoader::loadSettlementTypes() {

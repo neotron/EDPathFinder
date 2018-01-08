@@ -346,3 +346,19 @@ protected:
 
     void addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const;
 };
+
+inline bool System::operator<(const System &rhs) const {
+    return _key < rhs._key;
+}
+
+inline bool System::operator>(const System &rhs) const {
+    return rhs < *this;
+}
+
+inline bool System::operator<=(const System &rhs) const {
+    return !(rhs < *this);
+}
+
+inline bool System::operator>=(const System &rhs) const {
+    return !(*this < rhs);
+}

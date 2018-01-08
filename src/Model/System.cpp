@@ -122,22 +122,6 @@ void System::setKey(std::string key) {
     _key = std::move(key);
 }
 
-bool System::operator<(const System &rhs) const {
-    return _key < rhs._key;
-}
-
-bool System::operator>(const System &rhs) const {
-    return rhs < *this;
-}
-
-bool System::operator<=(const System &rhs) const {
-    return !(rhs < *this);
-}
-
-bool System::operator>=(const System &rhs) const {
-    return !(*this < rhs);
-}
-
 const PresetEntry &System::presetEntry() const {
     return _presetEntry;
 }

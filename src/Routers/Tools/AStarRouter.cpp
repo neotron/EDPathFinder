@@ -86,6 +86,7 @@ void AStarCalculator::cylinder(const SystemList &stars, QVector3D vec_from, QVec
 }
 
 AStarResult AStarCalculator::solve() {
+
     if(!_start || !_end) {
         return AStarResult();
     }
@@ -102,6 +103,7 @@ AStarResult AStarCalculator::solve() {
 
 
 QVariant AStarRouter::data(const QModelIndex &index, int role) const {
+    QMutexLocker lock(&_lock);
     if((role == Qt::EditRole || role == Qt::DisplayRole) && index.row() < (int) _systems.size() &&
        index.column() == 0) {
         // This is incredibly ugly but allows for lazy sorting.
@@ -116,6 +118,7 @@ int AStarRouter::columnCount(const QModelIndex &) const {
 }
 
 int AStarRouter::rowCount(const QModelIndex &) const {
+    QMutexLocker lock(&_lock);
     return (int) _systems.size();
 }
 
@@ -133,6 +136,7 @@ void AStarRouter::sortSystemList() {
         _isUnsorted = false;
         beginResetModel();
         std::sort(_systems.begin(), _systems.end());
+        _systemLookup.clear();
         for(auto &system: _systems) {
             _systemLookup[system.key()] = &system;
         }

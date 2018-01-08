@@ -34,8 +34,7 @@ class AStarResult {
 
 public:
 
-
-    AStarResult() : _valid(false) { }
+    AStarResult() : _valid(false) {}
 
     explicit AStarResult(const AStarSystemList &solution);
 
@@ -54,8 +53,8 @@ public:
 
 private:
     SystemList _route;
-    float      _distance{};
-    bool       _valid;
+    float _distance{};
+    bool _valid;
 };
 
 class AStarSystemNode : public AStarNode {
@@ -119,7 +118,6 @@ public:
 
     explicit AStarRouter(QObject *parent = Q_NULLPTR) : QAbstractItemModel(parent), _systems(), _systemLookup(), _isUnsorted(false), _lock(QMutex::Recursive) { }
 
-
     ~AStarRouter() override = default;
 
     void addSystem(const System &system);
@@ -149,15 +147,12 @@ public:
     void sortSystemList();
 protected:
     friend class SystemLoader;
-    void reserveSystemSpace(int size) {
-        _systems.reserve(size);
-    }
 
 private:
     SystemList _systems;
     std::unordered_map<std::string, System *> _systemLookup;
     bool _isUnsorted;
-    QMutex _lock;
+    mutable QMutex _lock;
 
 };
 
