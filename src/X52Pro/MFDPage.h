@@ -25,10 +25,16 @@ public:
     DWORD numLines() const;
 
     virtual bool update(const JournalFile &journal, const Event &ev) { return false; };
-    virtual bool scrollWheelclick() { return false; }
+    virtual bool scrollWheelclick() {
+        if(_currentLine > 0) {
+            _currentLine = 0;
+            return true;
+        }
+        return false;
+    }
 
 protected:
-    size_t _currentLine{};
+    int _currentLine{};
     QStringList _lines{};
 };
 

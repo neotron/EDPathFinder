@@ -7,7 +7,8 @@
 #include <QDebug>
 #include <deps/EDJournalQT/src/Event.h>
 #include <deps/EDJournalQT/src/JournalFile.h>
-
+#include "HabitableZone.h"
+#define FMTK(X) ((X) < 10000 ? QString::number(X) : QString("%1k").arg(round((X)/1000.0)))
 //{
 //   "timestamp":"2018-01-01T00:24:58Z",
 //   "event":"Scan",
@@ -40,32 +41,63 @@
 //   "AxialTilt":0.232441
 //}
 bool ScanMFDPage::update(const JournalFile &journal, const Event &ev) {
-    if(ev.type() != EventTypeScan) {
+    switch(ev.type()) {
+    case EventTypeScan:
+        processScanEvent(ev);
+        return true;
+    case EventTypeStartJump:
+        if(ev.string("JumpType") == "Hyperspace") {
+            _currentLine = 0;
+            _lines.clear();
+            _lines.append("Jumping to");
+            _lines.append(ev.string("StarSystem"));
+            _lines.append("Class "+ev.string("StarClass"));
+            return true;
+        }
+        return false;
+
+    case EventTypeFSDJump:
+        _lines.clear();
+        _lines.append("Arrived in:");
+        _lines.append(journal.system());
+        _lines.append("Pending scan...");
+        _history.clear();
+        _currentEntry = 0;
+        _currentLine = 0;
+        return true;
+    default:
         return false;
     }
-    _lastBodyName = ev.string("BodyName");
-    qDebug() << "Scan event in " << _lastBodyName;
+}
+
+void ScanMFDPage::processScanEvent(const Event &ev) {
+    _currentLine = 1; // Hide system name initially.
     _lines.clear();
-    _lines.append(displayName());
-    
+    _lines.append(ev.string("BodyName"));
     auto bodyInfo = ev.string("PlanetClass");
     QString line2, line3;
     if(bodyInfo.isEmpty()) {
         bodyInfo = ev.string("StarType");
-        auto lum = ev.string("Luminosity");
 
-        auto surfaceTemp = ev.integer("SurfaceTemperature");
-        auto temp        = QString("%1K").arg(surfaceTemp > 999999
-                                              ? QString::number(surfaceTemp * 1.0, 'g', 3).replace("+", "")
-                                              : QString::number(surfaceTemp));
-        auto massStr     = QString::number(ev.doubleValue("StellarMass"), 'f', 1);
-        auto radius    = ev.doubleValue("Radius") / 695700000.0;
-        auto radiusStr = radius < 0.1 ? "0" : QString::number(radius, 'f', 1);
-        line3 = QString("%1 M%2 R%3").arg(temp).arg(massStr).arg(radiusStr);
+        auto lum = ev.string("Luminosity");
         line2 = mediumBodyType(bodyInfo) + (lum.isEmpty() ? "" : " " + lum);
         if(line2.length() <= 9) {
             line2 = "Star: " + line2;
         }
+        _lines.append(line2);
+        auto surfaceTemp = ev.integer("SurfaceTemperature");
+        HabZone habZone = HabitableZone::habitableZone(bodyInfo, surfaceTemp,
+                                                       ev.doubleValue("AbsoluteMagnitude"));
+        if(habZone.inner > 0) {
+            _lines.append(QString("HZ %1~%2 ls").arg(FMTK(habZone.inner)).arg(FMTK(habZone.outer)));
+        }
+        auto temp = QString("%1K").arg(surfaceTemp > 999999
+                                       ? QString::number(surfaceTemp * 1.0, 'g', 3).replace("+", "")
+                                       : QString::number(surfaceTemp));
+        auto massStr = QString::number(ev.doubleValue("StellarMass"), 'f', 1);
+        auto radius = ev.doubleValue("Radius") / 695700000.0;
+        auto radiusStr = radius < 0.1 ? "0" : QString::number(radius, 'f', 1);
+        _lines.append(QString("%1 M%2 R%3").arg(temp).arg(massStr).arg(radiusStr));
     } else {
         auto gravity = calculateGravity(ev);
         auto numDigits = 2;
@@ -78,19 +110,19 @@ bool ScanMFDPage::update(const JournalFile &journal, const Event &ev) {
             line3 = atmosphereShort(ev.string("AtmosphereType"));
         }
         if(line3.isEmpty()) {
-            // Gas giant or somethign
+            // Gas giant or something
             line2 = mediumBodyType(bodyInfo);
 
-            auto massEM  = ev.doubleValue("MassEM");
+            auto massEM = ev.doubleValue("MassEM");
             auto massStr = massEM < 10 ? QString::number(massEM, 'f', 1) : QString::number(massEM, 'f', 0);
-            auto radius      = ev.doubleValue("Radius");
+            auto radius = ev.doubleValue("Radius");
             QString radiusStr;
             if(radius < 1000) {
                 radiusStr = QString("%1m").arg(static_cast<int>(radius));
             } else if(radius < 1000000) {
-                radiusStr = QString("%1km").arg(static_cast<int>(radius/1000));
+                radiusStr = QString("%1km").arg(static_cast<int>(radius / 1000));
             } else if(radius < 1000000000) {
-                radiusStr = QString("%1Mm").arg(static_cast<int>(radius/1000000));
+                radiusStr = QString("%1Mm").arg(static_cast<int>(radius / 1000000));
             }
             // 1234567890123456
             // 9.99g M172.2 R1.2
@@ -102,21 +134,22 @@ bool ScanMFDPage::update(const JournalFile &journal, const Event &ev) {
             if(!ev.string("TerraformState").isEmpty()) {
                 line2 += " TF";
             }
-            line2 += ", "+QString::number(gravity, 'f', numDigits)+"g";
+            line2 += QString(", %1g").arg(QString::number(gravity, 'f', numDigits));
         }
+        auto temp = ev.doubleValue("SurfaceTemperature");
+        auto pressure = ev.doubleValue("SurfacePressure")/101325.0;
+        auto line4 = QString("%1K").arg(QString::number(temp, temp >= 1000 ? 'g' : 'f', 0));
+        if(pressure > 0) {
+            auto digits = pressure > 1000 ? 2 : 1;
+            auto pressureStr = QString(" %1atm").arg(QString::number(pressure, pressure > 1000 ? 'g' : 'f', digits));
+            line4 = QString("%1 %2").arg(line4, -6).arg(pressureStr, -9);
+        }
+        _lines.append(line2);
+        _lines.append(line3);
+        _lines.append(line4);
     }
-    _lines.append(line2);
-    _lines.append(line3);
-    qDebug() << "Updated summary lines to"<<endl <<_lines;
-    return true;
-}
-
-QString ScanMFDPage::displayName() const {
-    if(!_showLongName && _lastBodyName.length() > 16) {
-        return "<"+_lastBodyName.right(15);
-    } else {
-        return _lastBodyName;
-    }
+    _history.append(_lines);
+    _currentEntry = _history.size() - 1;
 }
 
 // Atmosphere in 16 or under letters.
@@ -146,13 +179,20 @@ QString ScanMFDPage::atmosphereShort(const QString &atm) {
 }
 
 // If we scan without a detailed scanner, we don't get gravity
-// We still get mass and radius however, so we can still claculate this.
+// We still get mass and radius however, so we can still calculate it as a backup.
 double ScanMFDPage::calculateGravity(const Event &ev) {
+    // First check to see if we got it from the event
+    const double earthG = 9.807;
+    auto gravity = ev.doubleValue("SurfaceGravity");
+    if(gravity > 0.0) {
+        return gravity / earthG;
+    }
+    // If not, let's calculate it
     auto planetRadius = ev.doubleValue("Radius");
     auto planetMass = ev.doubleValue("MassEM");
     auto G = 6.67408e-11;
     auto earthMass = 5.9721986e24;
-    return (G * planetMass * earthMass / (planetRadius * planetRadius))/9.807;
+    return (G * planetMass * earthMass / (planetRadius * planetRadius))/earthG;
 }
 
 // This maps the details planet type to a shorthand for the summary display.
@@ -228,12 +268,17 @@ ScanMFDPage::ScanMFDPage(QObject *parent) : MFDPage(parent) {
 }
 
 bool ScanMFDPage::scrollWheelclick() {
-    _showLongName = !_showLongName;
-    if(!_lines.isEmpty()) {
-        _lines[0] = displayName();
-        return true;
+    if(_history.size() <= 1) {
+        return false;
     }
-    return false;
+    _currentEntry++;
+    if(_currentEntry >= _history.size()) {
+        _currentEntry = 0;
+    }
+    _currentLine = 0;
+    _lines = _history[_currentEntry];
+    qDebug() << "Loaded page"<<_currentEntry<<endl<<_lines;
+    return true;
 }
 
 #endif

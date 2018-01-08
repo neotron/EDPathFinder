@@ -34,13 +34,13 @@
     </Objective-C-extensions>
     <codeStyleSettings language="ObjectiveC">
       <option name="INDENT_CASE_FROM_SWITCH" value="false" />
-      <option name="ALIGN_GROUP_FIELD_DECLARATIONS" value="true" />
       <option name="SPACE_BEFORE_IF_PARENTHESES" value="false" />
       <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false" />
       <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false" />
       <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
       <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false" />
       <indentOptions>
+        <option name="CONTINUATION_INDENT_SIZE" value="4" />
         <option name="TAB_SIZE" value="8" />
       </indentOptions>
     </codeStyleSettings>

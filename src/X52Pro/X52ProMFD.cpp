@@ -13,9 +13,8 @@
 #define MASK(X, Y) (((X)&(Y)) == Y)
 #define ROK(X) ((res = X) == S_OK)
 const DWORD kScanSummaryPage = 0;
-const DWORD kScanDetailsPage = 1;
-const DWORD kCommanderDetailsPage = 2;
-const DWORD kMaterialLogPage = 3;
+const DWORD kMaterialLogPage = 1;
+const DWORD kHelpPage = 2;
 
 void X52ProMFD::initializeMFD() {
     HRESULT res;
@@ -106,8 +105,6 @@ void X52ProMFD::updateCurrentPage() {
         return;
     }
     for(DWORD line = 0; line < 3; line++) {
-
-
         auto str = line < _pages[_currentPage]->numLines()
                    ? _pages[_currentPage]->textForLine(line)
                    : "";
@@ -139,15 +136,26 @@ void X52ProMFD::onSoftButtonChange(void *device, DWORD buttonMask) {
 void X52ProMFD::addDevicePages() {
     HRESULT res;
     for(auto pageId: _pages.keys()) {
-        if(!ROK(DirectOutput_AddPage(_device, pageId, nullptr, 0))) {
+        auto name = QString("%1").arg(pageId).toStdWString().c_str();
+        if(!ROK(DirectOutput_AddPage(_device, pageId, name, pageId == kHelpPage ? FLAG_SET_AS_ACTIVE : 0))) {
             qDebug() << "Failed to add page" << pageId << ":" << res;
         }
     }
+    _currentPage = kHelpPage;
+    updateCurrentPage();
 }
 
 void X52ProMFD::createPages() {
     _pages[kScanSummaryPage] = new ScanMFDPage(this);
     _pages[kMaterialLogPage] = new MaterialLogMFDPage(this);
+
+    QFile help(":/MFDHelp.txt");
+    if(help.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        auto helpPage = new MFDPage(this);
+        QStringList lines(QString(help.readAll()).split("\n"));
+        helpPage->setLines(lines);
+        _pages[kHelpPage] = helpPage;
+    }
 }
 
 void X52ProMFD::handleEvent(const JournalFile &journal, const Event &event) {

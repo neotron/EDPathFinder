@@ -10,27 +10,17 @@ QString MFDPage::textForLine(size_t line) const {
     // Calculate actual line using current offset.
     auto actualLine = _currentLine + line;
     if(actualLine >= _lines.size()) {
-        actualLine -= _lines.size();
+        return "";
     }
-    // Check for out of bounds
-    if(actualLine >= _lines.size()) { return {}; }
-
     return _lines[static_cast<int>(actualLine)];
 }
 
 bool MFDPage::stepLine(bool up) {
-    if(_lines.size() <= 3) {
-        return false; // No scrolling if it already fits.
+    int newLine = up ? _currentLine - 1 : _currentLine + 1;
+    if(newLine < 0 || newLine == _lines.size()) {
+        return false;
     }
-    if(up) {
-        if(_currentLine == 0) {
-            _currentLine = _lines.size() - 1U;
-        } else {
-            _currentLine--;
-        }
-    } else {
-        _currentLine = (_currentLine + 1)%_lines.size();
-    }
+    _currentLine = newLine;
     return true;
 }
 

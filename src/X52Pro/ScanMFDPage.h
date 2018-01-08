@@ -24,11 +24,10 @@ public:
     static QString mediumBodyType(const QString &bodyType);
 
 private:
-    QString _lastBodyName{};
-    bool _showLongName{};
+    int _currentEntry{};
+    QList<QStringList> _history{};
 
-    QString displayName() const;
-
+    void processScanEvent(const Event &ev);
 };
 
 #endif
