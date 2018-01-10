@@ -2,6 +2,5 @@
 <qresource>
     <file>dbdump.csv</file>
     <file>legend.jpg</file>
-    <file>MFDHelp.txt</file>
 </qresource>
 </RCC>

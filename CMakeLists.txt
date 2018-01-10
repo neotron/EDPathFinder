@@ -75,8 +75,7 @@ if (UNIX)
     file(GLOB_RECURSE MM_FILES src/*.mm)
 else (MSVC)
     set(WINTOAST "deps/wintoast/src/wintoastlib.cpp" "deps/wintoast/src/wintoastlib.h")
-    set(DOUTPUT "deps/SaitekDirectOutput/DirectOutput.h")
-    link_libraries(${LINK_LIBS} "${PROJECT_SOURCE_DIR}/deps/SaitekDirectOutput/DirectOutput.lib")
+    link_libraries(${LINK_LIBS})
 endif ()
 
 file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
@@ -95,7 +94,6 @@ add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src
 
 if  (WIN32)
     # copy dlls.
-    configure_file("deps/SaitekDirectOutput/DirectOutput.dll" "${PROJECT_BINARY_DIR}/DirectOutput.dll" COPYONLY)
     add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.9.3/msvc2015_64/bin/windeployqt.exe" --verbose 0 "${PROJECT_NAME}.exe"
             WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
 endif ()

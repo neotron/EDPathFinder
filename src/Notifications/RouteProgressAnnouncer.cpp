@@ -19,7 +19,7 @@
 #include <QTableView>
 #include <deps/EDJournalQT/src/Event.h>
 #include <deps/EDJournalQT/src/JournalFile.h>
-#include "LiveJournal.h"
+#include "deps/EDJournalQT/src/LiveJournal.h"
 #include "RouteTableModel.h"
 #include "RouteProgressAnnouncer.h"
 #include "MessageToaster.h"

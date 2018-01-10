@@ -21,7 +21,7 @@
 #include <QListView>
 #include <QMessageBox>
 #include <QComboBox>
-#include "LiveJournal.h"
+#include "deps/EDJournalQT/src/LiveJournal.h"
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
@@ -33,7 +33,6 @@
 #include "SystemLoader.h"
 #include "BearingCalculator.h"
 #include "Version.h"
-#include "X52ProMFD.h"
 
 static const char *const kMinMatsSettingsKey = "settlement/minMats";
 static const char *const kMinDropProbabilitySettingsKey = "settlement/minDropProbability";
@@ -317,8 +316,6 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     connect(updater, &QThread::finished, updater, &QObject::deleteLater);
     connect(updater, SIGNAL(newVersionAvailable(const Version &)), this, SLOT(showVersionUpdateDialog(const Version &)));
     updater->start();
-
-    auto mfd = new X52ProMFD(this);
 }
 
 void MainWindow::showVersionUpdateDialog(const Version &newVersion) {
