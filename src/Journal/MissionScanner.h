@@ -19,10 +19,7 @@
 
 #include <QObject>
 #include <QMap>
-
-class JournalFile;
-
-class Event;
+#include <Events.h>
 
 struct Mission {
     Mission(const QString destination, const QString origin, const QString station)
@@ -55,7 +52,7 @@ public:
 
 private slots:
 
-    void handleEvent(const JournalFile &file, const Event &ev);
+    void handleEvent(const JournalFile &file, EventPtr ev);
 
 private:
     QMap<QString, QMap<int, Mission>> _commanderMissions;

@@ -47,7 +47,7 @@ protected slots:
 
     void updateFilters() override;
 
-    void handleEvent(const JournalFile &journal, const Event &event);
+    void handleEvent(const JournalFile &journal, EventPtr event);
 
     void systemLoadProgress(int progress);
     void systemSortingProgress();

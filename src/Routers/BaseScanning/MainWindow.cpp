@@ -21,7 +21,7 @@
 #include <QListView>
 #include <QMessageBox>
 #include <QComboBox>
-#include "deps/EDJournalQT/src/LiveJournal.h"
+#include <LiveJournal.h>
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
@@ -33,6 +33,9 @@
 #include "SystemLoader.h"
 #include "BearingCalculator.h"
 #include "Version.h"
+
+using Journal::Event;
+using Journal::LiveJournal;
 
 static const char *const kMinMatsSettingsKey = "settlement/minMats";
 static const char *const kMinDropProbabilitySettingsKey = "settlement/minDropProbability";
@@ -53,8 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->centralWidget->setEnabled(false);
     _ui->menuBar->setEnabled(false);
-    connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),
-            this, SLOT(handleEvent( const JournalFile &, const Event &)));
+    connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
+            this, SLOT(handleEvent( const JournalFile &, EventPtr)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
@@ -307,7 +310,7 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     _ui->menuBar->setEnabled(true);
     // Start monitoring.  Things changed in the last 16 days  - we need 14 days for expire.
     auto newerThanDate = QDateTime::currentDateTime().addDays(-16);
-    LiveJournal::instance()->startWatching(newerThanDate);
+    LiveJournal::instance()->startWatching(newerThanDate, Settings::restoreJournalPath());
     _loading = false;
 
     updateCommanderAndSystem();
@@ -352,14 +355,14 @@ int MainWindow::distanceSliderValue() const {
     return value;
 }
 
-void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
-//    qDebug() << "Got event"<<event.obj();
+void MainWindow::handleEvent(const JournalFile &journal, EventPtr event) {
+//    qDebug() << "Got event"<<event->obj();
     const QString &commander = journal.commander();
     if(commander.isEmpty()) {
         return;
     }
-    switch(event.type()) {
-    case EventTypeDatalinkScan: {
+    switch(event->type()) {
+    case Event::DatalinkScan: {
         auto settlementName = journal.settlement();
         if(settlementName.isEmpty()) {
             return;
@@ -372,20 +375,20 @@ void MainWindow::handleEvent(const JournalFile &journal, const Event &event) {
 
         auto settlementKey = makeSettlementKey(journal.system(), journal.body(), settlementName);
         auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
-        updateSettlementScanDate(commander, settlementKey, event.timestamp());
+        updateSettlementScanDate(commander, settlementKey, event->timestamp());
         if(settlementKey != shortSettlementKey) {
-            updateSettlementScanDate(commander, shortSettlementKey, event.timestamp());
+            updateSettlementScanDate(commander, shortSettlementKey, event->timestamp());
         }
         updateFilters();
         break;
     }
-    case EventTypeLocation:
-    case EventTypeFSDJump:
+    case Event::Location:
+    case Event::FSDJump:
         if(updateCommanderInfo(journal, event, commander)  && !_loading) {
             updateCommanderAndSystem();
         }
         if(!_router->findSystemByName(journal.system())) {
-            QVector3D pos(event.position());
+            QVector3D pos(event->position());
             if(!pos.isNull()) {
                 const System &system = System(journal.system(), pos);
                 _router->addSystem(system);

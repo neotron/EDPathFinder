@@ -48,8 +48,9 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Network REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
 find_package(Qt5TextToSpeech REQUIRED)
+add_subdirectory(deps/EDJournalQT)
 
-set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::TextToSpeech)
+set(LINK_LIBS ortools Qt5::Core Qt5::Widgets Qt5::Network Qt5::Concurrent Qt5::TextToSpeech EDJournalQT)
 
 link_directories(${ORTOOLS}/lib)
 
@@ -78,16 +79,15 @@ else (MSVC)
     link_libraries(${LINK_LIBS})
 endif ()
 
-file(GLOB EDJOURNAL_SRC ${JOURNALDIR}/*.cpp ${JOURNALDIR}/*.h)
 file(GLOB_RECURSE PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h )
 file(GLOB_RECURSE SRC_FILES src/*.cpp src/*.h src/*.ui)
 
 HEADER_DIRECTORIES(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
 
-include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/)
-include_directories(AFTER ${INCLUDE_DIRS})
+include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/ )
+include_directories(AFTER ${INCLUDE_DIRS} "deps/EDJournalQT/src")
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
-    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${EDJOURNAL_SRC} ${WINTOAST} ${MM_FILES} ${DOUTPUT}
+    ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${WINTOAST} ${MM_FILES} ${DOUTPUT}
 )
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})

@@ -18,12 +18,10 @@
 
 #pragma once
 #include <QObject>
-
+#include <Events.h>
 
 class QTableView;
 class RouteTableModel;
-class JournalFile;
-class Event;
 
 class RouteProgressAnnouncer : QObject {
 Q_OBJECT
@@ -33,8 +31,8 @@ public:
     ~RouteProgressAnnouncer() override;
 
 public slots:
-    void handleEventSystemOnly(const JournalFile &journal, const Event &event);
-    void handleEventSettlements(const JournalFile &journal, const Event &event);
+    void handleEventSystemOnly(const JournalFile &journal, EventPtr event);
+    void handleEventSettlements(const JournalFile &journal, EventPtr event);
 private:
     RouteTableModel *_routeModel;
     QTableView *_tableView;

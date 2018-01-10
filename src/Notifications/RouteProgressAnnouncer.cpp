@@ -17,27 +17,29 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QTableView>
-#include <deps/EDJournalQT/src/Event.h>
-#include <deps/EDJournalQT/src/JournalFile.h>
-#include "deps/EDJournalQT/src/LiveJournal.h"
+#include <Events.h>
+#include <JournalFile.h>
+#include <LiveJournal.h>
 #include "RouteTableModel.h"
 #include "RouteProgressAnnouncer.h"
 #include "MessageToaster.h"
 
+using Journal::Event;
+using Journal::LiveJournal;
 
 RouteProgressAnnouncer::RouteProgressAnnouncer(QObject *parent, RouteTableModel *routeModel, QTableView *tableView)
         : QObject(parent), _routeModel(routeModel), _tableView(tableView) {
 
     switch(_routeModel->resultType()) {
     case RouteTableModel::ResultTypeSettlement:
-        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),
-                this, SLOT(handleEventSettlements(const JournalFile &, const Event &)));
+        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
+                this, SLOT(handleEventSettlements(const JournalFile &, EventPtr)));
         break;
     case RouteTableModel::ResultTypePresets:
     case RouteTableModel::ResultTypeSystemsOnly:
     case RouteTableModel::ResultTypeValuableSystems:
-        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, const Event &)),
-                this, SLOT(handleEventSystemOnly( const JournalFile &, const Event &)));
+        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
+                this, SLOT(handleEventSystemOnly( const JournalFile &, EventPtr)));
         break;
     }
 }
@@ -45,13 +47,13 @@ RouteProgressAnnouncer::RouteProgressAnnouncer(QObject *parent, RouteTableModel 
 RouteProgressAnnouncer::~RouteProgressAnnouncer() = default;
 
 
-void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, const Event &event) {
+void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, EventPtr event) {
     bool hasArrived = false;
     size_t arrivedAt = 0;
 
-    switch(event.type()) {
-    case EventTypeFSDJump:
-    case EventTypeLocation:
+    switch(event->type()) {
+    case Event::FSDJump:
+    case Event::Location:
         // This means we changed system or opened the game.
         arrivedAt = findArrivalHop(journal, false, hasArrived);
         if(hasArrived) {
@@ -83,14 +85,14 @@ void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, c
     }
 }
 
-void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, const Event &event) {
+void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, EventPtr event) {
     bool hasArrived = false;
     size_t arrivedAt = 0;
     auto &route = _routeModel->result().route();
 
-    switch(event.type()) {
-    case EventTypeFSDJump:
-    case EventTypeLocation:
+    switch(event->type()) {
+    case Event::FSDJump:
+    case Event::Location:
         // This means we changed system or opened the game.
         arrivedAt = findArrivalHop(journal, false, hasArrived);
         if(hasArrived) {
@@ -103,10 +105,10 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
             MessageToaster::send(QString("You have arrived at %1.").arg(currentHop[0]), settlement);
         }
         break;
-    case EventTypeApproachSettlement:
+    case Event::ApproachSettlement:
         findArrivalHop(journal, true, hasArrived);
         break;
-    case EventTypeTouchdown:
+    case Event::Touchdown:
         arrivedAt = findArrivalHop(journal, true, hasArrived);
         if(hasArrived) {
             auto &currentHop = route[arrivedAt];

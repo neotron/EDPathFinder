@@ -8,7 +8,7 @@
 #include <QMainWindow>
 #include <QCheckBox>
 #include <QRadioButton>
-#include <deps/EDJournalQT/src/JournalWatcher.h>
+#include <Events.h>
 
 #include "System.h"
 #include "AStarRouter.h"
@@ -155,14 +155,14 @@ protected :
         _ui->createRouteButton->setEnabled(true);
     }
 
-    bool updateCommanderInfo(const JournalFile &file, const Event &ev, const QString &commander) {
+    bool updateCommanderInfo(const JournalFile &file, EventPtr ev, const QString &commander) {
         CommanderInfo info;
         if(_commanderInformation.contains(commander)) {
             info = _commanderInformation[commander];
         }
 
-        if(ev.timestamp() > info._lastEventDate) {
-            info._lastEventDate = ev.timestamp();
+        if(ev->timestamp() > info._lastEventDate) {
+            info._lastEventDate = ev->timestamp();
             info._system = file.system();
             _commanderInformation[commander] = info;
             if(_ui->filterCommander->findText(commander) < 0) {
