@@ -39,9 +39,13 @@
 #include <QList>
 #include <QThread>
 #include <utility>
+#ifdef Q_OS_WIN
 #pragma warning(push, 0)
 #include <ortools/constraint_solver/routing.h>
 #pragma warning(pop)
+#else
+#include <ortools/constraint_solver/routing.h>
+#endif
 #include "System.h"
 #include "AStarRouter.h"
 
