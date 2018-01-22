@@ -23,21 +23,25 @@
 class QTableView;
 class RouteTableModel;
 
-class RouteProgressAnnouncer : QObject {
+class RouteProgressAnnouncer : Journal::EventDispatchObject {
 Q_OBJECT
 public:
     RouteProgressAnnouncer(QObject *parent, RouteTableModel *routeModel, QTableView *tableView);
 
     ~RouteProgressAnnouncer() override;
 
-public slots:
-    void handleEventSystemOnly(const JournalFile &journal, EventPtr event);
-    void handleEventSettlements(const JournalFile &journal, EventPtr event);
+protected:
 private:
+    void onEventGeneric(Journal::Event *event) override;
+
+private:
+    void handleEventSystemOnly(const Journal::JFile *journal, Journal::Event *event);
+    void handleEventSettlements(const Journal::JFile *journal, Journal::Event *event);
+
     RouteTableModel *_routeModel;
     QTableView *_tableView;
 
-    size_t findArrivalHop(const JournalFile &journal, bool matchSettlement, bool &matchFound) const;
+    size_t findArrivalHop(const Journal::JFile *journal, bool matchSettlement, bool &matchFound) const;
 };
 
 

@@ -18,40 +18,30 @@
 #include <QClipboard>
 #include <QTableView>
 #include <Events.h>
-#include <JournalFile.h>
+#include <JFile.h>
 #include <LiveJournal.h>
 #include "RouteTableModel.h"
 #include "RouteProgressAnnouncer.h"
 #include "MessageToaster.h"
 
 using Journal::Event;
+using Journal::JFile;
 using Journal::LiveJournal;
 
 RouteProgressAnnouncer::RouteProgressAnnouncer(QObject *parent, RouteTableModel *routeModel, QTableView *tableView)
-        : QObject(parent), _routeModel(routeModel), _tableView(tableView) {
-
-    switch(_routeModel->resultType()) {
-    case RouteTableModel::ResultTypeSettlement:
-        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
-                this, SLOT(handleEventSettlements(const JournalFile &, EventPtr)));
-        break;
-    case RouteTableModel::ResultTypePresets:
-    case RouteTableModel::ResultTypeSystemsOnly:
-    case RouteTableModel::ResultTypeValuableSystems:
-        connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
-                this, SLOT(handleEventSystemOnly( const JournalFile &, EventPtr)));
-        break;
-    }
+        : EventDispatchObject(parent), _routeModel(routeModel), _tableView(tableView) {
+    
+    LiveJournal::instance()->registerHandler(this);
 }
 
 RouteProgressAnnouncer::~RouteProgressAnnouncer() = default;
 
 
-void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, EventPtr event) {
+void RouteProgressAnnouncer::handleEventSystemOnly(const JFile *journal, Event *event) {
     bool hasArrived = false;
     size_t arrivedAt = 0;
 
-    switch(event->type()) {
+    switch(event->journalEvent()) {
     case Event::FSDJump:
     case Event::Location:
         // This means we changed system or opened the game.
@@ -85,12 +75,12 @@ void RouteProgressAnnouncer::handleEventSystemOnly(const JournalFile &journal, E
     }
 }
 
-void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, EventPtr event) {
+void RouteProgressAnnouncer::handleEventSettlements(const JFile *journal, Event *event) {
     bool hasArrived = false;
     size_t arrivedAt = 0;
     auto &route = _routeModel->result().route();
 
-    switch(event->type()) {
+    switch(event->journalEvent()) {
     case Event::FSDJump:
     case Event::Location:
         // This means we changed system or opened the game.
@@ -139,13 +129,13 @@ void RouteProgressAnnouncer::handleEventSettlements(const JournalFile &journal, 
     }
 }
 
-size_t RouteProgressAnnouncer::findArrivalHop(const JournalFile &journal, bool matchSettlement, bool &matchFound) const {
+size_t RouteProgressAnnouncer::findArrivalHop(const JFile *journal, bool matchSettlement, bool &matchFound) const {
     auto route = _routeModel->result().route();
     size_t matchedHop = 0;
     for(size_t hop = 0; hop < route.size(); hop++) {
-        if(!route[hop][0].compare(journal.system(), Qt::CaseInsensitive)) {
+        if(!route[hop][0].compare(journal->system(), Qt::CaseInsensitive)) {
             if(matchSettlement && _routeModel->resultType() == RouteTableModel::ResultTypeSettlement) {
-                if(route[hop][2].compare(journal.settlement().split(" +")[0], Qt::CaseInsensitive)) {
+                if(route[hop][2].compare(journal->settlement().split(" +")[0], Qt::CaseInsensitive)) {
                     continue; // didn't match settlement
                 }
             }
@@ -156,4 +146,17 @@ size_t RouteProgressAnnouncer::findArrivalHop(const JournalFile &journal, bool m
         }
     }
     return matchedHop;
+}
+
+void RouteProgressAnnouncer::onEventGeneric(Event *event) {
+    switch(_routeModel->resultType()) {
+    case RouteTableModel::ResultTypeSettlement:
+        handleEventSettlements(event->file(), event);
+        break;
+    case RouteTableModel::ResultTypeSystemsOnly:
+    case RouteTableModel::ResultTypeValuableSystems:
+    case RouteTableModel::ResultTypePresets:
+        handleEventSystemOnly(event->file(), event);
+        break;
+    }
 }

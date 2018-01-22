@@ -6,6 +6,7 @@
 #include "Settings.h"
 
 using Journal::Event;
+using Journal::JFile;
 
 static const char *const kELWSettingsKey = "exploration/elw";
 static const char *const kWWSettingsKey = "exploration/ww";
@@ -47,9 +48,8 @@ void ValueRouter::scanJournals() {
 
     for(const auto &entry: list) {
         auto file = entry.absoluteFilePath();
-        JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, EventPtr)),
-                this, SLOT(handleEvent(const JournalFile &, EventPtr)));
+        JFile journalFile(file);
+        journalFile.registerHandler(this);
         journalFile.parse();
     }
     const auto comboBox = _ui->filterCommander;
@@ -105,16 +105,18 @@ void ValueRouter::routeCalculated(const RouteResult &route) {
     viewer->show();
 }
 
-void ValueRouter::handleEvent(const JournalFile &file, EventPtr ev) {
-    const QString &commander = file.commander();
-    const QString &systemName = file.system();
+
+void ValueRouter::onEventGeneric(Event *event) {
+    auto file = event->file();
+    const QString &commander = file->commander();
+    const QString &systemName = file->system();
     if(commander.isEmpty() || systemName.isEmpty()) {
         return;
     }
-    switch(ev->type()) {
+    switch(event->journalEvent()) {
     case Event::Location:
     case Event::FSDJump:
-        if (updateCommanderInfo(file, ev, commander)) {
+        if (updateCommanderInfo(file, event, commander)) {
             if (!_commanderExploredSystems.contains(commander)) {
                 _commanderExploredSystems[commander] = QSet<QString>();
             }

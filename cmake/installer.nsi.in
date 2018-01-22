@@ -52,11 +52,11 @@ ShowUnInstDetails show
 
 Section "Prerequisites" SEC01
    SetOutPath $INSTDIR\Prerequisites
-  MessageBox MB_YESNO "EDPathFinder requires Visual C++ Redistributable for Visual Studio 2015. Do you want to install it?" /SD IDYES IDNO endActiveSync
+ ; MessageBox MB_YESNO "EDPathFinder requires Visual C++ Redistributable for Visual Studio 2015. Do you want to install it?" /SD IDYES IDNO endActiveSync
    File "..\output\EDPathFinder\vcredist_x64.exe"
     ExecWait "$INSTDIR\Prerequisites\vcredist_x64.exe"
-    Goto endActiveSync
-   endActiveSync:
+ ;   Goto endActiveSync
+ ;  endActiveSync:
 SectionEnd
 
 Section "MainSection" SEC02

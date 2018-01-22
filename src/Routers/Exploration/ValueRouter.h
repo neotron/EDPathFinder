@@ -23,10 +23,12 @@ protected slots:
     void routeCalculated(const RouteResult &route) override;
     void onRouterCreated(TSPWorker *worker) override;
 
-    void handleEvent(const JournalFile &file, EventPtr ev);
     void scanJournals();
     void updateSystem();
     void saveSettings() const override;
+
+protected:
+    void onEventGeneric(Journal::Event *event) override;
 
 private:
     void restoreSettings() const;

@@ -56,8 +56,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->centralWidget->setEnabled(false);
     _ui->menuBar->setEnabled(false);
-    connect(LiveJournal::instance(), SIGNAL(onEvent(const JournalFile &, EventPtr)),
-            this, SLOT(handleEvent( const JournalFile &, EventPtr)));
     _ui->filterCommander->setInsertPolicy(QComboBox::InsertAlphabetically);
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
@@ -355,15 +353,16 @@ int MainWindow::distanceSliderValue() const {
     return value;
 }
 
-void MainWindow::handleEvent(const JournalFile &journal, EventPtr event) {
-//    qDebug() << "Got event"<<event->obj();
-    const QString &commander = journal.commander();
+void MainWindow::onEventGeneric(Event *event) {
+    qDebug() << "Got event"<<event->obj();
+    auto journal(event->file());
+    const QString &commander = journal->commander();
     if(commander.isEmpty()) {
         return;
     }
-    switch(event->type()) {
+    switch(event->journalEvent()) {
     case Event::DatalinkScan: {
-        auto settlementName = journal.settlement();
+        auto settlementName = journal->settlement();
         if(settlementName.isEmpty()) {
             return;
         }
@@ -373,8 +372,8 @@ void MainWindow::handleEvent(const JournalFile &journal, EventPtr event) {
             settlementName = parts.join(" ");
         }
 
-        auto settlementKey = makeSettlementKey(journal.system(), journal.body(), settlementName);
-        auto shortSettlementKey = makeSettlementKey(journal.system(), "", settlementName);
+        auto settlementKey = makeSettlementKey(journal->system(), journal->body(), settlementName);
+        auto shortSettlementKey = makeSettlementKey(journal->system(), "", settlementName);
         updateSettlementScanDate(commander, settlementKey, event->timestamp());
         if(settlementKey != shortSettlementKey) {
             updateSettlementScanDate(commander, shortSettlementKey, event->timestamp());
@@ -387,10 +386,10 @@ void MainWindow::handleEvent(const JournalFile &journal, EventPtr event) {
         if(updateCommanderInfo(journal, event, commander)  && !_loading) {
             updateCommanderAndSystem();
         }
-        if(!_router->findSystemByName(journal.system())) {
+        if(!_router->findSystemByName(journal->system())) {
             QVector3D pos(event->position());
             if(!pos.isNull()) {
-                const System &system = System(journal.system(), pos);
+                const System &system = System(journal->system(), pos);
                 _router->addSystem(system);
             }
         }

@@ -16,15 +16,16 @@
 #include "TSPWorker.h"
 #include "RouteViewer.h"
 #include "CommanderInfo.h"
+#include <EventDispatchObject.h>
 
-
-class BaseSlots : public QMainWindow {
+class BaseSlots : public Journal::EventDispatchMainWindow {
 Q_OBJECT
 
 
 public:
     explicit BaseSlots(QWidget *parent)
-            : QMainWindow(parent) {
+            : EventDispatchMainWindow(parent) {
+        Journal::LiveJournal::instance()->registerHandler(this);
     }
 
 protected slots:
@@ -78,6 +79,7 @@ public:
     ~AbstractBaseWindow() override { delete _ui; }
 
 protected :
+
     void systemCoordinatesRequestInitiated(const QString &systemName) override {
         _ui->createRouteButton->setEnabled(false);
         showMessage(QString("Looking up coordinates for system: %1").arg(systemName));
@@ -155,7 +157,7 @@ protected :
         _ui->createRouteButton->setEnabled(true);
     }
 
-    bool updateCommanderInfo(const JournalFile &file, EventPtr ev, const QString &commander) {
+    bool updateCommanderInfo(const Journal::JFile *file, Journal::Event *ev, const QString &commander) {
         CommanderInfo info;
         if(_commanderInformation.contains(commander)) {
             info = _commanderInformation[commander];
@@ -163,7 +165,7 @@ protected :
 
         if(ev->timestamp() > info._lastEventDate) {
             info._lastEventDate = ev->timestamp();
-            info._system = file.system();
+            info._system = file->system();
             _commanderInformation[commander] = info;
             if(_ui->filterCommander->findText(commander) < 0) {
                 _ui->filterCommander->addItem(commander);

@@ -23,7 +23,7 @@ using namespace Journal;
 
 
 MissionScanner::MissionScanner(QObject *parent)
-        : QObject(parent), _commanderMissions() {
+        : EventDispatchObject(parent), _commanderMissions() {
 }
 
 void MissionScanner::scanJournals() {
@@ -32,49 +32,50 @@ void MissionScanner::scanJournals() {
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
     auto monitorDate = QDateTime::currentDateTime().addDays(-30); // Missions last at most a month.
 
-    for (auto entry: list) {
+    for (const auto &entry: list) {
         if (entry.lastModified() < monitorDate) {
             continue;
         }
         auto file = entry.absoluteFilePath();
-        JournalFile journalFile(file);
-        connect(&journalFile, SIGNAL(onEvent(const JournalFile &, EventPtr)),
-                this, SLOT(handleEvent(const JournalFile &, EventPtr)));
+        Journal::JFile journalFile(file);
+        journalFile.registerHandler(this);
         journalFile.parse();
     }
 }
 
-void MissionScanner::handleEvent(const JournalFile &file, EventPtr ev) {
+
+void MissionScanner::onEventGeneric(Event *event) {
     QDateTime now = QDateTime::currentDateTimeUtc();
-    _recentCommander = file.commander();
-    switch (ev->type()) {
+    auto file(event->file());
+    _recentCommander = file->commander();
+    switch (event->journalEvent()) {
     case Event::MissionAccepted:
          //   qDebug() << ev->obj();
-        if (ev->date("Expiry") >= now) {
-            auto destination = ev->string("DestinationSystem");
-            if (!destination.isEmpty() && file.system() != destination) {
-                auto mission = Mission(destination, file.system(), ev->string("DestinationStation"));
-                _commanderMissions[file.commander()][ev->integer("MissionID")] = mission;
+        if (event->date("Expiry") >= now) {
+            auto destination = event->string("DestinationSystem");
+            if (!destination.isEmpty() && file->system() != destination) {
+                auto mission = Mission(destination, file->system(), event->string("DestinationStation"));
+                _commanderMissions[file->commander()][event->integer("MissionID")] = mission;
             }
         }
         break;
     case Event::MissionRedirected: {
-        auto destination = ev->string("NewDestinationSystem");
-        auto missionId = ev->integer("MissionID");
-        if (!destination.isEmpty() && _commanderMissions[file.commander()].contains(missionId)) {
-            _commanderMissions[file.commander()][missionId]._destination = destination;
+        auto destination = event->string("NewDestinationSystem");
+        auto missionId = event->integer("MissionID");
+        if (!destination.isEmpty() && _commanderMissions[file->commander()].contains(missionId)) {
+            _commanderMissions[file->commander()][missionId]._destination = destination;
         }
     }
         break;
     case Event::MissionAbandoned:
     case Event::MissionFailed:
     case Event::MissionCompleted:
-        _commanderMissions[file.commander()].remove(ev->integer("MissionID"));
+        _commanderMissions[file->commander()].remove(event->integer("MissionID"));
         break;
     case Event::FSDJump:
     case Event::Location:
-        //      qDebug() << file.commander() << " in "<<file.system();
-        _commanderLastSystem[file.commander()] = file.system();
+        //      qDebug() << file->commander() << " in "<<file->system();
+        _commanderLastSystem[file->commander()] = file->system();
         break;
     default:
         break;

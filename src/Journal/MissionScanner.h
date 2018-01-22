@@ -32,7 +32,7 @@ struct Mission {
     QString _station;
 };
 
-class MissionScanner : public QObject {
+class MissionScanner : public Journal::EventDispatchObject {
 Q_OBJECT
 public:
     explicit MissionScanner(QObject *parent);
@@ -50,12 +50,11 @@ public:
 
     const QString &recentCommander() const;
 
-private slots:
-
-    void handleEvent(const JournalFile &file, EventPtr ev);
+protected:
+    void onEventGeneric(Journal::Event *event) override;
 
 private:
-    QMap<QString, QMap<int, Mission>> _commanderMissions;
+    QMap<QString, QMap<int64_t, Mission>> _commanderMissions;
     QMap<QString, QString>            _commanderLastSystem;
     QString _recentCommander;
 };
