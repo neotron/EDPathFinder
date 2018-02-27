@@ -174,3 +174,4 @@ workspace.xml
 /src/buildnumber.h
 installer.nsi
 /.idea/atlassian-ide-plugin.xml
+.idea/GrepConsole.xml
