@@ -17,7 +17,8 @@ win-package:
 	rm -rf output/EDPathFinder
 	mkdir -p output/EDPathFinder
 	cp cmake-build-minsizerel/EDPathFinder.exe output/EDPathFinder
-	cp cmake-build-minsizerel/DirectOutput.dll output/EDPathFinder
+	cp cmake-build-minsizerel/ssleay32.dll output/EDPathFinder
+	cp cmake-build-minsizerel/libeay32.dll output/EDPathFinder
 	rm -f wininstall/*.exe
 	env VCINSTALLDIR="c:/User Programs/Visual Studio Community 2015/VC" /cygdrive/c/User\ Programs/Qt/${QT}/msvc2015_64/bin/windeployqt.exe output/EDPathFinder/EDPathFinder.exe
 	(cd wininstall && /cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe installer.nsi)

@@ -43,5 +43,23 @@
     "lon": 48.8618,
     "type": "Crash Site",
     "radius": 727
-  }
+  },
+  {
+    "short": "Crashed Anaconda",
+    "sys": "Orrere",
+    "planet": "2 b",
+    "lat": 43.8214,
+    "lon":  -173.9800,
+    "type": "Crash Site",
+    "radius": 876
+  },
+  {
+    "short": "Crashed Anaconda",
+    "sys": "Leucos",
+    "planet": "A 5 a",
+    "lat": -36.1280,
+    "lon":  -45.2436,
+    "type": "Crash Site",
+    "radius": 831
+  },
 ]
