@@ -1,8 +1,9 @@
 QT_MA=5
-QT_MI=9
-QT_PA=3
+QT_MI=11
+QT_PA=0
 QT=${QT_MA}.${QT_MI}.${QT_PA}
 QTUS=${QT_MA}_${QT_MI}_${QT_PA}
+
 all:
 	@echo mac-package or win-package
 
@@ -20,13 +21,5 @@ win-package:
 	cp cmake-build-minsizerel/ssleay32.dll output/EDPathFinder
 	cp cmake-build-minsizerel/libeay32.dll output/EDPathFinder
 	rm -f wininstall/*.exe
-	env VCINSTALLDIR="c:/User Programs/Visual Studio Community 2015/VC" /cygdrive/c/User\ Programs/Qt/${QT}/msvc2015_64/bin/windeployqt.exe output/EDPathFinder/EDPathFinder.exe
+	env VCINSTALLDIR="C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC" /cygdrive/c/User\ Programs/Qt/${QT}/msvc2017_64/bin/windeployqt.exe output/EDPathFinder/EDPathFinder.exe
 	(cd wininstall && /cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe installer.nsi)
-
-win-package-bash: 
-	rm -rf output/EDPathFinder
-	mkdir -p output/EDPathFinder
-	cp ../build-EliteTSP-Desktop_Qt_${QTUS}_MSVC2015_64bit-Minimum\ Size\ Release/EDPathFinder.exe output/EDPathFinder
-	rm -f wininstall/*.exe
-	(export VCINSTALLDIR="c:/User Programs/Visual Studio Community 2015/VC" ; /mnt/c/User\ Programs/Qt/${QT}/msvc2015_64/bin/windeployqt.exe output/EDPathFinder/EDPathFinder.exe)
-	(cd wininstall && /mnt/c/Program\ Files\ \(x86\)/NSIS/makensis.exe installer.nsi)

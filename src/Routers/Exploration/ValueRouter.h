@@ -27,7 +27,9 @@ protected slots:
     void updateSystem();
     void saveSettings() const override;
 
+    void finishAsyncSetup();
 protected:
+    void showEvent(QShowEvent *event) override;
     void onEventGeneric(Journal::Event *event) override;
 
 private:

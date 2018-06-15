@@ -20,6 +20,7 @@
 #include <QDebug>
 #include <QSplashScreen>
 #include <src/Widgets/SplashScreen.h>
+#include "buildnumber.h"
 #include "MainWindow.h"
 #include "Theme.h"
 
@@ -42,6 +43,7 @@ int main(int argc, char *argv[]) {
    // qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "true");
     QCoreApplication::setOrganizationName("NeoTron Software");
     QCoreApplication::setApplicationName("EDPathFinder");
+    QCoreApplication::setApplicationVersion(PROJECT_VERSION);
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();

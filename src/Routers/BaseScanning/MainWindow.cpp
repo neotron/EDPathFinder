@@ -61,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
     _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
     layout()->setSizeConstraint(QLayout::SetFixedSize);
+    connect(_ui->actionQuit, &QAction::triggered, [] { QApplication::quit(); });
 }
 
 void MainWindow::restoreSettings() {

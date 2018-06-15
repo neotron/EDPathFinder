@@ -9,7 +9,7 @@ include(QtCommon)
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.4.2)
+project(EDPathFinder VERSION 1.4.3)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -93,11 +93,11 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
-#if  (WIN32)
+if  (MSVC)
     # copy dlls.
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
     configure_file("deps/openssl/libeay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
 
     add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.11.0/msvc2017_64/bin/windeployqt.exe" --verbose 1 "${PROJECT_NAME}.exe"
             WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
-#endif ()
+endif ()

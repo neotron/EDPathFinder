@@ -64,28 +64,30 @@ tm_continue:
 Section "Prerequisites" SEC01
   !insertmacro TerminateApp
   SetOutPath $INSTDIR\Prerequisites
-  File "..\output\EDPathFinder\vcredist_x64.exe"
-  ExecWait "$INSTDIR\Prerequisites\vcredist_x64.exe  /passive /norestart"
+  File "..\output\EDPathFinder\vc_redist.x64.exe"
+  ExecWait "$INSTDIR\Prerequisites\vc_redist.x64.exe  /passive /norestart"
 SectionEnd
 
 Section "MainSection" SEC02
-  SetOutPath "$INSTDIR\bearer"
   SetOverwrite try
-  File "..\output\EDPathFinder\bearer\*.dll"
   SetOutPath "$INSTDIR"
   File "..\output\EDPathFinder\EDPathFinder.exe"
   CreateDirectory "$SMPROGRAMS\EDPathfinder"
   CreateShortCut "$SMPROGRAMS\EDPathfinder\ED Pathfinder.lnk" "$INSTDIR\EDPathFinder.exe"
   CreateShortCut "$DESKTOP\ED Pathfinder.lnk" "$INSTDIR\EDPathFinder.exe"
+  File "..\output\EDPathFinder\*.dll"
+  SetOutPath "$INSTDIR\bearer"
+  File "..\output\EDPathFinder\bearer\*.dll"
   SetOutPath "$INSTDIR\iconengines"
-  File "..\output\EDPathFinder\iconengines\qsvgicon.dll"
+  File "..\output\EDPathFinder\iconengines\*"
   SetOutPath "$INSTDIR\imageformats"
   File "..\output\EDPathFinder\imageformats\*"
-  SetOutPath "$INSTDIR"
-  File "..\output\EDPathFinder\*.dll"
   SetOutPath "$INSTDIR\platforms"
-  File "..\output\EDPathFinder\platforms\qwindows.dll"
-  SetOutPath "$INSTDIR"
+  File "..\output\EDPathFinder\platforms\*"
+  SetOutPath "$INSTDIR\styles"
+  File "..\output\EDPathFinder\styles\*"
+  SetOutPath "$INSTDIR\texttospeech"
+  File "..\output\EDPathFinder\texttospeech\*"
   SetOutPath "$INSTDIR\translations"
   File "..\output\EDPathFinder\translations\*"
 SectionEnd

@@ -25,37 +25,35 @@ ValueRouter::ValueRouter(QWidget *parent, AStarRouter *router, SystemList *syste
         : AbstractBaseWindow(parent, router, systems), _systemResolverDestination(nullptr) {
     _ui->menuBar->addMenu(new WindowMenu(this, _ui->menuBar));
     restoreSettings();
-
     _systemsOnly = true;
-    scanJournals();
-    connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
-    connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
-
-    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,_ui->yEnd, _ui->zEnd);
-    connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
-    connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
-    connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
+    _ui->centralWidget->setDisabled(true);
     setAttribute(Qt::WA_DeleteOnClose, true);
-    updateFilters();
+    connect(_ui->actionQuit, &QAction::triggered, [] { QApplication::quit(); });
 }
 
+
+
 void ValueRouter::scanJournals() {
+    _ui->centralWidget->setDisabled(true);
     _commanderExploredSystems.clear();
     _commanderInformation.clear();
     QDir dir(Settings::restoreJournalPath(), "Journal.*.log");
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
-
+    int current = 0;
     for(const auto &entry: list) {
+        ++current;
         auto file = entry.absoluteFilePath();
         JFile journalFile(file);
         journalFile.registerHandler(this);
         journalFile.parse();
+        _ui->statusBar->showMessage(QString("Parsing journal file %1 of %2...").arg(current).arg(list.size()));
     }
     const auto comboBox = _ui->filterCommander;
     comboBox->clear();
     comboBox->addItems(_commanderExploredSystems.keys());
     updateCommanderAndSystem();
     updateFilters();
+    _ui->centralWidget->setDisabled(false);
 }
 
 void ValueRouter::updateFilters() {
@@ -156,3 +154,21 @@ void ValueRouter::restoreSettings() const {
     RESTORE_VALUE(minSystemValue, kMinValueSettingsKey);
     RESTORE_VALUE(systemCountSlider, kMaxSystemsSettingsKey);
 }
+
+void ValueRouter::showEvent(QShowEvent *event) {
+    QWidget::showEvent(event);
+    QTimer::singleShot(50, this, SLOT(finishAsyncSetup()));
+}
+
+void ValueRouter::finishAsyncSetup() {
+    scanJournals();
+    connect(_ui->rescanJournalButton, SIGNAL(clicked()), this, SLOT(scanJournals()));
+    connect(_ui->filterCommander, SIGNAL(currentTextChanged(const QString &)), this, SLOT(updateSystem()));
+
+    _systemResolverDestination = new SystemEntryCoordinateResolver(this, _router, _ui->systemNameEnd, _ui->xEnd,_ui->yEnd, _ui->zEnd);
+    connect(_systemResolverDestination, SIGNAL(systemLookupInitiated(const QString &)), this, SLOT(systemCoordinatesRequestInitiated(const QString &)));
+    connect(_systemResolverDestination, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(systemCoordinatesRequestFailed(const QString &)));
+    connect(_systemResolverDestination, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(updateSystemCoordinateDisplay(const System &)));
+    updateFilters();
+}
+

@@ -36,8 +36,8 @@ Preferences::Preferences(QWidget *parent)
     RESTORE_CHECKED_DEFAULT(voiceNotifications, MessageToaster::kVoiceNotificationsEnabledKey, true);
     auto rate = Settings::restore(MessageToaster::kVoiceRateKey, 0.0);
     auto pitch = Settings::restore(MessageToaster::kVoicePitchKey, 0.0);
-    _ui->pitchSlider->setValue(static_cast<int>((pitch + 1) * 1000));
-    _ui->rateSlider->setValue(static_cast<int>((rate + 1) * 1000));
+    _ui->pitchSlider->setValue(static_cast<int>(pitch * 10));
+    _ui->rateSlider->setValue(static_cast<int>(rate * 10));
 
     for(const auto &voice: _speech->availableVoices()) {
         auto voiceString = QString("%2, %3 %1").arg(voice.genderName(voice.gender()))
@@ -104,11 +104,12 @@ void Preferences::testTTS() {
             _speech->setVoice(voice);
         }
     }
-
     _speech->setRate(rate);
     _speech->setPitch(pitch);
-    _speech->say(QString("I am %1. Will you journey from Sol to Distant Worlds with me?").arg(voiceName));
+    _speech->say(QString("I am %1. Will you journey from Sol to Beagle Point with me?").arg(voiceName));
 
 }
 
-double Preferences::convertedSliderValue(const QSlider *slider) const { return slider->value() / 1000.0 - 1.0; }
+double Preferences::convertedSliderValue(const QSlider *slider) const {
+    return slider->value() / 10.0;
+}

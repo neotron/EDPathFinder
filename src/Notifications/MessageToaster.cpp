@@ -27,8 +27,8 @@ using namespace WinToastLib;
 const char* MessageToaster::kTextNotificationsEnabledKey = "notifications/textEnabled";
 const char* MessageToaster::kVoiceNotificationsEnabledKey = "notifications/voiceEnabled";
 const char* MessageToaster::kVoiceKey = "notifications/voice";
-const char* MessageToaster::kVoiceRateKey = "notifications/rate";
-const char* MessageToaster::kVoicePitchKey = "notifications/pitch";
+const char* MessageToaster::kVoiceRateKey = "notifications/rateFixed";
+const char* MessageToaster::kVoicePitchKey = "notifications/pitchFixed";
 
 MessageToaster::MessageToaster(QObject *parent) : QObject(parent), _speech(new QTextToSpeech(this))
 #ifdef Q_OS_WIN

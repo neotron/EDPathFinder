@@ -55,6 +55,10 @@ private slots:
 
     void copySelectedItem();
 
+    void finishAsyncSetup();
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private:
     bool resolversComplete();
 

@@ -38,7 +38,7 @@ CustomRouter::CustomRouter(QWidget *parent, AStarRouter *router, const SystemLis
     connect(systemResolver, SIGNAL(systemLookupFailed(const QString &)), this, SLOT(onSystemCoordinatesRequestFailed(const QString &)));
     connect(systemResolver, SIGNAL(systemLookupCompleted(const System &)), this, SLOT(onSystemCoordinatesReceived(const System &)));
     _resolvers.push_back(systemResolver);
-    
+
     refreshMissions();
     auto table = _ui->tableView;
     table->setSelectionBehavior(QTableView::SelectRows);
@@ -53,6 +53,21 @@ CustomRouter::CustomRouter(QWidget *parent, AStarRouter *router, const SystemLis
         }
         updateMissionTable();
     });
+
+    connect(_ui->actionQuit, &QAction::triggered, [] { QApplication::quit(); });
+
+}
+
+
+
+void CustomRouter::showEvent(QShowEvent *event) {
+    QWidget::showEvent(event);
+    resize(minimumSize());
+    QTimer::singleShot(50, this, SLOT(finishAsyncSetup()));
+}
+
+void CustomRouter::finishAsyncSetup() {
+    resize(minimumSize());
 }
 
 void CustomRouter::copySelectedItem() {

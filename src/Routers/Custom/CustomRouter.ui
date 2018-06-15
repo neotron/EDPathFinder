@@ -6,14 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>468</width>
-    <height>612</height>
+    <width>462</width>
+    <height>583</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>462</width>
+    <height>583</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Custom Routing</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="9" column="2">
      <widget class="QPushButton" name="optimizeButton">
@@ -86,7 +98,14 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="originSystem"/>
+        <widget class="QLineEdit" name="originSystem">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="1" column="3">
         <widget class="QLabel" name="oy">
@@ -121,7 +140,14 @@
         </widget>
        </item>
        <item row="3" column="1">
-        <widget class="QLineEdit" name="destinationSystem"/>
+        <widget class="QLineEdit" name="destinationSystem">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
        <item row="3" column="3">
         <widget class="QLabel" name="dy">
@@ -247,6 +273,12 @@
        </item>
        <item row="2" column="2">
         <widget class="QPushButton" name="refreshButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Refresh Missions</string>
          </property>
@@ -255,7 +287,7 @@
        <item row="0" column="1" colspan="2">
         <widget class="QComboBox" name="commanders">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>10</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -264,6 +296,12 @@
        </item>
        <item row="2" column="0" colspan="2">
         <widget class="QCheckBox" name="includeMissionSystems">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>Load missions from selected commander</string>
          </property>
@@ -307,7 +345,7 @@
        <item>
         <widget class="NoBeepLineEdit" name="customSystem">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>1</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -332,8 +370,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>468</width>
-     <height>22</height>
+     <width>462</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -343,6 +381,8 @@
     <addaction name="actionExport_as_CSV"/>
     <addaction name="actionExport_as_Tab_Separated"/>
     <addaction name="actionImport_Systems"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -383,6 +423,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
@@ -492,22 +540,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionExport_as_CSV</sender>
-   <signal>triggered()</signal>
-   <receiver>CustomRouter</receiver>
-   <slot>exportAsCSV()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>257</x>
-     <y>230</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionExport_as_Tab_Separated</sender>
    <signal>triggered()</signal>
    <receiver>CustomRouter</receiver>
@@ -552,6 +584,22 @@
     <hint type="destinationlabel">
      <x>146</x>
      <y>574</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExport_as_CSV</sender>
+   <signal>triggered()</signal>
+   <receiver>CustomRouter</receiver>
+   <slot>exportAsCSV()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>257</x>
+     <y>230</y>
     </hint>
    </hints>
   </connection>

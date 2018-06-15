@@ -1003,6 +1003,13 @@
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionQuit"/>
+   </widget>
+   <addaction name="menuFile"/>
    <addaction name="menuTools"/>
   </widget>
   <widget class="QStatusBar" name="statusBar">
@@ -1050,6 +1057,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="text">
+    <string>Quit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
