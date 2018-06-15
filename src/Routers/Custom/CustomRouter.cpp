@@ -1,4 +1,3 @@
-#include <QListView>
 #include <QCompleter>
 #include <QFileDialog>
 #include <QMessageBox>

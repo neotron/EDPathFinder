@@ -115,7 +115,6 @@ void ValueRouter::routeCalculated(const RouteResult &route) {
 
 
 void ValueRouter::onEventGeneric(Event *event) {
-    QMutexLocker lock(&_mutex);
     auto file = event->file();
     const QString &commander = file->commander();
     const QString &systemName = file->system();
@@ -124,16 +123,20 @@ void ValueRouter::onEventGeneric(Event *event) {
     }
     switch(event->journalEvent()) {
     case Event::Location:
-    case Event::FSDJump:
-        if (updateCommanderInfo(file, event, commander)) {
-            if (!_commanderExploredSystems.contains(commander)) {
+    case Event::FSDJump: {
+        QMutexLocker lock(&_mutex);
+        if(updateCommanderInfo(file, event, commander)) {
+            if(!_commanderExploredSystems.contains(commander)) {
                 _commanderExploredSystems[commander] = QSet<QString>();
             }
         }
         break;
-    case Event::Scan:
+    }
+    case Event::Scan: {
+        QMutexLocker lock(&_mutex);
         _commanderExploredSystems[commander].insert(systemName.toUpper());
         break;
+    }
     default:
         break;
     }

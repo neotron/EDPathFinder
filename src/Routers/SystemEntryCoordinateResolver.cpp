@@ -25,10 +25,10 @@ SystemEntryCoordinateResolver::SystemEntryCoordinateResolver(QObject *parent, AS
     auto completer = new QCompleter(_router, this);
     completer->setModelSorting(QCompleter::CaseSensitivelySortedModel);
     completer->setCaseSensitivity(Qt::CaseInsensitive);
-
     auto popup = new QListView();
     popup->setBatchSize(10);
     popup->setLayoutMode(QListView::Batched);
+    popup->setUniformItemSizes(true);
     completer->setPopup(popup);
     connect(completer, SIGNAL(activated(const QString &)), this, SLOT(onCompletion(const QString &)));
     _lineEdit->setCompleter(completer);
