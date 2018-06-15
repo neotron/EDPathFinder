@@ -32,7 +32,7 @@ class ValuablePlanetRouteViewer : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent = 0);
+    explicit ValuablePlanetRouteViewer(const RouteResult &result, QWidget *parent = nullptr);
 
     ~ValuablePlanetRouteViewer() override;
 

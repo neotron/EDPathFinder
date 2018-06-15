@@ -20,7 +20,7 @@ Q_OBJECT
 
 
 public:
-    explicit BearingCalculator(QWidget *parent = 0);
+    explicit BearingCalculator(QWidget *parent = nullptr);
 
     ~BearingCalculator() override;
 

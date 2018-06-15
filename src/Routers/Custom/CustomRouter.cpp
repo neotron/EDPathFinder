@@ -318,7 +318,7 @@ void CustomRouter::importSystems() {
     QFile file(fileName);
     if(!file.open(QFile::ReadOnly)) {
         QMessageBox messageBox;
-        messageBox.critical(0,"Failed to open file","The file provided couldn't be opened for reading. Try another file");
+        messageBox.critical(nullptr,"Failed to open file","The file provided couldn't be opened for reading. Try another file");
         messageBox.setFixedSize(300,200);
         messageBox.show();
         return;

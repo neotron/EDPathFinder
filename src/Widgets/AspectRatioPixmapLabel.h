@@ -29,7 +29,7 @@ public:
 
 
 public:
-    explicit AspectRatioPixmapLabel(QWidget *parent = 0);
+    explicit AspectRatioPixmapLabel(QWidget *parent = nullptr);
     const QPixmap* pixmap() const;
 
 public slots:

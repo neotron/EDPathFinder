@@ -31,7 +31,7 @@ public:
     explicit NoBeepLineEdit(const QString &string, QWidget *parent) : QLineEdit(string, parent) {
     }
 
-    virtual ~NoBeepLineEdit();
+    ~NoBeepLineEdit() override;
 
     void keyPressEvent(QKeyEvent *event) override;
 };

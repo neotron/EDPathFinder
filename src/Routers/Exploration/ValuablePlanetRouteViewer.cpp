@@ -14,8 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
-#include <deps/EDJournalQT/src/Watcher.h>
-#include <src/Notifications/RouteProgressAnnouncer.h>
+#include "deps/EDJournalQT/src/Watcher.h"
+#include "Notifications/RouteProgressAnnouncer.h"
 #include "MessageToaster.h"
 #include "System.h"
 #include "TSPWorker.h"

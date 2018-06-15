@@ -13,7 +13,7 @@ class PresetSelector : public QDialog
 
 public:
     explicit PresetSelector(QWidget *parent, const PresetEntryList &presets);
-    ~PresetSelector();
+    ~PresetSelector() override;
 
 public slots:
     void slotSelectAll();

@@ -19,7 +19,7 @@
 AStarResult::AStarResult(const AStarSystemList &solution) : _route(), _valid(true) {
     float distance = 0;
 
-    AStarSystemNode *last(0);
+    AStarSystemNode *last(nullptr);
 
     for(auto asys: solution) {
         if(last) {

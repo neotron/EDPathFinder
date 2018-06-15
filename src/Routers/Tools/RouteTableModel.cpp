@@ -120,7 +120,7 @@ void RouteTableModel::exportTableViewToCSV(QTableView *table) {
 void RouteTableModel::exportTableViewToTabNewline(QTableView *table) {
     QString filters("Text files (*.txt);;All files (*.*)");
     QString defaultFilter("Text files (*.txt)");
-    QString fileName = QFileDialog::getSaveFileName(0, "Save file", Settings::restoreSavePath(), filters, &defaultFilter);
+    QString fileName = QFileDialog::getSaveFileName(nullptr, "Save file", Settings::restoreSavePath(), filters, &defaultFilter);
 
     exportTableView(table, fileName, false);
 }

@@ -175,3 +175,4 @@ workspace.xml
 installer.nsi
 /.idea/atlassian-ide-plugin.xml
 .idea/GrepConsole.xml
+/cmake-xcode

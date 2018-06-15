@@ -33,7 +33,7 @@ class MainWindow : public AbstractBaseWindow<Ui::MainWindow> {
 Q_OBJECT
 
 public:
-    explicit MainWindow(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow() override;
 
@@ -47,7 +47,7 @@ protected slots:
 
     void updateFilters() override;
 
-    void onEventGeneric(Journal::Event *event);
+    void onEventGeneric(Journal::Event *event) override;
 
     void systemLoadProgress(int progress);
     void systemSortingProgress();

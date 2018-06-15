@@ -32,7 +32,7 @@ class RouteViewer : public QMainWindow {
 Q_OBJECT
 
 public:
-    explicit RouteViewer(const RouteResult &result, QWidget *parent = 0);
+    explicit RouteViewer(const RouteResult &result, QWidget *parent = nullptr);
 
     ~RouteViewer();
 

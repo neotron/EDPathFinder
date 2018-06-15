@@ -55,6 +55,7 @@ void ValueRouter::scanJournals() {
         future.waitForFinished();
         ++current;
         _ui->statusBar->showMessage(QString("Parsing journal file %1 of %2...").arg(current).arg(list.size()));
+        QApplication::processEvents();
     }
     const auto comboBox = _ui->filterCommander;
     comboBox->clear();
