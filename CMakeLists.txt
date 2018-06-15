@@ -9,7 +9,7 @@ include(QtCommon)
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.4.3)
+project(EDPathFinder VERSION 1.5.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
