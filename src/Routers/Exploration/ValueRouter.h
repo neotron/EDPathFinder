@@ -37,5 +37,6 @@ private:
 
     QMap<QString, QSet<QString>> _commanderExploredSystems;
     SystemEntryCoordinateResolver *_systemResolverDestination;
+    QBasicMutex _mutex;
 
 };

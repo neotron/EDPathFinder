@@ -1,4 +1,5 @@
 #include <QRadioButton>
+#include <QtConcurrent>
 #include "WindowMenu.h"
 #include "ValueRouter.h"
 #include "ValuablePlanetRouteViewer.h"
@@ -40,12 +41,19 @@ void ValueRouter::scanJournals() {
     QDir dir(Settings::restoreJournalPath(), "Journal.*.log");
     QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Time | QDir::Reversed);
     int current = 0;
+    QList<QFuture<void>> futures;
     for(const auto &entry: list) {
+        auto future = QtConcurrent::run([=]() {
+            auto file = entry.absoluteFilePath();
+            JFile journalFile(file);
+            journalFile.registerHandler(this);
+            journalFile.parse();
+        });
+        futures += future;
+    }
+    for(auto &future: futures) {
+        future.waitForFinished();
         ++current;
-        auto file = entry.absoluteFilePath();
-        JFile journalFile(file);
-        journalFile.registerHandler(this);
-        journalFile.parse();
         _ui->statusBar->showMessage(QString("Parsing journal file %1 of %2...").arg(current).arg(list.size()));
     }
     const auto comboBox = _ui->filterCommander;
@@ -106,6 +114,7 @@ void ValueRouter::routeCalculated(const RouteResult &route) {
 
 
 void ValueRouter::onEventGeneric(Event *event) {
+    QMutexLocker lock(&_mutex);
     auto file = event->file();
     const QString &commander = file->commander();
     const QString &systemName = file->system();
