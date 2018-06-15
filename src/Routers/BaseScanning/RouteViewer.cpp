@@ -166,6 +166,7 @@ void RouteViewer::updateSettlementInfo() {
     }
     _ui->imageList->setCurrentText(preferredMap);
     loadOverviewImage(settlementType->imageNamed(preferredMap));
+
 }
 
 void RouteViewer::setFlag(const Settlement &settlement, QString key, SettlementFlags flag) {

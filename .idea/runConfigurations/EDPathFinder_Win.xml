@@ -3,6 +3,8 @@
     <envs>
       <env name="Path" value="C:\User Programs\Qt\bin;C:\Users\neotron\.babun\cygwin\home\neotron\src\EliteTSP\deps\SaitekDirectOutput;%Path%" />
     </envs>
-    <method />
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
   </configuration>
 </component>

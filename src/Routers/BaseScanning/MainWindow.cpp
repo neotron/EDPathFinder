@@ -60,6 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     _ui->minMats->setToolTip("Exclude settlements that can't provide at least this many of your wanted materials.");
     _ui->dropProbability->setToolTip("Exclude matched materials if the probability quotient is lower than this. Note that some materials never have very high probability.");
+    layout()->setSizeConstraint(QLayout::SetFixedSize);
 }
 
 void MainWindow::restoreSettings() {
@@ -136,7 +137,7 @@ void MainWindow::buildLookupMap() {
 
 void MainWindow::routeCalculated(const RouteResult &route) {
     AbstractBaseWindow::routeCalculated(route);
-    auto viewer = new RouteViewer(route, this);
+    auto viewer = new RouteViewer(route, nullptr);
     viewer->show();
 }
 
@@ -317,6 +318,8 @@ void MainWindow::systemsLoaded(const SystemList &systems) {
     connect(updater, &QThread::finished, updater, &QObject::deleteLater);
     connect(updater, SIGNAL(newVersionAvailable(const Version &)), this, SLOT(showVersionUpdateDialog(const Version &)));
     updater->start();
+
+    updateFilters();
 }
 
 void MainWindow::showVersionUpdateDialog(const Version &newVersion) {
@@ -354,7 +357,7 @@ int MainWindow::distanceSliderValue() const {
 }
 
 void MainWindow::onEventGeneric(Event *event) {
-    qDebug() << "Got event"<<event->obj();
+  //  qDebug() << "Got event"<<event->obj();
     auto journal(event->file());
     const QString &commander = journal->commander();
     if(commander.isEmpty()) {
@@ -444,17 +447,21 @@ void MainWindow::updateSystemForCommander(const QString &commander) {
 void MainWindow::openMissionTool() {
     auto tool = new CustomRouter(nullptr, _router, *_systems);
     tool->show();
+    tool->hide();
+    tool->show();
 }
 
 void MainWindow::openExplorationTool() {
     auto tool = new ValueRouter(nullptr, _router, _systems);
     tool->show();
+    tool->adjustSize();
 }
 
 void MainWindow::openBearingCalculator() {
     auto tool = new BearingCalculator();
     tool->setModal(false);
     tool->show();
+    tool->adjustSize();
 }
 
 void MainWindow::openPreferences() {

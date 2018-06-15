@@ -77,7 +77,7 @@ namespace operations_research {
                 }
             }
         }
-        qDebug() << "Waiting for completion of" << futures.size() << "futures";
+        //qDebug() << "Waiting for completion of" << futures.size() << "futures";
         for(auto &pair: futures) {
             pair.first.waitForFinished();
             auto a = pair.second.first;

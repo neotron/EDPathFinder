@@ -39,10 +39,10 @@ int main(int argc, char *argv[]) {
         freopen_s(&fpe, "CONOUT$", "w", stderr);
     }
 #endif
-    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "true");
+   // qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "true");
     QCoreApplication::setOrganizationName("NeoTron Software");
     QCoreApplication::setApplicationName("EDPathFinder");
-
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     qRegisterMetaType<RouteResult>();
     qRegisterMetaType<SystemList>();
     qRegisterMetaType<Version>();

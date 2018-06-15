@@ -9,7 +9,7 @@ include(QtCommon)
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.4.1)
+project(EDPathFinder VERSION 1.4.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -27,7 +27,7 @@ set(CMAKE_USE_RELATIVE_PATHS ON)
 set(RESOURCE_FOLDER resources)
 set(ICON_NAME icon512)
 set(COMPANY "David Hedbor")
-set(COPYRIGHT "Copyright (c) 2016 David Hedbor. All rights reserved.")
+set(COPYRIGHT "Copyright (c) 2016-2018 David Hedbor. All rights reserved.")
 set(IDENTIFIER "org.hedbor.EDPathFinder")
 
 file(GLOB_RECURSE RESOURCE_FILES resources/*.qrc)
@@ -76,7 +76,7 @@ if (UNIX)
     file(GLOB_RECURSE MM_FILES src/*.mm)
 else (MSVC)
     set(WINTOAST "deps/wintoast/src/wintoastlib.cpp" "deps/wintoast/src/wintoastlib.h")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  /std:c++latest")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
     link_libraries(${LINK_LIBS})
 endif ()
 
@@ -93,11 +93,11 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
-if  (WIN32)
+#if  (WIN32)
     # copy dlls.
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
     configure_file("deps/openssl/libeay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
 
-    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.9.3/msvc2015_64/bin/windeployqt.exe" --verbose 1 "${PROJECT_NAME}.exe"
+    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.11.0/msvc2017_64/bin/windeployqt.exe" --verbose 1 "${PROJECT_NAME}.exe"
             WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
-endif ()
+#endif ()

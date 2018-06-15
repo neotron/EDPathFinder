@@ -54,7 +54,7 @@ void RouteProgressAnnouncer::handleEventSystemOnly(const JFile *journal, Event *
                 auto system = route[i][0];
                 if(system != route[arrivedAt][0]) {
                     nextSystem = system;
-					break;
+                    break;
                 }
             }
 

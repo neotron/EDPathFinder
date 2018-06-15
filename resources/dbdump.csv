@@ -768,7 +768,7 @@ M5M	Valtys	1	Burton's Inheritance	map		-35.90625	-63.375	-60.90625	150.69	0	1	1	
 M4M	Valtys	4	Roberts Base	map		-35.90625	-63.375	-60.90625	150.69	0	0	0	tomalus		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 M5M	Lembava	A 3	Steiner Mine	map		-43.25	-64.34375	-77.6875	165.83	0	1	1	tomalus		0.78	0.04	0.48	0.04	0.35	0.26	0.57	0.43	0.35	0.26	0.43	Large	2	
 L1M	Baldr	4 D	Leydenfrost Reach	map		-43.65625	-61.59375	-68.03125	158.77	0	1	1	tomalus		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
-M2L	HIP 116352		Reynolds` Folly	map	1	-51.09375	-160.8125	29.0625	207.95	0	0	0	Sandro75		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
+M2L	HIP 116352		Reynolds' Folly	map	1	-51.09375	-160.8125	29.0625	207.95	0	0	0	Sandro75		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
 S1M	HIP 116352		Thompson Holdings	map		-51.09375	-160.8125	29.0625	207.95	2	0	0	Sandro75		1.20	0.00	0.27	0.00	0.33	0.13	0.20	0.53	0.53	0.27	0.00	Small	2	
 L2L	Chedita		Grego Installation	map		-27.5	-130.625	28.3125	169.99	0	1	0	Sandro75		0.50	0.50	0.44	0.12	0.26	0.18	0.03	0.18	0.24	0.03	0.00	Large	1	
 S1M	Chedita		Friend Settlement	map		-27.5	-130.625	28.3125	169.99	2	0	0	Sandro75		1.20	0.00	0.27	0.00	0.33	0.13	0.20	0.53	0.53	0.27	0.00	Small	2	
@@ -869,9 +869,9 @@ S2L	57 Zeta Serpentis	AB 4 D	Felice Prospect	map		-30.9375	12	69.28125	96.51	0	0
 L4M1	57 Zeta Serpentis	D 3 A	Baker Silo	map		-30.9375	12	69.28125	96.51	3	1	1	dja	437k ls	0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 S3M	Noatiaca	7 A	Lucid Works	map		-17	8.3125	61.34375	80.89	0	0	0	dja		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
 S3M	Noatiaca	8 A	Murdoch Base	map		-17	8.3125	61.34375	80.89	0	0	0	dja		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
-S4M	Arcturus	Massyworld	Rodrigues` Claim	map		-3.53125	34.15625	12.96875	63.14	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
-M5M	Yimanbin	B 3	Brash`s Progress	map		51.40625	-51.34375	37.03125	69.77	0	1	1	Sandro75		0.78	0.04	0.48	0.04	0.35	0.26	0.57	0.43	0.35	0.26	0.43	Large	2	
-M2M	Nu Indi	A 2	Bulleid`s Folly	map		48.3125	-61.53125	51.4375	83.10	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
+S4M	Arcturus	Massyworld	Rodrigues' Claim	map		-3.53125	34.15625	12.96875	63.14	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
+M5M	Yimanbin	B 3	Brash's Progress	map		51.40625	-51.34375	37.03125	69.77	0	1	1	Sandro75		0.78	0.04	0.48	0.04	0.35	0.26	0.57	0.43	0.35	0.26	0.43	Large	2	
+M2M	Nu Indi	A 2	Bulleid's Folly	map		48.3125	-61.53125	51.4375	83.10	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2
 M2M	Nu Indi	A 2	Plucker Vision	map	1	48.3125	-61.53125	51.4375	83.10	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 M1L	Belarsuk	1 a	Misgley Silo	map		48.9375	-20.78125	37.375	40.29	0	0	0	Sandro75		0.46	0.69	0.38	0.08	0.77	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M3L	Belarsuk	1 a	Galton Beacon	map		48.9375	-20.78125	37.375	40.29	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
@@ -909,10 +909,10 @@ L2M	Quaaybuwala	A 2	Herreshoff Landing	map		110.65625	-73.125	-37.78125	124.36	0
 S3L	Muan Nu	6 F	Nourse Hub	map		99	-63.5	-49.96875	119.99	0	0	0	dja		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
 M3M	Huangais	A 1	Stairs Settlement	map		72.53125	-12.03125	10.71875	37.82	0	0	0	Drownerfood		0.84	0.00	0.31	0.00	0.40	0.67	0.40	0.43	0.39	0.49	0.00	Medium	2	
 M3M	LU Velorum	1	Bakewell Laboratory	map		49.875	5.875	4.3125	26.33	0	0	0	Drownerfood		0.84	0.00	0.31	0.00	0.40	0.67	0.40	0.43	0.39	0.49	0.00	Medium	2	
-S4M	LB 3303	B 2 F	Garay`s Inheritance	map		22.9375	-22.9375	6.5625	56.05	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
+S4M	LB 3303	B 2 F	Garay's Inheritance	map		22.9375	-22.9375	6.5625	56.05	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
 L2H	Benoit	1	Merle Beacon	map		30.46875	-22.65625	-2.125	55.81	3	1	0	Sandro75		0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
-M4M	LP 715-52	3 E	Teller`s Folly	map		13.96875	-20.3125	-26.53125	77.86	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
-L1L	LHS 3804	8 A	McQuay`s Folly	map		5.03125	-31.75	21.78125	70.94	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
+M4M	LP 715-52	3 E	Teller's Folly	map		13.96875	-20.3125	-26.53125	77.86	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
+L1L	LHS 3804	8 A	McQuay's Folly	map		5.03125	-31.75	21.78125	70.94	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
 M2H	LTT 7857	4 B	Dampier Plant	map		39.78125	-39.6875	52.40625	64.60	2	1	0	Sandro75		0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
 M4M	Daha Deti	8	Collins Holdings	map		20.5	-20.90625	45.78125	55.40	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 L3L	Daha Deti	8	Searle Installation	map		20.5	-20.90625	45.78125	55.40	0	1	0	Sandro75		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
@@ -935,7 +935,7 @@ S3M	Kamito	3	Boucher Hub	map		65.3125	-83.4375	-70.15625	140.60	0	0	0	Drownerfoo
 M2M	LHS 1590	1	Nagata Beacon	map	1	19.4375	-57.21875	-51.78125	114.65	0	0	0	Drownerfood	1.5g	0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 M3H	Hunaharten	A 3 a	Finney Beacon	map		2.1875	-40.09375	82.53125	96.23	2	1	1	Sandro75		0.00	0.00	1.67	0.00	0.00	0.67	0.67	0.67	0.33	1.00	0.33	Medium	3	
 L1H	Hunaharten	A 6 a	Anthony Prospect	map	1	2.1875	-40.09375	82.53125	96.23	3	1	1	Sandro75		0.00	0.00	0.83	0.00	0.00	0.00	1.00	1.33	0.83	1.00	0.50	Large	3	
-M4L	Hunaharten	A 6 a	Lynn`s Exile	map		2.1875	-40.09375	82.53125	96.23	0	0	0	Sandro75		0.74	0.48	0.17	0.22	0.65	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
+M4L	Hunaharten	A 6 a	Lynn's Exile	map		2.1875	-40.09375	82.53125	96.23	0	0	0	Sandro75		0.74	0.48	0.17	0.22	0.65	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 L3M	Yu Tiku	A 4 a	Kawanishi Enterprise	map		-1.71875	-38.5625	87.90625	100.71	0	1	0	Sandro75		0.76	0.00	0.33	0.00	0.18	0.61	0.21	0.58	0.42	0.64	0.33	Large	2	
 L3L	Yu Tiku	A 3 a	Napier Relay	map		-1.71875	-38.5625	87.90625	100.71	0	1	0	Sandro75		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
 M1M	Jaurinani	10 b	Pangborn Bastion	map		-19.53125	-36.96875	134.84375	142.25	0	0	1	Sandro75		1.21	0.00	0.38	0.00	0.50	0.46	0.33	0.50	0.33	0.29	0.00	Medium	2	
@@ -943,7 +943,7 @@ L2L	HIP 91253	A 5 e	Great Base	map	1	-22.15625	-25.65625	155.0625	155.87	0	1	0	S
 M1M	Kabiku	D 2 a	Auer Installation	map		-34.34375	-24.5	173.375	176.81	0	0	1	Sandro75	280 000 ls	1.21	0.00	0.38	0.00	0.50	0.46	0.33	0.50	0.33	0.29	0.00	Medium	2	
 M5L	Kabiku	D 1	Williams Landing	map		-34.34375	-24.5	173.375	176.81	0	1	0	Sandro75	280 000 ls	0.44	0.61	0.44	0.33	0.33	0.17	0.00	0.00	0.06	0.00	0.00	Large	1	
 L2H	Kabiku	D 6	Silverberg Base	map		-34.34375	-24.5	173.375	176.81	3	1	0	Sandro75	280 000 ls	0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
-S4H	LP 336-71	A 1 c	Baker`s Inheritance	map		41.875	7.25	77.65625	53.38	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
+S4H	LP 336-71	A 1 c	Baker's Inheritance	map		41.875	7.25	77.65625	53.38	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
 L2M	Tobarci	A 2	Abel Terminal	map		18.96875	-20.4375	117.21875	104.44	0	1	0	Sandro75	1.2g	0.88	0.00	0.13	0.00	0.25	0.41	0.53	0.41	0.31	0.50	0.19	Large	2	
 S3M	HIP 31833	A 4 B	Giles Keep	map		129.3125	-53.125	-26.59375	115.35	0	0	0	dja		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
 S1L	Wardhr	A 2	Kornbluth Base	map		23.96875	-184.875	56.125	206.98	0	0	0	dja		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
@@ -976,7 +976,7 @@ S2H	Toci	5 A	Soper Installation	map		-26.90625	-37.46875	-49.9375	125.71	2	0	1	d
 M4M	Sanna	Caher	Akers Settlement	map		35.96875	-83.3125	23.125	102.90	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 M4M	Sanna	2 e	Quaglia Horizons	map		35.96875	-83.3125	23.125	102.90	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 M4M	Sanna	2 e	Allen Horizons	map		35.96875	-83.3125	23.125	102.90	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
-M2M	Sanna	6 g	Lyell`s Inheritance	map		35.96875	-83.3125	23.125	102.90	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
+M2M	Sanna	6 g	Lyell's Inheritance	map		35.96875	-83.3125	23.125	102.90	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 S2M	Sakarabru	1	Laing Survey	map		4.46875	-68.40625	-49.90625	126.34	0	0	0	dja		0.98	0.10	0.19	0.00	0.45	0.43	0.33	0.43	0.31	0.38	0.02	Small	2	
 S1L	Sakarabru	2	Collins Reach	map		4.46875	-68.40625	-49.90625	126.34	0	0	0	dja		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
 S1L	Sakarabru	2	Borel Depot	map		4.46875	-68.40625	-49.90625	126.34	0	0	0	dja		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
@@ -1065,7 +1065,7 @@ S2M	Xihe	3 B	Chun Observatory	map		-19.8125	-35.375	34	92.51	0	0	0	dja		0.98	0.1
 L4M1	Wolf 906	1 D	Qureshi Bastion	map		-27.28125	-25.09375	28.78125	93.35	3	1	1	dja		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 S3M	LHS 3802	2	Al-Haytham Asylum	map		17.65625	-48.34375	35.375	76.58	0	0	0	dja		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
 M2L	Tatapai	2	Riemann Terminal	map		57.09375	-56.25	42.96875	75.53	0	0	0	dja		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
-M2M	Tatapai	3	Gonnessiat Refinery	map		57.09375	-56.25	42.96875	75.53	0	0	0	dja		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
+M2M	Tatapai	3	Whitney's Claim	map		57.09375	-56.25	42.96875	75.53	0	0	0	dja		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2
 L3L	Mehuenomici	6 A	White Vision	map	1	83.28125	-81.28125	56.78125	106.83	0	1	0	dja		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
 M2H	Gongalungul	A 3	Thierree Terminal	map		76.4375	-85.4375	27.3125	105.09	2	1	0	dja		0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
 S1M	Gongalungul	A 6	Wolf Depot	map		76.4375	-85.4375	27.3125	105.09	2	0	0	dja		1.20	0.00	0.27	0.00	0.33	0.13	0.20	0.53	0.53	0.27	0.00	Small	2	
@@ -1127,7 +1127,7 @@ L1L	LHS 2037	3 c	Perry Vista	map		33.78125	7.25	-14.5	48.20	0	1	1	Sandro75		0.53
 M4L	LHS 2037	3 c	Serrao Prospect	map		33.78125	7.25	-14.5	48.20	0	0	0	Sandro75		0.74	0.48	0.17	0.22	0.65	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M5M	Mikir	C 3	Brunner Point	map		42.375	-3.53125	0.5625	36.49	0	1	1	Sandro75		0.78	0.04	0.48	0.04	0.35	0.26	0.57	0.43	0.35	0.26	0.43	Large	2	
 L1M	LTT 4730	B 5 a	Nolan Stop	map		22.1875	30.875	9.84375	40.01	0	1	1	Sandro75		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
-S3M	LTT 4730	B 5 a	Roberts` Inheritance	map		22.1875	30.875	9.84375	40.01	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
+S3M	LTT 4730	B 5 a	Roberts' Inheritance	map		22.1875	30.875	9.84375	40.01	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
 S4M	Wolf 433	A 2 a	Fullerton Prospect	map		11.71875	45.0625	5.1875	56.33	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
 L4M1	Dhanchu	2 A	FairBairn Relay	map	1	-118.90625	47.46875	76.34375	183.86	3	1	1	dja		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 S2L	Bunuvivia	3 B	Clark Landing	map		-104.34375	28.46875	59.34375	163.63	0	0	0	dja		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
@@ -1141,7 +1141,7 @@ S4L	Achelous	9 C	Chu Vista	map		-76.9375	3.53125	19.96875	133.59	0	0	0	dja		0.58
 S2L	Achelous	6 A	Nusslein-Volhard Horizons	map		-76.9375	3.53125	19.96875	133.59	0	0	0	dja		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
 L4M2	Wolf 433	A 1 b	Heaviside Barracks	map		11.71875	45.0625	5.1875	56.33	3	1	1	Sandro75	; gravity=0.05gg; dist=0.322k ls												Large	2	
 L1H	LP 734-11	B 1 f	Bugrov Stop	map		36.9375	41.28125	9.625	34.95	3	1	1	Sandro75	; gravity=0.06gg	0.00	0.00	0.83	0.00	0.00	0.00	1.00	1.33	0.83	1.00	0.50	Large	3	
-M2L	Arcturus	Richard`s Rock	White Vision	map		-3.53125	34.15625	12.96875	63.14	0	0	0	Sandro75		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
+M2L	Arcturus	Richard's Rock	White Vision	map		-3.53125	34.15625	12.96875	63.14	0	0	0	Sandro75		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M3L	Arcturus	Masseyworld	McKay Base	map	1	-3.53125	34.15625	12.96875	63.14	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
 L4M1	LP 339-7	4 A	Higginbothan Point	map		-70.0625	-8.28125	27.90625	128.42	3	1	1	dja		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 L3L	LP 339-7	5 E	Shatalov Lab	map		-70.0625	-8.28125	27.90625	128.42	0	1	0	dja		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
@@ -1155,11 +1155,11 @@ L4M1	Miquich	Pulag	LeConte Relay	map		-17.71875	19.125	19.59375	73.84	3	1	1	Sand
 L2L	Mikir	C 2	Pytheas Settlement	map		42.375	-3.53125	0.5625	36.49	0	1	0	Sandro75		0.50	0.50	0.44	0.12	0.26	0.18	0.03	0.18	0.24	0.03	0.00	Large	1	
 M1H	LFT 1404	A 5 e	Hoffman Survey	map		-25.84375	7.65625	44.1875	83.91	3	1	1	Sandro75													Medium	3	
 S3L	Miquich	Pulag	Gamow Installation	map		-17.71875	19.125	19.59375	73.84	0	0	0	Sandro75		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
-L2M	V816 Herculis	1 a	Barth`s Progress	map		-23.5625	4.8125	24	80.37	0	1	0	Sandro75		0.88	0.00	0.13	0.00	0.25	0.41	0.53	0.41	0.31	0.50	0.19	Large	2	
+L2M	V816 Herculis	1 a	Barth's Progress	map		-23.5625	4.8125	24	80.37	0	1	0	Sandro75		0.88	0.00	0.13	0.00	0.25	0.41	0.53	0.41	0.31	0.50	0.19	Large	2	
 L2L	LHS 3384	2 g	Przhevalsky Enterprise	map		-20.34375	-0.03125	61.96875	85.49	0	1	0	Sandro75		0.50	0.50	0.44	0.12	0.26	0.18	0.03	0.18	0.24	0.03	0.00	Large	1	
 S2L	LP 811-17	A 2 c	Clayton Horizons	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
 S2L	LP 811-17	A 3 a	Hamilton Horizons	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
-S4L	LP 811-17	A 4 c	Russell`s Inheritance	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		0.58	0.26	0.05	0.05	0.47	0.16	0.00	0.00	0.00	0.00	0.00	Small	1	
+S4L	LP 811-17	A 4 c	Russell's Inheritance	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		0.58	0.26	0.05	0.05	0.47	0.16	0.00	0.00	0.00	0.00	0.00	Small	1	
 M3L	LP 811-17	A 5 a	Vespucci Prospect	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
 S4M	LP 811-17	A 5 a	Leonov Reach	map		-22.15625	-14.125	73.09375	95.82	0	0	0	Sandro75		1.13	0.00	0.42	0.00	0.50	0.53	0.39	0.26	0.42	0.42	0.00	Small	2	
 L4M1	LP 811-17	A 6 b	Stiegler Relay	map		-22.15625	-14.125	73.09375	95.82	3	1	1	Sandro75		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
@@ -1181,8 +1181,8 @@ S3L	Unktomi	3 B	Dowling Refinery	map		-78.625	-21.8125	-31.34375	151.73	0	0	0	dj
 S1M	Koraga	A 3	Flynn Mine	map	1	-77.4375	-22.375	-33.125	151.53	2	0	0	dja		1.20	0.00	0.27	0.00	0.33	0.13	0.20	0.53	0.53	0.27	0.00	Small	2	
 M2L	Koraga	A 2	Vinci Works	map		-77.4375	-22.375	-33.125	151.53	0	0	0	dja		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
 L1L	Kokojawa	B 3	Janes Base	map	1	-34.40625	-35.09375	104.0625	129.67	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
-S1L	Kokojawa	B 2	Zahn`s Progress	map		-34.40625	-35.09375	104.0625	129.67	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
-S1L	Kokojawa	B 1	Lewitt`s Folly	map		-34.40625	-35.09375	104.0625	129.67	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
+S1L	Kokojawa	B 2	Zahn's Progress	map		-34.40625	-35.09375	104.0625	129.67	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
+S1L	Kokojawa	B 1	Lewitt's Folly	map		-34.40625	-35.09375	104.0625	129.67	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
 S3L	HIP 95006	3 d	Polya Prison	map		-17.21875	-43.75	121.25	133.93	0	0	0	Sandro75		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
 M2M	Ix Chuacae	A 15 a	Shaver Works	map		-14.90625	-51.96875	140.65625	150.70	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 L4M2	Ix Chuacae	B 1 a	Hinz Bastion	map		-14.90625	-51.96875	140.65625	150.70	3	1	1	Sandro75	; dist=76k ls												Large	2	
@@ -1200,7 +1200,7 @@ S4L	HIP 94926	1 d	Coney Arena	map		-15.28125	-62.78125	167.6875	176.78	0	0	0	San
 M1L	HIP 94926	4 b	Hennepin Base	map		-15.28125	-62.78125	167.6875	176.78	0	0	0	Sandro75		0.46	0.69	0.38	0.08	0.77	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 L3M	HIP 94926	3 c	Roddenberry Camp	map		-15.28125	-62.78125	167.6875	176.78	0	1	0	Sandro75		0.76	0.00	0.33	0.00	0.18	0.61	0.21	0.58	0.42	0.64	0.33	Large	2	
 S2H	HIP 95203	9 c	Hill Camp	map	1	-25	-56.1875	154.4375	167.81	2	0	1	Sandro75		0.00	0.00	0.50	0.00	0.00	0.75	1.75	0.25	0.75	0.50	0.00	Small	3	
-L1L	HIP 93685	2 f	Pashin`s Claim	map	1	-16.75	-49.34375	161.03125	166.30	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
+L1L	HIP 93685	2 f	Pashin's Claim	map	1	-16.75	-49.34375	161.03125	166.30	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
 M3L	HIP 93685	2b	Taylor Beacon	map	1	-16.75	-49.34375	161.03125	166.30	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
 L1L	HIP 93685	2 a	Sabine Reach	map		-16.75	-49.34375	161.03125	166.30	0	1	1	Sandro75		0.53	0.57	0.57	0.13	0.26	0.06	0.00	0.11	0.28	0.00	0.00	Large	1	
 S3L	HIP 93685	3 c	Akers Stop	map	1	-16.75	-49.34375	161.03125	166.30	0	0	0	Sandro75		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
@@ -1209,15 +1209,15 @@ M3H	HIP 98237	C 5	Nelder Relay	map	1	-57.15625	-74.5	153.90625	193.10	2	1	1	Sand
 S2L	Paliti	2	Altshuller Beacon	map		-115.8125	-59.625	48.21875	189.29	0	0	0	Sandro75		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
 S3L	Paliti	2	Zetford Installation	map	1	-115.8125	-59.625	48.21875	189.29	0	0	0	Sandro75		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
 L3L	Paliti	8 a	Williams Installation	map	1	-115.8125	-59.625	48.21875	189.29	0	1	0	Sandro75		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
-S4H	Prahlada	1 a	Rorschach`s Claim	map		-128.3125	-76.28125	47.84375	207.62	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
+S4H	Prahlada	1 a	Rorschach's Claim	map		-128.3125	-76.28125	47.84375	207.62	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
 S2M	Urhodiweu	1 a	Siegel Base	map		-74.53125	-41.71875	68.3125	148.92	0	0	0	Sandro75		0.98	0.10	0.19	0.00	0.45	0.43	0.33	0.43	0.31	0.38	0.02	Small	2	
 M2H	Urhodiweu	1d	Clute Landing	map		-74.53125	-41.71875	68.3125	148.92	2	1	0	Sandro75		0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
-L1M	Zeaex	Irvin`s Wreck	Khan Legacy	map		27.53125	0.8125	26.84375	32.81	0	1	1	Sandro75		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
+L1M	Zeaex	Irvin's Wreck	Khan Legacy	map		27.53125	0.8125	26.84375	32.81	0	1	1	Sandro75		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
 M3L	Zeaex	Schmidt Rock	Bella Lab	map		27.53125	0.8125	26.84375	32.81	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
 L3H	ER 8	2 e	Szentmartony Terminal	map	1	37.28125	12.65625	27.8125	19.10	3	1	0	Sandro75		0.00	0.00	0.33	0.00	0.00	0.00	0.67	2.00	0.33	0.67	1.67	Large	3	
 M1M	ER 8	5 g	McMullen Survey	map	1	37.28125	12.65625	27.8125	19.10	0	0	1	Sandro75		1.21	0.00	0.38	0.00	0.50	0.46	0.33	0.50	0.33	0.29	0.00	Medium	2	
 L3L	LHS 346	1 b	Berezovoy Beacon	map		38.96875	20.21875	28.96875	17.05	0	1	0	Sandro75		0.54	0.54	0.33	0.04	0.33	0.17	0.00	0.17	0.29	0.00	0.00	Large	1	
-S4H	Urhodiweu	1 c	Serrao`s Folly	map		-74.53125	-41.71875	68.3125	148.92	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
+S4H	Urhodiweu	1 c	Serrao's Folly	map		-74.53125	-41.71875	68.3125	148.92	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
 L1H	LP 635-46	3 b	Parsons Vision	map		-59.28125	-38.34375	55.34375	130.95	3	1	1	Sandro75		0.00	0.00	0.83	0.00	0.00	0.00	1.00	1.33	0.83	1.00	0.50	Large	3	
 M4L	V886 Centauri	8 e	Heng Installation	map		45.15625	12.125	26.96875	11.90	0	0	0	Sandro75		0.74	0.48	0.17	0.22	0.65	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M2M	Nuenets	B 3	Lee Terminal	map		48	17.65625	28.3125	7.81	0	0	0	Sandro75		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
@@ -1251,11 +1251,11 @@ M3L	MCC 445	A 7 a	Boole relay	map		5.5625	-45.1875	-102.5	152.54	0	0	0	Sandro75	
 S2L	MCC 445	BC 3 a	Reed Observatory	map	1	5.5625	-45.1875	-102.5	152.54	0	0	0	Sandro75		0.26	0.58	0.26	0.00	0.53	0.05	0.00	0.00	0.00	0.00	0.00	Small	1	
 M1L	MCC 445	BC 1 a	Sekelj Barracks	map	1	5.5625	-45.1875	-102.5	152.54	0	0	0	Sandro75		0.46	0.69	0.38	0.08	0.77	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 L4M1	HIP 20948	B 3 a	Menezes Depot	map	1	-2	-51.78125	-142.21875	191.92	3	1	1	Sandro75	56k ls	0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
-S3L	HIP 20948	B 3 a	Turtledove`s Exile	map	1	-2	-51.78125	-142.21875	191.92	0	0	0	Sandro75	56k ls	0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
+S3L	HIP 20948	B 3 a	Turtledove's Exile	map	1	-2	-51.78125	-142.21875	191.92	0	0	0	Sandro75	56k ls	0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
 M2H	HIP 20577	2	Lander Landing	map		-2.0625	-57.5625	-145.78125	197.22	2	1	0	Sandro75	1.4g	0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
 L4M2	LHS 1748	2 b	Krylov Barracks	map	1	46.1875	-37.0625	-33.3125	82.06	3	1	1	Sandro75													Large	2	
 L4M2	San Qin Gu	2 a	Winne Keep	map		56.25	-21.65625	-4.40625	50.37	3	1	1	Sandro75													Large	2	
-S3M	Bembarriosk	1 g	Moore`s Folly	map	1	59.03125	-13.3125	10.59375	35.22	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
+S3M	Bembarriosk	1 g	Moore's Folly	map	1	59.03125	-13.3125	10.59375	35.22	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
 M4M	Njirus	1	Rominger Colony	map		50.375	-31.09375	4.5	53.97	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 L4M2	Tupeng Yu	A 1 a	Chandra Arsenal	map		41.59375	-18.15625	73.875	60.50	3	1	1	Sandro75													Large	2	
 M5H	Paesici	A 5	Jernigan Vision	map		9.40625	-59.21875	125.40625	133.03	1	1	1	Sandro75		0.00	0.00	1.10	0.00	0.00	0.10	0.80	1.30	0.90	1.50	0.50	Large	3	
@@ -1263,9 +1263,9 @@ S3H	Paesici	A 6	Hale Silo	map		9.40625	-59.21875	125.40625	133.03	2	0	0	Sandro75
 M4M	Paesici	A 14 c	Amano Reach	map		9.40625	-59.21875	125.40625	133.03	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 S4L	Paesici	A 14 b	Ross Settlement	map	1	9.40625	-59.21875	125.40625	133.03	0	0	0	Sandro75		0.58	0.26	0.05	0.05	0.47	0.16	0.00	0.00	0.00	0.00	0.00	Small	1	
 L1M	HIP 95864	A 2 a	Sinisalo Stop	map		-5.0625	-59.90625	135.96875	146.77	0	1	1	Sandro75		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
-M4M	HIP 95864	BCD 4 c	Miller`s Claim	map		-5.0625	-59.90625	135.96875	146.77	0	0	0	Sandro75	100k ls	0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
+M4M	HIP 95864	BCD 4 c	Miller's Claim	map		-5.0625	-59.90625	135.96875	146.77	0	0	0	Sandro75	100k ls	0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 M2H	Tegiranyan	A 1	Coulter Beacon	map	1	24.875	-37.65625	159.5625	146.75	2	1	0	Sandro75		0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
-S1L	Tegiranyan	A 2	Rashid`s Folly	map		24.875	-37.65625	159.5625	146.75	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
+S1L	Tegiranyan	A 2	Rashid's Folly	map		24.875	-37.65625	159.5625	146.75	0	0	0	Sandro75		0.43	0.43	0.13	0.09	0.48	0.04	0.00	0.00	0.00	0.00	0.00	Small	1	
 L4M1	Tegiranyan	A 7	Nusslein-Volhard Penal Colony	map		24.875	-37.65625	159.5625	146.75	3	1	1	Sandro75		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 S4H	HIP 85010	F 6 a	Dampier Arena	map		54.4375	-25.375	125.21875	107.07	2	0	0	Sandro75		0.00	0.00	0.50	0.00	0.60	0.90	0.50	0.80	1.00	0.60	0.00	Small	3	
 M1H	Serda	4 e	Napier Keep	map		45.84375	-4.40625	127.90625	103.60	3	1	1	Sandro75													Medium	3	
@@ -1277,12 +1277,12 @@ M3M	Epomana	B 4 a	Bates Termnial	map		19.40625	17.53125	123.3125	102.78	0	0	0	Sa
 M4L	Clee	C 6 a	Garfinkle Installation	map	1	31.46875	20.15625	125.84375	101.66	0	0	0	Sandro75		0.74	0.48	0.17	0.22	0.65	0.00	0.00	0.00	0.00	0.00	0.00	Medium	1	
 S4L	Clee	C 6 a	Bulgakov Point	map		31.46875	20.15625	125.84375	101.66	0	0	0	Sandro75		0.58	0.26	0.05	0.05	0.47	0.16	0.00	0.00	0.00	0.00	0.00	Small	1	
 M3L	Clee	C 2 a	Cook Terminal	map		31.46875	20.15625	125.84375	101.66	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
-L2H	Clee	C 2 a	Siodmak`s Inheritance	map		31.46875	20.15625	125.84375	101.66	3	1	0	Sandro75		0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
+L2H	Clee	C 2 a	Siodmak's Inheritance	map		31.46875	20.15625	125.84375	101.66	3	1	0	Sandro75		0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
 L4M2	Clee	C 2 a	Patrick Survey	map		31.46875	20.15625	125.84375	101.66	3	1	1	Sandro75													Large	2	
 S3H	Lu Xianses	2 f	Apt Installation	map		40.6875	29.6875	106	81.17	2	0	0	Sandro75		0.00	0.00	1.67	0.00	1.33	0.33	1.67	0.33	0.00	0.67	0.00	Small	3	
 M5M	Fu Huangaa	2	Sucharitkul Landing	map		52.09375	44.65625	84.8125	63.79	0	1	1	Sandro75		0.78	0.04	0.48	0.04	0.35	0.26	0.57	0.43	0.35	0.26	0.43	Large	2	
 S3L	Aku	2 a	Krylov Survey	map		53.8125	29.5	67.40625	42.02	0	0	0	Sandro75		0.17	0.46	0.21	0.13	0.58	0.08	0.00	0.00	0.00	0.00	0.00	Small	1	
-L2H	Aku	Kitsu`s Rest	Sturgeon Works	map		53.8125	29.5	67.40625	42.02	3	1	0	Sandro75	3,5g	0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
+L2H	Aku	Kitsu's Rest	Sturgeon Works	map		53.8125	29.5	67.40625	42.02	3	1	0	Sandro75	3,5g	0.00	0.00	1.00	0.00	0.00	0.00	0.75	1.38	0.38	1.88	0.75	Large	3	
 L4M1	HR 4979	A 5 a	Turtledove Keep	map		48.28125	28.03125	37.75	16.63	3	1	1	Sandro75		0.33	1.00	0.33	0.00	0.00	0.00	0.00	0.67	0.00	0.00	0.00	Large	1	
 M3L	HR 4979	A 5 c	Grunsfeld Vision	map		48.28125	28.03125	37.75	16.63	0	0	0	Sandro75		0.43	0.52	0.48	0.13	0.52	0.09	0.00	0.00	0.04	0.00	0.00	Medium	1	
 L1M	FN Virginis	A 2 b	Fisher Vista	map		7.5625	24.6875	6.15625	53.01	0	1	1	Zieman		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
@@ -1497,8 +1497,7 @@ L2L	Snoquot	1	Verrazano Holdings	map		-34.21875	-63.40625	-60.21875	149.28	0	1	0
 M2L	Snoquot	2	Abel's Folly	map		-34.21875	-63.40625	-60.21875	149.28	0	0	0	stannbor		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M2L	Wichaimi	B 2	Shinn's Inheritance	map		15.5	-141.75	-21.1875	171.30	0	0	0	stannbor		0.58	0.46	0.23	0.12	0.58	0.15	0.00	0.00	0.00	0.00	0.00	Medium	1	
 M2M	Felkan	5 F	Baxter's Folly	map		-34.5	-62.90625	-42.9375	139.76	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
-M2M	Nu Indi	A 2	Bulleids Folly	map		48.3125	-61.53125	51.4375	83.10	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
-M2M	Eotienses	B 4	Campbell Installation	map		49.5	-104.03125	6.3125	123.55	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
+M2M	Eotienses	B 4	Campbell Installation	map		49.5	-104.03125	6.3125	123.55	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2
 M2M	Kab	1	Gidzenko's Inheritance	map		-24.59375	-104.53125	-32.4375	157.85	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 M2M	Furuhjelm III-674	4	Leestma Depot	map		-39	-8.125	-87.75	151.12	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
 M2M	LHS 1380	B 2	Rothfuss' Inheritance	map		29	-87.40625	-15.40625	116.41	0	0	0	stannbor		0.69	0.00	0.29	0.00	0.41	0.55	0.48	0.52	0.55	0.47	0.00	Medium	2	
@@ -1672,7 +1671,7 @@ L2M	ALS 16791	A 8 h	Freud Enterprise	map		29.125	-52.03125	86.6875	95.39	0	1	0	S
 M4M	Candecama	A 5 a	Mead Installation	map		56.75	-99.1875	84.34375	130.04	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 M4M	LTT 9028	B 1	Mitchell Vista	map		17.84375	-94.71875	63.5	123.97	0	0	0	Sandro75		0.88	0.00	0.40	0.00	0.33	0.30	0.48	0.48	0.58	0.58	0.03	Medium	2	
 S3H	Omicron Gruis	C 1	Pond Depot	map		25.84375	-87.28125	42.28125	110.09	2	0	0	Sandro75	7k ls	0.00	0.00	1.67	0.00	1.33	0.33	1.67	0.33	0.00	0.67	0.00	Small	3	
-S3M	CPC 22 212	4 a	Reynolds Realy	map		69.8125	-58.625	40.3125	78.62	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2	
+S3M	CPC 22 212	4 a	Reynolds Relay	map		69.8125	-58.625	40.3125	78.62	0	0	0	Sandro75		0.94	0.00	0.11	0.00	0.48	0.45	0.18	0.48	0.44	0.42	0.00	Small	2
 L1M	Ngugira	B 1	Rominger Settlement	map		62.21875	-24.71875	22.65625	43.04	0	1	1	Sandro75		1.10	0.02	0.24	0.00	0.31	0.47	0.41	0.43	0.18	0.29	0.31	Large	2	
 M2H	Kayimali	1	Arrhenius Enterprise	map		80.25	4.46875	-8.875	45.52	2	1	0	Sandro75		0.00	0.00	0.60	0.00	0.00	0.40	1.80	0.60	0.00	1.60	0.60	Medium	3	
 L3M	Cromovit	AB 2 a	Medupe Enterprise	map		79.84375	-2.5	25.6875	31.43	0	1	0	Sandro75		0.76	0.00	0.33	0.00	0.18	0.61	0.21	0.58	0.42	0.64	0.33	Large	2	

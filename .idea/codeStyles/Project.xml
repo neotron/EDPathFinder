@@ -1,5 +1,8 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
+    <CsvCodeStyleSettings>
+      <option name="SEPARATOR_INDEX" value="3" />
+    </CsvCodeStyleSettings>
     <Objective-C>
       <option name="FIELDS_PREFIX" value="_" />
       <option name="GETTERS_PREFIX" value="" />
