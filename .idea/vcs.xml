@@ -5,5 +5,8 @@
     <mapping directory="$PROJECT_DIR$/deps/EDJournalQT" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/deps/PathFinder" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/deps/WinToast" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/coordinate-mapper/.build/checkouts/Marshal-833418860664787093" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/coordinate-mapper/Packages/Marshal-1.2.4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/jsonconverter/Packages/Unbox-2.3.1" vcs="Git" />
   </component>
 </project>
