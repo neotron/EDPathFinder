@@ -61,5 +61,15 @@
     "lon":  -45.2436,
     "type": "Crash Site",
     "radius": 831
+  },
+  {
+    "short": "Crashed Anaconda: Bug Killer",
+    "desc": "Materials, audio / text logs. Crashed SRV if you head in bearing 270 from the crashed ship (look for green glow).",
+    "sys": "HIP 16613",
+    "planet": "1 a",
+    "lat": -11.0962,
+    "lon":  -96.0339,
+    "type": "Crash Site",
+    "radius": 831
   }
 ]
