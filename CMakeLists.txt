@@ -9,7 +9,7 @@ include(QtCommon)
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.5.0)
+project(EDPathFinder VERSION 1.6.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -91,7 +91,6 @@ include_directories(AFTER ${INCLUDE_DIRS} "deps/EDJournalQT/src")
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${WINTOAST} ${MM_FILES} ${DOUTPUT}
 )
-
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
