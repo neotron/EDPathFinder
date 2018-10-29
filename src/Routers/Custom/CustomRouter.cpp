@@ -54,7 +54,17 @@ CustomRouter::CustomRouter(QWidget *parent, AStarRouter *router, const SystemLis
     });
 
     connect(_ui->actionQuit, &QAction::triggered, [] { QApplication::quit(); });
-
+    connect(_ui->tableView, &CustomRouteTableWidget::deleteStop, [=](const QString &toDelete) {
+        for(const auto &entry: _customStops) {
+            if(entry.systemName() == toDelete) {
+                _customStops.remove(entry);
+                updateMissionTable();
+                showMessage(QString("Deleted custom system '%1' from route.").arg(toDelete));
+                return;
+            }
+        }
+        showMessage(QString("System '%1' is a mission system - not deleted.").arg(toDelete));
+    });
 }
 
 
@@ -94,7 +104,7 @@ void CustomRouter::copySelectedItem() {
         }
     }
     QApplication::clipboard()->setText(name);
-    _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
+    showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
 }
 
 CustomRouter::~CustomRouter() {
@@ -212,7 +222,7 @@ void CustomRouter::optimizeRoute() {
         routeSystems.push_back(system);
     }
 
-    _ui->statusbar->showMessage(QString("Resolving route for %1 systems...").arg(routeSystems.size()), 10000);
+    showMessage(QString("Resolving route for %1 systems...").arg(routeSystems.size()), 10000);
 
     // Create new system resolver.
     const auto tspWorker = new TSPWorker(routeSystems, originSystem, routeSystems.size());
@@ -236,10 +246,10 @@ void CustomRouter::optimizeRoute() {
 
 void CustomRouter::routeCalculated(const RouteResult &route) {
     if(!route.isValid()) {
-        _ui->statusbar->showMessage("No solution found to the given route.", 10000);
+        showMessage("No solution found to the given route.", 10000);
         return;
     }
-    _ui->statusbar->showMessage("Route calculation completed.", 10000);
+    showMessage("Route calculation completed.", 10000);
     _ui->optimizeButton->setEnabled(true);
     auto model = new RouteTableModel(this, route);
     model->setResultType(RouteTableModel::ResultTypePresets);

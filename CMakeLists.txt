@@ -34,7 +34,7 @@ file(GLOB_RECURSE RESOURCE_FILES resources/*.qrc)
 
 add_project_meta(META_FILES_TO_INCLUDE)
 
-set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools/)
+set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools)
 set(PFDIR ${PROJECT_SOURCE_DIR}/deps/PathFinder/src/)
 set(JOURNALDIR ${PROJECT_SOURCE_DIR}/deps/EDJournalQT/src/)
 
@@ -56,7 +56,9 @@ link_directories(${ORTOOLS}/lib)
 
 if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic  -Wno-padded -Wno-old-style-cast -Wno-double-promotion -Wno-undefined-reinterpret-cast -Wno-implicit-fallthrough -Wno-exit-time-destructors -Wno-global-constructors -Wno-switch-enum")
+    add_definitions(-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic  -Wno-padded
+    -Wno-old-style-cast -Wno-double-promotion -Wno-undefined-reinterpret-cast -Wno-implicit-fallthrough
+    -Wno-exit-time-destructors -Wno-global-constructors -Wno-switch-enum -Wno-redundant-parens)
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "-isystem")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -W")
@@ -83,13 +85,13 @@ endif ()
 file(GLOB_RECURSE PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h )
 file(GLOB_RECURSE SRC_FILES src/*.cpp src/*.h src/*.ui)
 
-HEADER_DIRECTORIES(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
-
+header_directories(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
 include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/ )
 include_directories(AFTER ${INCLUDE_DIRS} "deps/EDJournalQT/src")
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
     ${SRC_FILES} ${META_FILES_TO_INCLUDE} ${RESOURCE_FILES} ${PATH_FINDER_SRC} ${WINTOAST} ${MM_FILES} ${DOUTPUT}
 )
+
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 

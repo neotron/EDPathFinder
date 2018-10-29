@@ -38,18 +38,12 @@
      </widget>
     </item>
     <item row="0" column="0" colspan="3">
-     <widget class="QTableView" name="tableView">
+     <widget class="CustomRouteTableWidget" name="tableView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
         <horstretch>1</horstretch>
         <verstretch>1</verstretch>
        </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>444</width>
-        <height>203</height>
-       </size>
       </property>
      </widget>
     </item>
@@ -371,7 +365,7 @@
      <x>0</x>
      <y>0</y>
      <width>462</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -439,6 +433,11 @@
    <class>NoBeepLineEdit</class>
    <extends>QLineEdit</extends>
    <header location="global">src/Widgets/NoBeepLineEdit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CustomRouteTableWidget</class>
+   <extends>QTableView</extends>
+   <header location="global">CustomRouteTableWidget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
