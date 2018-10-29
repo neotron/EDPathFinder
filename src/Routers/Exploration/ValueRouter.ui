@@ -48,7 +48,7 @@
        <item row="0" column="0">
         <widget class="QCheckBox" name="elw">
          <property name="text">
-          <string>Earth Like Worlds</string>
+          <string>Earth-like worlds</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -58,28 +58,28 @@
        <item row="0" column="1">
         <widget class="QCheckBox" name="aw">
          <property name="text">
-          <string>Ammonia Worlds</string>
+          <string>Ammonia worlds</string>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="ww">
          <property name="text">
-          <string>Water Worlds</string>
+          <string>Water worlds</string>
          </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QCheckBox" name="wwt">
          <property name="text">
-          <string>Terraformable Water Worlds</string>
+          <string>Terraformable water worlds</string>
          </property>
         </widget>
        </item>
        <item row="2" column="0">
         <widget class="QCheckBox" name="tf">
          <property name="text">
-          <string>Other Terraformable</string>
+          <string>Other terraformable</string>
          </property>
         </widget>
        </item>

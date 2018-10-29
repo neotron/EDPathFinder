@@ -67,10 +67,10 @@ const QString SettlementType::IMAGE_CORE = "Core Map";
 const QString System::formatPlanets() const {
     QStringList planets;
     if(_numPlanets.count() == ValuableBodyFlagsCount) {
-        addSystemString(planets, ValuableBodyFlagsEW, "Earth-like World");
-        addSystemString(planets, ValuableBodyFlagsWT, "Water World (TF)");
-        addSystemString(planets, ValuableBodyFlagsWW, "Water World");
-        addSystemString(planets, ValuableBodyFlagsAW, "Ammonia World");
+        addSystemString(planets, ValuableBodyFlagsEW, "Earth-like world");
+        addSystemString(planets, ValuableBodyFlagsWT, "Water world (TF)");
+        addSystemString(planets, ValuableBodyFlagsWW, "Water world");
+        addSystemString(planets, ValuableBodyFlagsAW, "Ammonia world");
         addSystemString(planets, ValuableBodyFlagsTF, "Other TF");
     }
     return planets.join("\n");
@@ -100,7 +100,7 @@ void System::addSystemString(QStringList &list, ValuableBodyFlags type, QString 
         list.append(name);
         break;
     default:
-        list.append(QString("%1x%2").arg(name).arg(numPlanets));
+        list.append(QString("%1 x%2").arg(name).arg(numPlanets));
         break;
     }
 }
