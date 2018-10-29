@@ -69,7 +69,7 @@ void RouteViewer::updateSettlementInfo() {
 
     QApplication::clipboard()->setText(settlementData->systemName());
     _ui->statusbar->showMessage(
-            QString("Copied system name `%1' to the system clipboard.").arg(settlementData->systemName()));
+            QString("Copied system name '%1' to the system clipboard.").arg(settlementData->systemName()));
     _ui->lastDistanceLabel->setText(QString("%1 ly").arg(_routeModel->lastDistance((size_t) row)));
     _ui->startDistanceLabel->setText(QString("%1 ly").arg(_routeModel->totalDistance((size_t) row)));
     _ui->planetLabel->setText(settlementData->planetName());

@@ -70,7 +70,7 @@ void ValuablePlanetRouteViewer::copySelectedItem() {
     }
     auto name = route[row][0];
     QApplication::clipboard()->setText(name);
-    _ui->statusbar->showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
+    _ui->statusbar->showMessage(QString("Copied system name '%1' to the system clipboard.").arg(name));
 }
 
 void ValuablePlanetRouteViewer::exportAsCSV() {

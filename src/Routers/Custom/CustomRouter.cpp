@@ -104,7 +104,7 @@ void CustomRouter::copySelectedItem() {
         }
     }
     QApplication::clipboard()->setText(name);
-    showMessage(QString("Copied system name `%1' to the system clipboard.").arg(name));
+    showMessage(QString("Copied system name '%1' to the system clipboard.").arg(name));
 }
 
 CustomRouter::~CustomRouter() {
