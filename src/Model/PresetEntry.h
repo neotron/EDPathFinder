@@ -83,6 +83,13 @@ public:
 
     bool isValid() const;
 
+    bool operator<(const PresetEntry &rhs) const;
+
+    bool operator>(const PresetEntry &rhs) const;
+
+    bool operator<=(const PresetEntry &rhs) const;
+
+    bool operator>=(const PresetEntry &rhs) const;
 
 private:
     QString _systemName;

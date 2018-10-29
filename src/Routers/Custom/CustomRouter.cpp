@@ -171,6 +171,7 @@ void CustomRouter::updateMissionTable() {
         entry.setDetails(QString("Mission stations: %1").arg(stations.join(", ")));
         stops.push_back(entry);
     }
+    std::sort(stops.begin(), stops.end());
     _currentModel = new PresetsTableModel(this, stops);
     _ui->optimizeButton->setEnabled(true);
     refreshTableView(_currentModel);

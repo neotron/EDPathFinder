@@ -148,3 +148,19 @@ void PresetEntry::setRadius(double radius) {
     _radius = radius;
 }
 
+bool PresetEntry::operator<(const PresetEntry &rhs) const {
+    return std::tie(_systemName, _type) < std::tie(rhs._systemName, rhs._type);
+}
+
+bool PresetEntry::operator>(const PresetEntry &rhs) const {
+    return rhs < *this;
+}
+
+bool PresetEntry::operator<=(const PresetEntry &rhs) const {
+    return !(rhs < *this);
+}
+
+bool PresetEntry::operator>=(const PresetEntry &rhs) const {
+    return !(*this < rhs);
+}
+
