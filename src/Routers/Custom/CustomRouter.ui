@@ -375,6 +375,7 @@
     <addaction name="actionExport_as_CSV"/>
     <addaction name="actionExport_as_Tab_Separated"/>
     <addaction name="actionImport_Systems"/>
+    <addaction name="actionImport_from_Clipboard"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -427,6 +428,17 @@
     <string>Ctrl+Q</string>
    </property>
   </action>
+  <action name="actionImport_from_Clipboard">
+   <property name="text">
+    <string>Import from Clipboard</string>
+   </property>
+   <property name="toolTip">
+    <string>Import systems from the text contained in the clipboard. One system imported per line. Especially useful for Spansh Neutron Star router.</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
  </widget>
  <customwidgets>
   <customwidget>
@@ -449,8 +461,8 @@
    <slot>refreshMissions()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>310</y>
+     <x>446</x>
+     <y>291</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -465,8 +477,8 @@
    <slot>updateMissionTable()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>346</x>
-     <y>288</y>
+     <x>443</x>
+     <y>257</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -481,8 +493,8 @@
    <slot>optimizeRoute()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>461</x>
-     <y>586</y>
+     <x>455</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -497,8 +509,8 @@
    <slot>addStop()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>450</x>
-     <y>538</y>
+     <x>446</x>
+     <y>503</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -513,8 +525,8 @@
    <slot>clearCustom()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>251</x>
-     <y>586</y>
+     <x>304</x>
+     <y>551</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -529,8 +541,8 @@
    <slot>updateMissionTable()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>318</y>
+     <x>251</x>
+     <y>287</y>
     </hint>
     <hint type="destinationlabel">
      <x>467</x>
@@ -577,8 +589,8 @@
    <slot>changeCommander(QString)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>271</y>
+     <x>358</x>
+     <y>257</y>
     </hint>
     <hint type="destinationlabel">
      <x>146</x>
@@ -618,6 +630,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionImport_from_Clipboard</sender>
+   <signal>triggered()</signal>
+   <receiver>CustomRouter</receiver>
+   <slot>fuzzyImportSystemsFromPasteBoard()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>230</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>refreshMissions()</slot>
@@ -630,5 +658,6 @@
   <slot>importSystems()</slot>
   <slot>changeCommander(QString)</slot>
   <slot>openBearingCalculator()</slot>
+  <slot>slot1()</slot>
  </slots>
 </ui>

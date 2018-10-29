@@ -314,6 +314,23 @@ void CustomRouter::exportAsTabNewline() {
     RouteTableModel::exportTableViewToTabNewline(_ui->tableView);
 }
 
+void CustomRouter::fuzzyImportSystemsFromPasteBoard() {
+    const auto cliptext(QApplication::clipboard()->text());
+    bool appended = false;
+    for(auto line: cliptext.split("\n")) {
+        auto components = line.trimmed().split("\t");
+        if(components.size() == 1 && !components[0].isEmpty()) {
+            auto entry = PresetEntry(components[0]);
+            entry.setType("Imported");
+            _customStops << entry;
+            appended = true;
+        }
+    }
+    if(appended) {
+        updateMissionTable();
+    }
+}
+
 void CustomRouter::importSystems() {
     QString filters("Text files (*.txt);;All files (*.*)");
     QString defaultFilter("Text files (*.txt)");

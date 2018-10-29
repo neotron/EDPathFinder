@@ -60,6 +60,7 @@ private:
     QLineEdit     *_lineEdit;
     QSet<QString> _pendingLookups;
     QLabel *_x, *_y, *_z;
+    int _retries{};
 
     void sendSystemLookupCompleted(const System &system);
 };

@@ -36,7 +36,7 @@ public slots:
     void importSystems();
     void changeCommander(const QString &cmdr);
     void openBearingCalculator();
-
+    void fuzzyImportSystemsFromPasteBoard();
 private:
     void refreshTableView(QAbstractItemModel *model) const;
 

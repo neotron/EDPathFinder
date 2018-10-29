@@ -41,6 +41,7 @@ void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &sys
     if(_pendingLookups.contains(systemName)) {
         return;
     }
+    _retries = 0;
     _pendingLookups << systemName.toLower();
     auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
     connect(executor, &QThread::finished, executor, &QObject::deleteLater);
@@ -54,15 +55,25 @@ void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &sys
 
 
 void SystemEntryCoordinateResolver::systemCoordinatesRequestFailed(const QString &systemName) {
+    _retries++;
+    if(_retries < 2) {
+        downloadSystemCoordinates(systemName);
+        return;
+    }
     _pendingLookups.remove(systemName.toLower());
     emit systemLookupFailed(systemName);
 }
 
 void SystemEntryCoordinateResolver::systemCoordinatesReceived(const System &system) {
     auto systemName = QString(system.name().toLower());
-    _pendingLookups.remove(systemName);
-    _router->addSystem(system);
-    sendSystemLookupCompleted(system);
+    if(0.0 == system.x() && 0.0 == system.y() && 0.0 == system.z()) {
+        // If coords are all zero, this is not a valid lookup.  - that means it's Sol. 
+        systemCoordinatesRequestFailed(systemName);
+    } else {
+        _pendingLookups.remove(systemName);
+        _router->addSystem(system);
+        sendSystemLookupCompleted(system);
+    }
 }
 
 
