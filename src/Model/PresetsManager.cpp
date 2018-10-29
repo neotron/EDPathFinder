@@ -47,6 +47,7 @@ PresetEntryList PresetsManager::loadFile(const QString &fileName) {
             }
         }
     }
+    std::sort(entries.begin(), entries.end());
     return entries;
 }
 
