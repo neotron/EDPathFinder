@@ -176,3 +176,5 @@ installer.nsi
 /.idea/atlassian-ide-plugin.xml
 .idea/GrepConsole.xml
 /cmake-xcode
+/tools/swift/valuable-systems.csv
+/tools/swift/valuable-bodies.jsonl

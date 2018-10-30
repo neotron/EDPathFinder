@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/coordinate-mapper/.build/checkouts/Marshal-2202302691568070516" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/coordinate-mapper/.build/checkouts/Marshal-833418860664787093" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/coordinate-mapper/Packages/Marshal-1.2.4" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jsonconverter/.build/checkouts/Unbox--897062909846576840" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/jsonconverter/Packages/Unbox-2.3.1" vcs="Git" />
+  </component>
+</project>

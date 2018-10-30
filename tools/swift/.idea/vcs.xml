@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/Marshal-5744117408035200600" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/Unbox--8431288716934513803" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Packages/Marshal-1.2.4" vcs="Git" />
+  </component>
+</project>

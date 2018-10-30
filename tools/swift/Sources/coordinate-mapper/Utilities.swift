@@ -3,7 +3,11 @@
 //
 
 import Foundation
-
+#if os(Linux)
+import Glibc
+#else
+import Darwin
+#endif
 struct System {
     var elw = 0
     var ww = 0

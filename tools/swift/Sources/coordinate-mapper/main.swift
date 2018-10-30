@@ -1,14 +1,13 @@
 import Foundation
-import Marshal
+#if os(Linux)
+import Glibc
+#else
 import Darwin
+#endif
+import Dispatch
 
-
-var valuableSystems = [Int:System]()
-var elws =  [String]() // try! String(contentsOfFile: "elws.txt", encoding: .isoLatin1).components(separatedBy: "\n")
-
-let elwsset = Set(elws.map { $0.uppercased() });
-elws.removeAll()
-
+//let modQueue = Dispatch.queue()
+var valuableSystems = [Int64:System]()
 func loadBodies() {
     //let systemrows = try! String(contentsOfFile: "valuable-bodies.jsonl").components(separatedBy: "\n")
     if let aStreamReader = StreamReader(path: "valuable-bodies.jsonl", chunkSize: 1024 * 1024) {
@@ -16,7 +15,7 @@ func loadBodies() {
             aStreamReader.close()
         }
         var bodies = 0
-        var elw = elwsset.count
+        var elw = 0
         var ww = 0
         var tf = 0
         var aw = 0
@@ -24,7 +23,7 @@ func loadBodies() {
         while let systemline = aStreamReader.nextLine() {
             do {
                 let json = try JSONSerialization.jsonObject(with: systemline, options: []) as! NSDictionary
-                guard let systemid: Int = try json.value(for: "system_id") else {
+                guard let systemid: Int64 = try json.value(for: "systemId64") else {
                     continue;
                 }
                 let existingsystem = valuableSystems[systemid]
@@ -33,21 +32,21 @@ func loadBodies() {
                 }
 
                 var system = existingsystem ?? System()
-                switch try json.value(for: "type_name") as String {
+                switch try json.value(for: "subType") as String {
                 case "Earth-like world":
                     system.elw += 1
                     elw += 1
                 case "Water world":
                     system.ww += 1
                     ww += 1
-                    if try json.value(for: "terraforming_state_id") == 2 {
+                    if try json.value(for: "terraformingState") != "Not terraformable" {
                         system.wwt += 1
                     }
                 case "Ammonia world":
                     system.aw += 1
                     aw += 1
                 default:
-                    if try json.value(for: "terraforming_state_id") == 2 {
+                    if try json.value(for: "terraformingState") != "Not terraformable" {
                         system.tf += 1
                         tf += 1
                     }
@@ -75,16 +74,17 @@ guard let handle = FileHandle(forUpdatingAtPath: "valuable-systems.csv") else {
 
 handle.truncateFile(atOffset: 0)
 var found: Int32 = 0
+var saved: Int = 0
 
 let queue = OperationQueue()
-let dir = "tmp"
+let dir = "../data/tmp"
 let files = (try? FileManager.default.contentsOfDirectory(atPath: dir))!
 for file in files {
-    let op = SystemOperation(file: "\(dir)/\(file)", systems: valuableSystems, elws: elwsset, handle: handle);
+    let op = SystemOperation(file: "\(dir)/\(file)", systems: valuableSystems, handle: handle);
     queue.addOperation(op)
 }
 while queue.operationCount > 0 {
-    print("\rResolving system coords: \(found)                  ", terminator: "")
+    print("\rResolving system coords: \(queue.operationCount) / \(saved) / \(found)                  ", terminator: "")
     fflush(stdout)
     Thread.sleep(forTimeInterval: 0.1)
 }
