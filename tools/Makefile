@@ -5,7 +5,7 @@ download:
 	mkdir -p data
 	cd data && \
 	rm -f * && \
-	aria2c  -Z --header="Accept-Encoding: gzip, deflate, sdch" -s10 -j10 -x 10 --file-allocation=none https://eddb.io/archive/v5/systems.csv https://eddb.io/archive/v5/systems_populated.jsonl  https://eddb.io/archive/v5/bodies.jsonl
+	aria2c -Z -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/bodies.json https://www.edsm.net/dump/systemsPopulated.json https://www.edsm.net/dump/systemsWithCoordinates.json
 
 
 swift/valuable-bodies.jsonl: data/bodies.json
@@ -20,7 +20,13 @@ data/tmp/systems-aaaa: data/systemsWithCoordinates.json
 	rm -f data/tmp/systems-*
 	cd data/tmp && gsed 's/,$$//' < ../systemsWithCoordinates.json | gsplit -l 50000 --verbose -a 4 - systems-
 
-parse: data/tmp/systems-aaa swift/valuable-bodies.jsonl
+data/systems-populated.jsonl: data/systemsPopulated.json
+	gsed 's/,$$//' < data/systemsPopulated.json > data/systems-populated.jsonl
+
+data/bodies.jsonl: data/bodies.json
+	gsed 's/,$$//' < data/bodies.json > data/bodies.jsonl
+
+parse: data/tmp/systems-aaa swift/valuable-bodies.jsonl data/systems-populated.jsonl 
 
 map-coords: 
 	cd swift && swift build --product coordinate-mapper -c release && ./.build/x86_64-apple-macosx10.10/release/coordinate-mapper

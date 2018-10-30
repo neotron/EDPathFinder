@@ -30,18 +30,20 @@ int main() {
 
     QMap<QString, QMap<QString, QPair<QString, QString>>> bodyLookup;
     int bodycount = 0;
+    int systemcount = 0;
     for(auto system: systems) {
         for(auto planet: system.planets()) {
             bodyLookup[system.name().toLower()][planet.name().toLower()] = QPair<QString, QString>(system.name(),
                                                                                                    planet.name());
+            bodycount++;
         }
-        bodycount++;
+        systemcount++;
     }
-    qDebug() << "Found" << bodycount << "bodies";
+    qDebug() << "Found" << bodycount << "bodies in "<< systemcount<<"systems.";
     QMap<int, QString> systemIdToName;
-    QFile file("../data/systems_populated.jsonl");
+    QFile file("../data/systems-populated.jsonl");
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qDebug() << "Couldn't open file for reading.";
+        qDebug() << "Couldn't open systems file for reading.";
         return -1;
     }
     int found = 0;
@@ -69,7 +71,7 @@ int main() {
 
 
     file.close();
-    QFile bodies("../data/bodies.jsonl");
+    QFile bodies("../data/bodies.json");
     if(!bodies.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Couldn't open file for reading.";
         return -1;
@@ -80,7 +82,6 @@ int main() {
     QMap<QString, QMap<QString, int>> distances;
     qint64 numReadBytes(0);
     while(!bodies.atEnd()) {
-
         auto linebytes = bodies.readLine();
         numReadBytes += linebytes.size() + 1;
         if(!(++numLines % 10000)) {
@@ -89,19 +90,20 @@ int main() {
             fflush(stderr);
         }
 
-        if(linebytes.isEmpty()) {
+        if(linebytes.length() < 2) {
             continue;
         }
+        linebytes.truncate(linebytes.length()-2);
         auto doc = QJsonDocument::fromJson(linebytes);
         if(!doc.isObject()) {
             continue;
         }
         auto jsonObject = doc.object();
-        int dist = jsonObject.value("distance_to_arrival").toInt(0);
+        auto dist = static_cast<int>(ceil(jsonObject.value("distanceToArrival").toDouble(0)));
         if(!dist) {
             continue;
         }
-        int id = jsonObject.value("system_id").toInt(0);
+        int id = jsonObject.value("systemId").toInt(0);
         if(!systemIdToName.contains(id)) {
             continue;
         }
