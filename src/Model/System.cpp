@@ -76,16 +76,13 @@ const QString System::formatPlanets() const {
     return planets.join("\n");
 }
 
+
 int32 System::estimatedValue() const {
-    int32 value = 0;
-    if(_numPlanets.count() == ValuableBodyFlagsCount) {
-        value += 552 * _numPlanets[ValuableBodyFlagsEW];
-        value += 370 * (_numPlanets[ValuableBodyFlagsWW] - _numPlanets[ValuableBodyFlagsWT]);
-        value += 611 * _numPlanets[ValuableBodyFlagsWT];
-        value += 281 * _numPlanets[ValuableBodyFlagsAW];
-        value += 362 * _numPlanets[ValuableBodyFlagsTF];
-    }
-    return value;
+    return _estimatedValue;
+}
+
+void System::setEstimatedValue(int32 estimatedValue) {
+    _estimatedValue = estimatedValue / 1000;
 }
 
 void System::addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const {

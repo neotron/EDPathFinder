@@ -14,12 +14,13 @@ struct System {
     var wwt = 0
     var tf = 0
     var aw = 0
+    var value = 0
 }
 
-func synced(_ lock: Any, closure: () -> ()) {
-    objc_sync_enter(lock)
+func synced(_ lock: NSLock, closure: () -> ()) {
+    lock.lock()
+    defer { lock.unlock() }
     closure()
-    objc_sync_exit(lock)
 }
 
 extension Int  {

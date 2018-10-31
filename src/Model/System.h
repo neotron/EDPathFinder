@@ -316,8 +316,6 @@ public:
 
     const QString formatPlanets() const;
 
-    int32 estimatedValue() const;
-
     void setKey(std::string key);
 
     const std::string &key() const;
@@ -335,6 +333,10 @@ public:
 
     void setPresetEntry(const PresetEntry &presetEntry);
 
+    int estimatedValue() const;
+
+    void setEstimatedValue(int estimatedValue);
+
 protected:
 
     System(float x, float y, float z)
@@ -348,7 +350,7 @@ protected:
     QList<int8_t>  _numPlanets;
     mutable std::string _key;
     PresetEntry _presetEntry;
-
+    int _estimatedValue{};
     void addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const;
 };
 

@@ -178,3 +178,4 @@ installer.nsi
 /cmake-xcode
 /tools/swift/valuable-systems.csv
 /tools/swift/valuable-bodies.jsonl
+/tools/swift/valuable-systems.jsonl

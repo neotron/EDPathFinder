@@ -9,8 +9,8 @@ struct Coords: Decodable {
     var y: Float
     var z: Float
 }
-struct SystemObj: Decodable {
 
+struct SystemObj: Decodable {
     var id64: Int64
     var name: String
     var coords: Coords
@@ -34,13 +34,15 @@ class SystemOperation : Operation {
             }
             while let rowline = aStreamReader.nextLine() {
                 if let systemObj = try? JSONDecoder().decode(SystemObj.self, from: rowline) {
-                    OSAtomicIncrement32(&found)
-                   if let system = systems[systemObj.id64] {
-                        let rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\n"
-                        if let rowdata = rowstring.data(using: .isoLatin1, allowLossyConversion: false) {
-                            synced(handle) {
+                    synced(lock) {
+                        found += 1;
+                    }
+                    if let system = systems[systemObj.id64] {
+                        let  =  rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\t\(system.value)\n"
+                        if let rowData = rowstring.data(using: .isoLatin1, allowLossyConversion: false) {
+                            synced(lock) {
                                 saved += 1
-                                handle.write(rowdata)
+                                handle.write(rowData)
                             }
                         }
                     }

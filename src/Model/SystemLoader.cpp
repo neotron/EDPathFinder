@@ -120,7 +120,7 @@ void SystemLoader::loadValueSystemFromTextFile() {
     for(auto qline = lines.readLine();  !lines.atEnd(); qline = lines.readLine()) {
         QStringList line = qline.split("\t");
         i += qline.length()+1;
-        if(line.size() != 9) {
+        if(line.size() != 10) {
             continue;
         }
         auto it = line.begin();
@@ -135,14 +135,17 @@ void SystemLoader::loadValueSystemFromTextFile() {
         numPlanets.append(READ_CHAR); // wwt
         numPlanets.append(READ_CHAR); // aw
         numPlanets.append(READ_CHAR); // tf
+        auto value = READ_INT; // value
         auto key(System::makeKey(name));
         System *current = _router->findSystemByKey(key);
         if(current) {
             current->setNumPlanets(numPlanets);
+            current->setEstimatedValue(value);
         } else {
             auto system = System(name, x, y, z);
             system.setKey(key);
             system.setNumPlanets(numPlanets);
+            system.setEstimatedValue(value);
             _router->addSystem(system);
         }
         _progress2 = (int) (i / (float) _valueBytes.size() * myPart);
