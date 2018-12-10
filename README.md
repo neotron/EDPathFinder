@@ -13,7 +13,7 @@ EDPathfinder depends on the Google Optimization Tools library and Qt 5.7. CMake 
 
 You can download binary packages of these from:
 
-* or-tools: https://developers.google.com/optimization/installing
+* or-tools: https://developers.google.com/optimization/install/
 * Qt: https://www.qt.io/download/
 
 Place or-tools in the same directory as the source (i.e both share a parent directory).
