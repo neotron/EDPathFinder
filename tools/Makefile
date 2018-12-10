@@ -1,11 +1,22 @@
 all: 
 	echo "Make download or parse"
 
-download:
+
+data/bodies.json:
+	cd data && aria2c -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/bodies.json
+
+data/systemsPopulated.json:
+	cd data && aria2c  -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsPopulated.json
+
+data/systemsWithCoordinates.json:
+	cd data && aria2c  -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsWithCoordinates.json
+
+
+download-prepare:
 	mkdir -p data
-	cd data && \
-	rm -f * && \
-	aria2c -Z -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/bodies.json https://www.edsm.net/dump/systemsPopulated.json https://www.edsm.net/dump/systemsWithCoordinates.json
+	cd data && rm -rf * 
+download:  data/bodies.json data/systemsPopulated.json data/systemsWithCoordinates.json
+
 
 
 swift/valuable-bodies.jsonl: data/tmp/bodies-aaaa

@@ -38,7 +38,7 @@ class SystemOperation : Operation {
                         found += 1;
                     }
                     if let system = systems[systemObj.id64] {
-                        let  =  rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\t\(system.value)\n"
+                        let rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\t\(system.value)\n"
                         if let rowData = rowstring.data(using: .isoLatin1, allowLossyConversion: false) {
                             synced(lock) {
                                 saved += 1

@@ -2,15 +2,6 @@
   "object": {
     "pins": [
       {
-        "package": "Marshal",
-        "repositoryURL": "https://github.com/utahiosmac/Marshal",
-        "state": {
-          "branch": null,
-          "revision": "6981eaacf4c217eb6172d438ac0121d2ffb79f4f",
-          "version": "1.2.4"
-        }
-      },
-      {
         "package": "Unbox",
         "repositoryURL": "https://github.com/JohnSundell/Unbox",
         "state": {

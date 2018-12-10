@@ -46,6 +46,7 @@
   },
   {
     "short": "Crashed Anaconda",
+    "desc": "Rare engineering materials.",
     "sys": "Orrere",
     "planet": "2 b",
     "lat": 43.8214,
@@ -55,6 +56,17 @@
   },
   {
     "short": "Crashed Anaconda",
+    "desc": "Rare engineering materials.",
+    "sys": "Koli Discii",
+    "planet": "C 6 a",
+    "lat": 28.5777,
+    "lon":  7.2193,
+    "type": "Crash Site",
+    "radius": 2011
+  },
+  {
+    "short": "Crashed Anaconda",
+    "desc": "Rare engineering materials.",
     "sys": "Leucos",
     "planet": "A 5 a",
     "lat": -36.1280,
@@ -64,7 +76,7 @@
   },
   {
     "short": "Crashed Anaconda: Bug Killer",
-    "desc": "Materials, audio / text logs. Crashed SRV if you head in bearing 270 from the crashed ship (look for green glow).",
+    "desc": "Rare engineering materials, audio / text logs. Crashed SRV if you head in bearing 270 from the crashed ship (look for green glow).",
     "sys": "HIP 16613",
     "planet": "1 a",
     "lat": -11.0962,
