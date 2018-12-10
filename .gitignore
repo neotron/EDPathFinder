@@ -179,3 +179,5 @@ installer.nsi
 /tools/swift/valuable-systems.csv
 /tools/swift/valuable-bodies.jsonl
 /tools/swift/valuable-systems.jsonl
+/.idea/other.xml
+/.idea/deployment.xml
