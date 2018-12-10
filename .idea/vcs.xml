@@ -6,6 +6,7 @@
     <mapping directory="$PROJECT_DIR$/deps/PathFinder" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/deps/WinToast" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tools/swift/.build/checkouts/Marshal-5744117408035200600" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/tools/swift/.build/checkouts/Unbox--1190137190182697802" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tools/swift/.build/checkouts/Unbox--8431288716934513803" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/tools/swift/Packages/Marshal-1.2.4" vcs="Git" />
   </component>
