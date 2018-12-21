@@ -2,37 +2,43 @@
   {
     "type": "Engineer",
     "short": "Tod \"The Blaster\" Mcquinn",
-    "desc": "Kinetic weapons",
+    "desc": "Multi Cannons, Rails, Fragment Cannons R3",
     "sys": "Wolf 397"
   },
   {
     "type": "Engineer",
+    "short": "C: Etienne Dorn",
+    "desc": "Plasma Accelerators, Scanners, Power Distributor, Rail Gun, Sensors",
+    "sys": "Los"
+  },
+  {
+    "type": "Engineer",
     "short": "Felicity Farseer",
-    "desc": "FSD, Thrusters, PowerPlant, Shield Booster, Interdictor",
+    "desc": "FSD, Sensors R3, Thrusters R3, Surface Scanner R3, PowerPlant R1, Shield Booster R1, FSD Interdictor R1",
     "sys": "Deciat"
   },
   {
     "type": "Engineer",
     "short": "Elvira Martuuk",
-    "desc": "FSD, Shield Cell Bank, Shield Generator, Thrusters",
+    "desc": "FSD, Shield Cell Bank R1, Shield Generator R3, Thrusters R1",
     "sys": "Khun"
   },
   {
     "type": "Engineer",
     "short": "Liz Ryder",
-    "desc": "Explosive armaments & protection",
+    "desc": "Missile, Torpedo, Armor & Hull R1",
     "sys": "Eurybia"
   },
   {
     "type": "Engineer",
     "short": "The Dweller",
-    "desc": "Lasers, Power Distributors",
+    "desc": "Power Distributors, Lasers R4",
     "sys": "Wyrd"
   },
   {
     "type": "Engineer",
     "short": "Lei Cheung",
-    "desc": "Shield Generators, Boosters",
+    "desc": "Shield Generators, Sensors, Boosters R3",
     "sys": "Laksak"
   },
   {
@@ -44,7 +50,7 @@
   {
     "type": "Engineer",
     "short": "Hera Tani",
-    "desc": "Detailed Surface Scanner, Power Plant, Power Distributo",
+    "desc": "Surface Scanner, Power Plant, Power Distributor R3, Sensors R3",
     "sys": "Kuwemaki"
   },
   {
@@ -56,67 +62,85 @@
   {
     "type": "Engineer",
     "short": "Marco Qwent",
-    "desc": "Power Plant, Power Distributor",
+    "desc": "Power Plant R4, Power Distributor R3",
     "sys": "Sirius"
   },
   {
     "type": "Engineer",
+    "short": "C: Marsha Hicks",
+    "desc": "Cannons, Fragment Cannons, Limpets, Fuel Scoop, Refinery",
+    "sys": "Tir"
+  },
+  {
+    "type": "Engineer",
+    "short": "C: Mel Brandon",
+    "desc": "Lasers, FSD, FSD Interdictor, Shield Generator and Boosters",
+    "sys": "Luchtaine"
+  },
+  {
+    "type": "Engineer",
+    "short": "C: Petra Olmanova",
+    "desc": "Hull & Armor, AFMU, Utilities",
+    "sys": "Asura"
+  },
+  {
+    "type": "Engineer",
     "short": "Zacariah Nemo",
-    "desc": "Fragment, Multi-cannons, Plasma Accelerator",
+    "desc": "Fragment Cannons,  Multi Cannons R3, Plasma Accelerator R2",
     "sys": "Yoru"
   },
   {
     "type": "Engineer",
     "short": "Didi Vatermann",
-    "desc": "Shield equipment",
+    "desc": "Shields Booster G5, Shields G3",
     "sys": "Leesti"
   },
   {
     "type": "Engineer",
     "short": "Colonel Bris Dekker",
-    "desc": "FSD, Interdictor",
+    "desc": "FSD Interdictor, FSD Rank 3",
     "sys": "Sol"
   },
   {
     "type": "Engineer",
     "short": "Juri Ishmaak",
-    "desc": "Sensors, Mine Launcher, Missile Rack, Torpedo Pylon",
+    "desc": "Sensors, Mine Launcher, Surface Scanner R4, Missile R3, Torpedo R3",
     "sys": "Giryak"
   },
   {
     "type": "Engineer",
     "short": "Professor Palin",
-    "desc": "FSD, Thrusters",
+    "desc": "Thrusters, FSD R3",
     "sys": "Maia"
   },
   {
     "type": "Engineer",
     "short": "Bill Turner",
-    "desc": "Plasma Accelerator, Utilities",
+    "desc": "Plasma Accelerator, Scanners",
     "sys": "Alioth"
   },
   {
     "type": "Engineer",
     "short": "Lori Jameson",
-    "desc": "Scanners, Utilities",
+    "desc": "Scanners, Sensors, AFMU R4, Life Support R4, Refiner R4, Fuel Scoop R3, SCB R3",
     "sys": "Shinrarta Dezhra"
   },
   {
     "type": "Engineer",
     "short": "Ram Tah",
-    "desc": "Defences, Limpets",
+    "desc": "Defensive Utilities, Limpets R4",
     "sys": "Meene"
   },
   {
     "type": "Engineer",
     "short": "Tiana Fortune",
-    "desc": "Limpets, Scanners",
+    "desc": "Limpets, Scanners, Sensors, Surface Scanner R3",
     "sys": "Achenar"
   },
   {
     "type": "Engineer",
     "short": "The Sarge",
-    "desc": "Limpets, Cannons",
+    "desc": "Limpets, Cannons, Rails R3",
     "sys": "Beta-3 Tucani"
   }
 ]
