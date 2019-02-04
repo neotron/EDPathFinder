@@ -31,7 +31,7 @@ PresetEntryList PresetsManager::loadFile(const QString &fileName) {
     }
 
     auto jsonData = file.readAll();
-    QJsonParseError error;
+    QJsonParseError error{};
     auto preset = QJsonDocument::fromJson(jsonData, &error);
     if(error.error != QJsonParseError::NoError) {
         qDebug() << "Parse error: ["<<error.offset <<"]"<< error.errorString();

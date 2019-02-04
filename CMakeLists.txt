@@ -99,6 +99,6 @@ if  (MSVC)
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
     configure_file("deps/openssl/libeay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
 
-    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.11.0/msvc2017_64/bin/windeployqt.exe" --verbose 1 "${PROJECT_NAME}.exe"
+    add_custom_command(TARGET "${PROJECT_NAME}" POST_BUILD COMMAND "C:/User Programs/Qt/5.11.2/msvc2017_64/bin/windeployqt.exe" --verbose 1 "${PROJECT_NAME}.exe"
             WORKING_DIRECTORY "${PROJECT_BINARY_DIR}")
 endif ()
