@@ -1,0 +1,18 @@
+
+all:
+	@echo mac-package or win-package
+
+mac-package:  
+	/workspace/Qt/@Qt5Widgets_VERSION@/clang_64/bin/macdeployqt cmake-build-minsizerel/EDPathFinder.app   -always-overwrite
+	rm -rf cmake-build-minsizerel/Contents/Frameworks/QtSql.framework
+	rm -f "${OUT}" ; appdmg  cmake/appdmg.json "output/EDPathFinder-@PROJECT_VERSION@.dmg"
+
+win-package: 
+	rm -rf output/EDPathFinder
+	mkdir -p output/EDPathFinder
+	cp cmake-build-minsizerel/EDPathFinder.exe output/EDPathFinder
+	cp cmake-build-minsizerel/ssleay32.dll output/EDPathFinder
+	cp cmake-build-minsizerel/libeay32.dll output/EDPathFinder
+	rm -f wininstall/*.exe
+	env VCINSTALLDIR="C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC" /cygdrive/c/User\ Programs/Qt/@Qt5Widgets_VERSION@/msvc2017_64/bin/windeployqt.exe output/EDPathFinder/EDPathFinder.exe
+	(cd wininstall && /cygdrive/c/Program\ Files\ \(x86\)/NSIS/makensis.exe installer.nsi)

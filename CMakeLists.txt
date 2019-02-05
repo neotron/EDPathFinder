@@ -94,6 +94,10 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
+configure_file("${PROJECT_SOURCE_DIR}/Makefile.in"
+  "${PROJECT_SOURCE_DIR}/Makefile"
+)
+
 if  (MSVC)
     # copy dlls.
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
