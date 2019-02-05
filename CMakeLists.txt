@@ -80,7 +80,7 @@ endif ()
 file(GLOB_RECURSE PATH_FINDER_SRC ${PFDIR}/*.cpp ${PFDIR}/*.h )
 file(GLOB_RECURSE SRC_FILES src/*.cpp src/*.h src/*.ui)
 
-header_directories(INCLUDE_DIRS src/ "${PROJECT_SOURCE_DIR}")
+header_directories(INCLUDE_DIRS src "${PROJECT_SOURCE_DIR}")
 include_directories(SYSTEM ${ORTOOLS}/include/ deps/PathFinder/src/ )
 include_directories(AFTER ${INCLUDE_DIRS} "deps/EDJournalQT/src")
 add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE depending on OS
@@ -90,7 +90,8 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
 configure_file("${PROJECT_SOURCE_DIR}/Makefile.in"  "${PROJECT_SOURCE_DIR}/Makefile")
-configure_file("${PROJECT_SOURCE_DIR}/src/buildnumber.h.in" "${PROJECT_SOURCE_DIR}/src/buildnumber.h")
+configure_file("${PROJECT_SOURCE_DIR}/src/buildnumber.h.in" "${PROJECT_BINARY_DIR}/buildnumber.h")
+
 if  (MSVC)
     # copy dlls.
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
