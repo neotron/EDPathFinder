@@ -15,11 +15,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(MSVC_RUNTIME "dynamicmak")
 
-file(WRITE src/buildnumber.h "#pragma once
-#define PROJECT_VERSION \"${PROJECT_VERSION}\"
-#define LPROJECT_VERSION L\"${PROJECT_VERSION}\"
-")
-
 fix_project_version()
 configure_msvc_runtime()
 
@@ -94,10 +89,8 @@ add_executable(${PROJECT_NAME} ${OS_BUNDLE} # Expands to WIN32 or MACOS_BUNDLE d
 
 add_executable(bodydistance tools/bodydistance/main.cpp src/Model/System.cpp src/Model/SystemLoader.cpp src/Routers/Tools/AStarRouter.cpp ${PATH_FINDER_SRC} ${RESOURCE_FILES})
 
-configure_file("${PROJECT_SOURCE_DIR}/Makefile.in"
-  "${PROJECT_SOURCE_DIR}/Makefile"
-)
-
+configure_file("${PROJECT_SOURCE_DIR}/Makefile.in"  "${PROJECT_SOURCE_DIR}/Makefile")
+configure_file("${PROJECT_SOURCE_DIR}/src/buildnumber.h.in" "${PROJECT_SOURCE_DIR}/src/buildnumber.h")
 if  (MSVC)
     # copy dlls.
     configure_file("deps/openssl/ssleay32.dll" "${PROJECT_BINARY_DIR}/" COPYONLY)
