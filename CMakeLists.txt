@@ -31,7 +31,8 @@ add_project_meta(META_FILES_TO_INCLUDE)
 
 if(NOT ORTOOLS)
     set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools)
-fi()
+endif()
+
 set(PFDIR ${PROJECT_SOURCE_DIR}/deps/PathFinder/src/)
 set(JOURNALDIR ${PROJECT_SOURCE_DIR}/deps/EDJournalQT/src/)
 
