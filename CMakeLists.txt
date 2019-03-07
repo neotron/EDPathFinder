@@ -29,7 +29,9 @@ file(GLOB_RECURSE RESOURCE_FILES resources/*.qrc)
 
 add_project_meta(META_FILES_TO_INCLUDE)
 
-set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools)
+if(NOT ORTOOLS)
+    set(ORTOOLS ${PROJECT_SOURCE_DIR}/../or-tools)
+fi()
 set(PFDIR ${PROJECT_SOURCE_DIR}/deps/PathFinder/src/)
 set(JOURNALDIR ${PROJECT_SOURCE_DIR}/deps/EDJournalQT/src/)
 
