@@ -3,13 +3,12 @@ all:
 
 
 data/bodies.json:
-	cd data && aria2c -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/bodies.json
-
+	cd data && aria2c -k1M  -s50 -j50 -x 50 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/bodies.json
 data/systemsPopulated.json:
-	cd data && aria2c  -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsPopulated.json
+	cd data && aria2c  -k1M  -s50 -j50 -x 50 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsPopulated.json
 
 data/systemsWithCoordinates.json:
-	cd data && aria2c  -k1M  -s10 -j30 -x 16 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsWithCoordinates.json
+	cd data && aria2c  -k1M  -s50 -j50 -x 50 --optimize-concurrent-downloads  --file-allocation=none https://www.edsm.net/dump/systemsWithCoordinates.json
 
 
 download-prepare:
@@ -45,5 +44,5 @@ parse: data/tmp/systems-aaaa swift/valuable-bodies.jsonl
 # data/systems-populated.jsonl 
 
 map-coords: parse
-	cd swift && swift build --product coordinate-mapper -c release && ./.build/x86_64-apple-macosx10.10/release/coordinate-mapper
+	cd swift && swift build --product coordinate-mapper -c release && ./.build/x86_64*/release/coordinate-mapper
 	gzip < swift/valuable-systems.csv > ../resources/valuable-systems.csv.gz
