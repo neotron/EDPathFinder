@@ -158,6 +158,7 @@ namespace operations_research {
         int _maxSystemCount;
         AStarRouter *_router;
         int _numDist;
+        float _routingCylinderSize{300};
         QVector<QVector<int64>> _distanceMatrix;
         bool _systemsOnly;
         bool _isPresets;

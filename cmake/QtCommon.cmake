@@ -90,6 +90,7 @@ set(CMAKE_AUTOMOC ON) # For meta object compiler
 set(CMAKE_AUTORCC ON) # Resource files
 set(CMAKE_AUTOUIC ON) # UI files
 endmacro()
+
 macro(configure_msvc_runtime)
   if(MSVC)
     # Default to statically-linked runtime.
@@ -112,9 +113,9 @@ macro(configure_msvc_runtime)
         "MSVC -> forcing use of statically-linked runtime."
       )
       foreach(variable ${variables})
-        if(${variable} MATCHES "/MD")
-          string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
-        endif()
+          if(${variable} MATCHES "/MD")
+              string(REGEX REPLACE "/MD" "/MT" ${variable} "${${variable}}")
+          endif()
       endforeach()
     else()
       message(STATUS
@@ -128,7 +129,6 @@ macro(configure_msvc_runtime)
     endif()
   endif()
 endmacro()
-
 
 macro(HEADER_DIRECTORIES return_list DIR BASE)
     file(GLOB_RECURSE new_list RELATIVE ${BASE} ${DIR}/*.h)

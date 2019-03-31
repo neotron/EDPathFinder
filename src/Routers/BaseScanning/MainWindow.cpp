@@ -22,7 +22,6 @@
 #include <QMessageBox>
 #include <QComboBox>
 #include <LiveJournal.h>
-#include <sys/socket.h>
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"

@@ -91,7 +91,7 @@ namespace operations_research {
         auto bufferSquare = buffer * buffer;
         typedef QPair<System,float> SystemDist;
         QList<SystemDist> filteredSystems;
-        auto originDestDist = vec_from.distanceToPoint(vec_to)+buffer;
+        auto originDestDist = vec_from.distanceToPoint(vec_to);
 
         for(const auto &s: _systems) {
             auto numerator = QVector3D::crossProduct(s.position() - vec_from, s.position() - vec_to).lengthSquared();
@@ -124,7 +124,7 @@ namespace operations_research {
         timer.start();
         if(_destination) {
             if(!_isPresets) {
-                cylinder(startingSystem->position(), _destination->position(), 200);
+                cylinder(startingSystem->position(), _destination->position(), _routingCylinderSize);
             }
             _systems.push_back(*_destination);
         } else {

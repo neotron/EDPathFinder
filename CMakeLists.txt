@@ -7,16 +7,17 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Include Qt basic functions
 include(QtCommon)
 
+set(MSVC_RUNTIME "static")
+configure_msvc_runtime()
+
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
 project(EDPathFinder VERSION 1.7.1)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(MSVC_RUNTIME "dynamicmak")
 
 fix_project_version()
-configure_msvc_runtime()
 
 set(CMAKE_USE_RELATIVE_PATHS ON)
 set(RESOURCE_FOLDER resources)
