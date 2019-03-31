@@ -19,6 +19,7 @@
 
 #include <QThread>
 #include "System.h"
+#include <QSemaphore>
 
 class AStarRouter;
 
@@ -44,7 +45,9 @@ public:
     const QMap<QString, SettlementType *> &settlementTypes() const {
         return _settlementTypes;
     }
-
+    void incrementPendingActions() {
+        ++_pendingActions;
+    }
 signals:
 
     void systemsLoaded(const SystemList &systems);
@@ -60,16 +63,18 @@ public slots:
     void valuableSystemDataDecompressed(const QByteArray &bytes);
 
 private:
-
+    QSemaphore _decompSemaphore{};
     QMap<QString, SettlementType *> _settlementTypes;
     SystemList _systems;
     AStarRouter *_router;
     QByteArray _bytes;
-    QByteArray _valueBytes;
+    QList<QByteArray> _valueBytes;
     QJsonObject _bodyDistances;
     QAtomicInt _progress1, _progress2;
+    int _pendingActions{0};
+
     SystemList * loadSystemFromTextFile();
-    void loadValueSystemFromTextFile();
+    SystemList * loadValueSystemFromBytes(QByteArray &bytes);
 
     int getDistance(const QString &system, const QString &planet);
 };

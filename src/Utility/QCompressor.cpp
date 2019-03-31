@@ -67,7 +67,7 @@ bool QCompressor::gzipCompress() {
             do {
 
                 // Declare vars
-                unsigned char *out = (unsigned char *) alloca(GZIP_CHUNK_SIZE);
+                auto out = (unsigned char *) alloca(GZIP_CHUNK_SIZE);
 
                 // Set deflater references
                 strm.next_out  = out;
@@ -114,11 +114,11 @@ bool QCompressor::gzipDecompress() {
     if(input_size > 0) {
         // Prepare inflater status
         z_stream strm;
-        strm.zalloc   = Z_NULL;
-        strm.zfree    = Z_NULL;
-        strm.opaque   = Z_NULL;
+        strm.zalloc   = nullptr;
+        strm.zfree    = nullptr;
+        strm.opaque   = nullptr;
         strm.avail_in = 0;
-        strm.next_in  = Z_NULL;
+        strm.next_in  = nullptr;
 
         // Initialize inflater
         int ret = inflateInit2(&strm, GZIP_WINDOWS_BIT);

@@ -4,9 +4,13 @@
       <option name="SEPARATOR_INDEX" value="3" />
     </CsvCodeStyleSettings>
     <Objective-C>
+      <option name="ADD_GETTER_PREFIX" value="false" />
       <option name="GENERATE_COMPARISON_OPERATORS_USE_STD_TIE" value="true" />
       <option name="INTRODUCE_AUTO_VARS" value="true" />
       <option name="INTRODUCE_GLOBALS_TO_HEADER" value="false" />
+      <option name="FIELDS_NAMING_CONVENTION">
+        <value prefix="_" style="CAMEL_CASE" suffix="" />
+      </option>
     </Objective-C>
     <codeStyleSettings language="ObjectiveC">
       <option name="INDENT_CASE_FROM_SWITCH" value="false" />

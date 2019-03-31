@@ -18,6 +18,7 @@
 
 #include <QMainWindow>
 #include <QMap>
+#include <src/Model/SystemLoader.h>
 #include "System.h"
 #include "CommanderInfo.h"
 #include "SystemEntryCoordinateResolver.h"
@@ -92,4 +93,6 @@ private:
     void saveMainSettings(int32 settlementFlags, const QString &selectedCommander, int32 threatFilter, int32 settlementSizes) const;
 
     float updateProbabilityLabel() const;
+
+    void loadValuableSystemSegment(SystemLoader *loader, const QString &postfix) const;
 };

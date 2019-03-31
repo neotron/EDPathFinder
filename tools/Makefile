@@ -43,6 +43,10 @@ data/bodies.jsonl: data/bodies.json
 parse: data/tmp/systems-aaaa swift/valuable-bodies.jsonl
 # data/systems-populated.jsonl 
 
-map-coords: parse
+build-map-coords: parse swift/valuable-systems.csv
 	cd swift && swift build --product coordinate-mapper -c release && ./.build/x86_64*/release/coordinate-mapper
-	gzip < swift/valuable-systems.csv > ../resources/valuable-systems.csv.gz
+
+map-coords: 
+	gsplit -n l/10 swift/valuable-systems.csv ../resources/valsys-
+	rm ../resources/valsys-*.gz || true 
+	gzip -9 ../resources/valsys-*

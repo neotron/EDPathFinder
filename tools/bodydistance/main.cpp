@@ -32,6 +32,7 @@ int main() {
     int bodycount = 0;
     int systemcount = 0;
     for(auto system: systems) {
+        if(!system.hasPlanets()){ continue; }
         for(auto planet: system.planets()) {
             bodyLookup[system.name().toLower()][planet.name().toLower()] = QPair<QString, QString>(system.name(),
                                                                                                    planet.name());

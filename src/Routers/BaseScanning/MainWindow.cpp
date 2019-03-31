@@ -22,6 +22,7 @@
 #include <QMessageBox>
 #include <QComboBox>
 #include <LiveJournal.h>
+#include <sys/socket.h>
 #include "WindowMenu.h"
 #include "MainWindow.h"
 #include "QCompressor.h"
@@ -278,24 +279,33 @@ void MainWindow::loadCompressedData() {
     QFile file(":/systems.txt.gz");
     if(!file.open(QIODevice::ReadOnly)) { return; }
 
-    QFile file2(":/valuable-systems.csv.gz");
-    if(!file2.open(QIODevice::ReadOnly)) { return; }
-    
-    auto compressor = new QCompressor(file.readAll());
-    auto compressor2 = new QCompressor(file2.readAll());
     auto loader = new SystemLoader(_router);
-
-    connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
-    connect(compressor2, &QThread::finished, compressor2, &QObject::deleteLater);
-    connect(loader, &QThread::finished, compressor, &QObject::deleteLater);
     connect(loader, SIGNAL(progress(int)), this, SLOT(systemLoadProgress(int)));
     connect(loader, SIGNAL(sortingSystems()), this, SLOT(systemSortingProgress()));
     connect(loader, SIGNAL(systemsLoaded(const SystemList &)), this, SLOT(systemsLoaded(const SystemList &)));
-    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
-    connect(compressor2, SIGNAL(complete(const QByteArray &)), loader, SLOT(valuableSystemDataDecompressed(const QByteArray &)));
 
+    auto compressor = new QCompressor(file.readAll());
+    connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
+    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
+    loader->incrementPendingActions();
     compressor->start();
-    compressor2->start();
+
+    for(auto &postfix: QString("abcdefghij").split("")) {
+        loadValuableSystemSegment(loader, postfix);
+    }
+    loader->start();
+}
+
+void MainWindow::loadValuableSystemSegment(SystemLoader *loader, const QString &postfix) const {
+    auto fileName = QString(":/valsys-a%1.gz").arg(postfix);
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly)) { return; }
+
+    auto compressor = new QCompressor(file.readAll());
+    connect(compressor, &QThread::finished, compressor, &QObject::deleteLater);
+    connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(valuableSystemDataDecompressed(const QByteArray &)));
+    loader->incrementPendingActions();
+    compressor->start();
 }
 
 void MainWindow::systemsLoaded(const SystemList &systems) {

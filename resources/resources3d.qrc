@@ -1,6 +1,6 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file>valuable-systems.csv.gz</file>
+        <file>valsys-ad.gz</file>
     </qresource>
 </RCC>

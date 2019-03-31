@@ -22,6 +22,8 @@
 #include "System.h"
 #include "AStarRouter.h"
 
+PresetEntry System::s_presetEntry;
+
 QString System::formatDistance(int64 dist, bool trunc) {
     if(dist > 0) {
         return trunc
@@ -32,8 +34,7 @@ QString System::formatDistance(int64 dist, bool trunc) {
     }
 }
 
-System::System(AStarSystemNode *system)
-        : _name(system->name()), _position(system->position()) {}
+System::System(AStarSystemNode *system) : _name(system->name()), _position(system->position()) {}
 
 void System::addSettlement(const QString &planetName, const Settlement &settlement, int distance) {
     for(auto &planet: _planets) {
@@ -45,34 +46,25 @@ void System::addSettlement(const QString &planetName, const Settlement &settleme
     _planets.push_back(Planet(planetName, distance, settlement));
 }
 
-System::~System() = default;
-
+System::~System() {
+    delete _presetEntry;
+}
 
 System::System(const QJsonObject &jsonObject)
-        : _name(jsonObject["name"].toString()), _planets(), _position(), _numPlanets() {
+        : _name(jsonObject["name"].toString())  {
     auto coords = jsonObject["coords"].toObject();
     _position.setX((float) coords["x"].toDouble());
     _position.setY((float) coords["y"].toDouble());
     _position.setZ((float) coords["z"].toDouble());
 }
 
-const QString SettlementType::IMAGE_BASE_ICON = "Icon";
-const QString SettlementType::IMAGE_SATELLITE = "Satellite Map";
-const QString SettlementType::IMAGE_COREFULLMAP = "Core Full Map";
-const QString SettlementType::IMAGE_OVERVIEW = "Overview Map";
-const QString SettlementType::IMAGE_PATHMAP = "Datapoint Path Map";
-const QString SettlementType::IMAGE_OVERVIEW3D = "3D Overview";
-const QString SettlementType::IMAGE_CORE = "Core Map";
-
 const QString System::formatPlanets() const {
     QStringList planets;
-    if(_numPlanets.count() == ValuableBodyFlagsCount) {
-        addSystemString(planets, ValuableBodyFlagsEW, "Earth-like world");
-        addSystemString(planets, ValuableBodyFlagsWT, "Water world (TF)");
-        addSystemString(planets, ValuableBodyFlagsWW, "Water world");
-        addSystemString(planets, ValuableBodyFlagsAW, "Ammonia world");
-        addSystemString(planets, ValuableBodyFlagsTF, "Other TF");
-    }
+    addSystemString(planets, ValuableBodyFlagsEW, "Earth-like world");
+    addSystemString(planets, ValuableBodyFlagsWT, "Water world (TF)");
+    addSystemString(planets, ValuableBodyFlagsWW, "Water world");
+    addSystemString(planets, ValuableBodyFlagsAW, "Ammonia world");
+    addSystemString(planets, ValuableBodyFlagsTF, "Other TF");
     return planets.join("\n");
 }
 
@@ -86,7 +78,7 @@ void System::setEstimatedValue(int32 estimatedValue) {
 }
 
 void System::addSystemString(QStringList &list, ValuableBodyFlags type, QString name) const {
-    int8_t numPlanets = _numPlanets[type];
+    uint8_t numPlanets = _numPlanets[type];
     if(type == ValuableBodyFlagsWW) {
         numPlanets -= _numPlanets[ValuableBodyFlagsWT];
     }
@@ -102,7 +94,7 @@ void System::addSystemString(QStringList &list, ValuableBodyFlags type, QString 
     }
 }
 
-const std::string &System::key() const {
+const std::string & System::key() const {
     if(_key.empty()) {
         _key = System::makeKey(_name);
     }
@@ -115,14 +107,13 @@ const std::string System::makeKey(const QString &name) {
     return key;
 }
 
-void System::setKey(std::string key) {
-    _key = std::move(key);
+void System::setPresetEntry(const PresetEntry &presetEntry) {
+    if(!_presetEntry) {
+        _presetEntry = new PresetEntry;
+    }
+    *_presetEntry = presetEntry;
 }
 
 const PresetEntry &System::presetEntry() const {
-    return _presetEntry;
-}
-
-void System::setPresetEntry(const PresetEntry &presetEntry) {
-    _presetEntry = presetEntry;
+    return _presetEntry ? *_presetEntry : s_presetEntry;
 }

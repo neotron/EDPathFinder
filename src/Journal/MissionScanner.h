@@ -40,7 +40,7 @@ public:
     const QStringList commanders() const {
         auto commanders = _commanderLastSystem.keys();
         commanders.sort();
-        return commanders;
+        return std::move(commanders);
     }
 
     const QList<Mission> commanderMission(const QString &cmdr);

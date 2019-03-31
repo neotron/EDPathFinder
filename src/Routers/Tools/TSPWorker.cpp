@@ -193,9 +193,6 @@ namespace operations_research {
                 } else  if(_systemsOnly) {
                     result.addEntry(sys, dist);
                 } else {
-                    if(sys.planets().empty()) {
-                        continue;
-                    }
                     for(const auto &planet: sys.planets()) {
                         for(const auto &settlement: planet.settlements()) {
                             result.addEntry(sys, planet, settlement, dist);

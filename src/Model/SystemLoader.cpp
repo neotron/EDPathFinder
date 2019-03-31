@@ -27,7 +27,7 @@
 #define SETTLEMENT_TYPE_FIELD_COUNT 17
 #define EXPECTED_FIELD_COUNT 27
 #define READ_INT (*(it++)).toInt()
-#define READ_CHAR static_cast<int8_t>((*(it++)).toShort())
+#define READ_CHAR static_cast<uint8_t>((*(it++)).toShort())
 #define READ_FLOAT (*(it++)).toFloat()
 #define READ_BOOL (READ_INT == 1)
 #define READ_STR (*(it++))
@@ -42,7 +42,10 @@
     }\
 } while(false)
 
+#define PROG2_MULTIPLIER 10000000
+
 void SystemLoader::run() {
+    _decompSemaphore.acquire(_pendingActions);
     QFile distances(":/body_distances.json");
     if(!distances.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return;
@@ -51,29 +54,49 @@ void SystemLoader::run() {
     if(distanceDoc.isObject()) {
         _bodyDistances = distanceDoc.object();
     }
+
     auto systemLoader = QtConcurrent::run(this, &SystemLoader::loadSystemFromTextFile);
-    auto valueLoader = QtConcurrent::run(this, &SystemLoader::loadValueSystemFromTextFile);
+
+    QList<QFuture<SystemList *>> futures;
+    for(const auto &bytes: _valueBytes) {
+        futures += QtConcurrent::run(this, &SystemLoader::loadValueSystemFromBytes, bytes);
+    }
     _progress1 = 0;
     _progress2 = 0;
+
+    for(auto &f: futures) {
+        f.waitForFinished();
+    }
+
     systemLoader.waitForFinished();
-    valueLoader.waitForFinished();
-    emit progress(90);
+    _bytes.clear();
+    _valueBytes = {};
+    _progress1 += 50;
+    emit progress(_progress1);
     auto systemList = systemLoader.result();
-    int oldProgress = 0;
-    size_t processed = 0;
     for(const auto &system: *systemList) {
-        if(!_router->findSystemByKey(system.key())) {
-            _router->addSystem(system);
-        }
-        ++processed;
-        int currProgress = static_cast<int>(processed / static_cast<double>(systemList->count())*10);
-         if(currProgress != oldProgress) {
-             emit progress(currProgress+90);
-             oldProgress = currProgress;
-         }
+        _router->addSystem(system);
     }
     delete systemList;
 
+    _progress1 += 5;
+    _progress2 = 0;
+    auto progressPerResult = 150000 / futures.size();
+    for(const auto &f: futures) {
+        const auto systems = f.result();
+        for(const auto &system: *systems) {
+            System *existing = _router->findSystemByKey(system.key());
+            if(!existing) {
+                _router->addSystem(system);
+            } else {
+                existing->setEstimatedValue(system.estimatedValue());
+                existing->setNumPlanetsFrom(system);
+            }
+        }
+        _progress2 += progressPerResult;
+        emit progress(_progress2/10000+_progress1);
+        delete systems;
+    }
     loadSettlements();
     emit sortingSystems();
     _router->sortSystemList();
@@ -100,7 +123,7 @@ SystemList * SystemLoader::loadSystemFromTextFile() {
         auto z = READ_FLOAT;
         systems->push_back(System(name, x, y, z));
         _progress1 = (int) (i / (float) _bytes.size() * myPart);
-        int currProgress = _progress1 + _progress2;
+        int currProgress = _progress1 + _progress2 / PROG2_MULTIPLIER;
         if(currProgress != oldProgress) {
             emit progress(currProgress);
             oldProgress = currProgress;
@@ -112,11 +135,13 @@ SystemList * SystemLoader::loadSystemFromTextFile() {
 }
 
 
-void SystemLoader::loadValueSystemFromTextFile() {
-    QTextStream lines(_valueBytes);
+SystemList * SystemLoader::loadValueSystemFromBytes(QByteArray &bytes) {
+    auto systems = new SystemList;
+    QTextStream lines(bytes);
     int i = 0;
-    int myPart = 60;
+    int myPart = 50*PROG2_MULTIPLIER / _valueBytes.size();
     int oldProgress = 0;
+    int lastLength = 0;
     for(auto qline = lines.readLine();  !lines.atEnd(); qline = lines.readLine()) {
         QStringList line = qline.split("\t");
         i += qline.length()+1;
@@ -129,33 +154,27 @@ void SystemLoader::loadValueSystemFromTextFile() {
         auto y = READ_FLOAT;
         auto z = READ_FLOAT;
 
-        QList<int8_t> numPlanets;
+        QList<uint8_t> numPlanets;
         numPlanets.append(READ_CHAR); // elw
         numPlanets.append(READ_CHAR); // ww
         numPlanets.append(READ_CHAR); // wwt
         numPlanets.append(READ_CHAR); // aw
         numPlanets.append(READ_CHAR); // tf
         auto value = READ_INT; // value
-        auto key(System::makeKey(name));
-        System *current = _router->findSystemByKey(key);
-        if(current) {
-            current->setNumPlanets(numPlanets);
-            current->setEstimatedValue(value);
-        } else {
-            auto system = System(name, x, y, z);
-            system.setKey(key);
-            system.setNumPlanets(numPlanets);
-            system.setEstimatedValue(value);
-            _router->addSystem(system);
-        }
-        _progress2 = (int) (i / (float) _valueBytes.size() * myPart);
-        int currProgress = _progress1 + _progress2;
+        auto system = System(name, x, y, z);
+        system.setNumPlanets(numPlanets);
+        system.setEstimatedValue(value);
+        systems->push_back(system);
+        _progress2 += (int) ((i - lastLength)/ (float) bytes.size() * myPart);
+        lastLength = i;
+        int currProgress = _progress1 + _progress2 / PROG2_MULTIPLIER;
         if(currProgress != oldProgress) {
             emit progress(currProgress);
             oldProgress = currProgress;
         }
     }
-    _progress2 = myPart;
+    bytes.clear();
+    return systems;
 }
 
 void SystemLoader::loadSettlementTypes() {
@@ -246,7 +265,7 @@ void SystemLoader::loadSettlements() {
             continue;
         }
 
-        int32 flags = 0;
+        uint32 flags = 0;
 
         auto it = line.begin();
 
@@ -304,6 +323,7 @@ void SystemLoader::loadSettlements() {
 
             if(!_router->findSystemByKey(systemObj.key())) {
                 _router->addSystem(systemObj);
+                qDebug() << "Not adding settlement" << system;
             }
         }
     }
@@ -311,16 +331,12 @@ void SystemLoader::loadSettlements() {
 
 void SystemLoader::dataDecompressed(const QByteArray &bytes) {
     _bytes = bytes;
-    if(!_bytes.isEmpty() && !_valueBytes.isEmpty()) {
-        start();
-    }
+    _decompSemaphore.release();
 }
 
 void SystemLoader::valuableSystemDataDecompressed(const QByteArray &bytes) {
-    _valueBytes = bytes;
-    if(!_bytes.isEmpty() && !_valueBytes.isEmpty()) {
-        start();
-    }
+    _valueBytes += bytes;
+    _decompSemaphore.release();
 }
 
 

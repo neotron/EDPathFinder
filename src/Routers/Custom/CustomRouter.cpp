@@ -218,7 +218,7 @@ void CustomRouter::optimizeRoute() {
             _routingPending = true;
             return;
         }
-        auto system = System(missionSystem->name(), PlanetList(), missionSystem->position());
+        auto system = System(missionSystem->name(), missionSystem->position());
         system.setPresetEntry(stop);
         routeSystems.push_back(system);
     }
