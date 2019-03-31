@@ -12,7 +12,7 @@ configure_msvc_runtime()
 
 #set(CMAKE_VERBOSE_MAKEFILE  YES)
 
-project(EDPathFinder VERSION 1.7.1)
+project(EDPathFinder VERSION 1.8.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

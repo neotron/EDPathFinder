@@ -173,7 +173,6 @@ SystemList * SystemLoader::loadValueSystemFromBytes(QByteArray &bytes) {
             oldProgress = currProgress;
         }
     }
-    bytes.clear();
     return systems;
 }
 
