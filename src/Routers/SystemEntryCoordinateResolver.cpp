@@ -37,11 +37,11 @@ SystemEntryCoordinateResolver::SystemEntryCoordinateResolver(QObject *parent, AS
 
 
 
-void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &systemName) {
+void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &systemName, int retryCount) {
     if(_pendingLookups.contains(systemName)) {
         return;
     }
-    _retries = 0;
+    _retries = retryCount;
     _pendingLookups << systemName.toLower();
     auto executor = EDSMQueryExecutor::systemCoordinateRequest(systemName);
     connect(executor, &QThread::finished, executor, &QObject::deleteLater);
@@ -57,7 +57,7 @@ void SystemEntryCoordinateResolver::downloadSystemCoordinates(const QString &sys
 void SystemEntryCoordinateResolver::systemCoordinatesRequestFailed(const QString &systemName) {
     _retries++;
     if(_retries < 2) {
-        downloadSystemCoordinates(systemName);
+        downloadSystemCoordinates(systemName, _retries);
         return;
     }
     _pendingLookups.remove(systemName.toLower());

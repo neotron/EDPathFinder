@@ -54,7 +54,7 @@ signals:
 
 
 private:
-    void downloadSystemCoordinates(const QString &systemName);
+    void downloadSystemCoordinates(const QString &systemName, int retryCount = 0);
 
     AStarRouter   *_router;
     QLineEdit     *_lineEdit;

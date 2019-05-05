@@ -35,7 +35,9 @@ void EDSMQueryExecutor::run() {
     QNetworkRequest request;
     request.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QVariant(int(QNetworkRequest::AlwaysNetwork)));
     request.setUrl(_url);
-    _mgr = new QNetworkAccessManager();
+    if(!_mgr) {
+        _mgr = new QNetworkAccessManager();
+    }
     QNetworkReply *pReply = _mgr->get(request);
     connect(_mgr, SIGNAL(finished(QNetworkReply * )), this, SLOT(replyFinished(QNetworkReply * )));
 
@@ -50,16 +52,16 @@ void EDSMQueryExecutor::replyFinished(QNetworkReply *reply) {
         auto document = QJsonDocument::fromJson(data);
         if(document.isObject()) {
             emit coordinatesReceived(System(document.object()));
-            reply->deleteLater();
+            delete reply;
             return;
         }
     }
     emit coordinateRequestFailed(_systemName);
-    reply->deleteLater();
+    delete reply;
 }
 
 EDSMQueryExecutor::~EDSMQueryExecutor() {
-    if(_mgr) { _mgr->deleteLater(); }
+    if(_mgr) { delete _mgr; }
 }
 
 EDSMQueryExecutor::EDSMQueryExecutor(const QUrl &url, RequestType requestType, const QString &systemName)
