@@ -32,20 +32,24 @@ class SystemOperation : Operation {
             defer {
                 aStreamReader.close()
             }
-            while let rowline = aStreamReader.nextLine() {
-                if let systemObj = try? JSONDecoder().decode(SystemObj.self, from: rowline) {
-                    synced(lock) {
-                        found += 1;
-                    }
-                    if let system = systems[systemObj.id64] {
-                        let rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\t\(system.value)\n"
-                        if let rowData = rowstring.data(using: .isoLatin1, allowLossyConversion: false) {
-                            synced(lock) {
-                                saved += 1
-                                handle.write(rowData)
+            var rowline = aStreamReader.nextLine();
+            while rowline != nil {
+                autoreleasepool {
+                    if let systemObj = try? JSONDecoder().decode(SystemObj.self, from: rowline!) {
+                        synced(lock) {
+                            found += 1;
+                        }
+                        if let system = systems[systemObj.id64] {
+                            let rowstring = "\(systemObj.name)\t\(systemObj.coords.x)\t\(systemObj.coords.y)\t\(systemObj.coords.z)\t\(system.elw)\t\(system.ww)\t\(system.wwt)\t\(system.aw)\t\(system.tf)\t\(system.value)\n"
+                            if let rowData = rowstring.data(using: .isoLatin1, allowLossyConversion: false) {
+                                synced(lock) {
+                                    saved += 1
+                                    handle.write(rowData)
+                                }
                             }
                         }
                     }
+                    rowline = aStreamReader.nextLine();
                 }
             }
         }

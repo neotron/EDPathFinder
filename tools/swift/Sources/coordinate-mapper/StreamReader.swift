@@ -43,7 +43,12 @@ class StreamReader  {
                let range = buffer.range(of: delimData, in: self.position..<buffer.count) {
                 // Convert complete line (excluding the delimiter) to a string:
                 let line = buffer.subdata(in: self.position..<range.lowerBound)
-                self.position = range.upperBound
+                if(buffer.count > 10*1024*1024) {
+                    buffer = buffer.subdata(in: range.upperBound..<buffer.endIndex)
+                    self.position = 0
+                } else {
+                    self.position = range.upperBound
+                }
                 return line
             }
             if self.position > 0 {

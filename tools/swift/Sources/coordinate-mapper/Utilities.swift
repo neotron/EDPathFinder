@@ -9,12 +9,12 @@ import Glibc
 import Darwin
 #endif
 struct System {
-    var elw = 0
-    var ww = 0
-    var wwt = 0
-    var tf = 0
-    var aw = 0
-    var value = 0
+    var elw: UInt8 = 0
+    var ww: UInt8 = 0
+    var wwt: UInt8 = 0
+    var tf: UInt8 = 0
+    var aw: UInt8 = 0
+    var value: UInt32 = 0
 }
 
 func synced(_ lock: NSLock, closure: () -> ()) {

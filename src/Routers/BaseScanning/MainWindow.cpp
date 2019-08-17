@@ -289,7 +289,7 @@ void MainWindow::loadCompressedData() {
     loader->incrementPendingActions();
     compressor->start();
 
-    for(auto &postfix: QString("abcdefghij").split("")) {
+    for(auto &postfix: QString("abcdefghijklmnopqrst").split("")) {
         loadValuableSystemSegment(loader, postfix);
     }
     loader->start();

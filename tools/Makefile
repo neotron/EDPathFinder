@@ -47,6 +47,7 @@ build-map-coords: parse swift/valuable-systems.csv
 	cd swift && swift build --product coordinate-mapper -c release && ./.build/x86_64*/release/coordinate-mapper
 
 map-coords: 
-	gsplit -n l/10 swift/valuable-systems.csv ../resources/valsys-
-	rm ../resources/valsys-*.gz || true 
-	gzip -9 ../resources/valsys-*
+	rm ../resources/valsys-*.gz ../resources/resources-valsys-*.qrc || true
+	split -n l/20 swift/valuable-systems.csv ../resources/valsys-
+	pigz -9 ../resources/valsys-*
+	zsh -c 'cd ../resources && for a in valsys-*.gz; do cat valsys.qrc.tmpl |sed "s/FILENAME/$$a/" > resources-$${a:s/gz/qrc/}; done'

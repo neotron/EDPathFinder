@@ -1,6 +1,6 @@
 <!DOCTYPE RCC>
 <RCC version="1.0">
     <qresource>
-        <file>valsys-ac.gz</file>
+        <file>valsys-ap.gz</file>
     </qresource>
 </RCC>

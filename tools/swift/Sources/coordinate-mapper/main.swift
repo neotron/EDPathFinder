@@ -5,7 +5,9 @@ import Glibc
 import Darwin
 #endif
 import Dispatch
-
+public func autoreleasepool(_ code: () -> ()) {
+    code()
+}
 struct Body: Decodable {
     var systemId64: Int64
     var subType: String
@@ -14,7 +16,7 @@ struct Body: Decodable {
 }
 
 let queue = OperationQueue()
-queue.maxConcurrentOperationCount = 28
+queue.maxConcurrentOperationCount = 12
 
 //let modQueue = Dispatch.queue()
 var valuableSystems = [Int64:System]()
@@ -82,16 +84,24 @@ func parseSystem(_ systemLine: Data) {
         }
     }
 }
-
-//let systemrows = try! String(contentsOfFile: "valuable-bodies.jsonl").components(separatedBy: "\n")
+let semaphore = DispatchSemaphore(value: 2000)
 if let aStreamReader = StreamReader(path: "valuable-bodies.jsonl", chunkSize: 1024 * 1024) {
     defer {
         aStreamReader.close()
     }
-    while let systemLine = aStreamReader.nextLine() {
-        let local = systemLine
-        queue.addOperation {
-            parseSystem(local)
+    var systemLine = aStreamReader.nextLine();
+    while systemLine != nil {
+        autoreleasepool {
+            if let local = systemLine {
+                queue.addOperation {
+                    autoreleasepool {
+                        parseSystem(local)
+                        semaphore.signal()
+                    }
+                }
+            }
+            semaphore.wait();
+            systemLine = aStreamReader.nextLine();
         }
     }
     queue.waitUntilAllOperationsAreFinished()
@@ -122,7 +132,7 @@ while queue.operationCount > 0 {
     fflush(stdout)
     Thread.sleep(forTimeInterval: 0.1)
 }
-print("\nCompleted.")
 queue.waitUntilAllOperationsAreFinished()
+print("\nCompleted.")
 handle.closeFile()
 exit(0)

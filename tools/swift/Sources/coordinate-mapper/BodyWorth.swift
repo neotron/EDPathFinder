@@ -22,7 +22,7 @@ var totalValue:Int64 = 0
 func adjustedPlanetValue(_ value: Int, mass: Float) -> Int {
     return Int(Float(value) + (3 * Float(value) * pow(mass, 0.199977) / 5.3))
 }
-func estimatedWorth(type: Type, mass: Float, tf: Bool = true) -> Int {
+func estimatedWorth(type: Type, mass: Float, tf: Bool = true) -> UInt32 {
     var value = 0
     var bonus = 0
     switch(type) {
@@ -54,5 +54,5 @@ func estimatedWorth(type: Type, mass: Float, tf: Bool = true) -> Int {
     let adjustedMass = mass <= 0.0 ? 1.0 : mass
     value = adjustedPlanetValue(value + bonus, mass: adjustedMass)
     totalValue += Int64(value)
-    return value
+    return UInt32(value)
 }

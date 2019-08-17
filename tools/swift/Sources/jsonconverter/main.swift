@@ -1,5 +1,4 @@
 import Unbox
-import Cocoa
 
 struct Coords {
     let x: Float
