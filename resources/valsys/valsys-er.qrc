@@ -1,0 +1,6 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource>
+        <file>valsys-er.gz</file>
+    </qresource>
+</RCC>

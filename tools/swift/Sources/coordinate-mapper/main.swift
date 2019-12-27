@@ -16,7 +16,7 @@ struct Body: Decodable {
 }
 
 let queue = OperationQueue()
-queue.maxConcurrentOperationCount = 12
+queue.maxConcurrentOperationCount = 32
 
 //let modQueue = Dispatch.queue()
 var valuableSystems = [Int64:System]()

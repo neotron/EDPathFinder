@@ -288,15 +288,18 @@ void MainWindow::loadCompressedData() {
     connect(compressor, SIGNAL(complete(const QByteArray &)), loader, SLOT(dataDecompressed(const QByteArray &)));
     loader->incrementPendingActions();
     compressor->start();
-
-    for(auto &postfix: QString("abcdefghijklmnopqrst").split("")) {
-        loadValuableSystemSegment(loader, postfix);
+    QDirIterator it(":", QDirIterator::NoIteratorFlags);
+    while (it.hasNext()) {
+        auto fileName = it.next();
+        if(fileName.contains("valsys")) {
+            qDebug() << fileName;
+            loadValuableSystemSegment(loader, fileName);
+        }
     }
     loader->start();
 }
 
-void MainWindow::loadValuableSystemSegment(SystemLoader *loader, const QString &postfix) const {
-    auto fileName = QString(":/valsys-a%1.gz").arg(postfix);
+void MainWindow::loadValuableSystemSegment(SystemLoader *loader, const QString &fileName) const {
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly)) { return; }
 
