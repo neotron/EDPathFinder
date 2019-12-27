@@ -292,7 +292,6 @@ void MainWindow::loadCompressedData() {
     while (it.hasNext()) {
         auto fileName = it.next();
         if(fileName.contains("valsys")) {
-            qDebug() << fileName;
             loadValuableSystemSegment(loader, fileName);
         }
     }
